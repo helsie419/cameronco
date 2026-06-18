@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Book an Appointment | Cameron &amp; Co</title>
+<link href="https://www.cameronco.com.au/booking" rel="canonical"/>
+<meta content="Book, reschedule or cancel Cameron &amp; Co appointments for Sydney and Melbourne consultations." name="description"/>
+<link href="assets/images/cameron-co-jewellery-favicon.png" rel="icon"/>
+<link href="styles.css" rel="stylesheet"/>
+<meta content="Book an Appointment | Cameron &amp; Co" property="og:title"/>
+<meta content="Book an appointment with Cameron &amp; Co in Melbourne or Sydney for jewellery insurance replacement, repairs, remodelling, appraisals and watch services." property="og:description"/>
+<meta content="https://www.cameronco.com.au/booking" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="assets/images/cameron-co-logo-cropped.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Book an Appointment | Cameron &amp; Co" name="twitter:title"/>
+<meta content="Book an appointment with Cameron &amp; Co in Melbourne or Sydney for jewellery insurance replacement, repairs, remodelling, appraisals and watch services." name="twitter:description"/>
+<meta content="assets/images/cameron-co-logo-cropped.png" name="twitter:image"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Book an Appointment | Cameron & Co",
+  "url": "https://www.cameronco.com.au/booking",
+  "description": "Book an appointment with Cameron & Co in Melbourne or Sydney for jewellery insurance replacement, repairs, remodelling, appraisals and watch services."
+}
+  </script>
+</head>
+<body class="cc-site">
+<!-- HEADER -->
+<header class="site-header" role="banner"><div class="container header-inner">
+<button aria-expanded="false" aria-label="Open menu" class="menu-icon" type="button">
+<span></span>
+<span></span>
+<span></span>
+</button>
+<a aria-label="Cameron &amp; Co home" class="site-logo" href="index.html">
+<img alt="Cameron &amp; Co" height="59" src="assets/images/cameron-co-logo-cropped.png" width="143"/>
+</a>
+<nav aria-label="Main navigation">
+<ul class="primary-nav">
+<li><a href="index.html">Home</a></li>
+<li><a href="testimonials.html">Testimonials</a></li>
+<li><a class="open-pricing-modal" href="#">Request Pricing</a></li>
+<li>
+<a class="nav-parent" href="about.html">About
+          <svg aria-hidden="true" viewbox="0 0 8 5" xmlns="http://www.w3.org/2000/svg"><path d="M4 5L0 0h8z"></path></svg>
+</a>
+<ul aria-label="About submenu" class="dropdown">
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="contact.html">Contact</a></li>
+<li><a href="sydneyservices.html">Services Sydney</a></li>
+<li><a href="melbourneservices.html">Services Melbourne</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-parent" href="jewellerycare.html">Education
+          <svg aria-hidden="true" viewbox="0 0 8 5" xmlns="http://www.w3.org/2000/svg"><path d="M4 5L0 0h8z"></path></svg>
+</a>
+<ul aria-label="Education submenu" class="dropdown">
+<li><a href="jewellerycare.html">Jewellery Care</a></li>
+<li><a href="understandingdiamonds.html">Understanding Diamonds</a></li>
+<li><a href="timelesstrendyjewellery.html">Timeless vs Trendy Jewellery Pieces</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+<a class="btn-book btn-red" href="booking.html">Book Appointment</a>
+</div></header>
+<!-- MAIN APP WRAPPER -->
+<main class="page-shell">
+<div class="brand-page">
+<section class="brand-hero">
+<h1>Book Appointment</h1>
+<p>Choose a Sydney or Melbourne appointment time. Each office has its own Zoom room and calendar, and confirmations include links to reschedule or cancel.</p>
+</section>
+<section class="app-grid">
+<form class="booking-card booking-form" id="booking-form">
+<label>Office
+            <select id="booking-office" name="office" required="">
+<option value="melbourne">Melbourne Office</option>
+<option value="sydney">Sydney Office</option>
+</select>
+</label>
+<label>Appointment type
+            <select name="service" required="">
+<option>Virtual Enquiry</option>
+<option>Engagement Ring Enquiry</option>
+<option>Wedding Ring Enquiry</option>
+<option>Jewellery Repairs</option>
+<option>Remake or Custom Item</option>
+</select>
+</label>
+<label>Name
+            <input autocomplete="name" name="name" required=""/>
+</label>
+<label>Email
+            <input autocomplete="email" name="email" required="" type="email"/>
+</label>
+<label>Mobile
+            <input autocomplete="tel" name="phone" placeholder="+61"/>
+</label>
+<label>Notes
+            <textarea name="notes" placeholder="Tell us briefly what you would like to discuss."></textarea>
+</label>
+<input id="selected-slot" name="slot" required="" type="hidden"/>
+<div class="button-row">
+<button class="brand-button btn-red" type="submit">Confirm appointment</button>
+<button class="brand-button secondary" id="refresh-slots" type="button">Refresh times</button>
+</div>
+<p class="status-line" id="booking-status">Select an available time.</p>
+</form>
+<section class="result-panel">
+<h2 class="sr-only">Available timeslots</h2>
+<div aria-live="polite" class="slot-grid" id="slot-grid"></div>
+</section>
+</section>
+<section class="booking-card cc-moved-style-002" hidden="" id="manage-booking">
+<h2>Manage Appointment</h2>
+<p id="manage-summary"></p>
+<div class="button-row cc-moved-style-003">
+<button class="brand-button secondary" id="manage-reschedule" type="button">Reschedule to selected time</button>
+<button class="brand-button" id="manage-cancel" type="button">Cancel appointment</button>
+</div>
+</section>
+</div>
+</main>
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo"><div class="footer-inner">
+<div class="footer-top">
+<div aria-label="Office locations" class="footer-offices">
+<div class="footer-office">
+<h4>Melbourne Office</h4>
+<a href="tel:+61398369922">(03) 9836 9922</a>
+<p>73-75 Canterbury Road</p>
+<p>Canterbury VIC 3126</p>
+</div>
+<div class="footer-office">
+<h4>Sydney Office</h4>
+<a href="tel:+61296992266">(02) 9699 2266</a>
+<p>Suite 2, Level 7, 37 York St.</p>
+<p>Sydney, NSW 2000</p>
+</div>
+</div>
+<div class="footer-col">
+<h4>Menu</h4>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="testimonials.html">Testimonials</a></li>
+<li><a href="booking.html">Book Appointment</a></li>
+<li><a class="open-pricing-modal" href="#">Request Pricing</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>About</h4>
+<ul>
+<li><a href="about.html">About</a></li>
+<li><a href="faq.html">FAQ</a></li>
+<li><a href="contact.html">Contact</a></li>
+<li><a href="sydneyservices.html">Services Sydney</a></li>
+<li><a href="melbourneservices.html">Services Melbourne</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Education</h4>
+<ul>
+<li><a href="jewellerycare.html">Jewellery Care</a></li>
+<li><a href="understandingdiamonds.html">Understanding Diamonds</a></li>
+<li><a href="timelesstrendyjewellery.html">Timeless vs Trendy Jewellery Pieces</a></li>
+</ul>
+</div>
+<div class="footer-right-col">
+<div class="footer-social">
+<a aria-label="Cameron &amp; Co on Facebook" href="https://www.facebook.com/profile.php?id=100076065382587" rel="noreferrer noopener" target="_blank">
+<img alt="Facebook" height="30" src="assets/images/cameron-co-facebook-icon.png" width="30"/>
+</a>
+<a aria-label="Cameron &amp; Co on Instagram" href="https://www.instagram.com/cameroncojewellery/" rel="noreferrer noopener" target="_blank">
+<img alt="Instagram" height="30" src="assets/images/cameron-co-instagram-icon.png" width="30"/>
+</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p class="footer-copyright">Cameron &amp; Co. © 2026</p>
+<div class="footer-links-row">
+<a href="mailto:info@cameronco.com.au?subject=Contact">Contact Us</a>
+<a href="https://www.cameronco.com.au/privacy-policy" rel="nofollow" target="_blank">Privacy Policy</a>
+<a href="https://www.cameronco.com.au/termsandconditions" rel="nofollow" target="_blank">Terms of Use</a>
+<a href="https://www.cameronco.com.au/disclaimer" rel="nofollow" target="_blank">Disclaimer</a>
+</div>
+<p class="footer-credit">Made by <a href="https://bravabird.com" rel="noreferrer noopener" target="_blank">bravabird</a></p>
+</div>
+</div></footer>
+<!-- PRICING MODAL -->
+<div aria-labelledby="modal-title" aria-modal="true" class="modal-overlay" id="pricing-modal" role="dialog">
+<div class="modal-card">
+<button aria-label="Close pricing modal" class="modal-close">×</button>
+<h2 class="cc-moved-style-001" id="modal-title">Request Pricing</h2>
+<form class="pricing-form" id="pricing-form" novalidate="">
+<div class="form-group">
+<label for="p-name">Name *</label>
+<input autocomplete="name" id="p-name" name="name" placeholder="Your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="p-email">Email *</label>
+<input autocomplete="email" id="p-email" name="email" placeholder="your@email.com" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="rte-content">Please describe what items you are looking for pricing for</label>
+<div class="rte-wrap">
+<div aria-label="Text formatting" class="rte-toolbar" role="toolbar">
+<button aria-label="Bold" data-cmd="bold" type="button"><strong>B</strong></button>
+<button aria-label="Italic" data-cmd="italic" type="button"><em>I</em></button>
+<button aria-label="Underline" data-cmd="underline" type="button"><u>U</u></button>
+<select aria-label="Text format" data-cmd="formatblock" title="Format">
+<option value="p">Normal Text</option>
+<option value="h1">Heading 1</option>
+<option value="h2">Heading 2</option>
+<option value="h3">Heading 3</option>
+</select>
+</div>
+<div aria-label="Item description" aria-multiline="true" class="rte-content" contenteditable="true" id="rte-content" role="textbox"></div>
+</div>
+</div>
+<button class="btn-submit btn-red" type="submit">Submit</button>
+</form>
+<div class="form-success" hidden="" id="form-success"><p>Thank you — we'll be in touch shortly.</p></div>
+</div>
+</div>
+<section aria-label="Cookie settings" class="cookie-settings-panel" data-cookie-panel="" hidden="">
+<h2>Cookie settings</h2>
+<p>Necessary cookies keep this site working. Analytics cookies help us understand page visits.</p>
+<label><input data-cookie-analytics="" type="checkbox"/> Allow analytics cookies</label>
+<button data-cookie-action="save" type="button">Save settings</button>
+</section>
+<aside aria-label="Cookie consent" class="cookie-banner" data-cookie-banner="" hidden="" role="banner">
+<p>We use cookies on our website to see how you interact with it. By accepting, you agree to our use of such cookies. <a href="https://www.cameronco.com.au/privacy-policy" rel="nofollow" target="_blank">Privacy Policy</a></p>
+<div class="cookie-actions">
+<button class="link-button" data-cookie-action="settings" type="button">Settings</button>
+<button data-cookie-action="decline" type="button">Decline All</button>
+<button class="accept" data-cookie-action="accept" type="button">Accept</button>
+<button aria-label="Close cookie banner" class="close" data-cookie-action="close" type="button">✕</button>
+</div>
+</aside>
+<script src="booking.js"></script>
+<script src="scripts.js"></script>
+</body>
+</html>
