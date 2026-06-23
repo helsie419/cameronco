@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cameron & Co CRM MVP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="app-sidebar" aria-label="CRM navigation">
+      <div class="sidebar-brand">
+        <a class="brand-mark" href="../index.html" aria-label="CRM POC launcher">
+          <img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co">
+        </a>
+      </div>
+
+      <nav class="module-tabs" aria-label="CRM modules">
+        <button class="tab active" data-tab="dashboard" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 10v10h14V10"></path><path d="M9 20v-6h6v6"></path></svg></span><span>Dashboard</span></button>
+        <button class="tab" data-tab="jobboard" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path><path d="M15 4v16"></path></svg></span><span>Job Board</span></button>
+        <button class="tab" data-tab="customers" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path><circle cx="9.5" cy="7" r="4"></circle><path d="M20 8v6"></path><path d="M23 11h-6"></path></svg></span><span>Customers</span></button>
+        <button class="tab" data-tab="work" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 6h4"></path><path d="M3 10h18"></path><rect x="4" y="6" width="16" height="14" rx="2"></rect><path d="M8 6V4h8v2"></path></svg></span><span>Quotes & Jobs</span></button>
+        <button class="tab" data-tab="communications" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg></span><span>Customer Contact</span></button>
+        <button class="tab" data-tab="automation" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3"></path><path d="M12 18v3"></path><path d="m4.9 4.9 2.1 2.1"></path><path d="m17 17 2.1 2.1"></path><path d="M3 12h3"></path><path d="M18 12h3"></path><path d="m4.9 19.1 2.1-2.1"></path><path d="m17 7 2.1-2.1"></path><circle cx="12" cy="12" r="4"></circle></svg></span><span>Automation</span></button>
+        <button class="tab" data-tab="reports" type="button"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h16"></path><rect x="7" y="11" width="3" height="5"></rect><rect x="12" y="7" width="3" height="9"></rect><rect x="17" y="9" width="3" height="7"></rect></svg></span><span>Reports</span></button>
+      </nav>
+
+      <div class="sidebar-profile">
+        <div class="avatar" aria-hidden="true">CC</div>
+        <div>
+          <strong>Cameron & Co</strong>
+          <span>Review workspace</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <header class="app-header">
+        <label class="global-search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" placeholder="Search customers, jobs, quotes">
+        </label>
+        <div class="header-actions">
+          <span class="save-pill" id="saveState">Saved locally</span>
+          <button class="button secondary" id="resetDemo" type="button">Reset demo</button>
+        </div>
+      </header>
+
+      <main>
+      <section class="metrics-grid" aria-label="Owner dashboard">
+        <article class="metric">
+          <span>Open quote value</span>
+          <strong id="metricQuoteValue">$0</strong>
+          <small id="metricQuoteCount">0 active quotes</small>
+        </article>
+        <article class="metric">
+          <span>Workshop load</span>
+          <strong id="metricWorkshop">0</strong>
+          <small id="metricOverdue">0 overdue jobs</small>
+        </article>
+        <article class="metric">
+          <span>Unpaid balances</span>
+          <strong id="metricBalances">$0</strong>
+          <small>Deposits and final payments</small>
+        </article>
+        <article class="metric">
+          <span>Follow-ups due</span>
+          <strong id="metricTasks">0</strong>
+          <small>Tasks and automations</small>
+        </article>
+        <article class="metric">
+          <span>Automations</span>
+          <strong id="metricAutomation">0</strong>
+          <small>Due or suppressed</small>
+        </article>
+      </section>
+
+      <section class="panel active" id="dashboardPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Live Workspace</h2>
+          </div>
+        </div>
+        <div class="dashboard-layout">
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Pipeline</h3>
+              <span id="pipelineSummary">0 records</span>
+            </div>
+            <div class="timeline-rail" id="pipelineRail"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Today</h3>
+              <span id="todaySummary">0 actions</span>
+            </div>
+            <div class="task-list" id="todayTasks"></div>
+          </section>
+          <section class="surface atelier-card" aria-label="Atelier focus">
+            <div class="atelier-media">
+              <img src="assets/cameron-co-teal-sapphire-diamond-halo-rings.webp" alt="Cameron & Co sapphire and diamond rings">
+            </div>
+            <div class="atelier-copy">
+              <span class="brand-kicker">Atelier focus</span>
+              <h3>Custom sapphire and diamond work</h3>
+              <div class="atelier-stats">
+                <span>CAD approvals 2</span>
+                <span>Image sets 8</span>
+                <span>Ready this week 3</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="jobboardPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Job Board</h2>
+          </div>
+          <div class="board-tools">
+            <label class="search-box">
+              Search
+              <input id="boardSearch" placeholder="Customer, job number, stone, owner">
+            </label>
+            <label>
+              Owner
+              <select id="boardOwner">
+                <option value="All">All owners</option>
+                <option>Tracey</option>
+                <option>April</option>
+                <option>Workshop</option>
+                <option>Admin</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="kanban-board" id="jobBoardColumns" aria-label="Draggable job board"></div>
+      </section>
+
+      <section class="panel" id="customersPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Customers</h2>
+          </div>
+          <div class="customer-actions">
+            <button class="button secondary" id="bulkUploadCustomerButton" type="button">Bulk upload</button>
+            <button class="button primary" id="addCustomerButton" type="button">Add customer</button>
+          </div>
+        </div>
+        <section class="surface customer-table-shell">
+          <div class="table-toolbar">
+            <label class="search-box">
+              Search
+              <input id="customerSearch" placeholder="Name, phone, email, style">
+            </label>
+            <label>
+              Type
+              <select id="customerTypeFilter">
+                <option value="All">All types</option>
+                <option>Private client</option>
+                <option>Insurance client</option>
+                <option>Retail partner</option>
+                <option>Trade</option>
+              </select>
+            </label>
+            <label>
+              Consent
+              <select id="customerConsentFilter">
+                <option value="All">All consent</option>
+                <option value="Marketing">Marketing consent</option>
+                <option value="Email">Email consent</option>
+                <option value="SMS">SMS consent</option>
+                <option value="Missing">Missing consent</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table class="customer-table">
+              <thead>
+                <tr>
+                  <th><button data-customer-sort="name" type="button">Customer</button></th>
+                  <th><button data-customer-sort="type" type="button">Type</button></th>
+                  <th><button data-customer-sort="phone" type="button">Phone</button></th>
+                  <th><button data-customer-sort="email" type="button">Email</button></th>
+                  <th><button data-customer-sort="lastJobDue" type="button">Last job due</button></th>
+                  <th><button data-customer-sort="jobCount" type="button">Jobs</button></th>
+                  <th><button data-customer-sort="consent" type="button">Consent</button></th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody id="customerTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel" id="workPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Quote to Workshop</h2>
+          </div>
+          <button class="button primary" id="newWorkButton" type="button">New order / quote</button>
+        </div>
+        <section class="surface customer-table-shell">
+          <div class="table-toolbar">
+            <label class="search-box">
+              Search
+              <input id="workSearch" placeholder="Job number, customer, stone, owner">
+            </label>
+            <label>
+              Stage
+              <select id="workFilter">
+                <option value="All">All stages</option>
+                <option>New enquiry</option>
+                <option>Quote sent</option>
+                <option>Awaiting deposit</option>
+                <option>CAD approval</option>
+                <option>In production</option>
+                <option>Quality check</option>
+                <option>Ready for collection</option>
+                <option>Completed</option>
+              </select>
+            </label>
+            <label>
+              Owner
+              <select id="workOwnerFilter">
+                <option value="All">All owners</option>
+                <option>Tracey</option>
+                <option>April</option>
+                <option>Workshop</option>
+                <option>Admin</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table class="customer-table">
+              <thead>
+                <tr>
+                  <th><button data-work-sort="number" type="button">Job</button></th>
+                  <th><button data-work-sort="customer" type="button">Customer</button></th>
+                  <th><button data-work-sort="stage" type="button">Stage</button></th>
+                  <th><button data-work-sort="dueDate" type="button">Due date</button></th>
+                  <th><button data-work-sort="owner" type="button">Owner</button></th>
+                  <th><button data-work-sort="balance" type="button">Balance</button></th>
+                  <th><button data-work-sort="satisfaction" type="button">Rating</button></th>
+                </tr>
+              </thead>
+              <tbody id="workTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel" id="communicationsPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Customer Contact</h2>
+          </div>
+        </div>
+        <div class="two-column">
+          <form class="surface form-grid" id="commForm">
+            <h3>Send or log message</h3>
+            <label>Action<select id="commContactMode"><option value="send">Send email</option><option value="log">Log phone call / other communication</option></select></label>
+            <label>Send to<select id="commRecipientMode"><option value="single">One customer</option><option value="list">Selected list</option></select></label>
+            <label id="commCustomerWrap">Customer search<input id="commCustomerSearch" placeholder="Search name, phone or email"><input id="commCustomer" type="hidden"><span class="selected-customer" id="commCustomerSelected"></span><div class="search-results" id="commCustomerResults"></div></label>
+            <label class="wide comm-list-wrap" id="commCustomerListWrap" hidden>Customer list search<input id="commCustomerListSearch" placeholder="Search and add customers"><div class="search-results" id="commCustomerListResults"></div><div class="recipient-chips" id="commCustomerChips"></div></label>
+            <label id="commChannelWrap">Channel<select id="commChannel"><option>Email</option><option value="SMS">SMS - CompleteSMS</option><option>Phone</option><option>In person</option></select></label>
+            <label>Linked work<select id="commWork"></select></label>
+            <label id="commTemplateWrap">Template<select id="commTemplate"><option value="quoteFollowup">Quote follow-up</option><option value="depositRequest">Deposit request</option><option value="cadApproval">CAD approval</option><option value="readyCollection">Ready for collection</option><option value="careReminder">Care and cleaning</option></select></label>
+            <label id="commStatusWrap">Status<select id="commStatus"><option>Delivered</option><option>Logged</option><option>Pending</option><option>Failed</option></select></label>
+            <label class="wide">Subject<input id="commSubject" placeholder="Subject or call outcome"></label>
+            <label class="wide">Message<textarea id="commBody" rows="6"></textarea></label>
+            <div class="consent-row wide">
+              <label><input id="commRestricted" type="checkbox"> Restricted</label>
+              <label><input id="commCreateTask" type="checkbox" checked> Create follow-up task</label>
+            </div>
+            <button class="button primary wide" id="commSubmitButton" type="submit">Send email</button>
+          </form>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Timeline</h3>
+              <span id="commSummary">0 items</span>
+            </div>
+            <div class="message-preview" id="templatePreview"></div>
+            <div class="timeline-list" id="commTimeline"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="automationPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Email Templates and Automations</h2>
+          </div>
+          <button class="button primary" id="runAutomations" type="button">Run due sends</button>
+        </div>
+        <div class="automation-layout">
+          <form class="surface form-grid" id="automationTemplateForm">
+            <h3>Create automated email</h3>
+            <label>Template name<input id="automationTemplateName" placeholder="Completion thank-you"></label>
+            <label>Send when phase is<select id="automationPhase"><option>Quote sent</option><option>Awaiting deposit</option><option>CAD approval</option><option>In production</option><option>Quality check</option><option>Ready for collection</option><option>Completed</option></select></label>
+            <label>Send timing<select id="automationDelay"><option value="0">Immediately</option><option value="1">1 day later</option><option value="7">7 days later</option><option value="30">30 days later</option></select></label>
+            <label>Subject<input id="automationSubject" placeholder="Your item is complete"></label>
+            <div class="wide rich-field">
+              <span class="field-label">Email body</span>
+              <div class="editor-toolbar" data-editor-for="automationBody" aria-label="Email template formatting">
+                <button type="button" data-editor-command="bold" title="Bold">B</button>
+                <button type="button" data-editor-command="italic" title="Italic">I</button>
+                <button type="button" data-editor-command="underline" title="Underline">U</button>
+                <button type="button" data-editor-command="insertUnorderedList" title="Bullet list">•</button>
+                <button type="button" data-editor-action="link" title="Insert link">🔗</button>
+                <button type="button" data-editor-action="logo" title="Insert logo signature">🖼️</button>
+              </div>
+              <div class="rich-editor" id="automationBody" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Hi {{customer_first_name}}, your {{work_title}} is now complete..."></div>
+            </div>
+            <button class="button primary wide" id="automationSaveButton" type="submit">Save automation</button>
+          </form>
+        </div>
+        <div class="dashboard-layout">
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Current Automations</h3>
+              <span id="automationRuleSummary">0 active</span>
+            </div>
+            <div class="automation-list" id="automationRuleList"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Scheduled sends</h3>
+              <span id="scheduleSummary">0 due</span>
+            </div>
+            <div class="automation-list" id="automationSchedule"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Run log</h3>
+              <span id="automationLogSummary">0 logged</span>
+            </div>
+            <div class="automation-list" id="automationLog"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="reportsPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Reports</h2>
+          </div>
+          <div class="report-actions">
+            <label>Role<select id="reportRole"><option>Owner</option><option>Sales</option><option>Workshop</option><option>Finance</option></select></label>
+            <button class="button secondary" id="exportReport" type="button">Export report</button>
+          </div>
+        </div>
+        <div class="report-grid">
+          <section class="surface">
+            <h3>Sales pipeline</h3>
+            <div id="salesReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Workshop stages</h3>
+            <div id="stageReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Data quality</h3>
+            <div id="qualityReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Export audit</h3>
+            <div id="auditLog"></div>
+          </section>
+        </div>
+      </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="detailModal" hidden>
+    <section class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <button class="modal-close" id="detailModalClose" type="button" aria-label="Close detail panel">×</button>
+      <div id="detailContent"></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="customerModal" hidden>
+    <section class="detail-modal compact-modal" role="dialog" aria-modal="true" aria-labelledby="customerModalTitle">
+      <button class="modal-close" id="customerModalClose" type="button" aria-label="Close customer form">×</button>
+      <p class="eyebrow">New customer</p>
+      <h2 id="customerModalTitle">Add customer</h2>
+      <form class="form-grid modal-section" id="customerForm">
+        <label>Full name<input id="customerName" required placeholder="Customer name"></label>
+        <label>Customer type<select id="customerType"><option>Private client</option><option>Insurance client</option><option>Retail partner</option><option>Trade</option></select></label>
+        <label>Phone<input id="customerPhone" placeholder="0400 000 000"></label>
+        <label>Email<input id="customerEmail" type="email" placeholder="name@example.com"></label>
+        <label class="wide">Address<input id="customerAddress" placeholder="Street, suburb, state, postcode"></label>
+        <label>Preferred contact<select id="customerPreferred"><option>Phone</option><option>Email</option><option>SMS</option><option>In-store</option></select></label>
+        <label>Lead source<select id="customerSource"><option>Referral</option><option>Insurance</option><option>Website</option><option>Walk-in</option><option>Retail partner</option><option>Instagram</option></select></label>
+        <label>Ring size<input id="customerRingSize" placeholder="E.g. N 1/2"></label>
+        <label>Partner / occasion<input id="customerPartner" placeholder="Anniversary, engagement, partner"></label>
+        <label class="wide">Style and service notes<textarea id="customerNotes" rows="4" placeholder="Preferred metals, stones, sentimental context, cleaning history"></textarea></label>
+        <div class="consent-row wide">
+          <label><input id="customerEmailConsent" type="checkbox" checked> Email consent</label>
+          <label><input id="customerSmsConsent" type="checkbox" checked> SMS consent</label>
+          <label><input id="customerMarketingConsent" type="checkbox" checked> Marketing consent</label>
+        </div>
+        <button class="button primary wide" type="submit">Add customer</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="workModal" hidden>
+    <section class="detail-modal compact-modal" role="dialog" aria-modal="true" aria-labelledby="workModalTitle">
+      <button class="modal-close" id="workModalClose" type="button" aria-label="Close job form">×</button>
+      <p class="eyebrow">New order / quote</p>
+      <h2 id="workModalTitle">Create job</h2>
+      <form class="form-grid modal-section" id="workForm">
+        <label>Customer<select id="workCustomer" required></select></label>
+        <label>Stage<select id="workStage"><option>New enquiry</option><option>Quote sent</option><option>Awaiting deposit</option><option>CAD approval</option><option>In production</option></select></label>
+        <label class="wide">Work title<input id="workTitle" required placeholder="Platinum sapphire remodel"></label>
+        <label>Metal<select id="workMetal"><option>18ct yellow gold</option><option>18ct white gold</option><option>18ct rose gold</option><option>Platinum</option><option>Sterling silver</option></select></label>
+        <label>Stone shape<select id="workStoneShape"><option>Not selected</option><option>Asscher</option><option>Cushion</option><option>Emerald</option><option>Heart</option><option>Marquise</option><option>Oval</option><option>Pear</option><option>Princess</option><option>Radiant</option><option>Round</option></select></label>
+        <label>Stone type<select id="workStoneType"><option>Not selected</option><option>Diamond</option><option>Sapphire</option><option>Ruby</option><option>Emerald</option><option>Moissanite</option><option>Other</option></select></label>
+        <label>Customer providing<select id="workStoneProvided"><option>No</option><option>Yes</option></select></label>
+        <label>Origin<select id="workStoneOrigin"><option>Natural</option><option>Lab grown</option><option>Not applicable</option></select></label>
+        <label>Ring size<input id="workSize" placeholder="E.g. N"></label>
+        <label>Due date<input id="workDue" type="date"></label>
+        <label>Materials cost<input id="workMaterials" type="number" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>Labour<input id="workLabour" type="number" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>Supplier cost<input id="workSupplier" type="number" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>Retail price<input id="workPrice" type="number" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>Deposit paid<input id="workDeposit" type="number" min="0" inputmode="decimal" placeholder="0"></label>
+        <label>Owner<select id="workOwner"><option>Tracey</option><option>April</option><option>Workshop</option><option>Admin</option></select></label>
+        <label class="wide">Job images<input id="workImages" type="file" accept="image/*" multiple></label>
+        <label class="wide">Manufacturing notes<textarea id="workNotes" rows="4" placeholder="CAD, casting, setting, polishing, rhodium, engraving, valuation"></textarea></label>
+        <button class="button primary wide" type="submit">Create job</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="bulkCustomerModal" hidden>
+    <section class="detail-modal compact-modal" role="dialog" aria-modal="true" aria-labelledby="bulkCustomerModalTitle">
+      <button class="modal-close" id="bulkCustomerModalClose" type="button" aria-label="Close bulk upload">×</button>
+      <p class="eyebrow">Bulk upload</p>
+      <h2 id="bulkCustomerModalTitle">Import customers</h2>
+      <form class="modal-section" id="bulkCustomerForm">
+        <label class="wide">Paste CSV rows
+          <textarea id="bulkCustomerCsv" rows="8" placeholder="name,type,phone,email,preferred,source,ringSize,partner,notes&#10;Jane Smith,Private client,0400 000 000,jane@example.com,Email,Referral,N,Anniversary,Likes platinum"></textarea>
+        </label>
+        <p class="fineprint">Columns: name, type, phone, email, preferred, source, ringSize, partner, notes. The first header row is optional.</p>
+        <button class="button primary" type="submit">Import customers</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
