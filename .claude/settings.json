@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(brew install *)",
+      "Bash(shopify version *)",
+      "Bash(/Users/helen/.npm-global/bin/shopify version *)",
+      "Bash(/Users/helen/.npm-global/bin/shopify theme *)"
+    ]
+  }
+}

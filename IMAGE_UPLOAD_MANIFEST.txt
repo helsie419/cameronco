@@ -1,0 +1,46 @@
+Upload these compressed WebP files to Shopify Admin > Settings > Files (or the theme's Assets folder).
+These files have been compressed to modern WebP format, saving 88.8% of total storage space (reduced from 4.60 MB to 0.52 MB overall).
+
+ORIGINAL FILENAME (in /assets/images/)                        ->  OPTIMIZED WEBP FILENAME
+----------------------------------------------------------------------------------------------------
+Cameron Co Brand Book.png                                     ->  cameron-co-brand-book-showroom.webp
+Jewellery Images (1).png                                      ->  cameron-co-jewellery-collection.webp
+Silver Ring.jpg                                               ->  silver-ring-care.webp
+_single_diamond_ring_in_a_jewellery_light_coloured_box_ffc487e1-6e0f-44ea-b93e-eebd83108ae.png  ->  single-diamond-ring-box.webp
+anatomy of a diamond.png                                      ->  anatomy-of-a-diamond-chart.webp
+burberry-brand-logo.jpg                                       ->  burberry-brand-logo.webp
+cameron-co-coloured-gemstone-bezel-rings.webp                 ->  cameron-co-coloured-gemstone-bezel-rings.webp
+cameron-co-custom-ring-design-sketch.webp                     ->  cameron-co-custom-ring-design-sketch.webp
+cameron-co-diamond-brilliant-cut-illustration.png             ->  cameron-co-diamond-brilliant-cut-illustration.webp
+cameron-co-diamond-icon-small.png                             ->  cameron-co-diamond-icon-small.webp
+cameron-co-facebook-icon.png                                  ->  cameron-co-facebook-icon.webp
+cameron-co-instagram-icon.png                                 ->  cameron-co-instagram-icon.webp
+cameron-co-jewellery-favicon.png                              ->  cameron-co-jewellery-favicon.webp
+cameron-co-jewellery-repair-components.webp                   ->  cameron-co-jewellery-repair-components.webp
+cameron-co-logo-cropped.png                                   ->  cameron-co-logo-cropped.webp
+cameron-co-loose-green-sapphire-gemstones.webp                ->  cameron-co-loose-green-sapphire-gemstones.webp
+cameron-co-luxury-jewellery-background-texture.webp           ->  cameron-co-luxury-jewellery-background-texture.webp
+cameron-co-teal-sapphire-diamond-halo-rings.webp              ->  cameron-co-teal-sapphire-diamond-halo-rings.webp
+citizen-watches-logo.jpg                                      ->  citizen-watches-logo.webp
+classique-jewellery-logo.jpg                                  ->  classique-jewellery-logo.webp
+diamond shape.png                                             ->  diamond-shapes-chart.webp
+diamond_colour_grades_AU_precise (1).png                      ->  diamond-colour-grades-chart.webp
+dora-international-jewellery-logo.jpg                         ->  dora-international-jewellery-logo.webp
+fossil-brand-logo.jpg                                         ->  fossil-brand-logo.webp
+georgini-jewellery-logo.jpg                                   ->  georgini-jewellery-logo.webp
+ice-watch-brand-logo.jpg                                      ->  ice-watch-brand-logo.webp
+ikecho-pearls-jewellery-logo.jpg                              ->  ikecho-pearls-jewellery-logo.webp
+inspecting diamonds.png                                       ->  inspecting-diamonds-magnification.webp
+men's sapphire rings_edited.jpg                               ->  mens-sapphire-rings-edited.webp
+peter-w-beck-jewellery-logo.jpg                               ->  peter-w-beck-jewellery-logo.webp
+rose gold dark green emerald rings.webp                       ->  rose-gold-green-emerald-rings.webp
+thomas-sabo-brand-logo.jpg                                    ->  thomas-sabo-brand-logo.webp
+titanium ring.jpg                                             ->  titanium-ring-care.webp
+
+---
+
+2026-07 homepage hero redesign — new asset, not from the original /assets/images/
+source folder. Already saved directly into this project's assets/ folder with its
+final sanitized name below; just needs uploading to Shopify the same way.
+
+(new AI-composited hero photo, hand holding a ring in a presentation box)         ->  cameron-co-jewellery-insurance-hero-reveal.webp

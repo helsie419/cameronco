@@ -1,0 +1,142 @@
+body { overflow-x: hidden; }
+    .sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; outline: 0 !important; background: transparent !important; }
+    .site-header { background: #ffffff; border: 0; box-shadow: none; }
+    .header-inner { min-height: 148px; align-items: center; gap: 28px; }
+    .site-logo img { width: 285px; max-width: 285px; height: auto; display: block; }
+    .primary-nav { align-items: center; gap: 26px; }
+    .primary-nav > li > a, .primary-nav > li > .nav-parent { font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; color: #8c6a2f; font-size: 15px; font-weight: 500; line-height: 1; text-decoration: none; padding: 8px 0; background: transparent; border: 0; }
+    .primary-nav > li > a:hover, .primary-nav > li > .nav-parent:hover, .primary-nav > li > a[aria-current="page"] { color: #8c6a2f; text-decoration: underline; text-underline-offset: 3px; }
+    .primary-nav svg { width: 8px; height: 5px; margin-left: 4px; fill: currentColor; }
+    .dropdown { background: #ffffff; border-radius: 0; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08); overflow: hidden; }
+    .dropdown a { font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; background: #ffffff !important; color: #171d29 !important; border: 0 !important; border-radius: 0 !important; padding: 14px 18px !important; text-decoration: none !important; }
+    .dropdown a:hover { background: #f7f3ee !important; color: #8c6a2f !important; }
+    .btn-book { background: #8c6a2f !important; color: #ffffff !important; border: 1px solid #8c6a2f !important; border-radius: 5px; min-width: 165px; min-height: 40px; padding: 12px 22px; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-book:hover { background: #6e5324 !important; border-color: #6e5324 !important; }
+    .home-services-shell .section-inner { width: min(1000px, calc(100% - 96px)); max-width: 1000px !important; }
+    .home-hero-grid { width: 100%; max-width: 1000px !important; margin: 0 auto 20px; display: grid; grid-template-columns: 1fr 2fr; gap: 18px; }
+    .hero-left-col, .hero-right-col { display: flex; flex-direction: column; gap: 18px; }
+    .hero-card { position: relative; overflow: hidden; border-radius: 12px; min-height: 140px; background: #e9e9e9; }
+    .hero-card.tall { min-height: 300px; }
+    .hero-card img { width: 100%; height: 100%; min-height: inherit; object-fit: cover; display: block; }
+    .hero-left-col .hero-card.tall img { object-position: 82% center; }
+    .hero-right-col .hero-card.tall img { object-position: 65% center; }
+    .hero-card::before { content: ''; position: absolute; left: 0; bottom: 0; width: 70%; height: 60%; background: radial-gradient(circle at 0% 100%, rgba(10, 12, 16, 0.45), rgba(10, 12, 16, 0.12) 55%, transparent 75%); pointer-events: none; z-index: 1; }
+    .hero-card-label { position: absolute; left: 20px; bottom: 20px; z-index: 2; margin: 0; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%); border: 1px solid rgba(255, 255, 255, 0.85); padding: 14px 24px; border-radius: 999px; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(19px, 1.8vw, 24px); line-height: 1.1; font-weight: 700; color: #171d29; white-space: nowrap; box-shadow: 0 8px 24px rgba(23, 29, 41, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.6); transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .hero-card:hover .hero-card-label { background: rgba(255, 255, 255, 0.9); box-shadow: 0 10px 30px rgba(23, 29, 41, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7); transform: translateY(-2px); }
+    .insurance-section { padding-top: 34px !important; padding-bottom: 38px !important; }
+    .insurance-title { margin-bottom: 4px !important; }
+    .insurance-subtitle { margin-top: 0 !important; margin-bottom: 14px !important; font-weight: 700 !important; }
+    .what-we-do-section { position: relative; padding: 38px 0 68px !important; background: #ffffff; overflow: hidden; }
+    .what-we-do-section .section-inner { width: min(1180px, calc(100% - 96px)); max-width: 1180px !important; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+    #services-heading { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(40px, 4.6vw, 58px); line-height: 1; margin: 0 0 50px !important; color: #171d29; font-weight: 500; }
+    .service-list { width: 100%; max-width: 1060px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; text-align: left; border-top: 0 !important; }
+    .service-item { display: grid; grid-template-columns: 48px 1fr; column-gap: 0; align-items: start; }
+    .service-item img { width: 34px; height: 34px; opacity: 0.45; margin-top: 2px; }
+    .service-item h3 { margin: 0 0 10px; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 30px; line-height: 1.15; font-weight: 700; color: #171d29; }
+    .service-item p { grid-column: 1 / -1; margin: 0; padding-left: 0; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 17px; line-height: 1.68; color: #171d29; max-width: 1040px; }
+    .what-we-do-rings { position: absolute; right: 48px; bottom: 0; width: min(250px, 22vw); height: auto; z-index: 1; pointer-events: none; -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 16%, #000 100%), linear-gradient(to right, transparent 0%, #000 16%, #000 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to top, transparent 0%, #000 16%, #000 100%), linear-gradient(to right, transparent 0%, #000 16%, #000 100%); mask-composite: intersect; }
+    .home-button { border-radius: 5px; min-width: 170px; min-height: 44px; padding: 12px 24px; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 15px; line-height: 1; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(23, 29, 41, 0.14); }
+    .home-button-red { background: #8c6a2f !important; color: #ffffff !important; border: 1px solid #8c6a2f !important; }
+    .home-button-red:hover { background: #6e5324 !important; border-color: #6e5324 !important; color: #ffffff !important; }
+    .home-button-dark { background: #171d29 !important; color: #ffffff !important; border: 1px solid #171d29 !important; }
+    .home-button-dark:hover { background: #0f141d !important; border-color: #0f141d !important; color: #ffffff !important; }
+    .btn-black-center { background: #171d29 !important; color: #ffffff !important; border: 1px solid #171d29 !important; border-radius: 5px; min-width: 170px; min-height: 44px; padding: 12px 24px; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px rgba(23, 29, 41, 0.14); }
+    .btn-black-center:hover { background: #0f141d !important; border-color: #0f141d !important; }
+    .logos-strip { background: #dcdcdc; padding: 45px 0; overflow: hidden; }
+    .brands-title { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(34px, 4vw, 44px); font-weight: 700; color: #171d29; text-align: center; margin: 0 0 30px; }
+    .logos-track-wrap { width: 100%; overflow: hidden; }
+    .logos-track { display: flex; align-items: center; gap: 10px !important; width: max-content; animation: logoScrollSlow 150s linear infinite; will-change: transform; }
+    .logo-img-item { margin: 0 !important; width: 150px !important; max-width: 150px !important; height: auto !important; object-fit: contain !important; transform: none !important; filter: grayscale(1); opacity: 0.96; flex: 0 0 auto; mix-blend-mode: normal; }
+    @keyframes logoScrollSlow { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .home-testimonials-preview { background: #ffffff; padding: 58px 0 70px !important; }
+    .home-testimonials-preview .section-inner { width: min(1020px, calc(100% - 96px)); max-width: 1020px !important; margin: 0 auto; text-align: center; }
+    #testimonials-heading { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(38px, 4vw, 52px); line-height: 1; color: #171d29; margin: 0 0 34px !important; font-weight: 600; }
+    .home-testimonials-list { display: flex; flex-direction: column; gap: 20px; }
+    .home-testimonial-card { width: 100%; background: #ffffff; border: 1px solid rgba(23, 29, 41, 0.12); border-radius: 6px; box-shadow: 0 2px 5px rgba(23, 29, 41, 0.13); padding: 28px 20px 24px; text-align: left; }
+    .home-testimonial-card .testimonial-diamond { display: block; width: 56px; height: 56px; object-fit: contain; opacity: 0.55; margin: 0 auto 20px; }
+    .home-testimonial-card h3 { text-align: center; margin: 0 0 32px; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 22px; font-weight: 400; color: #171d29; }
+    .home-testimonial-card p { margin: 0; font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif; font-size: 17px; line-height: 1.75; color: #171d29; }
+    .footer-copyright { white-space: nowrap; }
+    @media (max-width: 980px) { .header-inner { min-height: 110px; } .site-logo img { width: 220px; } .primary-nav { gap: 18px; } .primary-nav > li > a, .primary-nav > li > .nav-parent { font-size: 19px; } .home-hero-grid { grid-template-columns: 1fr; } .hero-card.tall { min-height: 360px; } .home-services-shell .section-inner, .what-we-do-section .section-inner, .home-testimonials-preview .section-inner { width: min(100% - 40px, 900px); } }
+    @media (max-width: 760px) { .header-inner { min-height: 88px; } .site-logo img { width: 190px; } .home-hero-grid { width: calc(100% - 24px); gap: 12px; } .hero-right-col { gap: 12px; } .hero-card, .hero-card.tall { min-height: 260px; } .hero-card-label { left: 16px; bottom: 16px; padding: 11px 18px; font-size: 17px; font-weight: 700; } .service-list { gap: 36px; } .service-item { grid-template-columns: 42px 1fr; } .service-item h3 { font-size: 26px; } .what-we-do-rings { position: relative; display: block; right: auto; bottom: auto; width: 190px; margin: 28px 18px 0 auto; } .logo-img-item { width: 132px !important; max-width: 132px !important; height: auto !important; transform: none !important; } .logos-track { gap: 10px !important; animation-duration: 120s; } .logos-strip { padding: 36px 0; } }
+
+
+    /* Footer correction: keep newer layout, consistent typography, avoid six-column look */
+    .site-footer,
+    .site-footer p,
+    .site-footer a,
+    .site-footer li {
+      font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+    }
+
+    .site-footer h4 {
+      font-family: "Cormorant Garamond", Georgia, serif !important;
+      color: #ffffff !important;
+      font-size: 24px !important;
+      line-height: 1.1 !important;
+      font-weight: 600 !important;
+      margin: 0 0 14px !important;
+    }
+
+
+    .footer-col a,
+    .footer-offices a,
+    .footer-links-row a,
+    .footer-credit a {
+      background: transparent !important;
+      border: 0 !important;
+      color: inherit !important;
+      padding: 0 !important;
+      min-height: 0 !important;
+      border-radius: 0 !important;
+      text-decoration: none !important;
+    }
+
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr 1fr !important; }
+      .footer-offices { grid-column: 1 / -1 !important; }
+    }
+
+    @media (max-width: 620px) {
+      .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+      .footer-offices { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 20px !important; grid-column: 1 / -1 !important; }
+      .footer-col-education,
+      .footer-right-col { grid-column: 1 / -1 !important; }
+      .footer-col-education,
+      .footer-col-education ul { text-align: center !important; }
+    }
+
+/* Former inline attributes from index.html. */
+.home-services-shell { padding-top: 20px !important; }
+.insurance-inner { max-width: 900px !important; text-align: center !important; }
+.insurance-copy { font-size: 17.5px !important; line-height: 1.8 !important; color: var(--color-text) !important; text-align: left !important; }
+.insurance-copy-primary { margin-bottom: 20px !important; }
+.insurance-copy-secondary { margin-bottom: 30px !important; }
+.home-chat-button-row { margin-top: 38px !important; }
+.home-testimonials-button-row { margin-top: 40px !important; }
+
+
+/* Final targeted safety fixes. */
+.btn-row-center,
+.home-chat-button-row,
+.home-testimonials-button-row,
+.cta-row {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.site-footer a {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+.dropdown a {
+  box-shadow: none !important;
+  min-height: auto !important;
+}

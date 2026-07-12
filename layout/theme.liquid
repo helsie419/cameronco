@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>
+  {%- if page_title -%}{{ page_title }} | {{ shop.name }}{%- else -%}{{ shop.name }}{%- endif -%}
+</title>
+{% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+{% endif %}
+<link rel="canonical" href="{{ canonical_url }}">
+<link rel="icon" href="{{ 'cameron-co-jewellery-favicon.webp' | asset_url }}">
+
+<meta property="og:title" content="{{ page_title | default: shop.name }}">
+{% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+{{ content_for_header }}
+
+<link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+{% if template.name == 'index' %}
+  <link rel="stylesheet" href="{{ 'index.css' | asset_url }}">
+{% endif %}
+</head>
+<body class="cc-site {{ template.name | handleize }}-page">
+
+{% render 'site-header' %}
+
+{%- comment -%}
+  Each page template below supplies its own <main class="page-content ..."> element
+  (carried over from the original page's markup, since each page had a slightly
+  different class on <main>, e.g. "about-live-page"). Do not add another <main> wrapper here.
+{%- endcomment -%}
+{{ content_for_layout }}
+
+{% render 'site-footer' %}
+{% render 'pricing-modal' %}
+{% render 'cookie-consent' %}
+
+<script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>
