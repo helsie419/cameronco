@@ -4461,26 +4461,12 @@ body, p {
   transform: translateX(3px);
 }
 
-/* ---- bento cards: rounded corners + a legible pill label (the label had no
-   dedicated styling before, so it rendered as an unpositioned default h2) ---- */
-.hero-card {
-  border-radius: 24px;
-}
-.hero-card-label {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  z-index: 3;
-  margin: 0;
-  background: rgba(255, 255, 255, .94);
-  color: #171d29;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 18px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  box-shadow: 0 8px 20px rgba(10, 10, 10, .18);
-}
+/* NOTE: .hero-card / .hero-card-label styling lives in assets/index.css (the
+   homepage-only stylesheet, loaded after this file) — it fully owns this
+   already, including rounded corners and the pill label. A duplicate rule
+   used to live here from before that file's existence was known about; it's
+   been removed since having both set conflicting position offsets (top vs
+   bottom) was stretching the label into a large oval instead of a pill. */
 
 /* ---- insurance copy: contained width for readability ---- */
 .insurance-copy {
