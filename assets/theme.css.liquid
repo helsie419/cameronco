@@ -4381,24 +4381,21 @@ body, p {
 .site-hero-photo {
   position: absolute;
   inset: 0;
-  background-image: url('{{ "cameron-co-jewellery-insurance-hero-reveal.webp" | asset_url }}');
-  background-size: 135%;
-  background-position: 25% 20%;
+  background-image: url('{{ "cameron-co-jewellery-insurance-hero-diamond-highlight.webp" | asset_url }}');
+  background-size: cover;
+  background-position: 62% 32%;
   background-repeat: no-repeat;
-  filter: grayscale(.5) contrast(.95) brightness(1.4);
 }
 .site-hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(rgba(247, 245, 243, .16), rgba(247, 245, 243, .16)),
-    linear-gradient(to bottom, rgba(247, 245, 243, .97) 0%, rgba(247, 245, 243, .4) 20%, transparent 34%, transparent 42%, rgba(247, 245, 243, .55) 58%, rgba(247, 245, 243, .85) 75%, rgba(247, 245, 243, .96) 100%);
+  background: linear-gradient(to bottom, rgba(247, 245, 243, .55) 0%, transparent 20%, transparent 68%, rgba(247, 245, 243, .5) 88%, rgba(247, 245, 243, .8) 100%);
 }
 .site-hero-inner {
   position: relative;
   z-index: 2;
-  max-width: 640px;
+  max-width: 900px;
   padding: 0 64px 64px 76px;
 }
 .site-hero-eyebrow {
@@ -4426,7 +4423,7 @@ body, p {
   font-size: clamp(38px, 5vw, 64px);
   color: var(--cc-ink);
   line-height: 1.05;
-  margin: 2px 0 0 56px;
+  margin: 2px 0 0 0;
 }
 .site-hero-line2 .accent {
   color: var(--cc-gold);
@@ -4435,7 +4432,7 @@ body, p {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 28px 0 0 56px;
+  margin: 28px 0 0 0;
   background: var(--cc-gold);
   color: #ffffff;
   font-family: var(--font-body);
@@ -4567,10 +4564,18 @@ body, p {
 @media (max-width: 900px) {
   .site-hero { min-height: 520px; }
   .site-hero-inner { padding: 0 24px 40px; max-width: 100%; }
-  .site-hero-line2 { font-size: clamp(32px, 8vw, 48px); margin-left: 0; }
+  .site-hero-eyebrow { font-size: 11px; letter-spacing: .08em; white-space: normal; }
+  .site-hero-line2 { font-size: clamp(32px, 9vw, 48px); margin-left: 0; white-space: normal; }
   .site-hero-cta { margin-left: 0; }
   .home-testimonials-list { grid-template-columns: 1fr; }
   .logos-strip .brands-title, .logos-track-wrap { padding: 0 24px; }
+}
+
+@media (max-width: 480px) {
+  .site-hero { min-height: 460px; }
+  .site-hero-line1 { font-size: 18px; }
+  .site-hero-line2 { font-size: clamp(28px, 11vw, 40px); }
+  .site-hero-cta { padding: 13px 24px; font-size: 13px; }
 }
 
 

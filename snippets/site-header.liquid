@@ -10,7 +10,6 @@
 <nav aria-label="Main navigation">
 <ul class="primary-nav">
 <li><a href="{{ routes.root_url }}"{% if request.page_type == 'index' %} aria-current="page"{% endif %}>Home</a></li>
-<li><a href="{{ pages['testimonials'].url }}" {% if request.page.template_suffix == "testimonials" %}aria-current="page"{% endif %}>Testimonials</a></li>
 <li><a class="open-pricing-modal" href="#">Request Pricing</a></li>
 <li><a href="{{ pages['diamonds'].url }}">Diamonds</a></li>
 <li><a href="{{ pages['ring-builder'].url }}">Ring Builder</a></li>
@@ -19,6 +18,7 @@
           <svg aria-hidden="true" viewbox="0 0 8 5" xmlns="http://www.w3.org/2000/svg"><path d="M4 5L0 0h8z"></path></svg>
 </a>
 <ul aria-label="About submenu" class="dropdown">
+<li><a href="{{ pages['testimonials'].url }}" {% if request.page.template_suffix == "testimonials" %}aria-current="page"{% endif %}>Testimonials</a></li>
 <li><a href="{{ pages['faq'].url }}" {% if request.page.template_suffix == "faq" %}aria-current="page"{% endif %}>FAQ</a></li>
 <li><a href="{{ pages['contact'].url }}" {% if request.page.template_suffix == "contact" %}aria-current="page"{% endif %}>Contact</a></li>
 <li><a href="{{ pages['sydney-services'].url }}" {% if request.page.template_suffix == "sydney-services" %}aria-current="page"{% endif %}>Services Sydney</a></li>
