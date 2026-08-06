@@ -1,0 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "office": {
+      "type": "office-services",
+      "blocks": {
+        "service-1": {
+          "type": "service_item",
+          "settings": {
+            "title": "Virtual Enquiry",
+            "description": "Speak with a Cameron & Co specialist online about jewellery replacement, repair, remodelling or a new design. (1 hr)",
+            "booking_link": "/pages/booking?office=melbourne&service=Virtual+Enquiry",
+            "button_text": "Book Now"
+          }
+        },
+        "service-2": {
+          "type": "service_item",
+          "settings": {
+            "title": "Engagement Ring Enquiry",
+            "description": "Discuss diamond options, settings, styles and custom design details for an engagement ring. (1 hr)",
+            "booking_link": "/pages/booking?office=melbourne&service=Engagement+Ring+Enquiry",
+            "button_text": "Book Now"
+          }
+        },
+        "service-3": {
+          "type": "service_item",
+          "settings": {
+            "title": "Wedding Ring Enquiry",
+            "description": "Book time to explore wedding bands, matching sets, redesigns or custom-made rings. (1 hr)",
+            "booking_link": "/pages/booking?office=melbourne&service=Wedding+Ring+Enquiry",
+            "button_text": "Book Now"
+          }
+        },
+        "service-4": {
+          "type": "service_item",
+          "settings": {
+            "title": "Jewellery Repairs",
+            "description": "Arrange an assessment for repairs, resizing, stone checks, restoration or insurance replacement work. (1 hr)",
+            "booking_link": "/pages/booking?office=melbourne&service=Jewellery+Repairs",
+            "button_text": "Book Now"
+          }
+        },
+        "service-5": {
+          "type": "service_item",
+          "settings": {
+            "title": "Remake or Custom Item",
+            "description": "Collaborate with our designers to remake old jewellery or craft a unique custom piece. (1 hr 30 min)",
+            "booking_link": "/pages/booking?office=melbourne&service=Remake+or+Custom+Item",
+            "button_text": "Book Now"
+          }
+        }
+      },
+      "block_order": ["service-1", "service-2", "service-3", "service-4", "service-5"],
+      "settings": {
+        "office_name": "Melbourne Office",
+        "intro_text": "All appointments are obligation free. Select the service you are interested in and choose an available appointment time with the Melbourne team.",
+        "address": "73-75 Canterbury Road, Canterbury VIC 3126.",
+        "phone_display": "(03) 9836 9922",
+        "phone_href": "+61398369922",
+        "email": "vicsales@cameronco.com.au",
+        "contact_button_text": "Contact Us",
+        "book_button_text": "Book Services",
+        "book_button_link": "/pages/booking?office=melbourne",
+        "map_url": "https://maps.google.com/maps?q=73-75+Canterbury+Road+Canterbury+VIC+3126&output=embed",
+        "map_title": "Melbourne Office Map",
+        "services_heading": "Services Available",
+        "services_intro": "Select a service below to book your appointment with our Melbourne team."
+      }
+    }
+  },
+  "order": ["office"]
+}

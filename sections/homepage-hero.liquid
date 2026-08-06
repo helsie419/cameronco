@@ -1,0 +1,520 @@
+<style>
+/* =========================================================
+   CAMERON & CO HERO — GLOBAL RESET & LAYOUT
+   ========================================================= */
+
+body.template-index main,
+body.template-index #MainContent,
+body.template-index .main-content,
+body.template-index .content-for-layout,
+body.template-index [role="main"] {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  gap: 0 !important;
+  row-gap: 0 !important;
+  column-gap: 0 !important;
+}
+
+.site-header,
+.shopify-section-group-header-group,
+#shopify-section-header,
+header.site-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+body.template-index #shopify-section-{{ section.id }} {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* =========================================================
+   HERO — DESKTOP
+   ========================================================= */
+
+.site-hero {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 600px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 0 !important;
+}
+
+.site-hero-photo {
+  position: absolute;
+  inset: 0 !important;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.site-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 1;
+}
+
+.site-hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 60px 40px;
+  max-width: 650px;
+}
+
+.site-hero h1 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(46px, 5.2vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.site-hero-eyebrow {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+
+.site-hero-line1 {
+  display: block;
+  font-family: "EB Garamond", Georgia, serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.site-hero-line2 {
+  display: block;
+  font-family: "EB Garamond", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+.site-hero-cta {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .site-hero h1 {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  .site-hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    margin-bottom: 18px;
+  }
+}
+
+/* =========================================================
+   HERO — MOBILE ADJUSTMENTS (<= 900px)
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .site-hero {
+    min-height: 82vh !important;
+    height: 82vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important; /* Pushes text container to the bottom */
+    align-items: center !important;
+  }
+
+/* Corrected focal point & direct zoom on the diamond gemstone */
+  .site-hero-photo {
+    background-position: 70% 40% !important; /* Center horizontally (50%), focus near the top third vertically (25%) */
+    background-size: 340% !important;        /* Zoom in so the diamond stands out clearly above the bottom text */
+    background-repeat: no-repeat !important;
+  }
+
+  .site-hero-video {
+    object-position: 70% 40% !important;
+  }
+
+  /* Anchored at bottom with safe padding */
+  .site-hero-inner {
+    padding: 35px 20px 115px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: Center !important;
+    transform: none !important;
+  }
+
+  .site-hero-eyebrow {
+    font-size: 11px !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase;
+    margin-bottom: 6px !important;
+    color: {{ section.settings.eyebrow_color_mobile }} !important;
+  }
+
+  .site-hero-line1 {
+    font-size: 24px !important;
+    line-height: 1.15 !important;
+    color: {{ section.settings.line1_color_mobile }} !important;
+  }
+
+  .site-hero-line2 {
+    font-size: 32px !important;
+    line-height: 1.1 !important;
+    margin-top: 2px !important;
+    margin-bottom: 18px !important;
+    color: {{ section.settings.line2_color_mobile }} !important;
+  }
+
+  .site-hero-line2 .accent {
+    color: {{ section.settings.accent_color_mobile }} !important;
+  }
+
+  .site-hero-cta {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 12px 22px !important;
+    font-size: 13px !important;
+    transform: none !important;
+  }
+}
+</style>
+
+<section
+  class="site-hero"
+  aria-label="Cameron &amp; Co — jewellery insurance specialists"
+  style="
+    justify-content: {{ section.settings.text_h_position }};
+    align-items: {{ section.settings.text_v_position }};
+  "
+>
+  {% if section.settings.media_type == 'video' %}
+    <div class="site-hero-photo">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'site-hero-video' }}
+      {% elsif section.settings.video_mp4_url != blank %}
+        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}"{% endif %}>
+          <source src="{{ section.settings.video_mp4_url }}" type="video/mp4">
+        </video>
+      {% elsif section.settings.background_image %}
+        <div
+          class="site-hero-photo"
+          style="background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');"
+        ></div>
+      {% else %}
+        <div
+          class="site-hero-photo"
+          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}');"
+        ></div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div
+      class="site-hero-photo"
+      style="
+        {% if section.settings.background_image %}
+          background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+        {% else %}
+          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}');
+        {% endif %}
+      "
+    ></div>
+  {% endif %}
+
+  <div
+    class="site-hero-inner"
+    {% if section.settings.text_offset_x != 0 or section.settings.text_offset_y != 0 %}
+      style="
+        transform: translate(
+          {{ section.settings.text_offset_x }}px,
+          {{ section.settings.text_offset_y }}px
+        );
+      "
+    {% endif %}
+  >
+    <div
+      class="site-hero-eyebrow cc-font-body-{{ section.settings.body_font }}"
+      style="color: {{ section.settings.eyebrow_color }};"
+    >
+      {{ section.settings.eyebrow }}
+    </div>
+
+    <h1>
+      <span
+        class="site-hero-line1 cc-font-body-{{ section.settings.body_font }}"
+        style="color: {{ section.settings.line1_color }};"
+      >
+        {{ section.settings.line1 }}
+      </span>
+
+      <span
+        class="site-hero-line2 cc-font-heading-{{ section.settings.heading_font }}"
+        style="color: {{ section.settings.line2_color }};"
+      >
+        {{ section.settings.line2 }}
+
+        <span
+          class="accent"
+          style="color: {{ section.settings.accent_color }};"
+        >
+          {{ section.settings.line2_accent }}
+        </span>
+      </span>
+    </h1>
+
+    <a
+      class="site-hero-cta"
+      href="{{ section.settings.cta_link }}"
+      style="
+        background: {{ section.settings.button_color }};
+        border-color: {{ section.settings.button_color }};
+        {% if section.settings.button_offset_x != 0 or section.settings.button_offset_y != 0 %}
+          transform: translate(
+            {{ section.settings.button_offset_x }}px,
+            {{ section.settings.button_offset_y }}px
+          );
+        {% endif %}
+      "
+    >
+      {{ section.settings.cta_text }}
+
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+      >
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Media Options"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media Type",
+      "options": [
+        { "value": "image", "label": "Still Image" },
+        { "value": "video", "label": "Background Video" }
+      ],
+      "default": "image",
+      "info": "Switch between Still Image and Background Video to compare performance in your store."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (or Video Poster Fallback)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify Hosted Video",
+      "info": "Select an uploaded video file from your Shopify Files."
+    },
+    {
+      "type": "url",
+      "id": "video_mp4_url",
+      "label": "Direct MP4 Video URL (Optional fallback)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Jewellery Insurance Specialists — Sydney & Melbourne"
+    },
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "Headline — line 1",
+      "default": "What was lost,"
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "Headline — line 2",
+      "default": "beautifully"
+    },
+    {
+      "type": "text",
+      "id": "line2_accent",
+      "label": "Headline — accent word",
+      "default": "restored."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Book a private consultation"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color",
+      "default": "#4D493F"
+    },
+    {
+      "type": "color",
+      "id": "line1_color",
+      "label": "Headline line 1 color",
+      "default": "#615F5A"
+    },
+    {
+      "type": "color",
+      "id": "line2_color",
+      "label": "Headline line 2 color",
+      "default": "#4D493F"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent word color",
+      "default": "#E5C33C"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background color",
+      "default": "#9B7E0C"
+    },
+    {
+      "type": "header",
+      "content": "Colors — mobile only"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color_mobile",
+      "label": "Eyebrow text color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "line1_color_mobile",
+      "label": "Headline line 1 color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "line2_color_mobile",
+      "label": "Headline line 2 color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color_mobile",
+      "label": "Accent word color (mobile)",
+      "default": "#D5B226"
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Headline font",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Eyebrow / line 1 font",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference (default)" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ],
+      "default": "glacial"
+    },
+    {
+      "type": "header",
+      "content": "Position — Desktop"
+    },
+    {
+      "type": "select",
+      "id": "text_h_position",
+      "label": "Horizontal position",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "text_v_position",
+      "label": "Vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "range",
+      "id": "text_offset_x",
+      "label": "Fine-tune text — horizontal",
+      "min": -400, "max": 400, "step": 10, "unit": "px", "default": 300
+    },
+    {
+      "type": "range",
+      "id": "text_offset_y",
+      "label": "Fine-tune text — vertical",
+      "min": -300, "max": 300, "step": 10, "unit": "px", "default": -130
+    },
+    {
+      "type": "range",
+      "id": "button_offset_x",
+      "label": "Fine-tune button — horizontal",
+      "min": -400, "max": 400, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_offset_y",
+      "label": "Fine-tune button — vertical",
+      "min": -300, "max": 300, "step": 10, "unit": "px", "default": 0
+    }
+  ]
+}
+{% endschema %}

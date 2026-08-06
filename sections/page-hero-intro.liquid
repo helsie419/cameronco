@@ -1,0 +1,53 @@
+<section class="page-intro-section" aria-labelledby="page-intro-heading-{{ section.id }}">
+  <div class="section-inner">
+    {% if section.settings.eyebrow != blank %}
+      <div class="section-eyebrow">{{ section.settings.eyebrow }}</div>
+    {% endif %}
+    <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="page-intro-heading-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
+    {% if section.settings.description != blank %}
+      <div class="section-subtitle page-intro-description{% if section.settings.description_font != blank %} cc-font-body-{{ section.settings.description_font }}{% endif %}" style="{% if section.settings.description_color != blank %}color:{{ section.settings.description_color }};{% endif %}">{{ section.settings.description }}</div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page intro",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "richtext", "id": "description", "label": "Description" },
+    { "type": "header", "content": "Heading style" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "info": "Leave blank to use the global Heading 1 color (Theme settings → Headings)." },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "info": "Leave unset to use the global Headings font (Theme settings → Headings).",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ]
+    },
+    { "type": "header", "content": "Description style" },
+    { "type": "color", "id": "description_color", "label": "Description color", "info": "Leave blank to use the global Paragraph color (Theme settings → Paragraph)." },
+    {
+      "type": "select",
+      "id": "description_font",
+      "label": "Description font",
+      "info": "Leave unset to use the global Paragraph font (Theme settings → Paragraph).",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Page intro" }
+  ]
+}
+{% endschema %}

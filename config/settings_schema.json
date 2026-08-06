@@ -1,1 +1,122 @@
-[]
+[
+  {
+    "name": "Headings",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sets the default color and font for every heading on the site (page titles, section titles, card/item titles, sub-headings). Individual sections still have their own heading color and font pickers — leave those blank to use the value set here, or pick a value there to override it just on that page. The footer and homepage hero headline have their own dedicated colors and are not affected by this panel."
+      },
+      { "type": "header", "content": "Heading 1 — page titles" },
+      { "type": "color", "id": "h1_color", "label": "Color", "default": "#D5B226" },
+      {
+        "type": "select",
+        "id": "h1_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "header", "content": "Heading 2 — section titles" },
+      { "type": "color", "id": "h2_color", "label": "Color", "default": "#D5B226" },
+      {
+        "type": "select",
+        "id": "h2_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "header", "content": "Heading 3 — card & item titles" },
+      { "type": "color", "id": "h3_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h3_font",
+        "label": "Font",
+        "info": "Only applies to headings styled with a heading font (FAQ categories, bento card labels, the \"Four ways we help\" service titles). Customer names on the homepage testimonials and the office services list are styled with the body font by design and follow their section's own body font setting instead.",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "header", "content": "Heading 4 — sub-headings" },
+      { "type": "color", "id": "h4_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h4_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      {
+        "type": "paragraph",
+        "content": "Heading 5 and 6 aren't used anywhere on the site yet, but are wired up and ready for whenever they're needed."
+      },
+      { "type": "header", "content": "Heading 5" },
+      { "type": "color", "id": "h5_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h5_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "header", "content": "Heading 6" },
+      { "type": "color", "id": "h6_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h6_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      }
+    ]
+  },
+  {
+    "name": "Paragraph",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sets the default color and font for body copy site-wide (intro text, descriptions, quotes). Individual sections still have their own text color pickers where they exist — leave those blank to use the value set here, or pick a value there to override it just on that page. The footer and homepage hero have their own dedicated colors and are not affected by this panel."
+      },
+      { "type": "color", "id": "paragraph_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "paragraph_font",
+        "label": "Font",
+        "options": [
+          { "value": "glacial", "label": "Glacial Indifference (default)" },
+          { "value": "montserrat", "label": "Montserrat" },
+          { "value": "inter", "label": "Inter" },
+          { "value": "poppins", "label": "Poppins" }
+        ],
+        "default": "glacial"
+      }
+    ]
+  }
+]

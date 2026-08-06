@@ -1,0 +1,149 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "The Importance of Regular Jewellery Cleaning",
+            "body": "<p>Regular cleaning is the cornerstone of jewellery care. Even with careful wear, jewellery can accumulate dirt, oils, and grime from daily use. This buildup can dull the appearance of metals and gemstones, and in some cases, even lead to long-term damage.</p>",
+            "callout": false,
+            "list_heading": "Benefits of regular cleaning:",
+            "list_items": "Maintaining the brilliance and shine of your jewellery\nPreventing the buildup of harmful substances\nEarly detection of loose stones or damaged settings\nProlonging the life of your jewellery",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Cleaning Methods for Different Types of Jewellery",
+            "body": "<p><strong>Gold Jewellery:</strong> Mix a few drops of mild dish soap with warm water. Soak the piece for 10–15 minutes, gently brush with a soft-bristled toothbrush, rinse thoroughly and dry with a soft, lint-free cloth.</p><p><strong>Silver Jewellery:</strong> Use a silver polishing cloth for light tarnish. For heavier tarnish, use a silver cleaner according to the product instructions, then rinse thoroughly and dry completely.</p><p><strong>Platinum Jewellery:</strong> Soak in mild soap and warm water for about 5 minutes, gently brush with a soft toothbrush, rinse well and dry with a soft cloth.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "Silver ring",
+            "image_1_fallback": "silver-ring-care.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Gemstone Jewellery",
+            "body": "<p>Different gemstones require different care. Diamonds can be cleaned with a solution of ammonia and water, while sapphires and rubies can be cleaned similarly. Softer stones such as emeralds and opals should only be cleaned with a damp, soft cloth. Avoid soaking delicate gemstones or using ultrasonic cleaners without professional advice.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        },
+        "block-4": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Storage Tips to Prevent Damage and Tarnishing",
+            "body": "",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "Keep pieces separate in soft pouches or a jewellery box with separate compartments.\nStore jewellery in a cool, dry place to reduce tarnishing.\nUse silica gel packets to absorb moisture.\nHang necklaces to prevent tangling.\nStore silver pieces in airtight bags to reduce tarnishing.",
+            "list_style": "bullet",
+            "image_1_alt": "Single diamond ring in a light jewellery box",
+            "image_1_fallback": "single-diamond-ring-box.webp",
+            "image_2_alt": "Jewellery pieces",
+            "image_2_fallback": "cameron-co-jewellery-collection.webp",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-5": {
+          "type": "content_block",
+          "settings": {
+            "heading": "When to Seek Professional Cleaning Services",
+            "body": "<p>Professional cleaning should be part of your jewellery care routine, especially for frequently worn pieces, antique pieces, valuable items, or any jewellery showing signs of damage or loose stones.</p>",
+            "callout": false,
+            "list_heading": "Common Jewellery Care Mistakes to Avoid",
+            "list_items": "Wearing jewellery during heavy physical activity\nExposing jewellery to chlorine, swimming pools, lotions or household cleaners\nUsing abrasive or harsh chemical cleaners\nNeglecting professional inspections\nStoring different pieces together without protection",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-6": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Maintenance Schedule for Different Types of Jewellery",
+            "body": "<p><strong>Daily:</strong> Wipe jewellery with a soft cloth after wearing.</p><p><strong>Weekly:</strong> Give frequently worn pieces a gentle clean with mild soap and water.</p><p><strong>Monthly:</strong> Check for signs of damage, loose stones, worn claws or damaged clasps.</p><p><strong>Bi-annually:</strong> Have valuable or frequently worn pieces professionally cleaned and checked.</p><p><strong>Annually:</strong> Schedule a professional cleaning and inspection for all fine jewellery.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3",
+        "block-4",
+        "block-5",
+        "block-6"
+      ],
+      "settings": {
+        "hero_title": "Essential Jewellery Care Tips",
+        "hero_tagline": "Keeping your precious pieces sparkling",
+        "hero_intro": "<p>Jewellery is more than just an accessory; it is an investment in beauty and often holds sentimental value. Proper care is essential to maintain its beauty and value over time.</p>",
+        "hero_image": "shopify://shop_images/multiple-diamond-ring.png",
+        "hero_image_alt": "Jewellery care and cleaning components",
+        "hero_image_fallback": "cameron-co-jewellery-repair-components.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "button_bg_color": "#171d29",
+        "button_text_color": "#ffffff",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

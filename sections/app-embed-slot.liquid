@@ -1,0 +1,24 @@
+<section class="app-embed-slot">
+  <div class="section-inner">
+    {% for block in section.blocks %}
+      {% render block %}
+    {% endfor %}
+    {% if section.blocks.size == 0 and request.design_mode %}
+      <div class="app-embed-placeholder">
+        <p>No app added yet. Click "Add block" on this section in the theme editor to add your Nivoda Connect ring builder or diamond search widget here.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "App embed",
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "presets": [
+    { "name": "App embed" }
+  ]
+}
+{% endschema %}

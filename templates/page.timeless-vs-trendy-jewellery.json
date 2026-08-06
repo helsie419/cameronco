@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "settings": {
+        "hero_title": "Choosing Jewellery That Stands the Test of Time",
+        "hero_tagline": "Timeless vs Trendy",
+        "hero_intro": "<p>In the ever-evolving world of fashion, jewellery stands as both a personal statement and a potential investment. The right balance can create a versatile collection that reflects your style while maintaining long-term value.</p>",
+        "hero_image_alt": "Coloured gemstone rings",
+        "hero_image_fallback": "cameron-co-coloured-gemstone-bezel-rings.webp"
+      },
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Characteristics of Timeless Jewellery",
+            "body": "<p>Timeless pieces transcend seasonal trends. They are usually defined by clean lines, quality metals, well-set stones, and craftsmanship that continues to feel relevant for years. Classic forms such as diamond solitaires, gold bands, pearl strands and refined gemstone rings remain wearable across generations.</p>",
+            "callout": false,
+            "list_items": "Simple, refined forms that do not feel dated\nQuality materials such as gold, white gold, rose gold and platinum\nCertified diamonds and precious gemstones with lasting value\nTraditional cuts such as round brilliant, oval, cushion and emerald\nVersatility across occasions, wardrobes and seasons",
+            "list_style": "bullet"
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "The Appeal of Contemporary Trends",
+            "body": "<p>Trendy jewellery captures the spirit of a particular moment. Bold colours, layered styling, mixed metals and statement shapes can express personality and creativity. Some contemporary ideas become lasting designs when they are made with quality materials and balanced proportions.</p>",
+            "callout": true,
+            "image_1_alt": "Loose green sapphires",
+            "image_1_fallback": "cameron-co-loose-green-sapphire-gemstones.webp",
+            "image_2_alt": "Teal sapphire and diamond rings",
+            "image_2_fallback": "cameron-co-teal-sapphire-diamond-halo-rings.webp"
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "How to Build a Versatile Jewellery Collection",
+            "body": "<p>A well-considered jewellery collection usually combines both timeless and trend-led pieces. A foundation of classic jewellery gives you reliable pieces that can be worn often. Contemporary pieces can then be added to reflect your changing personal style.</p><p>When making any significant jewellery purchase, consider material quality, craftsmanship, and whether the piece reflects who you are beyond the current moment. The best jewellery is both personally meaningful and enduringly beautiful.</p>",
+            "callout": false,
+            "list_heading": "Questions to ask before choosing a piece:",
+            "list_items": "Will I still want to wear this in five or ten years?\nIs the piece made from durable materials?\nDoes it work with jewellery I already own?\nCan it be repaired, resized or remodelled later?\nDoes the design feel personal rather than purely seasonal?",
+            "list_style": "bullet",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        }
+      },
+      "block_order": ["block-1", "block-2", "block-3"]
+    }
+  },
+  "order": ["main"]
+}

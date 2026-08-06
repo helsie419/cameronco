@@ -1,23 +1,34 @@
 /* ============================================================
    Cameron & Co — Main Stylesheet
-   Fonts: Cormorant Garamond (Google) + Glacial Indifference (Wix CDN)
+   Fonts: Cormorant Garamond (Google) + Glacial Indifference (legacy CDN)
+   The Google Fonts stylesheet is linked directly in layout/theme.liquid's
+   document head instead of @import'd here, so the browser fetches it in parallel
+   with this file rather than only discovering it after this file loads.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
 
-@font-face {
-  font-display: swap;
-  font-family: 'Glacial Indifference';
-  src: url("https://static.wixstatic.com/ufonts/0db6a8_7d9658992ed449eca90e138121827d8e/woff2/file.woff2") format("woff2"),
-       url("https://static.wixstatic.com/ufonts/0db6a8_7d9658992ed449eca90e138121827d8e/woff/file.woff") format("woff");
-}
+/* Section-level font picker settings (heading_font / body_font selects
+   in each section's schema) resolve to one of these classes, applied
+   directly on the element alongside its normal class — this is the
+   single place that maps a picker's stored key to an actual font
+   stack. !important because these sit early in the file (fonts need
+   to load before anything else) but must still beat the base element
+   rules for site-hero-line2 etc. that are declared much further down. */
+.cc-font-heading-cormorant { font-family: 'Cormorant Garamond', Georgia, serif !important; }
+.cc-font-heading-playfair { font-family: 'Playfair Display', Georgia, serif !important; }
+.cc-font-heading-garamond { font-family: 'EB Garamond', Georgia, serif !important; }
+.cc-font-heading-baskerville { font-family: 'Libre Baskerville', Georgia, serif !important; }
+.cc-font-body-glacial { font-family: 'Montserrat', Arial, sans-serif !important; }
+.cc-font-body-montserrat { font-family: 'Montserrat', Arial, sans-serif !important; }
+.cc-font-body-inter { font-family: 'Inter', Arial, sans-serif !important; }
+.cc-font-body-poppins { font-family: 'Poppins', Arial, sans-serif !important; }
 
 /* ---- Design Tokens ---- */
 :root {
   --color-white: #ffffff;
   --color-dark: #19202c;
-  --color-brand-red: #8b0000;
-  --color-brand-red-light: #a85454;
+  --color-brand-red: #8c6a2f;
+  --color-brand-red-light: #b89a5f;
   --color-grey-light: #f7f5f3;
   --color-border: rgba(0, 0, 0, 0.08);
 
@@ -30,7 +41,7 @@
   --color-accent-hover: #AD5038;
 
   --font-heading: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Glacial Indifference', Arial, sans-serif;
+  --font-body: 'Montserrat', Arial, sans-serif;
 
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8rem + 0.38vw, 1rem);
@@ -171,12 +182,12 @@ nav {
 
 .primary-nav > li > a:hover,
 .primary-nav > li > span:hover {
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .primary-nav > li > a[aria-current="page"],
 .primary-nav > li > a[aria-current="true"] {
-  color: var(--color-brand-red);
+  color: #D5B226;
   text-decoration: underline;
 }
 
@@ -223,7 +234,7 @@ nav {
 
 .dropdown li a:hover {
   background: var(--color-grey-light);
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 /* ---- Book Button ---- */
@@ -251,7 +262,7 @@ nav {
 
 .btn-book:hover {
   background: var(--color-white);
-  color: var(--color-brand-red);
+  color: #D5B226;
   border-color: var(--color-brand-red);
 }
 
@@ -264,7 +275,7 @@ nav {
   gap: 5px;
   cursor: pointer;
   padding: 8px;
-  border: 1px solid rgba(139,0,0,0.32);
+  border: 1px solid rgba(140, 106, 47,0.32);
   border-radius: 50%;
   background: var(--color-white);
   grid-row: 1;
@@ -309,7 +320,7 @@ nav {
 /* ============================================================
    SECTIONS
    ============================================================ */
-.wix-section {
+.cc-section {
   width: 100%;
   padding: 60px 0;
 }
@@ -326,7 +337,7 @@ nav {
   font-weight: 700;
   text-align: center;
   margin-bottom: 24px;
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .section-subtitle {
@@ -433,7 +444,7 @@ nav {
 .staggered-content h3 {
   font-family: var(--font-heading);
   font-size: 28px;
-  color: var(--color-brand-red);
+  color: #D5B226;
   margin-bottom: 15px;
   font-weight: 400;
 }
@@ -461,7 +472,7 @@ nav {
   gap: 24px;
 }
 
-.testimonial-card-wix {
+.testimonial-card-cc {
   background: var(--color-white);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: var(--radius-sm);
@@ -475,28 +486,28 @@ nav {
   min-height: 280px;
 }
 
-.testimonial-card-wix .diamond-icon {
+.testimonial-card-cc .diamond-icon {
   margin-bottom: 16px;
   width: 24px;
   height: auto;
   opacity: 0.7;
 }
 
-.testimonial-card-wix p {
+.testimonial-card-cc p {
   font-size: 13.5px;
   line-height: 1.7;
   color: var(--color-text);
   margin-bottom: 20px;
 }
 
-.testimonial-card-wix h4 {
+.testimonial-card-cc h4 {
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: bold;
   color: var(--color-dark);
 }
 
-.testimonial-img-wix {
+.testimonial-img-cc {
   width: 100%;
   height: 280px;
   object-fit: cover;
@@ -549,14 +560,14 @@ nav {
 /* ============================================================
    FAQ PAGE — THREE-COLUMN ACCORDION
    ============================================================ */
-.faq-columns-wix {
+.faq-columns-cc {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 40px;
 }
 
-.faq-column-wix h3 {
+.faq-column-cc h3 {
   font-family: var(--font-heading);
   font-size: 26px;
   color: var(--color-dark);
@@ -569,7 +580,7 @@ nav {
   padding-bottom: 8px;
 }
 
-.faq-column-wix h3 img {
+.faq-column-cc h3 img {
   width: 22px;
   height: auto;
 }
@@ -599,7 +610,7 @@ nav {
 }
 
 .faq-list summary:hover {
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .faq-list summary::-webkit-details-marker {
@@ -609,7 +620,7 @@ nav {
 .faq-list summary::after {
   content: '+';
   font-size: 20px;
-  color: var(--color-brand-red);
+  color: #D5B226;
   flex-shrink: 0;
   line-height: 1;
   transition: transform 0.2s;
@@ -714,7 +725,7 @@ nav {
 /* ============================================================
    DIAMOND OUTLINE DECORATION
    ============================================================ */
-.wix-diamond-decor {
+.cc-diamond-decor {
   display: block;
   margin: 0 auto 12px;
   width: 32px;
@@ -815,7 +826,7 @@ nav {
   display: contents;
 }
 
-.footer-offices h4 {
+.footer-offices h2 {
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
@@ -824,7 +835,7 @@ nav {
   margin-top: 20px;
 }
 
-.footer-offices h4:first-child {
+.footer-offices h2:first-child {
   margin-top: 0;
 }
 
@@ -837,8 +848,8 @@ nav {
   display: block;
 }
 
-.footer-nav-col h4,
-.footer-col h4 {
+.footer-nav-col h3,
+.footer-col h3 {
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
@@ -977,7 +988,7 @@ nav {
   background: none;
   border: none;
   font-size: 24px;
-  color: var(--color-brand-red);
+  color: #D5B226;
   cursor: pointer;
   line-height: 1;
 }
@@ -1152,7 +1163,7 @@ nav {
 
 .cookie-actions button.accept {
   background: var(--color-white);
-  color: var(--color-brand-red);
+  color: #D5B226;
   font-weight: bold;
 }
 
@@ -1177,7 +1188,7 @@ nav {
   font-family: var(--font-heading);
   font-size: 20px;
   margin-bottom: 8px;
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .cookie-settings-panel p {
@@ -1228,7 +1239,7 @@ nav {
 
 .brand-hero h1 {
   margin: 0;
-  color: var(--color-brand-red);
+  color: #D5B226;
   font-family: var(--font-heading);
   font-size: clamp(34px, 5vw, 62px);
   font-weight: 700;
@@ -1327,11 +1338,11 @@ nav {
 
 .brand-button:hover {
   background: var(--color-white);
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .brand-button.secondary {
-  color: var(--color-brand-red);
+  color: #D5B226;
   background: var(--color-white);
 }
 
@@ -1376,7 +1387,7 @@ nav {
 
 .diamond-card h3 {
   margin: 0;
-  color: var(--color-brand-red);
+  color: #D5B226;
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 700;
@@ -1394,7 +1405,7 @@ nav {
 .slot-button:hover,
 .slot-button.selected {
   border-color: var(--color-brand-red);
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .status-line {
@@ -1517,6 +1528,7 @@ nav {
   gap: 16px;
 }
 
+.split-text h1,
 .split-text h2 {
   font-family: var(--font-heading);
   font-size: clamp(24px, 3vw, 38px);
@@ -1532,7 +1544,7 @@ nav {
 }
 
 .split-text a {
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 
 .split-image img,
@@ -1601,7 +1613,7 @@ nav {
   font-family: var(--font-heading);
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-brand-red);
+  color: #D5B226;
   margin-bottom: 16px;
 }
 
@@ -1625,7 +1637,7 @@ nav {
 }
 
 .office-details a {
-  color: var(--color-brand-red);
+  color: #D5B226;
   transition: opacity 0.2s;
 }
 
@@ -1652,7 +1664,7 @@ summary:focus-visible {
 /* ============================================================
    RESPONSIVE — TABLET & MOBILE (max 860px)
    ============================================================ */
-@media (max-width: 860px) {
+@media (max-width: 1200px) {
 
   /* Header */
   .menu-icon { display: flex; }
@@ -1710,7 +1722,7 @@ summary:focus-visible {
     position: static;
     display: block;
     min-width: 0;
-    border-top: 1px solid rgba(139,0,0,0.15);
+    border-top: 1px solid rgba(140, 106, 47,0.15);
     box-shadow: none;
     padding-left: 12px;
   }
@@ -1753,7 +1765,7 @@ summary:focus-visible {
 
   .copy-grid { grid-template-columns: 1fr; }
 
-  .faq-columns-wix { grid-template-columns: 1fr; }
+  .faq-columns-cc { grid-template-columns: 1fr; }
 
   /* Footer */
   .footer-inner { padding: 40px 24px 32px; }
@@ -1815,11 +1827,11 @@ summary:focus-visible {
 
 /* ============================================================
    2026-06 correction pass: Cameron & Co live-site fidelity
-   Purpose: restore a closer Wix-style visual treatment while preserving
+   Purpose: restore a closer legacy-style visual treatment while preserving
    uploaded page structure and the approved footer component.
    ============================================================ */
 :root{
-  --cc-red:#8b0000;
+  --cc-red:#8c6a2f;
   --cc-black:#19202c;
   --cc-muted:#767676;
   --cc-cream:#f7f5f3;
@@ -1862,7 +1874,7 @@ body{
   letter-spacing:0;
 }
 .primary-nav>li>a:hover,.primary-nav>li>span:hover,.primary-nav>li>a[aria-current="page"]{
-  color:var(--cc-red);
+  color:#D5B226;
   text-decoration:none;
 }
 .dropdown{
@@ -1879,12 +1891,12 @@ body{
   border-radius:5px;background:var(--cc-red);border-color:var(--cc-red);
   font-size:14px;color:#fff;
 }
-.btn-book:hover{background:#fff;color:var(--cc-red);}
+.btn-book:hover{background:#fff;color:#D5B226;}
 .page-content{padding-top:118px;}
-.wix-section{padding:48px 0;}
+.cc-section{padding:48px 0;}
 .section-inner{max-width:980px;padding:0 22px;}
 .section-title,h1.section-title,h2.section-title{
-  color:var(--cc-red);
+  color:#D5B226;
   font-family:var(--font-heading), Georgia, serif;
   font-weight:700;
   font-size:clamp(34px,4vw,56px);
@@ -1928,16 +1940,16 @@ body{
   padding:10px 28px;
 }
 .btn-black-center:hover,.btn-office:hover,.brand-button:hover{background:#fff;color:var(--cc-black);}
-.wix-diamond-decor{width:70px;height:70px;margin:0 auto 10px;display:block;}
+.cc-diamond-decor{width:70px;height:70px;margin:0 auto 10px;display:block;}
 .copy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-.copy-card,.testimonial-card-wix,.office-card,.faq-section-card,.care-card,.diamond-info-card,.brand-card{
+.copy-card,.testimonial-card-cc,.office-card,.faq-section-card,.care-card,.diamond-info-card,.brand-card{
   border:0;
   border-radius:0;
   box-shadow:none;
   background:#fff;
 }
 .copy-card{padding:22px 18px;text-align:center;}
-.copy-card h3,.copy-card h4{font-family:var(--font-heading),Georgia,serif;color:var(--cc-red);font-size:20px;}
+.copy-card h3,.copy-card h4{font-family:var(--font-heading),Georgia,serif;color:#D5B226;font-size:20px;}
 .copy-card p{font-size:14px;line-height:1.72;color:#202733;}
 .logos-strip{padding:30px 0;background:#dcdcdc;border-top:0;border-bottom:0;overflow:hidden;}
 .logo-img-item{width:82px!important;height:82px!important;object-fit:contain;margin:0 18px;filter:none;}
@@ -1951,14 +1963,14 @@ body{
 }
 .staggered-row,.staggered-row.reverse{grid-template-columns:1fr 1fr;gap:34px;}
 .staggered-image img{border-radius:0;box-shadow:none;height:330px;object-fit:cover;}
-.staggered-content h2,.staggered-content h3{font-family:var(--font-heading),Georgia,serif;color:var(--cc-red);font-weight:400;}
-.faq-list details,.faq-item{border-bottom:1px solid rgba(139,0,0,.28);border-radius:0;background:#fff;}
+.staggered-content h2,.staggered-content h3{font-family:var(--font-heading),Georgia,serif;color:#D5B226;font-weight:400;}
+.faq-list details,.faq-item{border-bottom:1px solid rgba(140, 106, 47,.28);border-radius:0;background:#fff;}
 .faq-list summary,.faq-question{color:#202733;font-size:14px;font-weight:700;padding:18px 0;}
 .article-hero,.brand-hero,.page-hero{background:#fff;}
 .office-card{border:1px solid rgba(0,0,0,.08);padding:22px;}
 .office-map{border-radius:0;filter:grayscale(100%);}
 .cookie-banner{border-radius:0;box-shadow:0 -6px 20px rgba(0,0,0,.09);}
-@media (max-width: 900px){
+@media (max-width: 1200px){
   .site-header{min-height:86px;padding:14px 0;}
   .header-inner{grid-template-columns:56px 1fr 0;grid-template-rows:58px;padding:0 22px;}
   .menu-icon{display:flex;grid-column:1;grid-row:1;}
@@ -1972,16 +1984,18 @@ body{
   .site-header.mobile-open .primary-nav>li>a,.site-header.mobile-open .primary-nav>li>span{padding:12px 0;font-size:16px;}
   .site-header.mobile-open .dropdown{display:block;position:static;box-shadow:none;padding-left:18px;min-width:0;border:0;}
   .page-content{padding-top:86px;}
+}
+@media (max-width: 900px){
   .home-hero-grid{grid-template-columns:1fr;}
   .hero-card.tall,.hero-card{min-height:300px;}
-  .copy-grid,.testimonial-grid,.offices-row{grid-template-columns:1fr!important;}
+  .copy-grid,.testimonial-grid{grid-template-columns:1fr!important;}
   .staggered-row,.staggered-row.reverse{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr 1fr;}
   .footer-right-col{align-items:flex-start;}
 }
 @media (max-width: 560px){
   .section-inner{padding:0 18px;}
-  .wix-section{padding:38px 0;}
+  .cc-section{padding:38px 0;}
   .hero-card,.hero-card.tall{min-height:230px;}
   .hero-card-title{font-size:30px;}
   .footer-top{grid-template-columns:1fr;}
@@ -1993,7 +2007,7 @@ body{
 
 /* ============================================================
    Cameron & Co — Restored Animation Layer
-   Adds subtle Wix-style motion, hover states and scroll reveals.
+   Adds subtle legacy-style motion, hover states and scroll reveals.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes ccFadeUp {
@@ -2017,7 +2031,7 @@ body{
   main, .page-shell, .page-content { animation: ccFadeUp .7s cubic-bezier(.16,1,.3,1) both; }
   .site-footer { animation: ccFadeUp .75s cubic-bezier(.16,1,.3,1) both; animation-delay: .1s; }
 
-  .hero-card img, .brand-hero img, .wix-hero img { animation: ccSoftZoom .95s cubic-bezier(.16,1,.3,1) both; }
+  .hero-card img, .brand-hero img, .cc-hero img { animation: ccSoftZoom .95s cubic-bezier(.16,1,.3,1) both; }
   .hero-card:hover img { transform: scale(1.045); }
   .hero-card:hover .hero-card-overlay { opacity: .72; }
   .hero-card, .btn-book, .btn-black-center, .brand-button, .btn-submit, .primary-nav a {
@@ -2043,7 +2057,7 @@ body{
 .site-header .primary-nav > li > a,
 .site-header .primary-nav > li > .nav-parent {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #9b0000;
+  color: #D5B226;
   font-size: 22px;
   font-weight: 600;
   line-height: 1;
@@ -2055,13 +2069,13 @@ body{
 .site-header .primary-nav > li > a:hover,
 .site-header .primary-nav > li > .nav-parent:hover,
 .site-header .primary-nav > li > a[aria-current="page"] {
-  color: #9b0000;
+  color: #D5B226;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .site-header .dropdown a {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
   background: #ffffff !important;
   color: #171d29 !important;
   border: 0 !important;
@@ -2074,15 +2088,15 @@ body{
 
 .site-header .dropdown a:hover {
   background: #f7f3ee !important;
-  color: #9b0000 !important;
+  color: #D5B226 !important;
 }
 
 .btn-book,
 .btn-red,
 .page-button-red,
 .brand-button.btn-red {
-  background: #9b0000 !important;
-  border-color: #9b0000 !important;
+  background: #8c6a2f !important;
+  border-color: #8c6a2f !important;
   color: #ffffff !important;
 }
 
@@ -2090,20 +2104,20 @@ body{
 .btn-red:hover,
 .page-button-red:hover,
 .brand-button.btn-red:hover {
-  background: #7d0000 !important;
-  border-color: #7d0000 !important;
+  background: #6e5324 !important;
+  border-color: #6e5324 !important;
   color: #ffffff !important;
 }
 
 .btn-hero {
-  background: #9b0000;
-  border-color: #9b0000;
+  background: #8c6a2f;
+  border-color: #8c6a2f;
   color: #ffffff;
 }
 
 .btn-hero:hover {
-  background: #7d0000;
-  border-color: #7d0000;
+  background: #6e5324;
+  border-color: #6e5324;
   color: #ffffff;
 }
 
@@ -2149,8 +2163,8 @@ body{
 .about-values-card p,
 .about-values-card li,
 .faq-list p,
-.faq-column-wix p,
-.testimonial-card-wix p,
+.faq-column-cc p,
+.testimonial-card-cc p,
 .service-list-item p,
 .office-details,
 .brand-hero p {
@@ -2162,7 +2176,7 @@ body{
 .site-footer p,
 .site-footer a,
 .site-footer li {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", Arial, sans-serif !important;
 }
 
 @media (max-width: 900px) {
@@ -2175,23 +2189,23 @@ body{
 }
 
 /* Moved from inline style attributes in non-homepage HTML files. */
-.cc-moved-style-001 { font-family:var(--font-heading);font-size:28px;font-weight:400;color:var(--color-brand-red);margin-bottom:28px; }
+.cc-moved-style-001 { font-family:var(--font-heading);font-size:28px;font-weight:400;color:#D5B226;margin-bottom:28px; }
 .cc-moved-style-002 { margin-top: 30px; }
 .cc-moved-style-003 { margin-top: 15px; }
 .cc-moved-style-004 { text-align: center; color: var(--color-text-muted); margin-bottom: 8px; font-size: 15px; }
-.cc-moved-style-005 { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: var(--color-brand-red); margin-bottom: 16px; }
+.cc-moved-style-005 { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #D5B226; margin-bottom: 16px; }
 .cc-moved-style-006 { padding-top: 0; }
 .cc-moved-style-007 { margin-top: 64px; text-align: center; padding: 40px; background: var(--color-grey-light); border-radius: var(--radius-md); }
 .cc-moved-style-008 { font-family: var(--font-heading); font-size: 28px; margin-bottom: 12px; font-weight: normal; }
 .cc-moved-style-009 { margin-bottom: 24px; color: var(--color-text-muted); }
 .cc-moved-style-010 { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 .cc-moved-style-011 { padding: 12px 30px; height: auto; }
-.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: var(--color-brand-red); padding: 12px 30px; height: auto; }
+.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: #D5B226; padding: 12px 30px; height: auto; }
 .cc-moved-style-013 { margin-top: -16px; }
 .cc-moved-style-014 { margin-bottom: 50px; }
 .cc-moved-style-015 { margin-top: 20px; }
 .cc-moved-style-016 { margin-top: 12px; }
-.cc-moved-style-017 { color: var(--color-brand-red); text-decoration: underline; }
+.cc-moved-style-017 { color: #D5B226; text-decoration: underline; }
 .cc-moved-style-018 { background-color: var(--color-grey-light); margin: 0 -24px; padding: 50px 24px; }
 .cc-moved-style-019 { margin-top: 16px; }
 .cc-moved-style-020 { max-width: 960px; margin: 0 auto; }
@@ -2217,7 +2231,7 @@ body{
 .cc-moved-style-040 { font-family: var(--font-body); font-size: 15px; font-weight: bold; color: var(--color-dark); }
 .cc-moved-style-041 { margin-top: 12px; font-style: italic; }
 .cc-moved-style-042 { margin: 50px 0 20px; }
-.cc-moved-style-043 { font-family: var(--font-heading); font-size: 22px; color: var(--color-brand-red); margin: 24px 0 12px; font-weight: 400; }
+.cc-moved-style-043 { font-family: var(--font-heading); font-size: 22px; color: #D5B226; margin: 24px 0 12px; font-weight: 400; }
 .cc-moved-style-044 { font-size: 14.5px; line-height: 1.8; color: var(--color-text); display: flex; flex-direction: column; gap: 8px; margin-left: 18px; }
 .cc-moved-style-045 { font-family: var(--font-heading); font-size: clamp(24px, 3vw, 38px); font-weight: 400; color: var(--color-dark); }
 .cc-moved-style-046 { max-width: 860px; text-align: center; }
@@ -2227,7 +2241,7 @@ body{
 .cc-moved-style-050 { font-size: 15px; line-height: 1.75; color: var(--color-text); margin-bottom: 28px; }
 .cc-moved-style-051 { margin: 0 auto; }
 .cc-moved-style-052 { margin-bottom: 64px; margin-top: 40px; }
-.cc-moved-style-053 { color: var(--color-brand-red); font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+.cc-moved-style-053 { color: #D5B226; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
 .cc-moved-style-054 { font-family: var(--font-heading); font-size: 36px; margin: 10px 0 20px; font-weight: 400; }
 .cc-moved-style-055 { background: var(--color-white); padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-glass); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
 .cc-moved-style-056 { font-family: var(--font-body); font-size: 14px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 10px; text-align: center; }
@@ -2251,8 +2265,8 @@ body{
 .cc-moved-style-074 { border: 1px solid var(--color-border); padding: 10px 4px; border-radius: 4px; }
 .cc-moved-style-075 { font-weight: bold; font-size: 13px; }
 .cc-moved-style-076 { font-size: 10px; color: var(--color-text-muted); margin-top: 4px; }
-.cc-moved-style-077 { border: 1px solid var(--color-border); padding: 10px 4px; border-radius: 4px; border-color: var(--color-brand-red-light); background: rgba(139,0,0,0.03); }
-.cc-moved-style-078 { font-weight: bold; font-size: 13px; color: var(--color-brand-red); }
+.cc-moved-style-077 { border: 1px solid var(--color-border); padding: 10px 4px; border-radius: 4px; border-color: var(--color-brand-red-light); background: rgba(140, 106, 47,0.03); }
+.cc-moved-style-078 { font-weight: bold; font-size: 13px; color: #D5B226; }
 .cc-moved-style-079 { font-size: 12px; color: var(--color-text-muted); text-align: center; }
 .cc-moved-style-080 { display: flex; justify-content: space-around; align-items: flex-end; width: 100%; height: 110px; padding-bottom: 15px; }
 .cc-moved-style-081 { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -2273,7 +2287,7 @@ body{
    Final correction pass: remaining pages, footer, service buttons
    ============================================================ */
 :root {
-  --cc-button-radius: 5px;
+  --cc-button-radius: 999px;
 }
 
 .btn-book,
@@ -2382,7 +2396,7 @@ iframe.office-map {
 
 .about-expertise h2,
 .about-title-band h1,
-.about-mission-grid h2 {
+.about-mission-grid h3 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 400;
   color: #171d29;
@@ -2407,7 +2421,7 @@ iframe.office-map {
 
 .about-title-band h1 {
   font-size: clamp(42px, 5vw, 72px);
-  color: #9b0000;
+  color: #D5B226;
 }
 
 .about-mission-grid {
@@ -2426,9 +2440,9 @@ iframe.office-map {
   padding: 34px;
 }
 
-.about-text-card h2,
-.about-values-card h2 {
-  color: #9b0000;
+.about-text-card h3,
+.about-values-card h3 {
+  color: #D5B226;
   font-size: clamp(34px, 4vw, 52px);
   margin-bottom: 16px;
 }
@@ -2538,7 +2552,7 @@ iframe.office-map {
 
 .article-card-grid h3 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #9b0000;
+  color: #D5B226;
   font-size: 30px;
   font-weight: 400;
   margin-bottom: 12px;
@@ -2615,14 +2629,14 @@ iframe.office-map {
 .site-header .btn-book,
 .site-header .btn-book:visited,
 .site-header .btn-book:hover {
-  background: #9b0000 !important;
-  border-color: #9b0000 !important;
+  background: #8c6a2f !important;
+  border-color: #8c6a2f !important;
   color: #ffffff !important;
 }
 
 .site-header .btn-book:hover {
-  background: #7d0000 !important;
-  border-color: #7d0000 !important;
+  background: #6e5324 !important;
+  border-color: #6e5324 !important;
 }
 
 
@@ -2725,15 +2739,15 @@ iframe.office-map {
   grid-row: 1 !important;
   justify-self: end !important;
   align-self: center !important;
-  background: #9b0000 !important;
-  border-color: #9b0000 !important;
+  background: #8c6a2f !important;
+  border-color: #8c6a2f !important;
   color: #ffffff !important;
 }
 
 .site-header .btn-book:hover,
 .site-header .btn-book:focus {
-  background: #7d0000 !important;
-  border-color: #7d0000 !important;
+  background: #6e5324 !important;
+  border-color: #6e5324 !important;
   color: #ffffff !important;
 }
 
@@ -2811,7 +2825,7 @@ iframe.office-map {
 /* FINAL QA CORRECTION PATCH 2026-06 */
 /* Do not use broad button substring selectors. These rules are explicit only. */
 :root {
-  --cc-button-radius: 5px;
+  --cc-button-radius: 999px;
 }
 
 /* Reveal fallback: prevents blank sections if scripts are disabled or delayed. */
@@ -2860,14 +2874,14 @@ iframe.office-map {
 .site-header .primary-nav > li > a,
 .site-header .primary-nav > li > .nav-parent {
   font-family: "Cormorant Garamond", Georgia, serif !important;
-  color: #9b0000 !important;
+  color: #D5B226 !important;
   font-size: 22px !important;
   font-weight: 600 !important;
   background: transparent !important;
   border: 0 !important;
 }
 .site-header .dropdown a {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", Arial, sans-serif !important;
   color: #171d29 !important;
   background: #ffffff !important;
   border: 0 !important;
@@ -2876,15 +2890,15 @@ iframe.office-map {
   min-height: auto !important;
 }
 .site-header .dropdown a:hover {
-  color: #9b0000 !important;
+  color: #D5B226 !important;
   background: #f7f3ee !important;
 }
 .site-header .btn-book,
 .btn-book,
 .btn-red,
 .page-button-red {
-  background: #9b0000 !important;
-  border-color: #9b0000 !important;
+  background: #8c6a2f !important;
+  border-color: #8c6a2f !important;
   color: #ffffff !important;
   border-radius: var(--cc-button-radius) !important;
 }
@@ -2896,8 +2910,8 @@ iframe.office-map {
 .btn-red:focus,
 .page-button-red:hover,
 .page-button-red:focus {
-  background: #7d0000 !important;
-  border-color: #7d0000 !important;
+  background: #6e5324 !important;
+  border-color: #6e5324 !important;
   color: #ffffff !important;
 }
 .btn-black-center,
@@ -2920,9 +2934,12 @@ iframe.office-map {
   color: #ffffff !important;
 }
 
-/* Page spacing below fixed header. */
+/* Page spacing below fixed header. Matches .site-header's actual
+   min-height at each breakpoint so content starts right where the
+   header ends, instead of leaving a blank gap. This value (≥1201px)
+   is overridden below at narrower widths, where the header is shorter. */
 .page-content {
-  padding-top: 170px !important;
+  padding-top: 136px !important;
 }
 .testimonials-page .page-content {
   padding-top: 270px !important;
@@ -2960,7 +2977,7 @@ iframe.office-map {
 .about-title-band h1,
 .about-expertise h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #9b0000;
+  color: #D5B226;
   font-size: clamp(42px, 5vw, 72px);
   line-height: 1.02;
   font-weight: 400;
@@ -2968,7 +2985,7 @@ iframe.office-map {
 }
 .live-article-hero .tagline,
 .article-subtitle {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
   color: #171d29;
   font-size: 18px;
   line-height: 1.65;
@@ -2993,7 +3010,7 @@ iframe.office-map {
 }
 .live-article-section h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #9b0000;
+  color: #D5B226;
   font-size: clamp(32px, 3.5vw, 52px);
   line-height: 1.08;
   font-weight: 400;
@@ -3014,7 +3031,7 @@ iframe.office-map {
 .about-text-card p,
 .about-values-card p,
 .about-values-card li {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif;
+  font-family: "Montserrat", Arial, sans-serif;
   font-size: 17px;
   line-height: 1.75;
   color: #171d29;
@@ -3081,10 +3098,10 @@ iframe.office-map {
   background: #ffffff;
   padding: 28px;
 }
-.about-text-card h2,
-.about-values-card h2 {
+.about-text-card h3,
+.about-values-card h3 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #9b0000;
+  color: #D5B226;
   font-size: 38px;
   line-height: 1.1;
   font-weight: 400;
@@ -3148,11 +3165,11 @@ iframe.office-map {
 }
 .about-page .about-intro-copy p,
 .about-page #about-intro-title {
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: var(--paragraph-font) !important;
   font-size: 17px !important;
   line-height: 1.75 !important;
   font-weight: 400 !important;
-  color: #171d29 !important;
+  color: var(--paragraph-color) !important;
   margin: 0 0 18px !important;
 }
 .about-page .about-title-band {
@@ -3182,7 +3199,7 @@ iframe.office-map {
 .search-loader .spinner {
   width: 44px;
   height: 44px;
-  border: 3px solid rgba(139, 0, 0, 0.1);
+  border: 3px solid rgba(140, 106, 47, 0.1);
   border-top-color: var(--color-brand-red);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -3306,7 +3323,7 @@ iframe.office-map {
 .detail-specs h2 {
   font-family: var(--font-heading);
   font-size: 28px;
-  color: var(--color-brand-red);
+  color: #D5B226;
   margin-bottom: 8px;
 }
 .detail-price {
@@ -3359,7 +3376,7 @@ iframe.office-map {
   font-family: var(--font-heading);
   font-size: clamp(28px, 3vw, 42px);
   font-weight: 400;
-  color: var(--color-brand-red);
+  color: #D5B226;
   margin-bottom: 12px;
 }
 .builder-intro-sub {
@@ -3386,7 +3403,7 @@ iframe.office-map {
   font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 300;
-  color: var(--color-brand-red);
+  color: #D5B226;
   line-height: 1;
 }
 .intro-step-label {
@@ -3426,7 +3443,7 @@ iframe.office-map {
   box-sizing: border-box;
 }
 .builder-brand-header .brand-right {
-  color: var(--color-brand-red);
+  color: #D5B226;
   font-weight: 600;
 }
 
@@ -3477,8 +3494,8 @@ iframe.office-map {
   transition: all 0.3s ease;
 }
 .stepper-step.active .step-num-box {
-  background: rgba(139, 0, 0, 0.06);
-  color: var(--color-brand-red);
+  background: rgba(140, 106, 47, 0.06);
+  color: #D5B226;
 }
 .step-text-box {
   display: flex;
@@ -3619,8 +3636,8 @@ iframe.office-map {
 }
 .filter-btn.active {
   border-color: var(--color-brand-red);
-  color: var(--color-brand-red);
-  background: rgba(139, 0, 0, 0.03);
+  color: #D5B226;
+  background: rgba(140, 106, 47, 0.03);
 }
 
 /* Metal Swatch Buttons */
@@ -3787,7 +3804,7 @@ iframe.office-map {
   margin: 0;
   font-family: var(--font-heading);
   font-size: 24px;
-  color: var(--color-brand-red);
+  color: #D5B226;
   font-weight: 500;
 }
 .setting-description {
@@ -3843,7 +3860,7 @@ iframe.office-map {
   margin-right: 8px;
 }
 .banner-info strong {
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 .btn-change-setting {
   font-size: 13px;
@@ -3916,12 +3933,12 @@ iframe.office-map {
   justify-content: center;
   gap: 8px;
   padding: 12px;
-  background: rgba(139, 0, 0, 0.04);
-  border: 1px dashed rgba(139, 0, 0, 0.15);
+  background: rgba(140, 106, 47, 0.04);
+  border: 1px dashed rgba(140, 106, 47, 0.15);
   border-radius: 6px;
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 .completed-ring-badge svg {
   width: 18px;
@@ -3931,7 +3948,7 @@ iframe.office-map {
   margin: 0 0 8px;
   font-family: var(--font-heading);
   font-size: 32px;
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 .review-subtitle {
   font-family: var(--font-body);
@@ -3994,7 +4011,7 @@ iframe.office-map {
   font-family: var(--font-body);
   font-size: 24px;
   font-weight: 700;
-  color: var(--color-brand-red);
+  color: #D5B226;
 }
 .review-actions {
   display: flex;
@@ -4066,9 +4083,9 @@ iframe.office-map {
   background: #FAF9F6 !important;
   border-radius: 8px !important;
   text-align: center !important;
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", Arial, sans-serif !important;
   font-size: 11px !important;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
   color: #171d29 !important;
   cursor: pointer !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -4094,9 +4111,9 @@ iframe.office-map {
 
 .filter-options-grid .filter-btn.active {
   border-color: var(--color-brand-red) !important;
-  background: rgba(139, 0, 0, 0.03) !important;
+  background: rgba(140, 106, 47, 0.03) !important;
   box-shadow: 0 0 0 1.5px var(--color-brand-red) !important;
-  color: var(--color-brand-red) !important;
+  color: #D5B226 !important;
 }
 
 /* Swatch container centering */
@@ -4118,9 +4135,9 @@ iframe.office-map {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", Arial, sans-serif !important;
   font-size: 10px !important;
-  font-weight: 700 !important;
+  font-weight: 400 !important;
   color: #171d29 !important;
   border: 1px solid rgba(0, 0, 0, 0.12) !important;
   margin: 0 auto !important;
@@ -4154,9 +4171,9 @@ iframe.office-map {
   background: transparent !important;
   border: none !important;
   color: #6b6661 !important;
-  font-family: "Glacial Indifference", "Montserrat", Arial, sans-serif !important;
+  font-family: "Montserrat", Arial, sans-serif !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
   cursor: pointer !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -4296,20 +4313,20 @@ iframe.office-map {
    that hardcodes .site-header .primary-nav > li > a to red, or this loses too */
 .site-header .primary-nav > li > a,
 .site-header .primary-nav > li > .nav-parent {
-  color: var(--cc-gold) !important;
+  color: #D5B226 !important;
 }
 .site-header .primary-nav > li > a:hover,
 .site-header .primary-nav > li > .nav-parent:hover,
 .site-header .primary-nav > li > a[aria-current="page"] {
-  color: var(--cc-gold-deep) !important;
+  color: #D5B226 !important;
 }
 .site-header .dropdown a:hover {
   background: #f7f3ee;
-  color: var(--cc-gold);
+  color: #D5B226;
 }
 .site-header .dropdown a:hover {
   background: #f7f3ee;
-  color: var(--cc-gold);
+  color: #D5B226;
 }
 .btn-book,
 .btn-red,
@@ -4347,7 +4364,7 @@ iframe.office-map {
   color: #ffffff !important;
 }
 .section-title, h1.section-title, h2.section-title {
-  color: var(--cc-gold-deep);
+  color: #D5B226;
 }
 
 /* ---- type scale correction: smaller display headlines, larger legible body copy ---- */
@@ -4381,16 +4398,18 @@ body, p {
 .site-hero-photo {
   position: absolute;
   inset: 0;
-  background-image: url('{{ "cameron-co-jewellery-insurance-hero-diamond-highlight.webp" | asset_url }}');
+  background-image: url('{{ "cameron-co-engagement-ring-box-satin-background-hero.webp" | asset_url }}');
   background-size: cover;
-  background-position: 62% 32%;
+  background-position: 72% 78%;
   background-repeat: no-repeat;
+  transform: scale(1.6);
+  transform-origin: 72% 78%;
 }
 .site-hero::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(247, 245, 243, .55) 0%, transparent 20%, transparent 68%, rgba(247, 245, 243, .5) 88%, rgba(247, 245, 243, .8) 100%);
+  background: linear-gradient(to bottom, rgba(247, 245, 243, .4) 0%, transparent 20%, transparent 68%, rgba(247, 245, 243, .55) 88%, rgba(247, 245, 243, .85) 100%);
 }
 .site-hero-inner {
   position: relative;
@@ -4398,35 +4417,39 @@ body, p {
   max-width: 900px;
   padding: 0 64px 64px 76px;
 }
+@media (min-width: 1280px) {
+  .site-hero-eyebrow,
+  .site-hero-line2 {
+    white-space: nowrap;
+  }
+}
 .site-hero-eyebrow {
   font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 16px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--cc-ivory);
+  color: var(--cc-ink);
   margin-bottom: 16px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
 }
 .site-hero-line1 {
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(20px, 2vw, 24px);
-  color: #f7f5f3;
-  text-shadow: 0 2px 14px rgba(20, 16, 12, .3);
+  color: var(--cc-ink);
   line-height: 1.25;
 }
 .site-hero-line2 {
   font-family: var(--font-heading);
   font-style: italic;
-  font-weight: 400;
-  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 700;
+  font-size: clamp(38px, 4.6vw, 58px);
   color: var(--cc-ink);
   line-height: 1.05;
   margin: 2px 0 0 0;
 }
 .site-hero-line2 .accent {
-  color: var(--cc-gold);
+  color: #D5B226;
 }
 .site-hero-cta {
   display: inline-flex;
@@ -4514,7 +4537,7 @@ body, p {
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 19px;
-  color: var(--cc-gold-deep);
+  color: #D5B226;
   margin-bottom: 10px;
 }
 .home-testimonial-card p {
@@ -4561,12 +4584,16 @@ body, p {
   color: #ffffff;
 }
 
+/* Mobile hero: text overlaid on the photo again (matching the
+   reference mockup) rather than stacked as separate blocks — the
+   text stays left-aligned in the softer/blurred left portion of the
+   crop so it doesn't cross the hands or ring. */
 @media (max-width: 900px) {
-  .site-hero { min-height: 520px; }
-  .site-hero-inner { padding: 0 24px 40px; max-width: 100%; }
+  .site-hero { min-height: 520px; align-items: flex-start !important; }
+  .site-hero-inner { padding: 56px 24px 40px; max-width: 100%; transform: none !important; }
   .site-hero-eyebrow { font-size: 11px; letter-spacing: .08em; white-space: normal; }
   .site-hero-line2 { font-size: clamp(32px, 9vw, 48px); margin-left: 0; white-space: normal; }
-  .site-hero-cta { margin-left: 0; }
+  .site-hero-cta { margin-left: 0; max-width: 100%; box-sizing: border-box; white-space: normal; text-align: center; }
   .home-testimonials-list { grid-template-columns: 1fr; }
   .logos-strip .brands-title, .logos-track-wrap { padding: 0 24px; }
 }
@@ -4578,4 +4605,355 @@ body, p {
   .site-hero-cta { padding: 13px 24px; font-size: 13px; }
 }
 
+/* Brand logos strip: crystal-facet background texture (longhand so it
+   doesn't get reset by the earlier shorthand `background:` declarations
+   for .logos-strip above). */
+.logos-strip {
+  background-image: linear-gradient(rgba(220, 220, 220, 0.88), rgba(220, 220, 220, 0.88)), url('{{ "cameron-co-crystal-facet-background-texture.webp" | asset_url }}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
+/* Ring Builder / Diamonds pages: intro header + Nivoda app-block slot. */
+.page-intro-section {
+  padding: 0 0 40px;
+}
+.page-intro-section .section-inner {
+  max-width: 760px;
+}
+.page-intro-description {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--cc-black, #171d29);
+  text-align: center;
+}
+.page-intro-description p {
+  margin: 0;
+}
+.app-embed-slot {
+  padding: 0 0 80px;
+}
+.app-embed-placeholder {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  border: 1px dashed rgba(23, 29, 41, 0.25);
+  border-radius: 12px;
+  background: var(--cc-cream, #f7f5f3);
+  text-align: center;
+}
+.app-embed-placeholder p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cc-black, #171d29);
+}
+
+/* NOTE: this used to also set a frosted-glass backdrop-filter blur, but
+   that blur applies uniformly across the header's full height — including
+   the bottom portion that header.liquid's inline gradient fades to fully
+   transparent — so it created a hard "blur cutoff" line exactly at the
+   header's bottom edge instead of a soft blend into the hero image below.
+   Removed so the fade is genuinely seamless. */
+
+/* Nav-wrap fix: the primary nav needs ~1250px to fit on one line without
+   wrapping, but the hamburger only used to kick in at 900px, leaving a
+   ~350px dead zone of broken two-line nav. The hamburger breakpoint was
+   moved up to 1280px above; this final override matches the specificity
+   and !important of the earlier unguarded ".site-header .site-logo" /
+   ".site-header .site-logo img" rules (which apply at ALL widths and were
+   forcing the logo into the hamburger's grid column) so the logo actually
+   lands in its own centered column within the new mobile range.
+   2026-07: pulled the hamburger threshold in to 1200px so the full nav
+   stays visible on more "normal" laptop-width screens instead of
+   dropping to the hamburger so early. That's below the ~1250px the nav
+   ideally wants, so between 1200-1250px it can rely on the
+   `.header-inner .primary-nav { flex-wrap: wrap; row-gap: 4px; }` safety
+   net to soft-wrap onto a second line rather than overflow. */
+@media (max-width: 1200px) {
+  .site-header .site-logo {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+    align-self: center !important;
+  }
+  .site-header .site-logo img {
+    width: 142px !important;
+    max-width: 142px !important;
+  }
+}
+@media (max-width: 760px) {
+  .site-header .site-logo img {
+    width: 120px !important;
+    max-width: 120px !important;
+  }
+}
+
+/* ============================================================
+   2026-07 header relayout v2: logo back on the left, vertically
+   centered across the full header height, sized up substantially so
+   it reads at the same visual weight as the nav + book button.
+   Hamburger stays on the right on mobile.
+   ============================================================ */
+@media (min-width: 1201px) {
+  .site-header {
+    min-height: 136px !important;
+  }
+  .site-header .header-inner {
+    grid-template-columns: auto 1fr auto !important;
+    column-gap: 14px !important;
+    min-height: 136px !important;
+  }
+  .site-header .site-logo {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    justify-self: start !important;
+    align-self: center !important;
+  }
+  .site-header .site-logo img {
+    width: 340px !important;
+    max-width: 340px !important;
+  }
+  .site-header nav {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    padding-top: 0 !important;
+  }
+  .site-header .primary-nav > li > a,
+  .site-header .primary-nav > li > .nav-parent {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+  .site-header .btn-book {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+  }
+}
+
+/* Mobile: hamburger to the far right, logo stays on the left (same
+   side as desktop), sized up noticeably from the old 142px/120px.
+   The open mobile nav panel's grid placement is reset to auto so its
+   left:0/right:0 absolute positioning spans the full header again,
+   now that there are three columns instead of two. */
+@media (max-width: 1200px) {
+  .site-header {
+    min-height: 84px !important;
+  }
+  .site-header .header-inner {
+    grid-template-columns: auto 1fr 56px !important;
+    min-height: 84px !important;
+  }
+  .site-header .menu-icon {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+  }
+  .site-header .site-logo {
+    grid-column: 1 !important;
+    justify-self: start !important;
+  }
+  .site-header .site-logo img {
+    width: 280px !important;
+    max-width: 280px !important;
+  }
+  .site-header.mobile-open nav {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  .page-content {
+    padding-top: 84px !important;
+  }
+}
+@media (max-width: 760px) {
+  .site-header {
+    min-height: 72px !important;
+  }
+  .site-header .header-inner {
+    min-height: 72px !important;
+  }
+  .site-header .site-logo img {
+    width: 230px !important;
+    max-width: 230px !important;
+  }
+  .page-content {
+    padding-top: 72px !important;
+  }
+}
+
+/* ============================================================
+   Footer: final layout, supersedes every earlier footer-top /
+   footer-offices patch above (kept for history, all beaten by
+   the !important + specificity + source-order here).
+   3 equal columns, 2 rows, at every width down to 560px:
+     row 1: Melbourne office | Sydney office | Social icons
+     row 2: Menu             | About         | Education
+   (footer-right-col was moved in the markup to sit right after
+   footer-offices so it lands in row 1 via normal grid auto-flow.)
+   Below 560px: single column, offices side-by-side as their own
+   row, then Menu / About / Education stacked, social icons last
+   (pushed to the end with `order` rather than reordering markup).
+   ============================================================ */
+.site-footer .footer-top { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.site-footer .footer-offices { display: contents !important; }
+.site-footer .footer-col-education,
+.site-footer .footer-right-col { grid-column: auto !important; }
+.site-footer .footer-col-education,
+.site-footer .footer-col-education ul { text-align: left !important; }
+@media (max-width: 560px) {
+  /* 2 columns at this width (3 made Menu/About/Education too narrow
+     and wrapped badly): offices row, Menu+About row, Education row
+     (alone, 2nd column empty), social row. footer-offices and
+     footer-right-col span both columns for their own full-width row. */
+  .site-footer .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 14px !important; }
+  .site-footer .footer-offices {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+  .site-footer .footer-right-col { grid-column: 1 / -1 !important; order: 999 !important; }
+}
+
+/* Contact page office cards: earlier "legacy cleanup" passes stripped
+   border-radius/box-shadow to flat/square, then a later padding
+   override left them that way permanently. Restore the same subtle
+   rounded + shadowed card treatment used elsewhere on the site
+   (e.g. .home-testimonial-card). */
+.office-card {
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(23, 29, 41, 0.13);
+  padding: 28px;
+}
+
+/* ============================================================
+   FINAL MOBILE, ACCESSIBILITY AND CONTRAST OVERRIDES
+   Keep this block at the end of the file.
+   ============================================================ */
+:root {
+  --color-gold-accessible: #7a5b12;
+  --color-gold-accessible-hover: #60470d;
+  --color-focus: #7a5b12;
+}
+
+.cc-section {
+  width: 100%;
+  padding: 48px 0;
+}
+
+.section-inner,
+.section-title,
+.section-subtitle,
+.page-intro-section,
+.home-services-shell,
+.insurance-section,
+.what-we-do-section,
+.home-testimonials-preview {
+  min-width: 0;
+}
+
+.section-title,
+h1.section-title,
+h2.section-title,
+.page-intro-section h1,
+.insurance-title,
+.home-services-shell .section-title,
+.what-we-do-section .section-title,
+.home-testimonials-preview .section-title {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  line-height: 1.12 !important;
+  padding-top: 0.08em;
+  padding-bottom: 0.14em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* Darker gold for normal-sized text on light backgrounds. */
+.section-eyebrow,
+.service-item-num,
+.home-testimonial-card h3,
+.faq-list summary::after,
+.primary-nav > li > a,
+.primary-nav > li > .nav-parent,
+.office-details a,
+.split-text a {
+  color: var(--color-gold-accessible) !important;
+}
+
+.primary-nav > li > a:hover,
+.primary-nav > li > .nav-parent:hover,
+.office-details a:hover,
+.split-text a:hover {
+  color: var(--color-gold-accessible-hover) !important;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-focus) !important;
+  outline-offset: 3px !important;
+}
+
+@media (max-width: 760px) {
+  .cc-section {
+    padding: 40px 0;
+  }
+
+  .section-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .section-title,
+  h1.section-title,
+  h2.section-title,
+  .page-intro-section h1,
+  .insurance-title,
+  .home-services-shell .section-title,
+  .what-we-do-section .section-title,
+  .home-testimonials-preview .section-title {
+    font-size: clamp(2.35rem, 11.5vw, 3.5rem) !important;
+    line-height: 1.13 !important;
+    margin-bottom: 20px !important;
+    padding-top: 0.1em !important;
+    padding-bottom: 0.18em !important;
+  }
+
+  .section-subtitle,
+  .page-intro-description,
+  .insurance-copy,
+  .service-item p,
+  .home-testimonial-card p {
+    font-size: 1rem !important;
+    line-height: 1.7 !important;
+  }
+
+  .office-card,
+  .about-text-card,
+  .about-values-card,
+  .testimonial-card-cc {
+    padding: 24px !important;
+  }
+
+  .office-buttons,
+  .cc-moved-style-010 {
+    align-items: stretch;
+  }
+
+  .office-buttons a,
+  .cc-moved-style-010 a,
+  .service-list-item .btn-book {
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+  }
+}

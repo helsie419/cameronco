@@ -1,0 +1,558 @@
+<style>
+/* =========================================================
+   CAMERON & CO HEADER
+   ========================================================= */
+
+
+/* =========================================================
+   ALL SCREEN SIZES
+   General header appearance
+   ========================================================= */
+
+.site-header {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+
+  /* ALL SCREENS:
+     Outer spacing beneath the header.
+     Keep this at 0 to avoid adding unnecessary height. */
+  padding-bottom: 0 !important;
+
+  background: {{ section.settings.background_color }} !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+/* ALL SCREENS:
+   Remove any fade or background overlay from the header. */
+.site-header::before,
+.site-header::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+
+/* =========================================================
+   ALL SCREEN SIZES
+   Navigation link appearance
+   ========================================================= */
+
+.site-header .primary-nav-link {
+  position: relative;
+  display: inline-block;
+  color: {{ section.settings.nav_color }} !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+/* ALL SCREENS:
+   Underline sits directly beneath the link text. */
+.site-header .primary-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+/* ALL SCREENS:
+   Show underline on hover, keyboard focus and active page. */
+.site-header .primary-nav-link:hover::after,
+.site-header .primary-nav-link:focus-visible::after,
+.site-header .primary-nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+
+/* =========================================================
+   DESKTOP SETTINGS
+   Applies to screens wider than 900px
+   ========================================================= */
+
+@media (min-width: 901px) {
+
+  .site-header .header-inner {
+    /* DESKTOP:
+       Change this number to adjust desktop header height. */
+    min-height: 50px !important;
+
+    /* DESKTOP:
+       Internal spacing above and below the header content. */
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
+    /* DESKTOP:
+       Keep logo, navigation and booking button on one row. */
+    flex-wrap: nowrap !important;
+  }
+
+  .site-header nav {
+    /* DESKTOP:
+       Allows the navigation area to shrink when required. */
+    min-width: 0;
+  }
+
+  .site-header .primary-nav {
+    /* DESKTOP:
+       Keep all navigation links on one line. */
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+  }
+
+  .site-header .primary-nav > li {
+    /* DESKTOP:
+       Prevent an individual navigation item from wrapping. */
+    flex: 0 0 auto;
+    white-space: nowrap !important;
+  }
+
+  .site-header .primary-nav-link {
+    /* DESKTOP:
+       Prevent text such as Ring Builder from splitting. */
+    white-space: nowrap !important;
+  }
+
+  .site-header .btn-book {
+    /* DESKTOP:
+       Keep the booking button on one line. */
+    flex: 0 0 auto;
+    white-space: nowrap !important;
+  }
+}
+
+
+/* =========================================================
+   SMALL DESKTOP SETTINGS
+   Applies from 901px to 1250px
+
+   These settings tighten the header before the existing
+   mobile burger menu appears at 900px.
+   ========================================================= */
+
+@media (min-width: 901px) and (max-width: 1250px) {
+
+  .site-header .header-inner {
+    /* SMALL DESKTOP:
+       Space between the logo, navigation and booking button. */
+    gap: 10px !important;
+
+    /* SMALL DESKTOP:
+       Header height. */
+    min-height: 42px !important;
+
+    /* SMALL DESKTOP:
+       Top and bottom internal spacing. */
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .site-header .primary-nav {
+    /* SMALL DESKTOP:
+       Space between navigation links. */
+    gap: 12px !important;
+  }
+
+  .site-header .primary-nav-link {
+    /* SMALL DESKTOP:
+       Navigation text size. */
+    font-size: 17px !important;
+  }
+
+  .site-header .site-logo img {
+    /* SMALL DESKTOP:
+       Logo width. */
+    max-width: 120px;
+    height: auto;
+  }
+
+  .site-header .btn-book {
+    /* SMALL DESKTOP:
+       Booking button horizontal padding and text size. */
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    font-size: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE SETTINGS
+   Applies to screens 900px wide and below
+
+   The theme's existing JavaScript and global CSS continue
+   to control opening and closing the burger menu.
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .site-header .header-inner {
+    /* MOBILE:
+       Change this number to adjust mobile header height. */
+    min-height: 42px !important;
+
+    /* MOBILE:
+       Internal spacing above and below the header content. */
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .site-header .primary-nav-link {
+    /* MOBILE:
+       Navigation link colour inside the mobile menu. */
+    color: {{ section.settings.nav_color_mobile }} !important;
+  }
+}
+
+/* Override hardcoded h1 color to use CSS variable */
+.brand-hero h1 {
+  color: var(--color-text) !important;
+  }
+</style>
+
+
+<header
+  class="site-header"
+  role="banner"
+  style="background: {{ section.settings.background_color }} !important;"
+>
+  <div class="container header-inner">
+
+    <button
+      aria-expanded="false"
+      aria-label="Open menu"
+      class="menu-icon"
+      type="button"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <a
+      aria-label="Cameron &amp; Co home"
+      class="site-logo"
+      href="{{ routes.root_url }}"
+      {% if section.settings.logo_offset_x != 0 or section.settings.logo_offset_y != 0 %}
+        style="transform: translate({{ section.settings.logo_offset_x }}px, {{ section.settings.logo_offset_y }}px);"
+      {% endif %}
+    >
+      <img
+        alt="Cameron &amp; Co Logo"
+        height="59"
+        src="{{ 'cameron-co-logo-cropped.webp' | asset_url }}"
+        width="143"
+      >
+    </a>
+
+    <nav
+      aria-label="Main navigation"
+      {% if section.settings.nav_offset_x != 0 or section.settings.nav_offset_y != 0 %}
+        style="transform: translate({{ section.settings.nav_offset_x }}px, {{ section.settings.nav_offset_y }}px);"
+      {% endif %}
+    >
+      <ul class="primary-nav">
+
+        {% if section.settings.main_menu.links.size > 0 %}
+
+          {% for link in section.settings.main_menu.links %}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+                {% if link.active %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+
+        {% else %}
+
+          <li>
+            <a
+              href="{{ pages['sydney-services'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "sydney-services" or request.page.template_suffix == "melbourne-services" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Services
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['about'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "about" %}
+                aria-current="page"
+              {% endif %}
+            >
+              About
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['testimonials'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "testimonials" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Testimonials
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['diamonds'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+            >
+              Diamonds
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['ring-builder'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+            >
+              Ring Builder
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['contact'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "contact" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Contact
+            </a>
+          </li>
+
+        {% endif %}
+
+      </ul>
+    </nav>
+
+    <a
+      class="btn-book btn-red cc-font-body-{{ section.settings.button_font }}"
+      href="{{ section.settings.button_link | default: pages['booking'].url }}"
+      style="
+        background: {{ section.settings.button_color }} !important;
+        border-color: {{ section.settings.button_color }} !important;
+        {% if section.settings.button_offset_x != 0 or section.settings.button_offset_y != 0 %}
+          transform: translate(
+            {{ section.settings.button_offset_x }}px,
+            {{ section.settings.button_offset_y }}px
+          );
+        {% endif %}
+      "
+    >
+      {{ section.settings.button_text }}
+    </a>
+
+  </div>
+</header>
+
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Menu",
+      "info": "Manage links in Online Store → Navigation. Leave blank to use the default links."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Book an appointment"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave blank to use the Booking page"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Nav link color",
+      "default": "#D5B226"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button background color",
+      "default": "#8c6a2f"
+    },
+    {
+      "type": "header",
+      "content": "Colors — mobile only"
+    },
+    {
+      "type": "color",
+      "id": "nav_color_mobile",
+      "label": "Nav link color (mobile menu)",
+      "default": "#D5B226"
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "nav_font",
+      "label": "Nav link font",
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond (default)"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button font",
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference (default)"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+      "default": "glacial"
+    },
+    {
+      "type": "header",
+      "content": "Move logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_x",
+      "label": "Logo — horizontal",
+      "min": -300,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_y",
+      "label": "Logo — vertical",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Move navigation"
+    },
+    {
+      "type": "range",
+      "id": "nav_offset_x",
+      "label": "Nav — horizontal",
+      "min": -300,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "nav_offset_y",
+      "label": "Nav — vertical",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Move button"
+    },
+    {
+      "type": "range",
+      "id": "button_offset_x",
+      "label": "Button — horizontal",
+      "min": -300,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_offset_y",
+      "label": "Button — vertical",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

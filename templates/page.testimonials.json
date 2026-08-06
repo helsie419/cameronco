@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "testimonials-page",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Loose green sapphire gemstones held with tweezers during jewellery appraisal",
+            "name": "Elizabeth Young",
+            "quote": "Very happy with the service and excellent craftsmanship, highly recommended. A big shout out to Mark who is lovely to deal with, very kind and considerate."
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Teal sapphire and diamond halo ring collection by Cameron & Co",
+            "name": "Will Sutherland",
+            "quote": "We had great service from TJ (Tejjas). He walked us through the process to get wedding rings, quoted really good prices and we ended up with rings we're really happy with. Would definitely recommend booking an appointment with Cameron & Co."
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Hands holding a custom jewellery ring design sketch by Cameron & Co",
+            "name": "Kellie Harris",
+            "quote": "Such a lovely experience. Having lost my treasured watch, Cameron & Co helped with a replacement swiftly and easily. Customer service was exceptional. Thank you."
+          }
+        },
+        "testimonial-4": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Stack of coloured gemstone rings in gold and silver bezel settings",
+            "name": "Graham Phy",
+            "quote": "Extremely good jewellery business, gives great advice. Trusted them with my mother's engagement ring that needed repairing and resizing and they did an excellent job."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3",
+        "testimonial-4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,219 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "homepage-hero",
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        ".site-hero-eyebrow {font-weight: 500;}",
+        ".site-hero-line1 {font-family: \"EB Garamond\", Georgia, serif; font-weight: 400; font-style: normal;}",
+        ".site-hero-line2 {font-weight: 400; font-style: italic;}",
+        ".site-hero-cta {font-weight: 500;}"
+      ],
+      "settings": {
+        "background_image": "shopify://shop_images/cameron-co-jewellery-insurance-hero-ring-box-diamond_51735006-1d7f-407d-b06b-8b297551b5fa.webp",
+        "eyebrow": "Jewellery Insurance Specialists",
+        "line1": "What was lost,",
+        "line2": "beautifully",
+        "line2_accent": "restored.",
+        "cta_text": "Book an appointment",
+        "cta_link": "/pages/booking",
+        "eyebrow_color": "#4d493f",
+        "line1_color": "#615f5a",
+        "line2_color": "#4d493f",
+        "accent_color": "#D5B226",
+        "button_color": "#9b7e0c",
+        "eyebrow_color_mobile": "#3a362f",
+        "line1_color_mobile": "#3a362f",
+        "line2_color_mobile": "#3a362f",
+        "accent_color_mobile": "#d5b226",
+        "heading_font": "garamond",
+        "body_font": "montserrat",
+        "text_h_position": "flex-start",
+        "text_v_position": "center",
+        "text_offset_x": 100,
+        "text_offset_y": 0,
+        "button_offset_x": 0,
+        "button_offset_y": 0
+      }
+    },
+    "bento": {
+      "type": "homepage-bento",
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        ".hero-card {height: 260px; overflow: hidden;}",
+        ".hero-card.tall {height: 540px;}",
+        ".hero-card img {height: 100%;}",
+        ".hero-right-col > .hero-card:first-child img {object-position: 37% center;}",
+        "@media (max-width: 768px) {.hero-card {height: 220px; } .hero-card.tall {height: 320px; }}"
+      ],
+      "settings": {
+        "eyebrow": "What we can do for you",
+        "heading": "Remodelling, repairs & replacement",
+        "subheading": "Working with Australia's major insurers and loss adjusters for over 25 years — current appraisals, trusted replacement, and bespoke remaking, all under one roof.",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#d5b226",
+        "heading_color": "#171d29",
+        "subheading_color": "",
+        "card_heading_color": "",
+        "eyebrow_color_mobile": "#d5b226",
+        "heading_color_mobile": "#171d29",
+        "subheading_color_mobile": "",
+        "heading_font": "cormorant",
+        "card_heading_font": "cormorant",
+        "body_font": "glacial",
+        "label_1": "Jewellery Remodelling",
+        "image_1_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+        "label_2": "Repairs",
+        "image_2_alt": "Laser welding repair on a broken gold chain link",
+        "label_3": "Appraisals",
+        "image_3_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
+        "label_4": "Jewellery Replacement",
+        "image_4_alt": "New diamond ring boxed ready as an insurance replacement piece"
+      }
+    },
+    "services": {
+      "type": "homepage-services",
+      "blocks": {
+        "service-1": {
+          "type": "service_item",
+          "settings": {
+            "title": "Appraisals",
+            "description": "By phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available."
+          }
+        },
+        "service-2": {
+          "type": "service_item",
+          "settings": {
+            "title": "Jewellery Remodelling",
+            "description": "We take apart the original piece, reuse the gems and metals, and craft a custom, updated design built around how you actually wear it."
+          }
+        },
+        "service-3": {
+          "type": "service_item",
+          "settings": {
+            "title": "Repairs",
+            "description": "Regular checks catch wear and tear before it becomes loss. Every visit includes a complimentary ring clean and inspection."
+          }
+        },
+        "service-4": {
+          "type": "service_item",
+          "settings": {
+            "title": "Jewellery Replacement",
+            "description": "Once your insurer establishes a replacement value, choose from stock, special order, or a piece individually designed and handcrafted in our workshop."
+          }
+        }
+      },
+      "block_order": [
+        "service-1",
+        "service-2",
+        "service-3",
+        "service-4"
+      ],
+      "settings": {
+        "eyebrow": "What we can do for you",
+        "heading": "Four ways we help",
+        "show_side_image": false,
+        "rings_image_alt": "Stack of gold and silver bezel-set gemstone rings",
+        "button_text": "Book an appointment",
+        "button_link": "/pages/contact",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#d5b226",
+        "heading_color": "#171d29",
+        "item_title_color": "",
+        "button_color": "#8c6a2f",
+        "eyebrow_color_mobile": "#d5b226",
+        "heading_color_mobile": "#171d29",
+        "item_title_color_mobile": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial",
+        "item_title_font": "cormorant"
+      }
+    },
+    "brands": {
+      "type": "homepage-brands",
+      "disabled": true,
+      "settings": {
+        "heading": "Our Brands",
+        "background_color": "#dcdcdc",
+        "heading_color": "#171d29",
+        "heading_color_mobile": "#171d29",
+        "heading_font": "cormorant",
+        "logo_1_alt": "Ikecho Pearls",
+        "logo_2_alt": "Ice Watch",
+        "logo_3_alt": "Citizen Watches",
+        "logo_4_alt": "Classique Jewellery",
+        "logo_5_alt": "Burberry",
+        "logo_6_alt": "Fossil",
+        "logo_7_alt": "Dora International",
+        "logo_8_alt": "Georgini Jewellery",
+        "logo_9_alt": "Thomas Sabo",
+        "logo_10_alt": "Peter W Beck"
+      }
+    },
+    "testimonials": {
+      "type": "homepage-testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Roslyn",
+            "quote": "Many thanks for your excellent service in providing a replacement diamond for my Insurance Claim. I am thrilled with the result and will recommend your service to others if the occasion arises."
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Marina",
+            "quote": "Just confirming that I received rings today. They are absolutely gorgeous. Many thanks for your patience, kind attention to detail and for making a terrible situation, under the circumstances, very special."
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Cate",
+            "quote": "Tracey, April and the team did a fantastic job replacing my wedding ring. From sourcing an outstanding stone, developing the design, to crafting the final piece, I always felt like I was in the best hands possible."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3"
+      ],
+      "settings": {
+        "eyebrow": "What others have to say",
+        "heading": "Client stories",
+        "button_text": "Read more",
+        "button_link": "/pages/testimonials",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#d5b226",
+        "heading_color": "#171d29",
+        "name_color": "#d5b226",
+        "quote_color": "",
+        "button_color": "#8c6a2f",
+        "eyebrow_color_mobile": "#d5b226",
+        "heading_color_mobile": "#171d29",
+        "name_color_mobile": "#d5b226",
+        "quote_color_mobile": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "bento",
+    "services",
+    "brands",
+    "testimonials"
+  ]
+}

@@ -1,0 +1,56 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "about-page",
+      "blocks": {
+        "value-1": {
+          "type": "value_item",
+          "settings": {
+            "label": "Integrity",
+            "text": "We operate with transparency, honesty, and respect in every interaction, ensuring the highest ethical standards are upheld."
+          }
+        },
+        "value-2": {
+          "type": "value_item",
+          "settings": {
+            "label": "Craftsmanship",
+            "text": "Our on-site workshops, manned by skilled artisans, produce quality handcrafted and CAD-designed items tailored to our clients' unique preferences."
+          }
+        },
+        "value-3": {
+          "type": "value_item",
+          "settings": {
+            "label": "Personalised Service",
+            "text": "We offer a personalised, client-focused approach, understanding the emotional significance of each piece and navigating the insurance claims process with care."
+          }
+        },
+        "value-4": {
+          "type": "value_item",
+          "settings": {
+            "label": "Industry Leadership",
+            "text": "We strive to be at the forefront of the industry, continuously updating our knowledge and collaborating with reputable suppliers and certifiers such as GIA."
+          }
+        }
+      },
+      "block_order": [
+        "value-1",
+        "value-2",
+        "value-3",
+        "value-4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

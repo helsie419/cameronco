@@ -1,5 +1,87 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "current": "Default",
+  "current": {
+    "h3_color": "#4D493F",
+    "h4_color": "#4D493F",
+    "h5_color": "#4D493F",
+    "h6_color": "#4D493F",
+    "sections": {
+      "header": {
+        "type": "header",
+        "custom_css": [
+          "a {color: #1a1a1a !important; text-decoration-color: #cba922 !important; }",
+          ".site-header .primary-nav-link::after {background-color: #D5B226 !important; }"
+        ],
+        "settings": {
+          "main_menu": "main-menu",
+          "button_text": "Book an appointment",
+          "button_link": "",
+          "background_color": "#ffffff",
+          "nav_color": "#1a1a1a",
+          "button_color": "#cba922",
+          "nav_color_mobile": "#1a1a1a",
+          "nav_font": "cormorant",
+          "button_font": "glacial",
+          "logo_offset_x": 0,
+          "logo_offset_y": 0,
+          "nav_offset_x": 0,
+          "nav_offset_y": 0,
+          "button_offset_x": 0,
+          "button_offset_y": 0
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "office1_name": "Melbourne Office",
+          "office1_phone": "(03) 9836 9922",
+          "office1_phone_href": "+61398369922",
+          "office1_address_line1": "73-75 Canterbury Road",
+          "office1_address_line2": "Canterbury VIC 3126",
+          "office2_name": "Sydney Office",
+          "office2_phone": "(02) 9699 2266",
+          "office2_phone_href": "+61296992266",
+          "office2_address_line1": "Suite 2, Level 7, 37 York St.",
+          "office2_address_line2": "Sydney, NSW 2000",
+          "menu_col_heading": "Menu",
+          "menu_col_links": "",
+          "show_pricing_link": true,
+          "pricing_link_text": "Request Pricing",
+          "about_col_heading": "About",
+          "about_col_links": "",
+          "education_col_heading": "Education",
+          "education_col_links": "",
+          "facebook_url": "",
+          "instagram_url": "",
+          "contact_email": "info@cameronco.com.au",
+          "legal_contact_text": "Contact Us",
+          "legal_privacy_text": "Privacy Policy",
+          "privacy_policy_url": "",
+          "legal_terms_text": "Terms of Use",
+          "terms_url": "",
+          "legal_disclaimer_text": "Disclaimer",
+          "disclaimer_url": "",
+          "copyright_text": "Cameron & Co.",
+          "background_color": "#1a202b",
+          "heading_color": "#ffffff",
+          "text_color": "#ffffff",
+          "heading_color_mobile": "#ffffff",
+          "text_color_mobile": "#ffffff",
+          "heading_font": "cormorant",
+          "body_font": "glacial"
+        }
+      }
+    },
+    "content_for_index": []
+  },
   "presets": {
     "Default": {}
   }

@@ -1,0 +1,380 @@
+<div class="booking-live-page">
+  <section class="brand-hero section-inner">
+    <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
+    <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
+  </section>
+
+  <section class="app-grid section-inner" aria-label="Appointment Booking System">
+    <form class="booking-card booking-form" id="booking-form" novalidate>
+      <label for="booking-office">Office *
+        <select id="booking-office" name="office" required aria-required="true">
+          <option value="melbourne">Melbourne Office</option>
+          <option value="sydney">Sydney Office</option>
+        </select>
+      </label>
+
+      <label for="booking-service">Appointment type *
+        <select id="booking-service" name="service" required aria-required="true">
+          <option>Virtual Enquiry</option>
+          <option>Engagement Ring Enquiry</option>
+          <option>Wedding Ring Enquiry</option>
+          <option>Jewellery Repairs</option>
+          <option>Remake or Custom Item</option>
+        </select>
+      </label>
+
+      <label for="booking-name">Name *
+        <input id="booking-name" autocomplete="name" name="name" required aria-required="true" type="text" placeholder="Your full name" />
+      </label>
+
+      <label for="booking-email">Email *
+        <input id="booking-email" autocomplete="email" name="email" required aria-required="true" type="email" placeholder="your@email.com" />
+      </label>
+
+      <label for="booking-phone">Mobile
+        <input id="booking-phone" autocomplete="tel" name="phone" placeholder="+61 400 000 000" type="tel" />
+      </label>
+
+      <label for="booking-notes">Notes
+        <textarea id="booking-notes" name="notes" placeholder="Tell us briefly what you would like to discuss."></textarea>
+      </label>
+
+      <input id="selected-slot" name="slot" required type="hidden" />
+
+      <div class="button-row">
+        <button class="btn-black-center btn-dark" type="submit">Confirm appointment</button>
+        <button class="btn-black-center secondary" id="refresh-slots" type="button">Refresh available times</button>
+      </div>
+
+      <p class="status-line" id="booking-status" aria-live="polite">Select an available time from the schedule.</p>
+    </form>
+
+    <section class="result-panel" aria-label="Available appointment timeslots">
+      <h2 class="sr-only">Available timeslots</h2>
+      <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
+    </section>
+  </section>
+
+  <section class="booking-card section-inner" hidden id="manage-booking" style="margin-top: 30px;">
+    <h2>Manage Appointment</h2>
+    <p id="manage-summary"></p>
+    <div class="button-row">
+      <button class="btn-black-center secondary" id="manage-reschedule" type="button">Reschedule to selected time</button>
+      <button class="btn-black-center btn-dark" id="manage-cancel" type="button">Cancel appointment</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  window.CAMERON_CO_BOOKING_API = {{ section.settings.api_endpoint | json }};
+</script>
+
+<script>
+(function () {
+  var API_BASE = window.CAMERON_CO_BOOKING_API || "https://cameronco-production.up.railway.app";
+  var params = new URLSearchParams(window.location.search);
+  var form = document.getElementById("booking-form");
+  var office = document.getElementById("booking-office");
+  var slotInput = document.getElementById("selected-slot");
+  var slotGrid = document.getElementById("slot-grid");
+  var status = document.getElementById("booking-status");
+  var refreshButton = document.getElementById("refresh-slots");
+  var managePanel = document.getElementById("manage-booking");
+  var manageSummary = document.getElementById("manage-summary");
+  var activeToken = params.get("booking");
+
+  if (params.get("office") && office) office.value = params.get("office");
+  var serviceSelect = form ? form.querySelector("[name='service']") : null;
+  if (serviceSelect) {
+    if (params.get("service")) {
+      serviceSelect.value = params.get("service");
+    } else if (params.get("diamondId") || params.get("diamond")) {
+      serviceSelect.value = "Engagement Ring Enquiry";
+    }
+  }
+
+  var notesField = form ? form.querySelector("[name='notes']") : null;
+  if (notesField) {
+    var diamondId = params.get("diamondId") || params.get("diamond");
+    var carat = params.get("carat");
+    var shape = params.get("shape");
+    var price = params.get("price");
+    var settingName = params.get("settingName");
+    var settingPrice = params.get("settingPrice");
+    var settingMetal = params.get("settingMetal");
+
+    if (settingName) {
+      var detailsText = "I would like to enquire about this custom ring configuration:\n\n";
+      detailsText += "Setting Selected:\n- Design: " + settingName + "\n- Metal: " + settingMetal + "\n";
+      if (settingPrice) detailsText += "- Price: $" + parseFloat(settingPrice).toLocaleString() + " AUD\n\n";
+      if (diamondId) {
+        detailsText += "Diamond Selected:\n";
+        if (carat && shape) detailsText += "- " + carat + " ct " + shape.charAt(0).toUpperCase() + shape.slice(1).toLowerCase() + "\n";
+        if (price) detailsText += "- Price: $" + parseFloat(price).toLocaleString() + " AUD\n";
+        detailsText += "- Sourcing ID: " + diamondId + "\n";
+      }
+      notesField.value = detailsText;
+    } else if (diamondId) {
+      var detailsText = "I am interested in viewing this diamond:\n";
+      if (carat && shape) detailsText += "- " + carat + " ct " + shape.charAt(0).toUpperCase() + shape.slice(1).toLowerCase() + "\n";
+      if (price) detailsText += "- Retail Price: $" + parseFloat(price).toLocaleString() + " AUD\n";
+      detailsText += "- Sourcing ID: " + diamondId;
+      notesField.value = detailsText;
+    }
+  }
+
+  function fmt(value) {
+    return new Intl.DateTimeFormat("en-AU", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "Australia/Sydney"
+    }).format(new Date(value));
+  }
+
+  function setStatus(msg) {
+    if (status) status.textContent = msg;
+  }
+
+  function loadSlots() {
+    setStatus("Loading available times...");
+    if (slotGrid) slotGrid.innerHTML = "";
+    if (slotInput) slotInput.value = "";
+    fetch(API_BASE + "/api/booking/availability?office=" + encodeURIComponent(office.value))
+      .then(function (res) {
+        if (!res.ok) throw new Error("Availability failed");
+        return res.json();
+      })
+      .then(function (json) {
+        renderSlots(json.slots || []);
+        setStatus("Select an available time.");
+      })
+      .catch(function () {
+        renderSlots(sampleSlots());
+        setStatus("Showing sample local times because live calendar backend is reconnecting.");
+      });
+  }
+
+  function sampleSlots() {
+    var slots = [];
+    var day = new Date();
+    day.setDate(day.getDate() + 1);
+    day.setHours(10, 0, 0, 0);
+    while (slots.length < 10) {
+      if (day.getDay() !== 0 && day.getDay() !== 6) {
+        slots.push({ start: day.toISOString(), end: new Date(day.getTime() + 45 * 60000).toISOString() });
+      }
+      day = new Date(day.getTime() + 90 * 60000);
+    }
+    return slots;
+  }
+
+  function renderSlots(slots) {
+    if (!slotGrid) return;
+    slotGrid.innerHTML = "";
+    if (slots.length === 0) {
+      slotGrid.innerHTML = "<p>No open slots for this date range. Please select another office or contact us directly.</p>";
+      return;
+    }
+    slots.forEach(function (slot) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "slot-button";
+      button.textContent = fmt(slot.start);
+      button.addEventListener("click", function () {
+        slotGrid.querySelectorAll(".slot-button").forEach(function (item) {
+          item.classList.remove("selected");
+        });
+        button.classList.add("selected");
+        if (slotInput) slotInput.value = slot.start;
+      });
+      slotGrid.appendChild(button);
+    });
+  }
+
+  function formPayload() {
+    var data = new FormData(form);
+    return {
+      office: data.get("office"),
+      service: data.get("service"),
+      name: data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+      notes: data.get("notes"),
+      slot: data.get("slot"),
+      diamondId: params.get("diamondId") || params.get("diamond") || ""
+    };
+  }
+
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!slotInput || !slotInput.value) {
+        setStatus("Please select an appointment time from the grid first.");
+        return;
+      }
+      setStatus("Creating your appointment with Google Calendar...");
+      fetch(API_BASE + "/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formPayload())
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Booking failed");
+          return res.json();
+        })
+        .then(function (json) {
+          activeToken = json.manageToken;
+          setStatus("Appointment confirmed! Confirmation and calendar invite queued.");
+          showManage(json.booking);
+        })
+        .catch(function () {
+          setStatus("Unable to reach the live booking server. Please call (02) 9699 2266 or email info@cameronco.com.au.");
+        });
+    });
+  }
+
+  function showManage(booking) {
+    if (!booking || !managePanel) return;
+    managePanel.hidden = false;
+    if (manageSummary) {
+      manageSummary.textContent = booking.service + " at " + fmt(booking.start) + " (" + booking.office.toUpperCase() + " Office).";
+    }
+  }
+
+  function loadManagedBooking() {
+    if (!activeToken) return;
+    fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken))
+      .then(function (res) {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then(function (json) {
+        showManage(json.booking);
+        setStatus("Select a new time if you need to reschedule.");
+      })
+      .catch(function () {
+        setStatus("We could not load that appointment. Please contact the office.");
+      });
+  }
+
+  var manageCancelButton = document.getElementById("manage-cancel");
+  var manageRescheduleButton = document.getElementById("manage-reschedule");
+
+  if (manageCancelButton) {
+    manageCancelButton.addEventListener("click", function () {
+      if (!activeToken) return;
+      fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/cancel", { method: "POST" })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Cancel failed");
+          return res.json();
+        })
+        .then(function () {
+          if (managePanel) managePanel.hidden = true;
+          setStatus("Appointment cancelled. A cancellation email has been queued.");
+        })
+        .catch(function () {
+          setStatus("Unable to cancel online. Please contact the office.");
+        });
+    });
+  }
+
+  if (manageRescheduleButton) {
+    manageRescheduleButton.addEventListener("click", function () {
+      if (!activeToken || !slotInput || !slotInput.value) {
+        setStatus("Select a new time first.");
+        return;
+      }
+      fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/reschedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slot: slotInput.value })
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Reschedule failed");
+          return res.json();
+        })
+        .then(function (json) {
+          showManage(json.booking);
+          setStatus("Appointment rescheduled. Updated confirmation and reminders are queued.");
+        })
+        .catch(function () {
+          setStatus("Unable to reschedule online. Please contact the office.");
+        });
+    });
+  }
+
+  if (office) office.addEventListener("change", loadSlots);
+  if (refreshButton) refreshButton.addEventListener("click", loadSlots);
+  loadSlots();
+  loadManagedBooking();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Booking Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Book an Appointment"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Choose a Sydney or Melbourne appointment time. Each office syncs directly with live Google Calendar availability."
+    },
+    {
+      "type": "text",
+      "id": "api_endpoint",
+      "label": "Google Calendar Booking API URL",
+      "default": "https://cameronco-production.up.railway.app",
+      "info": "The Railway backend URL connecting to Google Calendar for Sydney & Melbourne."
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#171d29"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ],
+      "default": "glacial"
+    }
+  ],
+  "presets": [
+    { "name": "Booking Page" }
+  ]
+}
+{% endschema %}

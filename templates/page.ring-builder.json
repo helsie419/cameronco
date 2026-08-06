@@ -1,0 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "intro": {
+      "type": "page-hero-intro",
+      "settings": {
+        "eyebrow": "Design Your Own",
+        "heading": "Build Your Ring",
+        "description": "<p>Start with a diamond or a setting and build a piece that's entirely yours — powered by our live diamond and gemstone inventory.</p>",
+        "heading_color": "",
+        "heading_font": "cormorant",
+        "description_color": "",
+        "description_font": "glacial"
+      }
+    },
+    "1784243820bc468ed8": {
+      "type": "apps",
+      "blocks": {
+        "nivoda_connect_ring_builder_HhhQqw": {
+          "type": "shopify://apps/nivoda-connect/blocks/ring_builder/1818f65a-9917-4ef2-bca9-2424a925fc76",
+          "settings": {
+            "primary_color": "#9B7E0C",
+            "ring_size_guide": "",
+            "ring_size_regions": "UNITED_STATES,UNITED_KINGDOM,AUSTRALIA,ITALY,SPAIN,HONG_KONG,EUROPE,SOUTH_AFRICA,CANADA,JAPAN,KOREA",
+            "diamond_type_natural": true,
+            "diamond_type_lab": true,
+            "diamond_type_gem_v2": false,
+            "default_stone_type": "Natural",
+            "color_min": "J",
+            "color_max": "D",
+            "clarity_min": "VS2",
+            "clarity_max": "FL",
+            "cut_min": "VG",
+            "cut_max": "ID",
+            "gem_certificate_lab": "GIA,IGI",
+            "collection": "",
+            "price_filter_min": 100,
+            "price_filter_max": 5000,
+            "shapes": "ROUND,OVAL,EMERALD,PEAR,PRINCESS,CUSHION,RADIANT,MARQUISE,HEART,SQUARE_EMERALD,ASSCHER",
+            "carats_min": 0,
+            "carats_max": 10,
+            "price_min": 1,
+            "price_max": 5000000,
+            "table_min": 0,
+            "table_max": 100,
+            "ratio_min_v1": 0,
+            "ratio_max": 3,
+            "polish_min": "GD",
+            "polish_max": "EX",
+            "symmetry_min": "GD",
+            "symmetry_max": "EX",
+            "fluorescence_min": "NON",
+            "fluorescence_max": "VST",
+            "certificate_lab": "GIA,IGI,WISE",
+            "default_sort_key": "price_asc",
+            "enable_tj_configurator": false,
+            "tj_tile_text": "DESIGN YOUR RING"
+          }
+        }
+      },
+      "block_order": [
+        "nivoda_connect_ring_builder_HhhQqw"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "intro",
+    "1784243820bc468ed8"
+  ]
+}

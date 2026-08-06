@@ -1,0 +1,203 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "cta_heading": "Still Have Questions?",
+        "cta_text": "Get in touch with our friendly consultants for any enquiries regarding claims, custom designs, or repairs.",
+        "cta_button_1_text": "Contact Us",
+        "cta_button_2_text": "Book Appointment"
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "How has my claim value been calculated?",
+            "answer": "If you provided past valuation certificates to your insurance company, Cameron & Co used that information to estimate current retail values. If no certificates were available, descriptions, photos, receipts and consultant notes were used to determine an estimated retail value."
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "Why are you asking to collect an excess?",
+            "answer": "Some insurance companies collect the excess directly, while others ask us to collect it on their behalf. We can show you the insurer instruction and contact them to clarify if anything appears incorrect."
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "What is the expected time frame for my claim?",
+            "answer": "Cameron & Co completes appraisals within strict time frames. Delays can occur if your insurer is considering other aspects of the claim, and we can contact them for a progress update upon your request."
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "What if I am not happy with my replacement items?",
+            "answer": "Please contact our office to discuss your concerns. Provided the jewellery is unworn and undamaged, we will do everything possible to resolve the matter to your satisfaction."
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "What happens if I am elderly or disabled and cannot travel?",
+            "answer": "Where possible, we will schedule an appointment to visit you at home during office hours."
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "How will my jewellery be delivered?",
+            "answer": "When you cannot collect from the showroom, Cameron & Co uses a secure, fully trackable delivery service and will notify you when your items are being sent."
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "Will I receive a receipt for my replacement jewellery?",
+            "answer": "Replacement jewellery supplied under a claim does not usually include a receipt because you have not paid for it directly. We provide a Replacement List detailing all items and their values. Additional purchases are always receipted."
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "Is a valuation certificate provided for my replacement item?",
+            "answer": "Items supplied in excess of $1,000 retail value are provided with an independent valuation from a registered NCJV valuer for re-insurance purposes."
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "How long does it take to hand-make my order?",
+            "answer": "Handmade items set with stones average 3–4 weeks. Simpler items such as chains take approximately 1–2 weeks."
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "How do you assess the damage to my jewellery?",
+            "answer": "If pre-damage valuation details are unavailable, we measure the vacant setting, compare any remaining stones, check hallmarks and ask purchase questions to estimate the original quality."
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "How long will the repairs take?",
+            "answer": "Repairs usually take approximately 2–3 weeks. Special stones, custom cutting, intricate work or extensive damage can require additional time."
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "How safe is my jewellery when I send it to you?",
+            "answer": "We use secure, fully trackable and fully insured delivery methods for receiving and returning all jewellery items."
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "How do you know what size and quality of stone will match my ring?",
+            "answer": "Settings are measured to determine stone size. Existing stones indicate quality. Purchase details or prior valuations help when no documentation exists."
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "Can I modify the setting of my original ring during repair?",
+            "answer": "Yes. Cameron & Co offers a complete design service, and you can pay the difference between the insurer's repair liability and the cost of modifications at discounted contracted rates."
+          }
+        },
+        "q15": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "Is the repair work guaranteed?",
+            "answer": "Yes — repair work is guaranteed against faulty workmanship or product. Damage from subsequent wear is not covered, but we can provide a competitive quote for any further work required."
+          }
+        },
+        "q16": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "What if I am not happy with the repair work?",
+            "answer": "Contact our office and we will arrange an in-store inspection or secure return. We will prioritise any further work required."
+          }
+        },
+        "q17": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "Can you replace the stones in my antique ring with old cut stones?",
+            "answer": "Yes. We can source old cut stones to maintain the ring's integrity, although sourcing the correct size and quality may require additional time."
+          }
+        },
+        "q18": {
+          "type": "question",
+          "settings": {
+            "category": "credits-upgrades",
+            "question": "Do I have to use my approved claim value all at once?",
+            "answer": "No. If you need more time or want to stagger your selections, Cameron & Co can liaise with your insurer and provide an in-store credit voucher for the assessed value or remaining balance."
+          }
+        },
+        "q19": {
+          "type": "question",
+          "settings": {
+            "category": "credits-upgrades",
+            "question": "Can I exchange my in-store credit voucher for cash?",
+            "answer": "No. The in-store credit voucher may only be used for the supply of jewellery or watches, as required under the contract with your insurance company."
+          }
+        },
+        "q20": {
+          "type": "question",
+          "settings": {
+            "category": "credits-upgrades",
+            "question": "When does my in-store credit voucher expire?",
+            "answer": "Your in-store credit voucher is valid for three years and can be extended by arrangement."
+          }
+        },
+        "q21": {
+          "type": "question",
+          "settings": {
+            "category": "credits-upgrades",
+            "question": "Can someone else use the in-store credit voucher?",
+            "answer": "Yes, provided they have your permission. Insurance policies are often in one household member's name while others are involved in the replacement process."
+          }
+        },
+        "q22": {
+          "type": "question",
+          "settings": {
+            "category": "credits-upgrades",
+            "question": "Can I buy additional jewellery items beyond my claim?",
+            "answer": "Yes. If you want to purchase additional items or upgrade your claimed item, Cameron & Co can offer a substantial discount in accordance with your insurance contract."
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20", "q21", "q22"]
+    }
+  },
+  "order": ["faq"]
+}

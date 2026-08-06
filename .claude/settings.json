@@ -5,7 +5,9 @@
       "Bash(brew install *)",
       "Bash(shopify version *)",
       "Bash(/Users/helen/.npm-global/bin/shopify version *)",
-      "Bash(/Users/helen/.npm-global/bin/shopify theme *)"
+      "Bash(/Users/helen/.npm-global/bin/shopify theme *)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -sL \"https://1bgeet-da.myshopify.com?preview_theme_id=188686500138\" -o /tmp/preview2.html -w \"HTTP %{http_code}\\\\n\")"
     ]
   }
 }
