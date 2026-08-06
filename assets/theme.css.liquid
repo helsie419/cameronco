@@ -3105,6 +3105,67 @@ iframe.office-map {
   gap: 28px;
   margin: 28px 0 0;
 }
+
+/* Diamond colour grading scale (see snippets/diamond-colour-scale.liquid) */
+.diamond-colour-scale {
+  display: grid;
+  gap: 4px;
+  margin: 28px 0 0;
+  max-width: 420px;
+}
+
+.diamond-colour-scale__row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(140, 106, 47, 0.2);
+}
+
+.diamond-colour-scale__row:last-child {
+  border-bottom: none;
+}
+
+.diamond-colour-scale__icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.diamond-colour-scale__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.diamond-colour-scale__name {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  color: #171d29;
+}
+
+.diamond-colour-scale__grade {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #D5B226;
+}
+
+/* Anatomy of a diamond diagram (see snippets/diamond-anatomy-diagram.liquid) */
+.diamond-anatomy {
+  margin: 28px 0 0;
+  max-width: 520px;
+}
+
+.diamond-anatomy svg {
+  width: 100%;
+  height: auto;
+}
+
+.diamond-anatomy text {
+  font-family: var(--font-body);
+}
 .article-callout {
   background: #f7f5f3;
   padding: 34px;

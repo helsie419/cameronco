@@ -46,7 +46,11 @@
               </ul>
             {% endif %}
           {% endif %}
-          {% if block.settings.image_1 and block.settings.image_2 %}
+          {% if block.settings.image_1_fallback == 'diamond-colour-grades-chart.webp' %}
+            {% render 'diamond-colour-scale' %}
+          {% elsif block.settings.image_1_fallback == 'anatomy-of-a-diamond-chart.webp' %}
+            {% render 'diamond-anatomy-diagram' %}
+          {% elsif block.settings.image_1 and block.settings.image_2 %}
             <div class="live-image-row">
               <img class="article-image" alt="{{ block.settings.image_1_alt | escape }}" src="{{ block.settings.image_1 | image_url: width: 900 }}" width="{{ block.settings.image_1.width }}" height="{{ block.settings.image_1.height }}">
               <img class="article-image" alt="{{ block.settings.image_2_alt | escape }}" src="{{ block.settings.image_2 | image_url: width: 900 }}" width="{{ block.settings.image_2.width }}" height="{{ block.settings.image_2.height }}">
