@@ -5079,3 +5079,24 @@ summary:focus-visible,
   border-radius: 16px !important;
   overflow: hidden !important;
 }
+
+/* ============================================================
+   REMOVE DOUBLE HEADER-SPACER GAP — several earlier rules gave
+   .page-content a padding-top matching the header's height, on the
+   assumption .site-header is position:fixed (removed from flow, so
+   content needs manual compensation). It's actually position:relative
+   (in-flow) per another override elsewhere, so the header's own
+   #shopify-section-header wrapper already pushes content down
+   correctly on its own — the padding-top was pure double-spacing,
+   showing as a visible gap the height of the header on every page.
+   ============================================================ */
+.page-content,
+.testimonials-page .page-content,
+.article-page .page-content,
+.about-live-page,
+.jewellery-care-page .page-content,
+.diamonds-education-page .page-content,
+.timeless-trendy-page .page-content,
+.luxury-hero + .page-content {
+  padding-top: 0 !important;
+}
