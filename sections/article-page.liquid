@@ -68,6 +68,8 @@
               {% when 'diamond-colour-grades-chart.webp' %}{% assign fb1_w = 540 %}{% assign fb1_h = 654 %}
               {% when 'diamond-shapes-chart.webp' %}{% assign fb1_w = 675 %}{% assign fb1_h = 675 %}
               {% when 'anatomy-of-a-diamond-chart.webp' %}{% assign fb1_w = 800 %}{% assign fb1_h = 798 %}
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}{% assign fb1_w = 1408 %}{% assign fb1_h = 768 %}
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}{% assign fb1_w = 1537 %}{% assign fb1_h = 1023 %}
             {% endcase %}
             {% assign fb2_w = 900 %}{% assign fb2_h = 600 %}
             {% case block.settings.image_2_fallback %}
@@ -83,6 +85,8 @@
               {% when 'diamond-colour-grades-chart.webp' %}{% assign fb2_w = 540 %}{% assign fb2_h = 654 %}
               {% when 'diamond-shapes-chart.webp' %}{% assign fb2_w = 675 %}{% assign fb2_h = 675 %}
               {% when 'anatomy-of-a-diamond-chart.webp' %}{% assign fb2_w = 800 %}{% assign fb2_h = 798 %}
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}{% assign fb2_w = 1408 %}{% assign fb2_h = 768 %}
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}{% assign fb2_w = 1537 %}{% assign fb2_h = 1023 %}
             {% endcase %}
             <div class="live-image-row">
               <img class="article-image" alt="{{ block.settings.image_1_alt | escape }}" src="{{ block.settings.image_1_fallback | asset_url }}" width="{{ fb1_w }}" height="{{ fb1_h }}">
@@ -103,6 +107,8 @@
               {% when 'diamond-colour-grades-chart.webp' %}{% assign fb1_w = 540 %}{% assign fb1_h = 654 %}
               {% when 'diamond-shapes-chart.webp' %}{% assign fb1_w = 675 %}{% assign fb1_h = 675 %}
               {% when 'anatomy-of-a-diamond-chart.webp' %}{% assign fb1_w = 800 %}{% assign fb1_h = 798 %}
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}{% assign fb1_w = 1408 %}{% assign fb1_h = 768 %}
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}{% assign fb1_w = 1537 %}{% assign fb1_h = 1023 %}
             {% endcase %}
             <img class="article-image" alt="{{ block.settings.image_1_alt | escape }}" src="{{ block.settings.image_1_fallback | asset_url }}" width="{{ fb1_w }}" height="{{ fb1_h }}">
           {% endif %}

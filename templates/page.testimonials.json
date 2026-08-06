@@ -43,13 +43,40 @@
             "name": "Graham Phy",
             "quote": "Extremely good jewellery business, gives great advice. Trusted them with my mother's engagement ring that needed repairing and resizing and they did an excellent job."
           }
+        },
+        "testimonial-5": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Close-up of jewellery repair components on a workbench",
+            "name": "Cate Lyons",
+            "quote": "April and the team did a fantastic job replacing my wedding ring. From sourcing an outstanding stone, developing the design, to crafting the final piece, I always felt like I was in the best hands possible. Importantly, communication was always clear and responsive. Not only did Cameron & Co totally meet my brief for a 'showstopper' ring, they delivered well beyond my expectations. They also turned what could have been a very difficult and upsetting experience into something special."
+          }
+        },
+        "testimonial-6": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Jeweller using laser welding equipment to repair a piece of jewellery",
+            "name": "Jillian O'Kelly-Barnes",
+            "quote": "Thank you April for the incredible service you provided when I finally decided to have my ring made. From that initial phone call discussing what I would like, to receiving the design, then to it all actually being completed was rather rapid. April was extremely knowledgeable, helpful and friendly. She took the time to listen to what I wanted. I could not fault any of my dealings with April & Julia at Cameron & Co and would highly recommend them to anyone looking for jewellery or for that “WOW” factor in an extremely special piece."
+          }
+        },
+        "testimonial-7": {
+          "type": "testimonial",
+          "settings": {
+            "image_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+            "name": "Kristy Parlor",
+            "quote": "Cannot recommend this business more! It was always going to be hard to replace a very sentimental necklace, but these guys nailed it. Huge shout out to Paige for being so patient with me, your customer service is second to none darling! Thank you thank you thank you 🩷"
+          }
         }
       },
       "block_order": [
         "testimonial-1",
         "testimonial-2",
         "testimonial-3",
-        "testimonial-4"
+        "testimonial-4",
+        "testimonial-5",
+        "testimonial-6",
+        "testimonial-7"
       ],
       "settings": {}
     }

@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Breathing New Life into Old Treasures",
+            "body": "<p>Jewellery remodelling lets a piece earn its place in your collection again — whether it's an inherited heirloom you've never worn, or a favourite that no longer suits your style. Rather than letting it sit in a drawer, the stones and precious metals you already own can be reimagined into something you'll reach for every day.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+            "image_1_fallback": "cameron-co-jewellery-remodelling-workbench.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "The Benefits of Remodelling Old Jewellery",
+            "body": "",
+            "callout": true,
+            "list_heading": "Why remodel instead of replace:",
+            "list_items": "Keep the emotional connection to an heirloom or gift while updating its style\nSave on cost compared to buying an entirely new piece\nA more sustainable choice, reusing precious metals and gemstones you already own\nCreate a completely unique piece designed around what you already have\nFlexibility to split one piece into several, or combine several into one",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Common Remodelling Techniques",
+            "body": "<p><strong>Resetting Stones:</strong> Your existing diamonds or gemstones are carefully removed and reset into a brand new setting — a favourite way to turn, for example, the diamond from a ring you no longer wear into a pendant you'll wear every day.</p><p><strong>Melting and Recasting:</strong> The original metal is melted down and recast into a new design, adding or removing elements to refresh a piece while keeping the same precious metal.</p><p><strong>Repurposing:</strong> A piece is transformed into an entirely different type of jewellery — a brooch reborn as a pendant, or beads from an old necklace reworked into a bracelet.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "Jeweller using laser welding equipment to repair and reshape jewellery",
+            "image_1_fallback": "cameron-co-jewellery-repair-laser-welding.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3"
+      ],
+      "settings": {
+        "hero_title": "The Art of Jewellery Remodelling",
+        "hero_tagline": "Breathing new life into old treasures",
+        "hero_intro": "<p>Whether it's an inherited heirloom or a piece you've outgrown, remodelling turns jewellery you already own into something you'll want to wear again.</p>",
+        "hero_image_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+        "hero_image_fallback": "cameron-co-jewellery-remodelling-workbench.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "button_bg_color": "#171d29",
+        "button_text_color": "#ffffff",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
