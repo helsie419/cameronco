@@ -72,12 +72,16 @@
         "body_font": "glacial",
         "label_1": "Jewellery Remodelling",
         "image_1_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+        "link_1": "/pages/jewelleryremodelling",
         "label_2": "Repairs",
         "image_2_alt": "Laser welding repair on a broken gold chain link",
+        "link_2": "/pages/jewelleryrepairs",
         "label_3": "Appraisals",
         "image_3_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
+        "link_3": "/pages/appraisals",
         "label_4": "Jewellery Replacement",
-        "image_4_alt": "New diamond ring boxed ready as an insurance replacement piece"
+        "image_4_alt": "New diamond ring boxed ready as an insurance replacement piece",
+        "link_4": "/pages/jewelleryreplacement"
       }
     },
     "services": {
@@ -87,28 +91,32 @@
           "type": "service_item",
           "settings": {
             "title": "Appraisals",
-            "description": "By phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available."
+            "description": "By phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available.",
+            "link": "/pages/appraisals"
           }
         },
         "service-2": {
           "type": "service_item",
           "settings": {
             "title": "Jewellery Remodelling",
-            "description": "We take apart the original piece, reuse the gems and metals, and craft a custom, updated design built around how you actually wear it."
+            "description": "We take apart the original piece, reuse the gems and metals, and craft a custom, updated design built around how you actually wear it.",
+            "link": "/pages/jewelleryremodelling"
           }
         },
         "service-3": {
           "type": "service_item",
           "settings": {
             "title": "Repairs",
-            "description": "Regular checks catch wear and tear before it becomes loss. Every visit includes a complimentary ring clean and inspection."
+            "description": "Regular checks catch wear and tear before it becomes loss. Every visit includes a complimentary ring clean and inspection.",
+            "link": "/pages/jewelleryrepairs"
           }
         },
         "service-4": {
           "type": "service_item",
           "settings": {
             "title": "Jewellery Replacement",
-            "description": "Once your insurer establishes a replacement value, choose from stock, special order, or a piece individually designed and handcrafted in our workshop."
+            "description": "Once your insurer establishes a replacement value, choose from stock, special order, or a piece individually designed and handcrafted in our workshop.",
+            "link": "/pages/jewelleryreplacement"
           }
         }
       },

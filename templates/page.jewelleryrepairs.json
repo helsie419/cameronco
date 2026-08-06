@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "How We Assess the Damage",
+            "body": "<p>If pre-damage valuation details aren't available, we measure the vacant setting, compare any remaining stones, check hallmarks and ask a few questions about the piece's history to estimate its original quality — so any repair or replacement stones match what was there before.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "Jeweller using laser welding equipment to repair a piece of jewellery",
+            "image_1_fallback": "cameron-co-jewellery-repair-laser-welding.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Turnaround Times",
+            "body": "<p>Most repairs take approximately 2–3 weeks. Special stones, custom cutting, intricate work or more extensive damage can require additional time — we'll let you know a realistic timeframe once we've assessed the piece. Every visit also includes a complimentary ring clean and inspection, so small issues get caught before they become bigger ones.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Modifying Your Design During Repair",
+            "body": "<p>Yes — Cameron & Co offers a complete design service, so a repair can also be an opportunity to update a piece. If your repair is covered by an insurer, you can pay the difference between their repair liability and the cost of any modifications, at discounted contracted rates. For antique pieces, we can also source old-cut stones to keep the ring's original character intact, though sourcing the right size and quality can take a little longer.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-4": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Our Guarantee",
+            "body": "<p>All repair work is guaranteed against faulty workmanship or product. Damage from subsequent wear isn't covered, but we're always happy to provide a competitive quote for any further work needed. Sending items to us rather than visiting in person? We use a secure, fully trackable and fully insured delivery service both ways.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3",
+        "block-4"
+      ],
+      "settings": {
+        "hero_title": "Jewellery Repairs",
+        "hero_tagline": "Restoring the pieces you wear every day",
+        "hero_intro": "<p>From a loose stone to a broken clasp, our workshop handles repairs of every scale — with the option to refresh the design at the same time, if you'd like.</p>",
+        "hero_image_alt": "Jeweller using laser welding equipment to repair a piece of jewellery",
+        "hero_image_fallback": "cameron-co-jewellery-repair-laser-welding.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "button_bg_color": "#171d29",
+        "button_text_color": "#ffffff",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -11,11 +11,15 @@
     <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="services-heading" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
     <div class="service-list">
       {% for block in section.blocks %}
-        <article class="service-item" {{ block.shopify_attributes }}>
+        {% if block.settings.link != blank %}
+          <a class="service-item" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+        {% else %}
+          <article class="service-item" {{ block.shopify_attributes }}>
+        {% endif %}
           <span class="service-item-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
           <h3 class="{% if section.settings.item_title_font != blank %}cc-font-heading-{{ section.settings.item_title_font }}{% endif %}" style="{% if section.settings.item_title_color != blank %}color:{{ section.settings.item_title_color }};{% endif %}">{{ block.settings.title }}</h3>
           <p>{{ block.settings.description }}</p>
-        </article>
+        {% if block.settings.link != blank %}</a>{% else %}</article>{% endif %}
       {% endfor %}
     </div>
     <div class="btn-row-center home-chat-button-row">
@@ -96,7 +100,8 @@
       "name": "Service",
       "settings": [
         { "type": "text", "id": "title", "label": "Title" },
-        { "type": "textarea", "id": "description", "label": "Description" }
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Leave blank for no link" }
       ]
     }
   ],

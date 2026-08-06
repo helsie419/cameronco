@@ -41,40 +41,40 @@
     <p class="section-subtitle cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
     <div class="home-hero-grid">
       <div class="hero-left-col">
-        <div class="hero-card tall">
+        {% if section.settings.link_1 != blank %}<a class="hero-card tall" href="{{ section.settings.link_1 }}">{% else %}<div class="hero-card tall">{% endif %}
           {% if section.settings.image_1 %}
             <img alt="{{ section.settings.image_1_alt | default: section.settings.label_1 | escape }}" height="500" loading="eager" src="{{ section.settings.image_1 | image_url: width: 1080 }}" width="1080">
           {% else %}
             <img alt="{{ section.settings.image_1_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-jewellery-remodelling-workbench.webp' | asset_url }}" width="1080">
           {% endif %}
           <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_1 }}</h3>
-        </div>
-        <div class="hero-card">
+        {% if section.settings.link_1 != blank %}</a>{% else %}</div>{% endif %}
+        {% if section.settings.link_2 != blank %}<a class="hero-card" href="{{ section.settings.link_2 }}">{% else %}<div class="hero-card">{% endif %}
           {% if section.settings.image_2 %}
             <img alt="{{ section.settings.image_2_alt | default: section.settings.label_2 | escape }}" height="500" loading="eager" src="{{ section.settings.image_2 | image_url: width: 1080 }}" width="1080">
           {% else %}
             <img alt="{{ section.settings.image_2_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-jewellery-repair-laser-welding.webp' | asset_url }}" width="1080">
           {% endif %}
           <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_2 }}</h3>
-        </div>
+        {% if section.settings.link_2 != blank %}</a>{% else %}</div>{% endif %}
       </div>
       <div class="hero-right-col">
-        <div class="hero-card">
+        {% if section.settings.link_3 != blank %}<a class="hero-card" href="{{ section.settings.link_3 }}">{% else %}<div class="hero-card">{% endif %}
           {% if section.settings.image_3 %}
             <img alt="{{ section.settings.image_3_alt | default: section.settings.label_3 | escape }}" height="500" loading="eager" src="{{ section.settings.image_3 | image_url: width: 1080 }}" width="1080">
           {% else %}
             <img alt="{{ section.settings.image_3_alt | escape }}" height="500" loading="eager" src="{{ 'inspecting-diamonds-magnification.webp' | asset_url }}" width="1080">
           {% endif %}
           <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_3 }}</h3>
-        </div>
-        <div class="hero-card tall">
+        {% if section.settings.link_3 != blank %}</a>{% else %}</div>{% endif %}
+        {% if section.settings.link_4 != blank %}<a class="hero-card tall" href="{{ section.settings.link_4 }}">{% else %}<div class="hero-card tall">{% endif %}
           {% if section.settings.image_4 %}
             <img alt="{{ section.settings.image_4_alt | default: section.settings.label_4 | escape }}" height="500" loading="eager" src="{{ section.settings.image_4 | image_url: width: 1080 }}" width="1080">
           {% else %}
             <img alt="{{ section.settings.image_4_alt | escape }}" height="500" loading="eager" src="{{ 'single-diamond-ring-box.webp' | asset_url }}" width="1080">
           {% endif %}
           <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_4 }}</h3>
-        </div>
+        {% if section.settings.link_4 != blank %}</a>{% else %}</div>{% endif %}
       </div>
     </div>
   </div>
@@ -138,18 +138,22 @@
     { "type": "image_picker", "id": "image_1", "label": "Image" },
     { "type": "text", "id": "label_1", "label": "Label", "default": "Jewellery Remodelling" },
     { "type": "text", "id": "image_1_alt", "label": "Image alt text", "default": "Jeweller reshaping a ring at the workbench during a remodelling project" },
+    { "type": "url", "id": "link_1", "label": "Card link", "info": "Leave blank for no link" },
     { "type": "header", "content": "Card 2 (left column)" },
     { "type": "image_picker", "id": "image_2", "label": "Image" },
     { "type": "text", "id": "label_2", "label": "Label", "default": "Repairs" },
     { "type": "text", "id": "image_2_alt", "label": "Image alt text", "default": "Laser welding repair on a broken gold chain link" },
+    { "type": "url", "id": "link_2", "label": "Card link", "info": "Leave blank for no link" },
     { "type": "header", "content": "Card 3 (right column)" },
     { "type": "image_picker", "id": "image_3", "label": "Image" },
     { "type": "text", "id": "label_3", "label": "Label", "default": "Appraisals" },
     { "type": "text", "id": "image_3_alt", "label": "Image alt text", "default": "Jeweller inspecting a diamond ring under magnification during an appraisal" },
+    { "type": "url", "id": "link_3", "label": "Card link", "info": "Leave blank for no link" },
     { "type": "header", "content": "Card 4 (tall, right column)" },
     { "type": "image_picker", "id": "image_4", "label": "Image" },
     { "type": "text", "id": "label_4", "label": "Label", "default": "Jewellery Replacement" },
-    { "type": "text", "id": "image_4_alt", "label": "Image alt text", "default": "New diamond ring boxed ready as an insurance replacement piece" }
+    { "type": "text", "id": "image_4_alt", "label": "Image alt text", "default": "New diamond ring boxed ready as an insurance replacement piece" },
+    { "type": "url", "id": "link_4", "label": "Card link", "info": "Leave blank for no link" }
   ]
 }
 {% endschema %}

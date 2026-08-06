@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "How We Assess Your Jewellery",
+            "body": "<p>Where past valuation certificates are available, we use that documentation to estimate current retail values. Where none exist, we work from descriptions, photos, receipts and the notes taken by our consultants during your appointment to reach an accurate estimated retail value.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
+            "image_1_fallback": "inspecting-diamonds-magnification.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Booking Your Appraisal",
+            "body": "<p>Appraisals can be arranged by phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available. If you're sending items to us rather than visiting in person, we use a secure, fully trackable and fully insured delivery service.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Valuation Certificates & Timeframes",
+            "body": "<p>We complete appraisals within strict time frames. Delays can occasionally occur if your insurer is considering other aspects of your claim — if that happens, we're happy to contact them directly for a progress update on your behalf.</p><p>For items with a retail value over $1,000, we provide an independent valuation from a registered NCJV valuer for re-insurance purposes.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3"
+      ],
+      "settings": {
+        "hero_title": "Jewellery Appraisals",
+        "hero_tagline": "Accurate valuations for insurance, claims and peace of mind",
+        "hero_intro": "<p>Whether you need a valuation for an insurance claim or simply want your collection accurately documented for re-insurance, our consultants assess each piece carefully to establish a fair, current retail value.</p>",
+        "hero_image_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
+        "hero_image_fallback": "inspecting-diamonds-magnification.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "button_bg_color": "#171d29",
+        "button_text_color": "#ffffff",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
