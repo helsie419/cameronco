@@ -19,7 +19,7 @@
       "header": {
         "type": "header",
         "custom_css": [
-          "a {color: #1a1a1a !important; text-decoration-color: #cba922 !important; }",
+          "a:not(.btn-book) {color: #1a1a1a !important; text-decoration-color: #cba922 !important; }",
           ".site-header .primary-nav-link::after {background-color: #D5B226 !important; }"
         ],
         "settings": {
