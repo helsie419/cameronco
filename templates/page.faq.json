@@ -194,9 +194,49 @@
             "question": "Can I buy additional jewellery items beyond my claim?",
             "answer": "Yes. If you want to purchase additional items or upgrade your claimed item, Cameron & Co can offer a substantial discount in accordance with your insurance contract."
           }
+        },
+        "q23": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "How do I start an insurance claim with Cameron & Co?",
+            "answer": "You can contact our team directly, or ask your insurer to refer your claim to us. From there, we'll book an appraisal appointment and guide you through each step of the process."
+          }
+        },
+        "q24": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "What is an NCJV valuer?",
+            "answer": "NCJV stands for the National Council of Jewellery Valuers. Where a replacement item's retail value exceeds $1,000, we arrange an independent valuation from a registered NCJV valuer, giving you accredited documentation for re-insurance purposes."
+          }
+        },
+        "q25": {
+          "type": "question",
+          "settings": {
+            "category": "claim-process",
+            "question": "Which areas do Cameron & Co service?",
+            "answer": "We have showrooms and workshops in Sydney and Melbourne. If you can't visit in person, we also offer secure, fully trackable and fully insured delivery for sending items to us from anywhere in Australia."
+          }
+        },
+        "q26": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "Do you repair watches as well as jewellery?",
+            "answer": "Yes — alongside jewellery repairs, remodelling and appraisals, we also service and repair watches. Get in touch with your nearest office to discuss what you need."
+          }
+        },
+        "q27": {
+          "type": "question",
+          "settings": {
+            "category": "repairs-care",
+            "question": "Do I need an appointment to get a repair quote?",
+            "answer": "Yes — we recommend booking an appointment so a consultant can properly assess your piece in person and give you an accurate quote and timeframe, rather than an estimate over the phone."
+          }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20", "q21", "q22"]
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20", "q21", "q22", "q23", "q24", "q25", "q26", "q27"]
     }
   },
   "order": ["faq"]

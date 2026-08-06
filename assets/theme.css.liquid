@@ -558,12 +558,15 @@ nav {
 }
 
 /* ============================================================
-   FAQ PAGE — THREE-COLUMN ACCORDION
+   FAQ PAGE — STACKED CATEGORY SECTIONS
+   Each category is a full-width band; its questions flow in two
+   columns on wider screens so no single category towers over the
+   others the way three uneven side-by-side columns used to.
    ============================================================ */
 .faq-columns-cc {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
   margin-top: 40px;
 }
 
@@ -583,6 +586,15 @@ nav {
 .faq-column-cc h3 img {
   width: 22px;
   height: auto;
+}
+
+.faq-column-cc .faq-list {
+  column-count: 2;
+  column-gap: 40px;
+}
+
+.faq-list details {
+  break-inside: avoid;
 }
 
 /* Details / Summary Accordion */
@@ -1765,7 +1777,7 @@ summary:focus-visible {
 
   .copy-grid { grid-template-columns: 1fr; }
 
-  .faq-columns-cc { grid-template-columns: 1fr; }
+  .faq-column-cc .faq-list { column-count: 1; }
 
   /* Footer */
   .footer-inner { padding: 40px 24px 32px; }
@@ -4956,4 +4968,34 @@ summary:focus-visible,
     max-width: none;
     min-height: 44px;
   }
+}
+
+/* ============================================================
+   UNIFIED PRIMARY BUTTON STYLE — final word, appended last so it
+   wins over the earlier "correction pass" layers above. One solid
+   gold background + bold white text across every primary CTA
+   (Book an appointment, Read more, Chat to us, etc). Secondary /
+   outline buttons (.btn-outline-red) are intentionally excluded —
+   they're meant to look different from the primary action beside
+   them.
+   ============================================================ */
+.btn-book:not(.btn-outline-red),
+.btn-black-center:not(.btn-outline-red),
+.btn-office:not(.btn-outline-red),
+.home-button:not(.btn-outline-red),
+.site-hero-cta {
+  background: #cba922 !important;
+  border-color: #cba922 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.btn-book:not(.btn-outline-red):hover,
+.btn-black-center:not(.btn-outline-red):hover,
+.btn-office:not(.btn-outline-red):hover,
+.home-button:not(.btn-outline-red):hover,
+.site-hero-cta:hover {
+  background: #a68d1c !important;
+  border-color: #a68d1c !important;
+  color: #ffffff !important;
 }
