@@ -4,7 +4,7 @@
       "type": "booking-page",
       "settings": {
         "heading": "Book an Appointment",
-        "subheading": "Choose a Sydney or Melbourne appointment time, synced live with our Google Calendar for consultations, appraisals and repairs.",
+        "subheading": "Choose a Sydney or Melbourne time, synced live with our Google&nbsp;Calendar.",
         "api_endpoint": "https://cameronco-production.up.railway.app",
         "heading_font": "garamond",
         "body_font": "montserrat"

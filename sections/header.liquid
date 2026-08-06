@@ -271,13 +271,25 @@
             <li>
               <a
                 href="{{ link.url }}"
-                class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+                class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link{% if link.links.size > 0 %} nav-parent{% endif %}"
                 {% if link.active %}
                   aria-current="page"
                 {% endif %}
               >
                 {{ link.title }}
+                {% if link.links.size > 0 %}
+                  <svg aria-hidden="true" viewbox="0 0 8 5" xmlns="http://www.w3.org/2000/svg"><path d="M4 5L0 0h8z"></path></svg>
+                {% endif %}
               </a>
+              {% if link.links.size > 0 %}
+                <ul aria-label="{{ link.title }} submenu" class="dropdown">
+                  {% for child_link in link.links %}
+                    <li>
+                      <a href="{{ child_link.url }}"{% if child_link.active %} aria-current="page"{% endif %}>{{ child_link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </li>
           {% endfor %}
 

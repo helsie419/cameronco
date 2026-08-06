@@ -1276,13 +1276,22 @@ nav {
   max-width: 760px;
 }
 
+.form-row-2,
 .form-row-3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 
+.form-row-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-row-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 @media (max-width: 640px) {
+  .form-row-2,
   .form-row-3 {
     grid-template-columns: 1fr;
   }
@@ -5014,4 +5023,38 @@ summary:focus-visible,
   background: #a68d1c !important;
   border-color: #a68d1c !important;
   color: #ffffff !important;
+}
+
+/* ============================================================
+   UNIFIED HEADER POSITIONING — the homepage gets its own
+   index.css stylesheet (only loaded on the homepage template),
+   which set the logo/nav positioning that matches the approved
+   mockup. Every other page was still on the older base values,
+   so the logo sat in a visibly different spot depending on which
+   page you were on. Apply the homepage's values everywhere, final
+   word appended last.
+   ============================================================ */
+@media (min-width: 1201px) {
+  .site-header .header-inner {
+    gap: 24px !important;
+    max-width: 1320px !important;
+    padding: 0 24px !important;
+    grid-template-columns: 340px 1fr 174px !important;
+  }
+}
+@media (max-width: 1200px) {
+  .site-header .header-inner {
+    grid-template-columns: 56px 1fr 0 !important;
+    padding: 0 22px !important;
+  }
+}
+
+/* Dropdown chevron on admin-menu parent items (.nav-parent) — the
+   existing chevron rule only targeted the older `span svg` pattern. */
+.site-header .primary-nav > li > .nav-parent svg {
+  width: 8px;
+  height: 8px;
+  fill: currentColor;
+  flex-shrink: 0;
+  margin-left: 4px;
 }
