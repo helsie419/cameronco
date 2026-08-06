@@ -6,26 +6,9 @@
         "block-1": {
           "type": "content_block",
           "settings": {
-            "heading": "How We Assess Your Jewellery",
-            "body": "<p>Where past valuation certificates are available, we use that documentation to estimate current retail values. Where none exist, we work from descriptions, photos, receipts and the notes taken by our consultants during your appointment to reach an accurate estimated retail value.</p>",
+            "heading": "How It Works",
+            "body": "<p>Where past valuation certificates are available, we use that documentation to estimate current retail values — otherwise, we work from descriptions, photos, receipts and our consultants' own notes to reach an accurate figure. Appointments can be arranged by phone, in our showroom, or at your home or workplace, Monday to Friday with extended hours available. Sending items to us instead? We use a secure, fully trackable and fully insured delivery service.</p>",
             "callout": false,
-            "list_heading": "",
-            "list_items": "",
-            "list_style": "bullet",
-            "image_1_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
-            "image_1_fallback": "inspecting-diamonds-magnification.webp",
-            "image_2_alt": "",
-            "image_2_fallback": "",
-            "cta_text": "",
-            "cta_link": ""
-          }
-        },
-        "block-2": {
-          "type": "content_block",
-          "settings": {
-            "heading": "Booking Your Appraisal",
-            "body": "<p>Appraisals can be arranged by phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available. If you're sending items to us rather than visiting in person, we use a secure, fully trackable and fully insured delivery service.</p>",
-            "callout": true,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
@@ -37,12 +20,12 @@
             "cta_link": ""
           }
         },
-        "block-3": {
+        "block-2": {
           "type": "content_block",
           "settings": {
             "heading": "Valuation Certificates & Timeframes",
-            "body": "<p>We complete appraisals within strict time frames. Delays can occasionally occur if your insurer is considering other aspects of your claim — if that happens, we're happy to contact them directly for a progress update on your behalf.</p><p>For items with a retail value over $1,000, we provide an independent valuation from a registered NCJV valuer for re-insurance purposes.</p>",
-            "callout": false,
+            "body": "<p>We complete appraisals within strict time frames, and if your insurer needs more time to consider other parts of your claim, we're happy to chase a progress update on your behalf. For items with a retail value over $1,000, we provide an independent valuation from a registered NCJV valuer for re-insurance purposes.</p>",
+            "callout": true,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
@@ -57,8 +40,7 @@
       },
       "block_order": [
         "block-1",
-        "block-2",
-        "block-3"
+        "block-2"
       ],
       "settings": {
         "hero_title": "Jewellery Appraisals",

@@ -7,13 +7,13 @@
           "type": "content_block",
           "settings": {
             "heading": "Your Options",
-            "body": "<p>Once your insurer establishes a replacement value, you can choose from stock we already hold, a special order piece, or something individually designed and handcrafted in our own workshop — whichever best replaces what you've lost.</p>",
+            "body": "<p>Once your insurer establishes a replacement value, you can choose from stock we already hold, a special order piece, or something individually designed and handcrafted in our own workshop — whichever best replaces what you've lost. If you'd like to purchase additional items or upgrade beyond your claimed item, we can also offer a substantial discount in accordance with your insurance contract.</p>",
             "callout": false,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "New diamond ring boxed ready as an insurance replacement piece",
-            "image_1_fallback": "single-diamond-ring-box.webp",
+            "image_1_alt": "",
+            "image_1_fallback": "",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -40,23 +40,6 @@
         "block-3": {
           "type": "content_block",
           "settings": {
-            "heading": "Upgrading Your Piece",
-            "body": "<p>If you'd like to purchase additional items, or upgrade beyond your claimed item, we can offer a substantial discount in accordance with your insurance contract.</p>",
-            "callout": false,
-            "list_heading": "",
-            "list_items": "",
-            "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
-            "image_2_alt": "",
-            "image_2_fallback": "",
-            "cta_text": "",
-            "cta_link": ""
-          }
-        },
-        "block-4": {
-          "type": "content_block",
-          "settings": {
             "heading": "Documentation",
             "body": "<p>Replacement jewellery supplied under a claim doesn't usually come with a receipt, since you haven't paid for it directly — instead, we provide a Replacement List detailing all items and their values. Any additional purchases are always receipted. For items with a retail value over $1,000, we also provide an independent valuation from a registered NCJV valuer for re-insurance purposes.</p>",
             "callout": false,
@@ -75,8 +58,7 @@
       "block_order": [
         "block-1",
         "block-2",
-        "block-3",
-        "block-4"
+        "block-3"
       ],
       "settings": {
         "hero_title": "Jewellery Replacement",
