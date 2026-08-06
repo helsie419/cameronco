@@ -100,6 +100,21 @@ a {
   transition: color var(--transition-smooth);
 }
 
+/* Inline cross-links within body copy (e.g. "browse our diamonds"),
+   as opposed to the button-style CTAs used everywhere else. Scoped to
+   the container rather than a class on the link tag itself, since
+   Shopify's richtext field sanitizer strips class attributes from links. */
+.page-intro-description a {
+  color: #D5B226;
+  text-decoration: underline;
+  text-decoration-color: rgba(213, 178, 38, 0.4);
+  text-underline-offset: 3px;
+}
+
+.page-intro-description a:hover {
+  text-decoration-color: currentColor;
+}
+
 @view-transition {
   navigation: auto;
   types: OutIn;

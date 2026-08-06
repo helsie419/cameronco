@@ -53,9 +53,19 @@
             "cta_text": "Book an appointment",
             "cta_link": "/pages/booking"
           }
+        },
+        "block-4": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Building Something That Lasts",
+            "body": "<p>Choosing certified stones and quality materials from the outset is the surest way to end up with a piece that stays meaningful for decades, not just seasons.</p>",
+            "callout": true,
+            "cta_text": "Design Your Own",
+            "cta_link": "/pages/ring-builder"
+          }
         }
       },
-      "block_order": ["block-1", "block-2", "block-3"]
+      "block_order": ["block-1", "block-2", "block-3", "block-4"]
     }
   },
   "order": ["main"]

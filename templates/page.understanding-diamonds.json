@@ -74,9 +74,19 @@
             "cta_text": "Book Appointment",
             "cta_link": "/pages/booking"
           }
+        },
+        "block-6": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Ready to Put It Into Practice?",
+            "body": "<p>Now that you know what to look for, browse our live diamond inventory and filter by cut, colour, clarity and carat to find the one that's right for you.</p>",
+            "callout": true,
+            "cta_text": "Browse Our Diamonds",
+            "cta_link": "/pages/diamonds"
+          }
         }
       },
-      "block_order": ["block-1", "block-2", "block-3", "block-4", "block-5"]
+      "block_order": ["block-1", "block-2", "block-3", "block-4", "block-5", "block-6"]
     }
   },
   "order": ["main"]
