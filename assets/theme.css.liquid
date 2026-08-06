@@ -5058,3 +5058,24 @@ summary:focus-visible,
   flex-shrink: 0;
   margin-left: 4px;
 }
+
+/* ============================================================
+   ROUNDED IMAGE CORNERS — applied consistently across every
+   photographic content image (article heroes, content blocks,
+   testimonials, about page, bento grid, embedded maps). The
+   homepage's full-bleed hero background is deliberately excluded —
+   it spans edge-to-edge with no card framing, so rounding it would
+   look like a rendering error rather than a design choice. Small
+   icons/logos (favicon, social icons, brand logo strip) are also
+   excluded — rounding a 20-30px mark doesn't read as intentional.
+   ============================================================ */
+.live-article-hero img,
+.article-image,
+.about-storefront-frame img,
+.about-image-card img,
+.testimonial-img-cc,
+.hero-card,
+.office-map {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
