@@ -419,5 +419,12 @@
     src="{{ 'theme.js' | asset_url }}"
     defer
   ></script>
+
+  {% if settings.google_maps_api_key != blank %}
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key={{ settings.google_maps_api_key }}&callback=initStyledMaps"
+      defer
+    ></script>
+  {% endif %}
 </body>
 </html>

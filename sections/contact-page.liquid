@@ -4,7 +4,16 @@
     <p class="cc-moved-style-004 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.intro_color != blank %}color:{{ section.settings.intro_color }};{% endif %}">{{ section.settings.intro_text }}</p>
     <div class="offices-row">
       <div class="office-card">
-        <iframe allowfullscreen class="office-map" src="{{ section.settings.office1_map_embed_url }}" title="{{ section.settings.office1_name }} location map"{% if section.settings.office1_map_aria_label != blank %} aria-label="{{ section.settings.office1_map_aria_label }}"{% endif %}></iframe>
+        {% assign office1_map_id = 'office-map-1-' | append: section.id %}
+        {% assign office1_address = section.settings.office1_address_line1 | append: ', ' | append: section.settings.office1_address_line2 %}
+        {% assign office1_map_title = section.settings.office1_name | append: ' location map' %}
+        {% render 'styled-map',
+          map_id: office1_map_id,
+          address: office1_address,
+          embed_url: section.settings.office1_map_embed_url,
+          map_title: office1_map_title,
+          aria_label: section.settings.office1_map_aria_label
+        %}
         <h3 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office1_name }}</h3>
         <div class="office-details cc-font-body-{{ section.settings.body_font }}">
           <p>{{ section.settings.office1_address_line1 }}</p>
@@ -18,7 +27,16 @@
         </div>
       </div>
       <div class="office-card">
-        <iframe allowfullscreen class="office-map" src="{{ section.settings.office2_map_embed_url }}" title="{{ section.settings.office2_name }} location map"{% if section.settings.office2_map_aria_label != blank %} aria-label="{{ section.settings.office2_map_aria_label }}"{% endif %}></iframe>
+        {% assign office2_map_id = 'office-map-2-' | append: section.id %}
+        {% assign office2_address = section.settings.office2_address_line1 | append: ', ' | append: section.settings.office2_address_line2 %}
+        {% assign office2_map_title = section.settings.office2_name | append: ' location map' %}
+        {% render 'styled-map',
+          map_id: office2_map_id,
+          address: office2_address,
+          embed_url: section.settings.office2_map_embed_url,
+          map_title: office2_map_title,
+          aria_label: section.settings.office2_map_aria_label
+        %}
         <h3 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office2_name }}</h3>
         <div class="office-details cc-font-body-{{ section.settings.body_font }}">
           <p>{{ section.settings.office2_address_line1 }}</p>

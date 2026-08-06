@@ -147,3 +147,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+// Custom-styled office maps (Google Maps JavaScript API). Called by the
+// Maps script's own ?callback= param once the API has loaded, so this
+// must stay a top-level global rather than a DOMContentLoaded listener —
+// the API can finish loading before or after the DOM is ready.
+window.ccMapStyle = [
+  { elementType: 'geometry', stylers: [{ color: '#f7f5f3' }] },
+  { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#4d493f' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#f7f5f3' }] },
+  { featureType: 'administrative', elementType: 'geometry.stroke', stylers: [{ color: '#c9c2b5' }] },
+  { featureType: 'administrative.land_parcel', stylers: [{ visibility: 'off' }] },
+  { featureType: 'landscape.natural', elementType: 'geometry', stylers: [{ color: '#eeece5' }] },
+  { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#dde0d3' }] },
+  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+  { featureType: 'road', elementType: 'geometry.stroke', stylers: [{ color: '#e3ddd0' }] },
+  { featureType: 'road.arterial', elementType: 'geometry', stylers: [{ color: '#f0ece2' }] },
+  { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#d5b226' }, { lightness: 55 }] },
+  { featureType: 'road.highway', elementType: 'labels.text.fill', stylers: [{ color: '#8c6a2f' }] },
+  { featureType: 'road.local', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+  { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#dbe2e0' }] },
+  { featureType: 'water', elementType: 'labels.text.fill', stylers: [{ color: '#9aa19c' }] }
+];
+
+window.initStyledMaps = function () {
+  var els = document.querySelectorAll('[data-styled-map]');
+  if (!els.length) return;
+  var geocoder = new google.maps.Geocoder();
+
+  els.forEach(function (el) {
+    var address = el.getAttribute('data-address');
+    if (!address) return;
+
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status !== 'OK' || !results || !results[0]) {
+        console.warn('Map geocoding failed for "' + address + '":', status);
+        return;
+      }
+      var location = results[0].geometry.location;
+      var map = new google.maps.Map(el, {
+        center: location,
+        zoom: 15,
+        styles: window.ccMapStyle,
+        disableDefaultUI: true,
+        zoomControl: true
+      });
+      new google.maps.Marker({
+        position: location,
+        map: map,
+        title: address
+      });
+    });
+  });
+};

@@ -15,7 +15,14 @@
         </div>
       </div>
       <div class="split-image">
-        <iframe allowfullscreen class="office-map cc-moved-style-030" loading="lazy" src="{{ section.settings.map_url }}" title="{{ section.settings.map_title }}"{% if section.settings.map_aria_label != blank %} aria-label="{{ section.settings.map_aria_label }}"{% endif %}></iframe>
+        {% assign office_map_id = 'office-map-' | append: section.id %}
+        {% render 'styled-map',
+          map_id: office_map_id,
+          address: section.settings.address,
+          embed_url: section.settings.map_url,
+          map_title: section.settings.map_title,
+          aria_label: section.settings.map_aria_label
+        %}
       </div>
     </div>
   </div>

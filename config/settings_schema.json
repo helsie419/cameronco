@@ -118,5 +118,15 @@
         "default": "glacial"
       }
     ]
+  },
+  {
+    "name": "Google Maps",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Powers the custom-styled office maps on the Contact page and office/services pages. Needs a Google Maps Platform API key with the Maps JavaScript API enabled. Leave blank and every map falls back to the plain embedded map (no custom styling, but still works)."
+      },
+      { "type": "text", "id": "google_maps_api_key", "label": "Maps JavaScript API key" }
+    ]
   }
 ]
