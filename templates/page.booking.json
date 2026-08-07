@@ -5,7 +5,7 @@
       "settings": {
         "heading": "Book an Appointment",
         "subheading": "Choose a Sydney or Melbourne time, synced live with our Google&nbsp;Calendar.",
-        "api_endpoint": "https://cameronco-production.up.railway.app",
+        "api_endpoint": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
         "heading_font": "garamond",
         "body_font": "montserrat"
       }

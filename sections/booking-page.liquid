@@ -75,7 +75,7 @@
 
 <script>
 (function () {
-  var API_BASE = window.CAMERON_CO_BOOKING_API || "https://cameronco-production.up.railway.app";
+  var API_BASE = window.CAMERON_CO_BOOKING_API || "https://us-central1-cameronco-booking.cloudfunctions.net/api";
   var params = new URLSearchParams(window.location.search);
   var form = document.getElementById("booking-form");
   var office = document.getElementById("booking-office");
@@ -336,9 +336,9 @@
     {
       "type": "text",
       "id": "api_endpoint",
-      "label": "Google Calendar Booking API URL",
-      "default": "https://cameronco-production.up.railway.app",
-      "info": "The Railway backend URL connecting to Google Calendar for Sydney & Melbourne."
+      "label": "Booking API URL",
+      "default": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
+      "info": "The Firebase Functions backend URL connecting to Google Calendar for Sydney & Melbourne."
     },
     {
       "type": "color",
