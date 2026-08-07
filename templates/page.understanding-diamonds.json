@@ -83,6 +83,17 @@
             "cta_link": "/pages/booking"
           }
         },
+        "block-5b": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Natural vs Lab-Grown Diamonds",
+            "body": "<p>Every diamond we source — whether mined from the earth or grown in a laboratory — is a genuine diamond: the same crystal structure, the same hardness, the same fire and brilliance. The difference is entirely in how it formed, not what it's made of.</p>",
+            "callout": true,
+            "list_heading": "How they compare:",
+            "list_items": "<strong>Formation:</strong> Natural diamonds form over one to three billion years under intense heat and pressure deep within the earth. Lab-grown diamonds are created in weeks to months, using technology that replicates those same conditions above ground.\n<strong>Price:</strong> Lab-grown diamonds typically cost 30–50% less than a natural diamond of equivalent size and quality, since production isn't limited by what can be mined.\n<strong>Rarity and value:</strong> Natural diamonds are geologically finite and have historically held their value well. Lab-grown diamond prices have fallen significantly as production has scaled, and they generally aren't expected to hold resale value the same way.\n<strong>Certification:</strong> Reputable labs such as GIA and IGI grade and certify both types using the same 4 C's — the certificate will always state the diamond's origin clearly.",
+            "list_style": "bullet"
+          }
+        },
         "block-6": {
           "type": "content_block",
           "settings": {
@@ -94,7 +105,7 @@
           }
         }
       },
-      "block_order": ["block-1", "block-2", "block-3", "block-3b", "block-4", "block-5", "block-6"]
+      "block_order": ["block-1", "block-2", "block-3", "block-3b", "block-4", "block-5", "block-5b", "block-6"]
     }
   },
   "order": ["main"]
