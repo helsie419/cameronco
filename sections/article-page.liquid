@@ -1,8 +1,8 @@
 <section class="live-article-hero" aria-labelledby="article-hero-title-{{ section.id }}">
   <div>
-    <h1 id="article-hero-title-{{ section.id }}" class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.hero_heading_color != blank %}color:{{ section.settings.hero_heading_color }};{% endif %}">{{ section.settings.hero_title }}</h1>
+    <h1 id="article-hero-title-{{ section.id }}" class="sr-only">{{ section.settings.hero_title }}</h1>
     {% if section.settings.hero_tagline != blank %}
-      <p class="tagline cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.hero_tagline_color != blank %}color:{{ section.settings.hero_tagline_color }};{% endif %}">{{ section.settings.hero_tagline }}</p>
+      <p class="tagline live-article-tagline cc-font-heading-{{ section.settings.heading_font | default: 'cormorant' }}" style="color:{{ section.settings.hero_heading_color | default: 'var(--heading-1-color)' }};">{{ section.settings.hero_tagline }}</p>
     {% endif %}
     {% if section.settings.hero_intro != blank %}
       <div class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.body_text_color != blank %}color:{{ section.settings.body_text_color }};{% endif %}">{{ section.settings.hero_intro }}</div>

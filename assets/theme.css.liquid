@@ -3044,6 +3044,17 @@ iframe.office-map {
   line-height: 1.65;
   margin: 0 0 20px;
 }
+/* The visible page heading on article-style pages: the actual page-title
+   heading is sr-only (hidden but present for SEO/accessibility), and this
+   tagline takes over its visual role instead -- same size/weight the
+   heading used to have, so hiding it doesn't leave the page looking
+   incomplete. */
+.live-article-hero .live-article-tagline {
+  font-size: clamp(42px, 5vw, 72px);
+  line-height: 1.02;
+  font-weight: 400;
+  margin: 0 0 18px;
+}
 .live-article-hero img,
 .article-image,
 .about-storefront-frame img,
