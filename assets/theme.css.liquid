@@ -253,7 +253,7 @@ nav {
 }
 
 /* ---- Book Button ---- */
-.btn-book {
+.site-header .btn-book {
   grid-row: 1;
   grid-column: 3;
   align-self: start;
@@ -790,7 +790,7 @@ nav {
   align-items: center;
   justify-content: center;
   padding: 0 32px;
-  height: 48px;
+  height: auto;
   background: var(--color-dark);
   color: var(--color-white);
   border: 1px solid var(--color-dark);
@@ -1616,7 +1616,7 @@ nav {
   align-items: center;
   justify-content: center;
   padding: 0 22px;
-  height: 40px;
+  height: auto;
   background: var(--color-dark);
   color: var(--color-white);
   border: 1px solid var(--color-dark);
@@ -1922,10 +1922,10 @@ body{
 .site-header nav{grid-column:2;grid-row:2;justify-content:flex-end;padding:0;}
 .primary-nav{gap:0;justify-content:flex-end;}
 .primary-nav>li>a,.primary-nav>li>span{
-  font-size:14px;
+  font-size:13px;
   line-height:1.2;
   color:#202733;
-  padding:7px 16px;
+  padding:7px 10px;
   font-weight:400;
   letter-spacing:0;
 }
@@ -1940,7 +1940,7 @@ body{
   padding:10px 0 16px;
 }
 .dropdown li a{font-size:13px;padding:11px 18px;background:#fff;}
-.btn-book{
+.site-header .btn-book{
   grid-column:3;grid-row:1;
   justify-self:end;align-self:center;
   height:38px;min-width:160px;
@@ -2184,7 +2184,7 @@ body{
   width: auto;
   max-width: max-content;
   min-height: 40px;
-  padding: 11px 26px;
+  padding: 16px 32px;
 }
 
 .brand-button.secondary {
@@ -2255,8 +2255,8 @@ body{
 .cc-moved-style-008 { font-family: var(--font-heading); font-size: 28px; margin-bottom: 12px; font-weight: normal; }
 .cc-moved-style-009 { margin-bottom: 24px; color: var(--color-text-muted); }
 .cc-moved-style-010 { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-.cc-moved-style-011 { padding: 12px 30px; height: auto; }
-.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: #D5B226; padding: 12px 30px; height: auto; }
+.cc-moved-style-011 { padding: 16px 32px; height: auto; font-size: 14px; border: 1px solid var(--color-brand-red); }
+.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: #D5B226; padding: 16px 32px; height: auto; font-size: 14px; }
 .cc-moved-style-013 { margin-top: -16px; }
 .cc-moved-style-014 { margin-bottom: 50px; }
 .cc-moved-style-015 { margin-top: 20px; }
@@ -2929,10 +2929,7 @@ iframe.office-map {
 }
 .site-header .primary-nav > li > a,
 .site-header .primary-nav > li > .nav-parent {
-  font-family: "Cormorant Garamond", Georgia, serif !important;
   color: #D5B226 !important;
-  font-size: 22px !important;
-  font-weight: 600 !important;
   background: transparent !important;
   border: 0 !important;
 }
@@ -4410,7 +4407,7 @@ iframe.office-map {
 .site-header .primary-nav > li > a,
 .site-header .primary-nav > li > .nav-parent {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 }
 /* grid items default to a content-based min-width, so a nav this long could
