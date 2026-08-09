@@ -151,7 +151,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: {{ section.settings.nav_color | default: '#D5B226' }} !important;
+  color: {{ section.settings.nav_color | default: '#171d29' }} !important;
   font-weight: 500;
   text-decoration: none !important;
   white-space: nowrap !important;
@@ -268,7 +268,7 @@
   }
 
   .site-header .header-inner {
-    grid-template-columns: 260px minmax(0, 1fr) 240px;
+    grid-template-columns: 310px minmax(0, 1fr) 260px;
     column-gap: 34px;
     min-height: 50px;
     max-width: 1540px;
@@ -282,7 +282,7 @@
   .site-header .site-logo img {
     /* Controlled by the "Logo size" setting in the theme editor
        (Header section). Width scales proportionally. */
-    height: {{ section.settings.logo_size | default: 40 }}px !important;
+    height: {{ section.settings.logo_size | default: 58 }}px !important;
     width: auto !important;
     max-width: none !important;
   }
@@ -298,7 +298,7 @@
     flex-wrap: nowrap;
     white-space: nowrap;
     justify-content: flex-end;
-    gap: 18px;
+    gap: 20px;
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -311,7 +311,7 @@
   }
 
   .site-header .primary-nav-link {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.2;
     white-space: nowrap !important;
   }
@@ -330,29 +330,29 @@
     /* Matches .site-hero-cta's height so the header button and the
        hero button read as the same size. Width is fixed 10px
        narrower than the hero button's fixed 220px. */
-    min-height: 46px !important;
+    min-height: 50px !important;
     width: auto !important;
-    min-width: 230px !important;
+    min-width: 238px !important;
     justify-content: center !important;
-    padding: 0 30px !important;
+    padding: 15px 32px 14px !important;
     box-sizing: border-box !important;
-    line-height: 1 !important;
+    line-height: 1.1 !important;
   }
 }
 
 @media (min-width: 1201px) and (max-width: 1380px) {
   .site-header .header-inner {
-    grid-template-columns: 230px minmax(0, 1fr) 220px;
+    grid-template-columns: 270px minmax(0, 1fr) 238px;
     column-gap: 24px;
     padding: 0 28px !important;
   }
 
   .site-header .primary-nav {
-    gap: 13px;
+    gap: 15px;
   }
 
   .site-header .primary-nav-link {
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 
