@@ -129,202 +129,12 @@ a {
 }
 
 /* ============================================================
-   SITE HEADER
+   SITE HEADER — see sections/header.liquid for the actual header
+   styling (.site-header, .site-logo, .menu-icon, .primary-nav,
+   .dropdown, .btn-book positioning). That file is the single
+   source of truth for the header; this stylesheet intentionally
+   no longer touches those selectors.
    ============================================================ */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 200;
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
-  padding: 16px 0;
-  transition: all var(--transition-smooth);
-}
-
-.header-inner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: auto auto;
-  align-items: center;
-}
-
-.site-logo {
-  grid-row: 1;
-  grid-column: 1;
-  display: flex;
-  align-items: center;
-}
-
-.site-logo img {
-  width: 143px;
-  height: auto;
-}
-
-nav {
-  grid-row: 2;
-  grid-column: 2 / 4;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 4px;
-}
-
-.primary-nav {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  gap: 0;
-}
-
-.primary-nav > li {
-  position: relative;
-}
-
-.primary-nav > li > a,
-.primary-nav > li > span {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 18px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--color-dark);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.primary-nav > li > a:hover,
-.primary-nav > li > span:hover {
-  color: #D5B226;
-}
-
-.primary-nav > li > a[aria-current="page"],
-.primary-nav > li > a[aria-current="true"] {
-  color: #D5B226;
-  text-decoration: underline;
-}
-
-.primary-nav > li > span svg {
-  width: 8px;
-  height: 8px;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-/* Dropdown */
-.dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: var(--color-white);
-  border-top: 2px solid var(--color-brand-red);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  min-width: 200px;
-  z-index: 300;
-  list-style: none;
-}
-
-.primary-nav > li:hover .dropdown,
-.primary-nav > li.dropdown-open .dropdown {
-  display: block;
-}
-
-.dropdown li a {
-  display: block;
-  padding: 12px 20px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--color-dark);
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-  transition: background 0.15s, color 0.15s;
-  white-space: nowrap;
-}
-
-.dropdown li:last-child a {
-  border-bottom: none;
-}
-
-.dropdown li a:hover {
-  background: var(--color-grey-light);
-  color: #D5B226;
-}
-
-/* ---- Book Button ---- */
-.site-header .btn-book {
-  grid-row: 1;
-  grid-column: 3;
-  align-self: start;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-  height: 38px;
-  min-width: 165px;
-  background: var(--color-brand-red);
-  color: var(--color-white);
-  border: 1px solid var(--color-brand-red);
-  border-radius: 5px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  text-align: center;
-  text-decoration: none;
-}
-
-.btn-book:hover {
-  background: var(--color-white);
-  color: #D5B226;
-  border-color: var(--color-brand-red);
-}
-
-/* ---- Hamburger ---- */
-.menu-icon {
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  padding: 8px;
-  border: 1px solid rgba(140, 106, 47,0.32);
-  border-radius: 50%;
-  background: var(--color-white);
-  grid-row: 1;
-  grid-column: 1;
-  width: 46px;
-  height: 46px;
-  z-index: 210;
-}
-
-.menu-icon span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--color-brand-red);
-  border-radius: 10px;
-  transition: transform 0.22s ease, opacity 0.22s ease;
-}
-
-.menu-icon span:last-child {
-  width: 16px;
-}
-
-.menu-icon.open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.menu-icon.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-icon.open span:nth-child(3) {
-  width: 24px;
-  transform: translateY(-7px) rotate(-45deg);
-}
 
 /* ---- Page Content Offset ---- */
 .page-content {
@@ -1287,6 +1097,188 @@ nav {
   align-items: start;
 }
 
+.booking-live-page {
+  background: #ffffff;
+}
+
+.booking-live-page .brand-hero {
+  padding-bottom: 18px;
+}
+
+.booking-live-page .brand-hero .section-title {
+  font-size: clamp(32px, 4vw, 48px);
+}
+
+.booking-card.booking-picker {
+  max-width: 980px;
+  margin-inline: auto;
+}
+
+.booking-picker-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.booking-picker-controls label {
+  display: grid;
+  gap: 7px;
+  color: #0f2b49;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.booking-picker-controls select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #d8e0ea;
+  border-radius: 4px;
+  padding: 10px 11px;
+  color: #0f2b49;
+  background: #ffffff;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.booking-scheduler {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.05fr) minmax(280px, 0.95fr);
+  gap: 44px;
+  align-items: start;
+}
+
+.booking-calendar-panel h2,
+.result-panel h2 {
+  margin: 0 0 30px;
+  color: #0f2b49;
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.calendar-month-row {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.calendar-month-row strong {
+  color: #0f2b49;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.calendar-nav {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  color: #D5B226;
+  background: transparent;
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.calendar-nav:hover {
+  background: #f5f8fc;
+  color: #D5B226;
+}
+
+.calendar-weekdays,
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-weekdays {
+  margin-bottom: 20px;
+  color: #31577f;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.calendar-weekdays span {
+  text-align: center;
+}
+
+.calendar-days {
+  row-gap: 10px;
+  min-height: 270px;
+}
+
+.calendar-day,
+.calendar-day-spacer {
+  width: 44px;
+  height: 44px;
+  justify-self: center;
+}
+
+.calendar-day {
+  border: 0;
+  border-radius: 50%;
+  color: #31577f;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.calendar-day.available {
+  color: #D5B226;
+  background: #fffaf0;
+}
+
+.calendar-day:hover:not(:disabled) {
+  color: #ffffff;
+  background: #aa8e1e;
+}
+
+.calendar-day.selected {
+  color: #ffffff;
+  background: #D5B226;
+}
+
+.calendar-day:disabled {
+  color: #31577f;
+  opacity: 0.75;
+  cursor: default;
+}
+
+.booking-timezone {
+  display: grid;
+  grid-template-columns: auto 18px 1fr;
+  gap: 9px;
+  align-items: center;
+  margin-top: 8px;
+  color: #0f2b49;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.booking-timezone strong {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.booking-timezone span[aria-hidden="true"] {
+  color: #0f2b49;
+  font-size: 12px;
+}
+
+.booking-card.booking-details-form {
+  max-width: 980px;
+  margin-inline: auto;
+}
+
 .booking-card {
   max-width: 760px;
 }
@@ -1310,6 +1302,27 @@ nav {
   .form-row-3 {
     grid-template-columns: 1fr;
   }
+
+  .booking-picker-controls,
+  .booking-scheduler {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-scheduler {
+    gap: 28px;
+  }
+
+  .booking-calendar-panel h2,
+  .result-panel h2 {
+    margin-bottom: 22px;
+    font-size: 20px;
+  }
+
+  .calendar-day,
+  .calendar-day-spacer {
+    width: 38px;
+    height: 38px;
+  }
 }
 
 .app-panel,
@@ -1329,6 +1342,13 @@ nav {
 .result-panel {
   min-height: 360px;
   padding: 18px;
+}
+
+.booking-picker .result-panel {
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
 }
 
 .filter-form,
@@ -1410,6 +1430,12 @@ nav {
   gap: 14px;
 }
 
+.booking-picker .slot-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 11px;
+}
+
 .diamond-card,
 .slot-button {
   border: 1px solid var(--color-border);
@@ -1454,10 +1480,29 @@ nav {
   font-family: var(--font-body);
 }
 
+.booking-picker .slot-button {
+  min-height: 52px;
+  border: 1px solid #D5B226;
+  border-radius: 4px;
+  color: #D5B226;
+  background: #ffffff;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 800;
+}
+
 .slot-button:hover,
 .slot-button.selected {
   border-color: var(--color-brand-red);
   color: #D5B226;
+}
+
+.booking-picker .slot-button:hover,
+.booking-picker .slot-button.selected {
+  border-color: #D5B226;
+  color: #ffffff;
+  background: #D5B226;
 }
 
 .status-line {
@@ -1722,66 +1767,7 @@ summary:focus-visible {
    ============================================================ */
 @media (max-width: 1200px) {
 
-  /* Header */
-  .menu-icon { display: flex; }
-
-  .site-header {
-    min-height: 76px;
-    padding: 12px 0;
-  }
-
-  .site-header .container {
-    padding: 0 24px;
-  }
-
-  .site-header .header-inner {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
-  }
-
-  .site-header .btn-book { display: none; }
-
-  .site-logo {
-    grid-column: 2;
-    justify-content: flex-end;
-    margin-left: auto;
-  }
-
-  nav { display: none; }
-
-  .site-header.mobile-open nav {
-    display: block;
-    grid-row: 2;
-    grid-column: 1 / 3;
-    width: 100%;
-    padding: 16px 0 8px;
-  }
-
-  .site-header.mobile-open .primary-nav {
-    display: grid;
-    gap: 4px;
-    padding: 12px;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    background: var(--color-white);
-    box-shadow: 0 14px 34px rgba(0,0,0,0.08);
-  }
-
-  .site-header.mobile-open .primary-nav > li > a,
-  .site-header.mobile-open .primary-nav > li > span {
-    justify-content: space-between;
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  .site-header.mobile-open .dropdown {
-    position: static;
-    display: block;
-    min-width: 0;
-    border-top: 1px solid rgba(140, 106, 47,0.15);
-    box-shadow: none;
-    padding-left: 12px;
-  }
+  /* Header — see sections/header.liquid, single source of truth. */
 
   /* Page content */
   .page-content { padding-top: 104px; }
@@ -1900,54 +1886,6 @@ body{
   font-size:14px;
   letter-spacing:.01em;
 }
-.site-header{
-  background:#fff;
-  min-height:118px;
-  padding:18px 0 12px;
-  border-bottom:0;
-  box-shadow:none;
-}
-.header-inner{
-  max-width:1180px;
-  margin:0 auto;
-  padding:0 42px;
-  display:grid;
-  grid-template-columns:190px 1fr 174px;
-  grid-template-rows:58px 34px;
-  column-gap:28px;
-  align-items:center;
-}
-.site-logo{grid-column:1;grid-row:1 / 3;align-self:center;justify-self:start;}
-.site-logo img{width:150px;height:auto;display:block;}
-.site-header nav{grid-column:2;grid-row:2;justify-content:flex-end;padding:0;}
-.primary-nav{gap:0;justify-content:flex-end;}
-.primary-nav>li>a,.primary-nav>li>span{
-  font-size:13px;
-  line-height:1.2;
-  color:#202733;
-  padding:7px 10px;
-  font-weight:400;
-  letter-spacing:0;
-}
-.primary-nav>li>a:hover,.primary-nav>li>span:hover,.primary-nav>li>a[aria-current="page"]{
-  color:#D5B226;
-  text-decoration:none;
-}
-.dropdown{
-  border-top:0;
-  box-shadow:0 7px 18px rgba(0,0,0,.08);
-  min-width:210px;
-  padding:10px 0 16px;
-}
-.dropdown li a{font-size:13px;padding:11px 18px;background:#fff;}
-.site-header .btn-book{
-  grid-column:3;grid-row:1;
-  justify-self:end;align-self:center;
-  height:38px;min-width:160px;
-  border-radius:5px;background:var(--cc-red);border-color:var(--cc-red);
-  font-size:14px;color:#fff;
-}
-.btn-book:hover{background:#fff;color:#D5B226;}
 .page-content{padding-top:118px;}
 .cc-section{padding:48px 0;}
 .section-inner{max-width:980px;padding:0 22px;}
@@ -2027,18 +1965,6 @@ body{
 .office-map{border-radius:0;filter:grayscale(100%);}
 .cookie-banner{border-radius:0;box-shadow:0 -6px 20px rgba(0,0,0,.09);}
 @media (max-width: 1200px){
-  .site-header{min-height:86px;padding:14px 0;}
-  .header-inner{grid-template-columns:56px 1fr 0;grid-template-rows:58px;padding:0 22px;}
-  .menu-icon{display:flex;grid-column:1;grid-row:1;}
-  .site-logo{grid-column:2;grid-row:1;justify-self:center;}
-  .site-logo img{width:142px;}
-  .site-header .btn-book{display:none;}
-  .site-header nav{display:none;}
-  .site-header.mobile-open nav{display:block;position:absolute;top:86px;left:0;right:0;background:#fff;border-top:1px solid rgba(0,0,0,.08);padding:18px 22px 26px;}
-  .site-header.mobile-open .primary-nav{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
-  .site-header.mobile-open .primary-nav>li{width:100%;}
-  .site-header.mobile-open .primary-nav>li>a,.site-header.mobile-open .primary-nav>li>span{padding:12px 0;font-size:16px;}
-  .site-header.mobile-open .dropdown{display:block;position:static;box-shadow:none;padding-left:18px;min-width:0;border:0;}
   .page-content{padding-top:86px;}
 }
 @media (max-width: 900px){
@@ -2083,7 +2009,7 @@ body{
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .site-header { animation: ccHeaderDrop .55s cubic-bezier(.16,1,.3,1) both; }
+  /* .site-header's own drop-in animation lives in sections/header.liquid. */
   main, .page-shell, .page-content { animation: ccFadeUp .7s cubic-bezier(.16,1,.3,1) both; }
   .site-footer { animation: ccFadeUp .75s cubic-bezier(.16,1,.3,1) both; animation-delay: .1s; }
 
@@ -2097,8 +2023,7 @@ body{
 
   .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1); }
   .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-  .primary-nav .dropdown { opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease, visibility .25s ease; }
-  .primary-nav li:hover > .dropdown, .primary-nav li:focus-within > .dropdown { opacity: 1; transform: translateY(0); }
+  /* Dropdown hover fade lives in sections/header.liquid. */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2110,43 +2035,6 @@ body{
    Cameron & Co — cross-page correction pass
    Applies homepage-approved header, footer, CTA, text and moved inline styles.
    ============================================================ */
-.site-header .primary-nav > li > a,
-.site-header .primary-nav > li > .nav-parent {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  color: #D5B226;
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  background: transparent;
-  border: 0;
-}
-
-.site-header .primary-nav > li > a:hover,
-.site-header .primary-nav > li > .nav-parent:hover,
-.site-header .primary-nav > li > a[aria-current="page"] {
-  color: #D5B226;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.site-header .dropdown a {
-  font-family: "Montserrat", Arial, sans-serif;
-  background: #ffffff !important;
-  color: #171d29 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  padding: 14px 18px !important;
-  min-height: auto !important;
-  text-decoration: none !important;
-}
-
-.site-header .dropdown a:hover {
-  background: #f7f3ee !important;
-  color: #D5B226 !important;
-}
-
 .btn-book,
 .btn-red,
 .page-button-red,
@@ -2662,150 +2550,12 @@ iframe.office-map {
 }
 
 /* ============================================================
-   2026-06 final alignment patch: shared header/footer spacing
+   2026-06 correction patches — the header/logo/nav/dropdown/
+   btn-book rules formerly here (three near-duplicate "final word"
+   patches) have moved to sections/header.liquid, the header's
+   single source of truth. Non-header rules (footer, testimonials
+   spacing, shared button styling, reveal fallback) stay here.
    ============================================================ */
-.site-header {
-  min-height: 148px !important;
-}
-
-.site-header .header-inner {
-  min-height: 148px !important;
-  grid-template-columns: auto 1fr auto !important;
-  grid-template-rows: auto auto !important;
-  column-gap: 28px !important;
-  align-items: center !important;
-}
-
-.site-header .site-logo img {
-  width: 285px !important;
-  max-width: 285px !important;
-  height: auto !important;
-}
-
-.site-header .btn-book,
-.site-header .btn-book:visited,
-.site-header .btn-book:hover {
-  background: #8c6a2f !important;
-  border-color: #8c6a2f !important;
-  color: #ffffff !important;
-}
-
-.site-header .btn-book:hover {
-  background: #6e5324 !important;
-  border-color: #6e5324 !important;
-}
-
-
-.testimonials-page .page-content {
-  padding-top: 178px !important;
-}
-
-@media (max-width: 980px) {
-  .site-header {
-    min-height: 110px !important;
-  }
-
-  .site-header .header-inner {
-    min-height: 110px !important;
-  }
-
-  .site-header .site-logo img {
-    width: 220px !important;
-    max-width: 220px !important;
-  }
-
-  .site-footer .footer-top {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-
-  .site-footer .footer-offices {
-    grid-column: 1 / -1 !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-
-  .testimonials-page .page-content {
-    padding-top: 140px !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .site-header {
-    min-height: 88px !important;
-  }
-
-  .site-header .header-inner {
-    min-height: 88px !important;
-  }
-
-  .site-header .site-logo img {
-    width: 190px !important;
-    max-width: 190px !important;
-  }
-}
-
-@media (max-width: 620px) {
-  .site-footer .footer-top,
-  .site-footer .footer-offices {
-    grid-template-columns: 1fr !important;
-  }
-
-  .testimonials-page .page-content {
-    padding-top: 116px !important;
-  }
-}
-
-/* ============================================================
-   2026-06 definitive correction patch: header, footer, spacing
-   ============================================================ */
-.site-header {
-  min-height: 148px !important;
-  padding: 0 !important;
-}
-
-.site-header .header-inner {
-  min-height: 148px !important;
-  display: grid !important;
-  grid-template-columns: auto 1fr auto !important;
-  grid-template-rows: auto auto !important;
-  column-gap: 28px !important;
-  align-items: center !important;
-}
-
-.site-header .site-logo {
-  grid-column: 1 !important;
-  grid-row: 1 / 3 !important;
-  align-self: center !important;
-  justify-self: start !important;
-}
-
-.site-header .site-logo img {
-  width: 285px !important;
-  max-width: 285px !important;
-  height: auto !important;
-}
-
-.site-header nav {
-  grid-column: 2 !important;
-  grid-row: 2 !important;
-  align-self: end !important;
-}
-
-.site-header .btn-book {
-  grid-column: 3 !important;
-  grid-row: 1 !important;
-  justify-self: end !important;
-  align-self: center !important;
-  background: #8c6a2f !important;
-  border-color: #8c6a2f !important;
-  color: #ffffff !important;
-}
-
-.site-header .btn-book:hover,
-.site-header .btn-book:focus {
-  background: #6e5324 !important;
-  border-color: #6e5324 !important;
-  color: #ffffff !important;
-}
 
 .testimonials-page .page-content {
   padding-top: 212px !important;
@@ -2816,19 +2566,6 @@ iframe.office-map {
 }
 
 @media (max-width: 980px) {
-  .site-header {
-    min-height: 110px !important;
-  }
-
-  .site-header .header-inner {
-    min-height: 110px !important;
-  }
-
-  .site-header .site-logo img {
-    width: 220px !important;
-    max-width: 220px !important;
-  }
-
   .site-footer .footer-top {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
@@ -2850,21 +2587,6 @@ iframe.office-map {
   }
 }
 
-@media (max-width: 760px) {
-  .site-header {
-    min-height: 88px !important;
-  }
-
-  .site-header .header-inner {
-    min-height: 88px !important;
-  }
-
-  .site-header .site-logo img {
-    width: 190px !important;
-    max-width: 190px !important;
-  }
-}
-
 @media (max-width: 620px) {
   .site-footer .footer-top,
   .site-footer .footer-offices {
@@ -2877,9 +2599,6 @@ iframe.office-map {
   }
 }
 
-
-/* FINAL QA CORRECTION PATCH 2026-06 */
-/* Do not use broad button substring selectors. These rules are explicit only. */
 :root {
   --cc-button-radius: 999px;
 }
@@ -2894,84 +2613,13 @@ iframe.office-map {
   transform: none !important;
 }
 
-/* Header consistency with corrected homepage. */
-.site-header {
-  min-height: 148px !important;
-  padding: 0 !important;
-  background: #ffffff !important;
-  border: 0 !important;
-  box-shadow: none !important;
-}
-.site-header .header-inner {
-  min-height: 148px !important;
-  display: grid !important;
-  grid-template-columns: auto 1fr auto !important;
-  grid-template-rows: auto auto !important;
-  column-gap: 28px !important;
-  align-items: center !important;
-}
-.site-header .site-logo {
-  grid-column: 1 !important;
-  grid-row: 1 / 3 !important;
-  align-self: center !important;
-  justify-self: start !important;
-}
-.site-header .site-logo img {
-  width: 285px !important;
-  max-width: 285px !important;
-  height: auto !important;
-}
-.site-header nav {
-  grid-column: 2 !important;
-  grid-row: 2 !important;
-  align-self: end !important;
-  justify-content: flex-end !important;
-}
-.site-header .primary-nav > li > a,
-.site-header .primary-nav > li > .nav-parent {
-  color: #D5B226 !important;
-  background: transparent !important;
-  border: 0 !important;
-}
-.site-header .dropdown a {
-  font-family: "Montserrat", Arial, sans-serif !important;
-  color: #171d29 !important;
-  background: #ffffff !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 14px 18px !important;
-  min-height: auto !important;
-}
-.site-header .dropdown a:hover {
-  color: #D5B226 !important;
-  background: #f7f3ee !important;
-}
-.site-header .btn-book,
-.btn-book,
-.btn-red,
-.page-button-red {
-  background: #8c6a2f !important;
-  border-color: #8c6a2f !important;
-  color: #ffffff !important;
-  border-radius: var(--cc-button-radius) !important;
-}
-.site-header .btn-book:hover,
-.site-header .btn-book:focus,
-.btn-book:hover,
-.btn-book:focus,
-.btn-red:hover,
-.btn-red:focus,
-.page-button-red:hover,
-.page-button-red:focus {
-  background: #6e5324 !important;
-  border-color: #6e5324 !important;
-  color: #ffffff !important;
-}
 .btn-black-center,
 .btn-office,
 .btn-hero,
 .brand-button,
-.page-button-dark {
+.page-button-dark,
+.btn-red,
+.page-button-red {
   border-radius: var(--cc-button-radius) !important;
 }
 .btn-office,
@@ -3248,11 +2896,6 @@ iframe.office-map {
 
 
 @media (max-width: 980px) {
-  .site-header { min-height: 110px !important; }
-  .site-header .header-inner { min-height: 110px !important; }
-  .site-header .site-logo img { width: 220px !important; max-width: 220px !important; }
-  .site-header .primary-nav > li > a,
-  .site-header .primary-nav > li > .nav-parent { font-size: 19px !important; }
   .page-content { padding-top: 140px !important; }
   .testimonials-page .page-content { padding-top: 190px !important; }
   .live-article-hero { grid-template-columns: 1fr; }
@@ -3261,11 +2904,6 @@ iframe.office-map {
   .site-footer .footer-offices { display: contents !important; }
 }
 @media (max-width: 760px) {
-  .site-header { min-height: 88px !important; }
-  .site-header .header-inner { min-height: 88px !important; }
-  .site-header .site-logo img { width: 190px !important; max-width: 190px !important; }
-  .site-header .primary-nav > li > a,
-  .site-header .primary-nav > li > .nav-parent { font-size: 17px !important; }
   .testimonials-page .page-content { padding-top: 138px !important; }
   .live-image-row { grid-template-columns: 1fr; }
 }
@@ -4412,47 +4050,8 @@ iframe.office-map {
   --cc-ink: #3a362f;
 }
 
-/* ---- nav link type scale: an earlier pass set these to 22px Cormorant
-   Garamond, wide enough to overflow the header grid and push "Book
-   Appointment" off-screen at normal desktop widths. Back to a sane nav size. ---- */
-.site-header .primary-nav > li > a,
-.site-header .primary-nav > li > .nav-parent {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-}
-/* grid items default to a content-based min-width, so a nav this long could
-   still force the "Book Appointment" column past the header's own max-width
-   even at the smaller font size above — let it shrink/wrap instead of pushing out */
-.header-inner nav {
-  min-width: 0;
-}
-.header-inner .primary-nav {
-  flex-wrap: wrap;
-  row-gap: 4px;
-  justify-content: flex-end;
-}
-
-/* ---- accent swap, site-wide: red -> brass/gold ---- */
-/* matches the specificity (and !important) of an earlier correction-pass rule
-   that hardcodes .site-header .primary-nav > li > a to red, or this loses too */
-.site-header .primary-nav > li > a,
-.site-header .primary-nav > li > .nav-parent {
-  color: #D5B226 !important;
-}
-.site-header .primary-nav > li > a:hover,
-.site-header .primary-nav > li > .nav-parent:hover,
-.site-header .primary-nav > li > a[aria-current="page"] {
-  color: #D5B226 !important;
-}
-.site-header .dropdown a:hover {
-  background: #f7f3ee;
-  color: #D5B226;
-}
-.site-header .dropdown a:hover {
-  background: #f7f3ee;
-  color: #D5B226;
-}
+/* ---- accent swap, site-wide: red -> brass/gold ----
+   (header nav link/dropdown colors now live in sections/header.liquid) */
 .btn-book,
 .btn-red,
 .page-button-red,
@@ -4467,23 +4066,6 @@ iframe.office-map {
 .page-button-red:hover,
 .brand-button.btn-red:hover,
 .btn-hero:hover {
-  background: var(--cc-gold-deep) !important;
-  border-color: var(--cc-gold-deep) !important;
-  color: #ffffff !important;
-}
-/* The file has several earlier "correction pass" layers that re-declare
-   .site-header .btn-book directly (a more specific compound selector than
-   plain .btn-book above), so the color swap above loses to them despite
-   being later in the file — specificity beats source order. Match their
-   specificity exactly so this genuinely is the final word. */
-.site-header .btn-book,
-.site-header .btn-book:visited {
-  background: var(--cc-gold) !important;
-  border-color: var(--cc-gold) !important;
-  color: #ffffff !important;
-}
-.site-header .btn-book:hover,
-.site-header .btn-book:focus {
   background: var(--cc-gold-deep) !important;
   border-color: var(--cc-gold-deep) !important;
   color: #ffffff !important;
@@ -4777,133 +4359,14 @@ body, p {
   color: var(--cc-black, #171d29);
 }
 
-/* NOTE: this used to also set a frosted-glass backdrop-filter blur, but
-   that blur applies uniformly across the header's full height — including
-   the bottom portion that header.liquid's inline gradient fades to fully
-   transparent — so it created a hard "blur cutoff" line exactly at the
-   header's bottom edge instead of a soft blend into the hero image below.
-   Removed so the fade is genuinely seamless. */
-
-/* Nav-wrap fix: the primary nav needs ~1250px to fit on one line without
-   wrapping, but the hamburger only used to kick in at 900px, leaving a
-   ~350px dead zone of broken two-line nav. The hamburger breakpoint was
-   moved up to 1280px above; this final override matches the specificity
-   and !important of the earlier unguarded ".site-header .site-logo" /
-   ".site-header .site-logo img" rules (which apply at ALL widths and were
-   forcing the logo into the hamburger's grid column) so the logo actually
-   lands in its own centered column within the new mobile range.
-   2026-07: pulled the hamburger threshold in to 1200px so the full nav
-   stays visible on more "normal" laptop-width screens instead of
-   dropping to the hamburger so early. That's below the ~1250px the nav
-   ideally wants, so between 1200-1250px it can rely on the
-   `.header-inner .primary-nav { flex-wrap: wrap; row-gap: 4px; }` safety
-   net to soft-wrap onto a second line rather than overflow. */
+/* Header layout (logo/nav/menu-icon grid placement, sizing at every
+   breakpoint) lives entirely in sections/header.liquid now. */
 @media (max-width: 1200px) {
-  .site-header .site-logo {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    justify-self: center !important;
-    align-self: center !important;
-  }
-  .site-header .site-logo img {
-    width: 142px !important;
-    max-width: 142px !important;
-  }
-}
-@media (max-width: 760px) {
-  .site-header .site-logo img {
-    width: 120px !important;
-    max-width: 120px !important;
-  }
-}
-
-/* ============================================================
-   2026-07 header relayout v2: logo back on the left, vertically
-   centered across the full header height, sized up substantially so
-   it reads at the same visual weight as the nav + book button.
-   Hamburger stays on the right on mobile.
-   ============================================================ */
-@media (min-width: 1201px) {
-  .site-header {
-    min-height: 136px !important;
-  }
-  .site-header .header-inner {
-    grid-template-columns: auto 1fr auto !important;
-    column-gap: 14px !important;
-    min-height: 136px !important;
-  }
-  .site-header .site-logo {
-    grid-column: 1 !important;
-    grid-row: 1 / 3 !important;
-    justify-self: start !important;
-    align-self: center !important;
-  }
-  .site-header .site-logo img {
-    width: 340px !important;
-    max-width: 340px !important;
-  }
-  .site-header nav {
-    grid-column: 2 !important;
-    grid-row: 2 !important;
-    padding-top: 0 !important;
-  }
-  .site-header .primary-nav > li > a,
-  .site-header .primary-nav > li > .nav-parent {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-  }
-  .site-header .btn-book {
-    grid-column: 3 !important;
-    grid-row: 1 !important;
-    align-self: end !important;
-  }
-}
-
-/* Mobile: hamburger to the far right, logo stays on the left (same
-   side as desktop), sized up noticeably from the old 142px/120px.
-   The open mobile nav panel's grid placement is reset to auto so its
-   left:0/right:0 absolute positioning spans the full header again,
-   now that there are three columns instead of two. */
-@media (max-width: 1200px) {
-  .site-header {
-    min-height: 84px !important;
-  }
-  .site-header .header-inner {
-    grid-template-columns: auto 1fr 56px !important;
-    min-height: 84px !important;
-  }
-  .site-header .menu-icon {
-    grid-column: 3 !important;
-    grid-row: 1 !important;
-    justify-self: center !important;
-  }
-  .site-header .site-logo {
-    grid-column: 1 !important;
-    justify-self: start !important;
-  }
-  .site-header .site-logo img {
-    width: 280px !important;
-    max-width: 280px !important;
-  }
-  .site-header.mobile-open nav {
-    grid-column: auto !important;
-    grid-row: auto !important;
-  }
   .page-content {
     padding-top: 84px !important;
   }
 }
 @media (max-width: 760px) {
-  .site-header {
-    min-height: 72px !important;
-  }
-  .site-header .header-inner {
-    min-height: 72px !important;
-  }
-  .site-header .site-logo img {
-    width: 230px !important;
-    max-width: 230px !important;
-  }
   .page-content {
     padding-top: 72px !important;
   }
@@ -4930,17 +4393,35 @@ body, p {
 .site-footer .footer-col-education ul { text-align: left !important; }
 @media (max-width: 560px) {
   /* 2 columns at this width (3 made Menu/About/Education too narrow
-     and wrapped badly): offices row, Menu+About row, Education row
-     (alone, 2nd column empty), social row. footer-offices and
-     footer-right-col span both columns for their own full-width row. */
+     and wrapped badly): offices row, Menu row, social row.
+     footer-offices and footer-right-col span both columns for their
+     own full-width row. Education column is hidden entirely at this
+     width — it added a third short row with no room to breathe next
+     to the Menu column. */
   .site-footer .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 14px !important; }
   .site-footer .footer-offices {
     grid-column: 1 / -1 !important;
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 20px !important;
+    gap: 12px !important;
+  }
+  .site-footer .footer-offices p,
+  .site-footer .footer-offices a {
+    /* Smaller so the longer addresses (e.g. Sydney's "Suite 2, Level
+       7, 37 York St.") fit on one line instead of wrapping. */
+    font-size: 11px !important;
+  }
+  .site-footer .footer-offices h2,
+  .site-footer .footer-col h3 {
+    /* "Melbourne Office" is longer than "Sydney Office" and was
+       wrapping to two lines in the narrow column while Sydney's
+       fit on one — shrink so both match. Menu/About headings sized
+       and weighted the same as the office headings for consistency. */
+    font-size: 14px !important;
+    font-weight: 700 !important;
   }
   .site-footer .footer-right-col { grid-column: 1 / -1 !important; order: 999 !important; }
+  .site-footer .footer-col-education { display: none !important; }
 }
 
 /* Contact page office cards: earlier "legacy cleanup" passes stripped
@@ -5113,39 +4594,6 @@ summary:focus-visible,
   color: #ffffff !important;
 }
 
-/* ============================================================
-   UNIFIED HEADER POSITIONING — the homepage gets its own
-   index.css stylesheet (only loaded on the homepage template),
-   which set the logo/nav positioning that matches the approved
-   mockup. Every other page was still on the older base values,
-   so the logo sat in a visibly different spot depending on which
-   page you were on. Apply the homepage's values everywhere, final
-   word appended last.
-   ============================================================ */
-@media (min-width: 1201px) {
-  .site-header .header-inner {
-    gap: 24px !important;
-    max-width: 1320px !important;
-    padding: 0 24px !important;
-    grid-template-columns: 340px 1fr 174px !important;
-  }
-}
-@media (max-width: 1200px) {
-  .site-header .header-inner {
-    grid-template-columns: 56px 1fr 0 !important;
-    padding: 0 22px !important;
-  }
-}
-
-/* Dropdown chevron on admin-menu parent items (.nav-parent) — the
-   existing chevron rule only targeted the older `span svg` pattern. */
-.site-header .primary-nav > li > .nav-parent svg {
-  width: 8px;
-  height: 8px;
-  fill: currentColor;
-  flex-shrink: 0;
-  margin-left: 4px;
-}
 
 /* ============================================================
    ROUNDED IMAGE CORNERS — applied consistently across every
@@ -5187,4 +4635,124 @@ summary:focus-visible,
 .timeless-trendy-page .page-content,
 .luxury-hero + .page-content {
   padding-top: 0 !important;
+}
+
+/* ============================================================
+   UNIVERSAL BUTTON COLOR — true final word, appended after
+   everything else. Every primary CTA class in the theme had drifted
+   to a different gold over time (#8c6a2f, #cba922, var(--cc-gold),
+   var(--color-brand-red)...) depending on which of a dozen older
+   "correction pass" rules happened to win for that particular class.
+   One color, site-wide: #D5B226. Secondary/outline/dark-variant
+   buttons are intentionally excluded — they're meant to look
+   different from the primary action beside them.
+   ============================================================ */
+.btn-book:not(.btn-outline-red),
+.btn-red:not(.btn-outline-red),
+.page-button-red:not(.btn-outline-red),
+.btn-black-center:not(.btn-outline-red),
+.btn-office:not(.btn-outline-red),
+.brand-button:not(.btn-outline-red):not(.secondary),
+.btn-hero:not(.btn-outline-red),
+.page-button-dark:not(.btn-outline-red),
+.home-button:not(.btn-outline-red),
+.home-button-red:not(.btn-outline-red),
+.site-hero-cta {
+  background: #D5B226 !important;
+  border-color: #D5B226 !important;
+  color: #ffffff !important;
+}
+
+.btn-book:not(.btn-outline-red):hover,
+.btn-red:not(.btn-outline-red):hover,
+.page-button-red:not(.btn-outline-red):hover,
+.btn-black-center:not(.btn-outline-red):hover,
+.btn-office:not(.btn-outline-red):hover,
+.brand-button:not(.btn-outline-red):not(.secondary):hover,
+.btn-hero:not(.btn-outline-red):hover,
+.page-button-dark:not(.btn-outline-red):hover,
+.home-button:not(.btn-outline-red):hover,
+.home-button-red:not(.btn-outline-red):hover,
+.site-hero-cta:hover {
+  background: #aa8e1e !important;
+  border-color: #aa8e1e !important;
+  color: #ffffff !important;
+}
+
+/* Booking page final polish: keep time slots readable and give the
+   calendar/times area a little more breathing room at the bottom. */
+.booking-live-page .app-grid {
+  padding-bottom: 56px !important;
+}
+
+.booking-live-page .booking-card.booking-picker {
+  padding-bottom: 36px !important;
+}
+
+.booking-live-page .calendar-days {
+  margin-bottom: 18px !important;
+}
+
+.booking-live-page .booking-picker .result-panel {
+  padding-bottom: 20px !important;
+}
+
+.booking-live-page .slot-grid {
+  padding-bottom: 18px !important;
+}
+
+.booking-live-page .slot-button,
+.booking-live-page .booking-picker .slot-button {
+  border-color: #D5B226 !important;
+  color: #171d29 !important;
+  background: #ffffff !important;
+}
+
+.booking-live-page .slot-button:hover,
+.booking-live-page .slot-button:focus-visible,
+.booking-live-page .slot-button.selected,
+.booking-live-page .booking-picker .slot-button:hover,
+.booking-live-page .booking-picker .slot-button:focus-visible,
+.booking-live-page .booking-picker .slot-button.selected {
+  border-color: #7d6422 !important;
+  color: #171d29 !important;
+  background: #D5B226 !important;
+  box-shadow: 0 0 0 3px rgba(125, 100, 34, .22) !important;
+}
+
+/* Footer background coverage: make the Shopify section wrapper,
+   footer element, and all footer rows share the same dark field so
+   no page background shows through at the edges or bottom. */
+#shopify-section-footer,
+.shopify-section:has(> .site-footer),
+.site-footer {
+  background-color: var(--cc-footer, #1a202b) !important;
+  background-image:
+    linear-gradient(rgba(26, 32, 43, .82), rgba(26, 32, 43, .82)),
+    url({{ 'cameron-co-luxury-jewellery-background-texture.webp' | asset_url }}) !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.site-footer {
+  display: flow-root !important;
+  width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+}
+
+.site-footer::before {
+  content: none !important;
+}
+
+.site-footer .footer-inner {
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.site-footer .footer-inner,
+.site-footer .footer-top,
+.site-footer .footer-bottom {
+  background: transparent !important;
 }

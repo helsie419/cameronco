@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -12,8 +21,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
-            "image_1_fallback": "cameron-co-jewellery-remodelling-workbench.webp",
+            "image_1_alt": "Rose gold and green emerald rings showing remodelling possibilities",
+            "image_1_fallback": "rose-gold-green-emerald-rings.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Design Your New Setting",
@@ -46,8 +55,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Jeweller using laser welding equipment to repair and reshape jewellery",
-            "image_1_fallback": "cameron-co-jewellery-repair-laser-welding.webp",
+            "image_1_alt": "Oval diamond halo ring held for resetting and remodelling assessment",
+            "image_1_fallback": "oval-diamond-halo-ring-held.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Book an appointment",
@@ -64,7 +73,7 @@
         "hero_title": "The Art of Jewellery Remodelling",
         "hero_tagline": "Breathing new life into old treasures",
         "hero_intro": "<p>Whether it's an inherited heirloom or a piece you've outgrown, remodelling turns jewellery you already own into something you'll want to wear again.</p>",
-        "hero_image_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+        "hero_image_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
         "hero_image_fallback": "cameron-co-jewellery-remodelling-workbench.webp",
         "hero_heading_color": "",
         "hero_tagline_color": "",

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -12,8 +21,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
+            "image_1_alt": "Pear diamond yellow gold ring selected as a replacement piece",
+            "image_1_fallback": "pear-diamond-yellow-gold-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Browse Our Diamonds",
@@ -29,8 +38,8 @@
             "list_heading": "A few things worth knowing about your voucher:",
             "list_items": "Valid for the supply of jewellery or watches only — it can't be exchanged for cash, as required under our contract with your insurer\nValid for three years, and can be extended by arrangement\nCan be used by another household member with your permission",
             "list_style": "bullet",
-            "image_1_alt": "Selection of replacement rings displayed in a jewellery box",
-            "image_1_fallback": "cameron-co-replacement-ring-selection.webp",
+            "image_1_alt": "Single diamond ring presented in a light jewellery box",
+            "image_1_fallback": "single-diamond-ring-box.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -46,8 +55,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
+            "image_1_alt": "Princess cut engagement ring with matching eternity band",
+            "image_1_fallback": "princess-cut-ring-and-eternity-band.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Book an appointment",
@@ -64,8 +73,8 @@
         "hero_title": "Jewellery Replacement",
         "hero_tagline": "Rebuilding your collection after a loss",
         "hero_intro": "<p>Once your claim is approved, replacing a lost or damaged piece should feel considered, not rushed. Here's how the process works, and the flexibility you have along the way.</p>",
-        "hero_image_alt": "New diamond ring boxed ready as an insurance replacement piece",
-        "hero_image_fallback": "single-diamond-ring-box.webp",
+        "hero_image_alt": "Solitaire diamond engagement ring beside hand-drawn design sketches for a replacement piece",
+        "hero_image_fallback": "cameron-co-replacement-ring-selection.webp",
         "hero_heading_color": "",
         "hero_tagline_color": "",
         "section_heading_color": "",

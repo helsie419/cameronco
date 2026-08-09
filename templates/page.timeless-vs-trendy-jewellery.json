@@ -15,8 +15,8 @@
         "hero_title": "Choosing Jewellery That Stands the Test of Time",
         "hero_tagline": "Timeless vs Trendy",
         "hero_intro": "<p>In the ever-evolving world of fashion, jewellery stands as both a personal statement and a potential investment. The right balance can create a versatile collection that reflects your style while maintaining long-term value.</p>",
-        "hero_image_alt": "Coloured gemstone rings",
-        "hero_image_fallback": "cameron-co-coloured-gemstone-bezel-rings.webp"
+        "hero_image_alt": "Double band diamond cluster ring as a timeless statement piece",
+        "hero_image_fallback": "double-band-diamond-cluster-ring.webp"
       },
       "blocks": {
         "block-1": {
@@ -35,10 +35,10 @@
             "heading": "The Appeal of Contemporary Trends",
             "body": "<p>Trendy jewellery captures the spirit of a particular moment. Bold colours, layered styling, mixed metals and statement shapes can express personality and creativity. Some contemporary ideas become lasting designs when they are made with quality materials and balanced proportions.</p>",
             "callout": true,
-            "image_1_alt": "Loose green sapphires",
-            "image_1_fallback": "cameron-co-loose-green-sapphire-gemstones.webp",
-            "image_2_alt": "Teal sapphire and diamond rings",
-            "image_2_fallback": "cameron-co-teal-sapphire-diamond-halo-rings.webp"
+            "image_1_alt": "Emerald cluster gold rings on satin representing trend-led colour",
+            "image_1_fallback": "emerald-cluster-gold-ring.webp",
+            "image_2_alt": "Opal vintage gold ring balancing character and longevity",
+            "image_2_fallback": "opal-vintage-gold-ring.webp"
           }
         },
         "block-3": {
@@ -65,8 +65,15 @@
           }
         }
       },
-      "block_order": ["block-1", "block-2", "block-3", "block-4"]
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3",
+        "block-4"
+      ]
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

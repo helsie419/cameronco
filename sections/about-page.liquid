@@ -31,7 +31,7 @@
     {% if section.settings.mission_image %}
       <img alt="{{ section.settings.mission_image_alt | escape }}" height="516" loading="lazy" src="{{ section.settings.mission_image | image_url: width: 412 }}" width="412">
     {% else %}
-      <img alt="{{ section.settings.mission_image_alt | escape }}" height="516" loading="lazy" src="{{ 'rose-gold-green-emerald-rings.webp' | asset_url }}" width="412">
+      <img alt="{{ section.settings.mission_image_alt | escape }}" height="334" loading="lazy" src="{{ 'emerald-cut-diamond-halo-ring.webp' | asset_url }}" width="315">
     {% endif %}
   </figure>
   <article class="about-text-card about-vision">
@@ -42,7 +42,7 @@
     {% if section.settings.vision_image %}
       <img alt="{{ section.settings.vision_image_alt | escape }}" height="485" loading="lazy" src="{{ section.settings.vision_image | image_url: width: 286 }}" width="286">
     {% else %}
-      <img alt="{{ section.settings.vision_image_alt | escape }}" height="485" loading="lazy" src="{{ 'mens-sapphire-rings-edited.webp' | asset_url }}" width="286">
+      <img alt="{{ section.settings.vision_image_alt | escape }}" height="333" loading="lazy" src="{{ 'gold-bracelet-and-ring-on-hand.webp' | asset_url }}" width="315">
     {% endif %}
   </figure>
   <article class="about-values-card">
@@ -81,12 +81,12 @@
     { "type": "text", "id": "mission_button_text", "label": "Button text", "default": "Book an appointment" },
     { "type": "url", "id": "mission_button_link", "label": "Button link", "info": "Leave blank to use the Booking page" },
     { "type": "image_picker", "id": "mission_image", "label": "Mission image" },
-    { "type": "text", "id": "mission_image_alt", "label": "Mission image alt text", "default": "Rose gold dark green emerald rings" },
+    { "type": "text", "id": "mission_image_alt", "label": "Mission image alt text", "default": "Emerald cut diamond halo ring on satin" },
     { "type": "header", "content": "Vision" },
     { "type": "text", "id": "vision_heading", "label": "Heading", "default": "Vision" },
     { "type": "textarea", "id": "vision_text", "label": "Text", "default": "Cameron & Co aspire to be the foremost authority in jewellery insurance claims, recognised for our unwavering commitment to integrity, precision, and seamless restoration of cherished pieces, setting the standard for industry expertise and customer satisfaction." },
     { "type": "image_picker", "id": "vision_image", "label": "Vision image" },
-    { "type": "text", "id": "vision_image_alt", "label": "Vision image alt text", "default": "Men's sapphire rings" },
+    { "type": "text", "id": "vision_image_alt", "label": "Vision image alt text", "default": "Gold bracelet and ring worn on hand" },
     { "type": "header", "content": "Core values" },
     { "type": "text", "id": "values_heading", "label": "Heading", "default": "Core Values" },
     { "type": "text", "id": "values_intro_label", "label": "Intro label (bold)", "default": "Expertise" },

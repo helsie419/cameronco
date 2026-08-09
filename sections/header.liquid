@@ -1,33 +1,51 @@
 <style>
 /* =========================================================
-   CAMERON & CO HEADER
-   ========================================================= */
+   CAMERON & CO HEADER — single source of truth
 
+   This used to be spread across ~7 separate "final word" patches
+   in theme.css.liquid (dated things like "2026-06 definitive
+   correction patch", "FINAL QA CORRECTION PATCH", "2026-07 header
+   relayout v2", "UNIFIED HEADER POSITIONING"), each re-declaring
+   the same properties and only winning by a mix of !important,
+   CSS specificity and source order. All of that has been
+   consolidated into this one block, which reproduces the same
+   final computed result. Edit here — nothing else in the theme
+   should style .site-header, .site-logo, .menu-icon, .primary-nav,
+   .dropdown or the header's .btn-book.
 
-/* =========================================================
-   ALL SCREEN SIZES
-   General header appearance
+   Real breakpoint: the burger replaces the inline nav at 1200px
+   (not 900px, despite what older comments elsewhere claimed).
    ========================================================= */
 
 .site-header {
   position: relative;
   z-index: 1000;
   width: 100%;
-
-  /* ALL SCREENS:
-     Outer spacing beneath the header.
-     Keep this at 0 to avoid adding unnecessary height. */
-  padding-bottom: 0 !important;
-
-  background: {{ section.settings.background_color }} !important;
+  background: {{ section.settings.background_color | default: '#ffffff' }} !important;
   background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
   opacity: 1 !important;
+  padding: 0 !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
+
+  /* Outer minimum height. Taller than .header-inner's own min-height
+     below — that's intentional and matches the header's current
+     live sizing, not a bug to "fix" here. */
+  min-height: 84px;
 }
 
-/* ALL SCREENS:
-   Remove any fade or background overlay from the header. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes ccHeaderDrop {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .site-header {
+    animation: ccHeaderDrop 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
 .site-header::before,
 .site-header::after {
   content: none !important;
@@ -37,22 +55,110 @@
   opacity: 1 !important;
 }
 
+.site-header .header-inner {
+  display: grid;
+  grid-template-columns: 56px 1fr 0;
+  grid-template-rows: auto auto;
+  column-gap: 28px;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 22px !important;
+}
 
-/* =========================================================
-   ALL SCREEN SIZES
-   Navigation link appearance
-   ========================================================= */
+.site-logo {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: start;
+  /* Mobile offset by default; overridden by the desktop offset
+     inside the desktop media query below. Neither needs !important
+     — the desktop rule is later in source order, so it naturally
+     wins at ≥1201px. */
+  transform: translate(var(--logo-x-m, 0px), var(--logo-y-m, 0px));
+}
+
+.site-header .site-logo img {
+  /* Controlled by the "Logo size — mobile" setting in the theme
+     editor (Header section). Width scales proportionally — no
+     max-width cap, it fights the height and forces a squish. */
+  height: {{ section.settings.logo_size_mobile | default: 28 }}px !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+.site-header nav {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  justify-content: flex-end;
+  min-width: 0;
+  display: none;
+}
+
+.site-header .menu-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  border: 1px solid rgba(140, 106, 47, 0.32);
+  border-radius: 50%;
+  background: #ffffff;
+  width: 46px;
+  height: 46px;
+  z-index: 210;
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: center;
+  /* Breathing room from the right edge of the screen — the grid
+     column it sits in is 0 width by design (see header-inner
+     above), so without this it renders flush against the edge. */
+  margin-right: 18px;
+}
+
+.site-header .menu-icon span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-brand-red);
+  border-radius: 10px;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.site-header .menu-icon span:last-child {
+  width: 16px;
+}
+
+.site-header .menu-icon.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-header .menu-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header .menu-icon.open span:nth-child(3) {
+  width: 24px;
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Nav link appearance (shared by desktop + open mobile panel) ---- */
 
 .site-header .primary-nav-link {
   position: relative;
-  display: inline-block;
-  color: {{ section.settings.nav_color }} !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #D5B226 !important;
+  font-weight: 500;
   text-decoration: none !important;
   white-space: nowrap !important;
+  background: transparent;
+  border: 0;
 }
 
-/* ALL SCREENS:
-   Underline sits directly beneath the link text. */
 .site-header .primary-nav-link::after {
   content: "";
   position: absolute;
@@ -66,160 +172,232 @@
   transition: transform 0.2s ease;
 }
 
-/* ALL SCREENS:
-   Show underline on hover, keyboard focus and active page. */
 .site-header .primary-nav-link:hover::after,
 .site-header .primary-nav-link:focus-visible::after,
 .site-header .primary-nav-link[aria-current="page"]::after {
   transform: scaleX(1);
 }
 
+.site-header .primary-nav > li > .nav-parent svg {
+  width: 8px;
+  height: 8px;
+  fill: currentColor;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
 
-/* =========================================================
-   DESKTOP SETTINGS
-   Applies to screens wider than 900px
-   ========================================================= */
+/* ---- Desktop dropdown (submenu on nav items with children) ---- */
 
-@media (min-width: 901px) {
+.site-header .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #ffffff;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+  min-width: 210px;
+  padding: 10px 0 16px;
+  z-index: 300;
+  list-style: none;
+}
 
-  .site-header .header-inner {
-    /* DESKTOP:
-       Change this number to adjust desktop header height. */
-    min-height: 50px !important;
+.site-header .primary-nav > li:hover .dropdown,
+.site-header .primary-nav > li.dropdown-open .dropdown {
+  display: block;
+}
 
-    /* DESKTOP:
-       Internal spacing above and below the header content. */
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
+.site-header .dropdown a {
+  display: block;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 13px;
+  color: #171d29;
+  background: #ffffff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 14px 18px;
+  min-height: auto;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transition: background 0.15s, color 0.15s;
+}
 
-    /* DESKTOP:
-       Keep logo, navigation and booking button on one row. */
-    flex-wrap: nowrap !important;
+.site-header .dropdown li:last-child a {
+  border-bottom: none;
+}
+
+.site-header .dropdown a:hover {
+  background: #f7f3ee;
+  color: #D5B226;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-header .dropdown {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
   }
-
-  .site-header nav {
-    /* DESKTOP:
-       Allows the navigation area to shrink when required. */
-    min-width: 0;
-  }
-
-  .site-header .primary-nav {
-    /* DESKTOP:
-       Keep all navigation links on one line. */
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap !important;
-    white-space: nowrap !important;
-  }
-
-  .site-header .primary-nav > li {
-    /* DESKTOP:
-       Prevent an individual navigation item from wrapping. */
-    flex: 0 0 auto;
-    white-space: nowrap !important;
-  }
-
-  .site-header .primary-nav-link {
-    /* DESKTOP:
-       Prevent text such as Ring Builder from splitting. */
-    white-space: nowrap !important;
-  }
-
-  .site-header .btn-book {
-    /* DESKTOP:
-       Keep the booking button on one line. */
-    flex: 0 0 auto;
-    white-space: nowrap !important;
+  .site-header .primary-nav > li:hover > .dropdown,
+  .site-header .primary-nav > li:focus-within > .dropdown {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* ---- Booking button (structural placement only — its color comes
+   from the shared "UNIFIED PRIMARY BUTTON STYLE" rule in
+   theme.css.liquid, same as every other primary CTA on the site) ---- */
+
+.site-header .btn-book {
+  display: none;
+  flex: 0 0 auto;
+  white-space: nowrap !important;
+}
 
 /* =========================================================
-   SMALL DESKTOP SETTINGS
-   Applies from 901px to 1250px
-
-   These settings tighten the header before the existing
-   mobile burger menu appears at 900px.
+   DESKTOP — nav visible inline, burger hidden. 1200px is the
+   theme's real threshold, not the 900/1250px older comments
+   elsewhere assumed.
    ========================================================= */
+@media (min-width: 1201px) {
 
-@media (min-width: 901px) and (max-width: 1250px) {
+  .site-header {
+    min-height: 136px;
+  }
 
   .site-header .header-inner {
-    /* SMALL DESKTOP:
-       Space between the logo, navigation and booking button. */
-    gap: 10px !important;
-
-    /* SMALL DESKTOP:
-       Header height. */
-    min-height: 42px !important;
-
-    /* SMALL DESKTOP:
-       Top and bottom internal spacing. */
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    grid-template-columns: 340px 1fr 174px;
+    column-gap: 24px;
+    min-height: 50px;
+    max-width: 1320px;
+    padding: 0 24px !important;
   }
 
-  .site-header .primary-nav {
-    /* SMALL DESKTOP:
-       Space between navigation links. */
-    gap: 12px !important;
-  }
-
-  .site-header .primary-nav-link {
-    /* SMALL DESKTOP:
-       Navigation text size. */
-    font-size: 17px !important;
+  .site-logo {
+    transform: translate(var(--logo-x, 0px), var(--logo-y, 0px));
   }
 
   .site-header .site-logo img {
-    /* SMALL DESKTOP:
-       Logo width. */
-    max-width: 120px;
-    height: auto;
+    /* Controlled by the "Logo size" setting in the theme editor
+       (Header section). Width scales proportionally. */
+    height: {{ section.settings.logo_size | default: 40 }}px !important;
+    width: auto !important;
+    max-width: none !important;
   }
 
-  .site-header .btn-book {
-    /* SMALL DESKTOP:
-       Booking button horizontal padding and text size. */
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-    font-size: 12px !important;
+  .site-header nav {
+    display: block;
+    padding-top: 0;
   }
-}
 
+  .site-header .primary-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-end;
+    gap: 0;
+  }
 
-/* =========================================================
-   MOBILE SETTINGS
-   Applies to screens 900px wide and below
-
-   The theme's existing JavaScript and global CSS continue
-   to control opening and closing the burger menu.
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-  .site-header .header-inner {
-    /* MOBILE:
-       Change this number to adjust mobile header height. */
-    min-height: 42px !important;
-
-    /* MOBILE:
-       Internal spacing above and below the header content. */
-    padding-top: 6px !important;
-    padding-bottom: 6px !important;
+  .site-header .primary-nav > li {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .site-header .primary-nav-link {
-    /* MOBILE:
-       Navigation link colour inside the mobile menu. */
-    color: {{ section.settings.nav_color_mobile }} !important;
+    font-size: 13px;
+    white-space: nowrap !important;
+  }
+
+  .site-header .menu-icon {
+    display: none;
+  }
+
+  .site-header .btn-book {
+    display: inline-flex;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: end;
+
+    /* Matches .site-hero-cta's height so the header button and the
+       hero button read as the same size. Width is fixed 10px
+       narrower than the hero button's fixed 220px. */
+    height: 46px !important;
+    width: 210px !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* =========================================================
+   MOBILE / BURGER — 1200px and below
+   ========================================================= */
+@media (max-width: 1200px) {
+
+  .site-header.mobile-open nav {
+    display: block;
+    position: absolute;
+    top: 86px;
+    left: 0;
+    right: 0;
+    grid-column: auto;
+    grid-row: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 18px 22px 26px;
+
+    /* Rounded bottom corners and a touch of transparency so the
+       panel doesn't read as a flat, harsh rectangle. */
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-radius: 0 0 16px 16px;
+  }
+
+  .site-header.mobile-open .primary-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .site-header.mobile-open .primary-nav > li {
+    width: 100%;
+  }
+
+  .site-header.mobile-open .primary-nav > li > a,
+  .site-header.mobile-open .primary-nav > li > span {
+    padding: 12px 0;
+    /* Slightly larger, easier-to-read menu item text. */
+    font-size: 15px;
+  }
+
+  .site-header.mobile-open .dropdown {
+    display: block;
+    position: static;
+    box-shadow: none;
+    padding-left: 18px;
+    min-width: 0;
+    border: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    min-height: 72px;
+  }
+  .site-header .header-inner {
+    min-height: 72px;
   }
 }
 
 /* Override hardcoded h1 color to use CSS variable */
 .brand-hero h1 {
   color: var(--color-text) !important;
-  }
+}
 </style>
 
 
@@ -245,15 +423,19 @@
       aria-label="Cameron &amp; Co home"
       class="site-logo"
       href="{{ routes.root_url }}"
-      {% if section.settings.logo_offset_x != 0 or section.settings.logo_offset_y != 0 %}
-        style="transform: translate({{ section.settings.logo_offset_x }}px, {{ section.settings.logo_offset_y }}px);"
-      {% endif %}
+      style="
+        --logo-x: {{ section.settings.logo_offset_x | default: 0 }}px;
+        --logo-y: {{ section.settings.logo_offset_y | default: 0 }}px;
+        --logo-x-m: {{ section.settings.logo_offset_x_mobile | default: 0 }}px;
+        --logo-y-m: {{ section.settings.logo_offset_y_mobile | default: 0 }}px;
+      "
     >
       <img
         alt="Cameron &amp; Co Logo"
-        height="59"
+        height="486"
         src="{{ 'cameron-co-logo-cropped.webp' | asset_url }}"
-        width="143"
+        width="2000"
+        style="object-fit: contain;"
       >
     </a>
 
@@ -495,12 +677,22 @@
     },
     {
       "type": "header",
-      "content": "Move logo"
+      "content": "Logo — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
     },
     {
       "type": "range",
       "id": "logo_offset_x",
-      "label": "Logo — horizontal",
+      "label": "Move — horizontal",
       "min": -300,
       "max": 300,
       "step": 10,
@@ -510,9 +702,43 @@
     {
       "type": "range",
       "id": "logo_offset_y",
-      "label": "Logo — vertical",
+      "label": "Move — vertical",
       "min": -100,
       "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Logo — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Height",
+      "min": 16,
+      "max": 70,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_x_mobile",
+      "label": "Move — horizontal",
+      "min": -150,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_y_mobile",
+      "label": "Move — vertical",
+      "min": -60,
+      "max": 60,
       "step": 5,
       "unit": "px",
       "default": 0

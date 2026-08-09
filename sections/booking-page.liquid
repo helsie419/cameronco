@@ -5,16 +5,16 @@
   </section>
 
   <section class="app-grid section-inner" aria-label="Appointment Booking System">
-    <form class="booking-card booking-form" id="booking-form" novalidate>
-      <div class="form-row-2">
-        <label for="booking-office">Office *
+    <section class="booking-card booking-picker" aria-label="Select a date and time">
+      <div class="booking-picker-controls">
+        <label for="booking-office">Office
           <select id="booking-office" name="office" required aria-required="true">
             <option value="melbourne">Melbourne Office</option>
             <option value="sydney">Sydney Office</option>
           </select>
         </label>
 
-        <label for="booking-service">Appointment type *
+        <label for="booking-service">Appointment type
           <select id="booking-service" name="service" required aria-required="true">
             <option>Virtual Enquiry</option>
             <option>Engagement Ring Enquiry</option>
@@ -25,6 +25,39 @@
         </label>
       </div>
 
+      <div class="booking-scheduler">
+        <div class="booking-calendar-panel">
+          <h2>Select a Date &amp; Time</h2>
+          <div class="calendar-month-row">
+            <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">‹</button>
+            <strong id="calendar-month-label">Loading</strong>
+            <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">›</button>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+          <div class="calendar-days" id="calendar-days"></div>
+          <div class="booking-timezone">
+            <strong>Time zone</strong>
+            <span aria-hidden="true">◉</span>
+            <span>Sydney, Melbourne Time (<span id="timezone-now">--:--</span>)</span>
+          </div>
+        </div>
+
+        <section class="result-panel" aria-label="Available appointment timeslots">
+          <h2 id="selected-date-heading">Select a date</h2>
+          <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
+        </section>
+      </div>
+    </section>
+
+    <form class="booking-card booking-form booking-details-form" id="booking-form" novalidate>
       <div class="form-row-3">
         <label for="booking-name">Name *
           <input id="booking-name" autocomplete="name" name="name" required aria-required="true" type="text" placeholder="Your full name" />
@@ -52,11 +85,6 @@
 
       <p class="status-line" id="booking-status" aria-live="polite">Select an available time from the schedule.</p>
     </form>
-
-    <section class="result-panel" aria-label="Available appointment timeslots">
-      <h2 class="sr-only">Available timeslots</h2>
-      <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
-    </section>
   </section>
 
   <section class="booking-card section-inner" hidden id="manage-booking" style="margin-top: 30px;">
@@ -79,16 +107,27 @@
   var params = new URLSearchParams(window.location.search);
   var form = document.getElementById("booking-form");
   var office = document.getElementById("booking-office");
+  var serviceSelect = document.getElementById("booking-service");
   var slotInput = document.getElementById("selected-slot");
   var slotGrid = document.getElementById("slot-grid");
   var status = document.getElementById("booking-status");
   var refreshButton = document.getElementById("refresh-slots");
   var managePanel = document.getElementById("manage-booking");
   var manageSummary = document.getElementById("manage-summary");
+  var calendarDays = document.getElementById("calendar-days");
+  var calendarMonthLabel = document.getElementById("calendar-month-label");
+  var selectedDateHeading = document.getElementById("selected-date-heading");
+  var timezoneNow = document.getElementById("timezone-now");
+  var calendarPrev = document.getElementById("calendar-prev");
+  var calendarNext = document.getElementById("calendar-next");
   var activeToken = params.get("booking");
+  var availableSlots = [];
+  var slotsByDate = {};
+  var selectedDateKey = "";
+  var calendarYear = new Date().getFullYear();
+  var calendarMonth = new Date().getMonth();
 
   if (params.get("office") && office) office.value = params.get("office");
-  var serviceSelect = form ? form.querySelector("[name='service']") : null;
   if (serviceSelect) {
     if (params.get("service")) {
       serviceSelect.value = params.get("service");
@@ -138,6 +177,66 @@
     }).format(new Date(value));
   }
 
+  function dateParts(value) {
+    var parts = new Intl.DateTimeFormat("en-AU", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "Australia/Sydney"
+    }).formatToParts(new Date(value));
+    return parts.reduce(function (memo, part) {
+      if (part.type !== "literal") memo[part.type] = part.value;
+      return memo;
+    }, {});
+  }
+
+  function slotDateKey(value) {
+    var parts = new Intl.DateTimeFormat("en-AU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "Australia/Sydney"
+    }).formatToParts(new Date(value)).reduce(function (memo, part) {
+      if (part.type !== "literal") memo[part.type] = part.value;
+      return memo;
+    }, {});
+    return parts.year + "-" + parts.month + "-" + parts.day;
+  }
+
+  function slotTime(value) {
+    return new Intl.DateTimeFormat("en-AU", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "Australia/Sydney"
+    }).format(new Date(value)).replace(" ", "").toLowerCase();
+  }
+
+  function readableDateFromKey(key) {
+    var slot = slotsByDate[key] && slotsByDate[key][0];
+    if (slot) {
+      var parts = dateParts(slot.start);
+      return parts.weekday + ", " + parts.month + " " + Number(parts.day);
+    }
+    var bits = key.split("-");
+    return new Intl.DateTimeFormat("en-AU", {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    }).format(new Date(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2])));
+  }
+
+  function updateTimezoneClock() {
+    if (!timezoneNow) return;
+    timezoneNow.textContent = new Intl.DateTimeFormat("en-AU", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: "Australia/Sydney"
+    }).format(new Date()).replace(" ", "").toLowerCase();
+  }
+
   function setStatus(msg) {
     if (status) status.textContent = msg;
   }
@@ -152,11 +251,11 @@
         return res.json();
       })
       .then(function (json) {
-        renderSlots(json.slots || []);
+        setSlots(json.slots || []);
         setStatus("Select an available time.");
       })
       .catch(function () {
-        renderSlots(sampleSlots());
+        setSlots(sampleSlots());
         setStatus("Showing sample local times because live calendar backend is reconnecting.");
       });
   }
@@ -175,18 +274,88 @@
     return slots;
   }
 
-  function renderSlots(slots) {
+  function setSlots(slots) {
+    availableSlots = slots.slice().sort(function (a, b) {
+      return new Date(a.start) - new Date(b.start);
+    });
+    slotsByDate = availableSlots.reduce(function (memo, slot) {
+      var key = slotDateKey(slot.start);
+      if (!memo[key]) memo[key] = [];
+      memo[key].push(slot);
+      return memo;
+    }, {});
+
+    var firstSlot = availableSlots[0];
+    if (firstSlot) {
+      selectedDateKey = slotDateKey(firstSlot.start);
+      var firstKeyParts = selectedDateKey.split("-");
+      calendarYear = Number(firstKeyParts[0]);
+      calendarMonth = Number(firstKeyParts[1]) - 1;
+    } else {
+      selectedDateKey = "";
+    }
+    renderCalendar();
+    renderSlotsForDate(selectedDateKey);
+  }
+
+  function renderCalendar() {
+    if (!calendarDays || !calendarMonthLabel) return;
+    calendarDays.innerHTML = "";
+    calendarMonthLabel.textContent = new Intl.DateTimeFormat("en-AU", {
+      month: "long",
+      year: "numeric"
+    }).format(new Date(calendarYear, calendarMonth, 1));
+
+    var firstDay = new Date(calendarYear, calendarMonth, 1);
+    var daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+    var leadingBlanks = (firstDay.getDay() + 6) % 7;
+
+    for (var blank = 0; blank < leadingBlanks; blank += 1) {
+      var spacer = document.createElement("span");
+      spacer.className = "calendar-day-spacer";
+      calendarDays.appendChild(spacer);
+    }
+
+    for (var day = 1; day <= daysInMonth; day += 1) {
+      var key = calendarYear + "-" + String(calendarMonth + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "calendar-day";
+      button.textContent = day;
+      button.disabled = !slotsByDate[key];
+      if (key === selectedDateKey) button.classList.add("selected");
+      if (slotsByDate[key]) button.classList.add("available");
+      button.addEventListener("click", function (event) {
+        selectedDateKey = event.currentTarget.getAttribute("data-date");
+        if (slotInput) slotInput.value = "";
+        renderCalendar();
+        renderSlotsForDate(selectedDateKey);
+      });
+      button.setAttribute("data-date", key);
+      calendarDays.appendChild(button);
+    }
+  }
+
+  function renderSlotsForDate(dateKey) {
     if (!slotGrid) return;
     slotGrid.innerHTML = "";
-    if (slots.length === 0) {
+    if (selectedDateHeading) {
+      selectedDateHeading.textContent = dateKey ? readableDateFromKey(dateKey) : "Select a date";
+    }
+    var slots = slotsByDate[dateKey] || [];
+    if (availableSlots.length === 0) {
       slotGrid.innerHTML = "<p>No open slots for this date range. Please select another office or contact us directly.</p>";
+      return;
+    }
+    if (slots.length === 0) {
+      slotGrid.innerHTML = "<p>Select a highlighted date to view available times.</p>";
       return;
     }
     slots.forEach(function (slot) {
       var button = document.createElement("button");
       button.type = "button";
       button.className = "slot-button";
-      button.textContent = fmt(slot.start);
+      button.textContent = slotTime(slot.start);
       button.addEventListener("click", function () {
         slotGrid.querySelectorAll(".slot-button").forEach(function (item) {
           item.classList.remove("selected");
@@ -201,8 +370,8 @@
   function formPayload() {
     var data = new FormData(form);
     return {
-      office: data.get("office"),
-      service: data.get("service"),
+      office: office ? office.value : data.get("office"),
+      service: serviceSelect ? serviceSelect.value : data.get("service"),
       name: data.get("name"),
       email: data.get("email"),
       phone: data.get("phone"),
@@ -210,6 +379,30 @@
       slot: data.get("slot"),
       diamondId: params.get("diamondId") || params.get("diamond") || ""
     };
+  }
+
+  if (calendarPrev) {
+    calendarPrev.addEventListener("click", function () {
+      calendarMonth -= 1;
+      if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear -= 1;
+      }
+      renderCalendar();
+      renderSlotsForDate(selectedDateKey);
+    });
+  }
+
+  if (calendarNext) {
+    calendarNext.addEventListener("click", function () {
+      calendarMonth += 1;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear += 1;
+      }
+      renderCalendar();
+      renderSlotsForDate(selectedDateKey);
+    });
   }
 
   if (form) {
@@ -312,6 +505,8 @@
 
   if (office) office.addEventListener("change", loadSlots);
   if (refreshButton) refreshButton.addEventListener("click", loadSlots);
+  updateTimezoneClock();
+  window.setInterval(updateTimezoneClock, 60000);
   loadSlots();
   loadManagedBooking();
 })();

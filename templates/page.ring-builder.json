@@ -22,7 +22,7 @@
       }
     },
     "1784243820bc468ed8": {
-      "type": "apps",
+      "type": "app-embed-slot",
       "blocks": {
         "nivoda_connect_ring_builder_HhhQqw": {
           "type": "shopify://apps/nivoda-connect/blocks/ring_builder/1818f65a-9917-4ef2-bca9-2424a925fc76",

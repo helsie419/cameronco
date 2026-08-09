@@ -39,7 +39,7 @@
         "body_font": "montserrat",
         "text_h_position": "flex-start",
         "text_v_position": "center",
-        "text_offset_x": 100,
+        "text_offset_x": 40,
         "text_offset_y": 0,
         "button_offset_x": 0,
         "button_offset_y": 0
@@ -71,16 +71,16 @@
         "card_heading_font": "cormorant",
         "body_font": "glacial",
         "label_1": "Jewellery Remodelling",
-        "image_1_alt": "Jeweller reshaping a ring at the workbench during a remodelling project",
+        "image_1_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
         "link_1": "/pages/jewelleryremodelling",
         "label_2": "Repairs",
         "image_2_alt": "Laser welding repair on a broken gold chain link",
         "link_2": "/pages/jewelleryrepairs",
         "label_3": "Appraisals",
-        "image_3_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
+        "image_3_alt": "Jeweller examining a diamond ring with a loupe during an appraisal inspection",
         "link_3": "/pages/appraisals",
         "label_4": "Jewellery Replacement",
-        "image_4_alt": "New diamond ring boxed ready as an insurance replacement piece",
+        "image_4_alt": "Solitaire diamond engagement ring beside hand-drawn design sketches for a replacement piece",
         "link_4": "/pages/jewelleryreplacement"
       }
     },

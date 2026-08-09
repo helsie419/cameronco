@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -12,8 +21,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
+            "image_1_alt": "Diamond ring inspected under magnification for an insurance appraisal",
+            "image_1_fallback": "inspecting-diamonds-magnification.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -29,8 +38,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Jeweller consulting with a client during an appraisal appointment",
-            "image_1_fallback": "cameron-co-appraisal-consultation.webp",
+            "image_1_alt": "Diamond halo stud earrings prepared for valuation documentation",
+            "image_1_fallback": "diamond-halo-stud-earrings.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Book an appointment",
@@ -46,8 +55,8 @@
         "hero_title": "Jewellery Appraisals",
         "hero_tagline": "Accurate valuations for insurance, claims and peace of mind",
         "hero_intro": "<p>Whether you need a valuation for an insurance claim or simply want your collection accurately documented for re-insurance, our consultants assess each piece carefully to establish a fair, current retail value.</p>",
-        "hero_image_alt": "Jeweller inspecting a diamond ring under magnification during an appraisal",
-        "hero_image_fallback": "inspecting-diamonds-magnification.webp",
+        "hero_image_alt": "Jeweller examining a diamond ring with a loupe during an appraisal inspection",
+        "hero_image_fallback": "cameron-co-appraisal-consultation.webp",
         "hero_heading_color": "",
         "hero_tagline_color": "",
         "section_heading_color": "",

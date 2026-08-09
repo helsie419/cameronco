@@ -45,8 +45,8 @@
             "heading": "Carat Weight",
             "body": "<p>Carat weight is a measure of a diamond's size, with larger diamonds typically being more valuable. Price can change significantly at popular benchmark weights such as 0.50, 1.00 and 2.00 carats.</p><p>When choosing a diamond, balance carat weight with cut, colour and clarity to find the stone that best suits your preferences and budget.</p>",
             "callout": true,
-            "image_1_alt": "Round brilliant cut diamond illustration",
-            "image_1_fallback": "cameron-co-diamond-brilliant-cut-illustration.webp"
+            "image_1_alt": "Pear diamond yellow gold ring showing diamond carat presence on the hand",
+            "image_1_fallback": "pear-diamond-yellow-gold-ring.webp"
           }
         },
         "block-3b": {
@@ -80,7 +80,9 @@
             "list_items": "<strong>Flawless (FL):</strong> no inclusions or blemishes visible under 10x magnification.\n<strong>Internally Flawless (IF):</strong> no inclusions visible under 10x magnification.\n<strong>Very, Very Slightly Included (VVS1 and VVS2):</strong> inclusions are extremely difficult to see.\n<strong>Very Slightly Included (VS1 and VS2):</strong> minor inclusions visible under magnification but usually not to the naked eye.\n<strong>Slightly Included (SI1 and SI2):</strong> inclusions noticeable under magnification and sometimes visible.\n<strong>Included (I1, I2, I3):</strong> inclusions can affect transparency and brilliance.",
             "list_style": "numbered",
             "cta_text": "Book Appointment",
-            "cta_link": "/pages/booking"
+            "cta_link": "/pages/booking",
+            "image_1_alt": "Princess cut diamond solitaire ring showing clarity and brilliance",
+            "image_1_fallback": "princess-cut-diamond-solitaire-ring.webp"
           }
         },
         "block-5b": {
@@ -105,8 +107,19 @@
           }
         }
       },
-      "block_order": ["block-1", "block-2", "block-3", "block-3b", "block-4", "block-5", "block-5b", "block-6"]
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3",
+        "block-3b",
+        "block-4",
+        "block-5",
+        "block-5b",
+        "block-6"
+      ]
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

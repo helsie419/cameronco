@@ -1,4 +1,4 @@
-{% assign fallback_images = 'cameron-co-loose-green-sapphire-gemstones.webp,cameron-co-teal-sapphire-diamond-halo-rings.webp,cameron-co-jewellery-collection.webp,cameron-co-coloured-gemstone-bezel-rings.webp,cameron-co-jewellery-repair-components.webp,cameron-co-jewellery-repair-laser-welding.webp,cameron-co-jewellery-remodelling-workbench.webp' | split: ',' %}
+{% assign fallback_images = 'aquamarine-solitaire-ring.webp,diamond-halo-stud-earrings.webp,cameron-co-replacement-ring-selection.webp,emerald-cluster-gold-ring.webp,cameron-co-jewellery-repair-components.webp,cameron-co-jewellery-repair-laser-welding.webp,cameron-co-jewellery-remodelling-workbench.webp' | split: ',' %}
 <div class="section-inner" style="background:{{ section.settings.background_color }};">
   <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
   <!-- ALTERNATING IMAGE / TESTIMONIAL CARD GRID -->
@@ -22,7 +22,7 @@
     {% if section.settings.closing_image %}
       <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ section.settings.closing_image | image_url: width: 400 }}" width="400">
     {% else %}
-      <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ 'cameron-co-diamond-brilliant-cut-illustration.webp' | asset_url }}" width="400">
+      <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ 'sapphire-diamond-halo-earrings.webp' | asset_url }}" width="400">
     {% endif %}
   </div>
   <div class="btn-row-center cc-moved-style-042">
@@ -38,7 +38,7 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Testimonials from Valued Customers" },
     { "type": "header", "content": "Closing image" },
     { "type": "image_picker", "id": "closing_image", "label": "Closing image", "info": "The final decorative image shown after the last testimonial" },
-    { "type": "text", "id": "closing_image_alt", "label": "Closing image alt text", "default": "Geometric brilliant-cut diamond outline illustration by Cameron & Co" },
+    { "type": "text", "id": "closing_image_alt", "label": "Closing image alt text", "default": "Sapphire and diamond halo earrings on satin" },
     { "type": "header", "content": "Call to action" },
     { "type": "text", "id": "cta_text", "label": "Button text", "default": "Chat to us" },
     { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave blank to use the Contact page" },

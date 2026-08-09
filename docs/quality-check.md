@@ -89,3 +89,17 @@ A comprehensive quality check review was performed across the complete Cameron &
 * All critical and major functional defects have been resolved.
 * The store is accessible, responsive, and color contrast compliant.
 * The Google Calendar Booking System is fully integrated into the Shopify theme structure.
+
+---
+
+## 7. August 9, 2026 Image & Integration Retest
+
+| Area | Status | Retest Result |
+| :--- | :---: | :--- |
+| Mobile hero asset | **PASS** | Converted corrected portrait image with in-box Cameron & Co mark to `cameron-co-mobile-engagement-ring-box-hero.webp`; removed raw generated PNGs. |
+| Page imagery | **PASS** | Updated article/testimonial/about fallback imagery with current stylised WebP assets; no missing referenced WebP fallbacks and no duplicate fallback image on an individual JSON page. |
+| Booking availability | **PASS** | Live `GET https://us-central1-cameronco-booking.cloudfunctions.net/api/api/booking/availability?office=sydney` and `office=melbourne` returned HTTP 200 with slot JSON. |
+| Booking frontend script | **PASS** | `sections/booking-page.liquid` JavaScript parsed successfully after calendar UI changes. |
+| Maps | **PASS** | Sydney and Melbourne Google Maps embed URLs returned HTTP 200 on GET. `HEAD` returns 404 from Google, so GET was used for the real iframe-equivalent check. |
+
+**Release Recommendation:** **PASS for this image/integration pass**, with the booking test limited to availability lookup only; no live appointment was created.

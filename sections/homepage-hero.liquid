@@ -50,7 +50,7 @@ body.template-index #shopify-section-{{ section.id }} {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: center top;
   background-size: cover;
   overflow: hidden;
 }
@@ -61,7 +61,7 @@ body.template-index #shopify-section-{{ section.id }} {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   z-index: 1;
 }
 
@@ -90,6 +90,7 @@ body.template-index #shopify-section-{{ section.id }} {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   margin-bottom: 30px;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
 }
 
 .site-hero-line1 {
@@ -97,6 +98,7 @@ body.template-index #shopify-section-{{ section.id }} {
   font-family: "EB Garamond", Georgia, serif;
   font-weight: 400;
   font-style: normal;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
 }
 
 .site-hero-line2 {
@@ -105,10 +107,18 @@ body.template-index #shopify-section-{{ section.id }} {
   font-weight: 400;
   font-style: italic;
   margin-top: 6px;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
 }
 
 .site-hero-cta {
   font-weight: 500;
+  height: 46px !important;
+  width: 220px !important;
+  justify-content: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box !important;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px)) !important;
 }
 
 @media (max-width: 768px) {
@@ -128,56 +138,89 @@ body.template-index #shopify-section-{{ section.id }} {
    ========================================================= */
 
 @media (max-width: 900px) {
+  /* Single full-bleed background photo, text overlaid on top.
+     The image itself has plenty of blank fabric up top (where the
+     text sits) and the box lower down — no separate white block. */
   .site-hero {
-    min-height: 82vh !important;
-    height: 82vh !important;
+    min-height: 560px !important;
+    height: 76svh !important;
+    max-height: 700px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-end !important; /* Pushes text container to the bottom */
+    justify-content: {{ section.settings.text_v_position_mobile | default: 'flex-end' }} !important;
     align-items: center !important;
+    background: #f8f6f2 !important;
   }
 
-/* Corrected focal point & direct zoom on the diamond gemstone */
   .site-hero-photo {
-    background-position: 70% 40% !important; /* Center horizontally (50%), focus near the top third vertically (25%) */
-    background-size: 340% !important;        /* Zoom in so the diamond stands out clearly above the bottom text */
+    position: absolute !important;
+    inset: 0 !important;
+    {% if section.settings.mobile_background_image %}
+      background-image: url('{{ section.settings.mobile_background_image | image_url: width: 1400 }}') !important;
+    {% elsif section.settings.background_image %}
+      background-image: url('{{ section.settings.background_image | image_url: width: 1400 }}') !important;
+    {% else %}
+      background-image: url('{{ 'cameron-co-mobile-engagement-ring-box-hero.webp' | asset_url }}') !important;
+    {% endif %}
+    background-position: center 52% !important;
+    background-size: cover !important;
     background-repeat: no-repeat !important;
+    transform: none !important;
   }
 
   .site-hero-video {
-    object-position: 70% 40% !important;
+    object-position: center 58% !important;
   }
 
-  /* Anchored at bottom with safe padding */
+  .site-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background:
+      linear-gradient(to bottom, rgba(255,255,255,.72) 0%, rgba(255,255,255,.36) 28%, rgba(255,255,255,.04) 58%, rgba(255,255,255,.18) 100%),
+      radial-gradient(circle at 50% 38%, rgba(255,255,255,.76) 0%, rgba(255,255,255,.36) 28%, rgba(255,255,255,0) 58%) !important;
+  }
+
+  .site-hero::after {
+    opacity: .55 !important;
+  }
+
   .site-hero-inner {
-    padding: 35px 20px 115px !important;
-    width: 100% !important;
+    position: relative !important;
+    z-index: 2 !important;
+    padding: 34px 26px 44px !important;
+    width: min(100%, 390px) !important;
     max-width: 100% !important;
     margin-left: 0 !important;
-    text-align: Center !important;
-    transform: none !important;
+    text-align: center !important;
+    transform: translate(var(--hero-text-offset-x-mobile, 0px), var(--hero-text-offset-y-mobile, 0px)) !important;
   }
 
   .site-hero-eyebrow {
     font-size: 11px !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.16em !important;
     text-transform: uppercase;
-    margin-bottom: 6px !important;
+    margin-bottom: 12px !important;
     color: {{ section.settings.eyebrow_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
   }
 
   .site-hero-line1 {
-    font-size: 24px !important;
+    font-size: 21px !important;
     line-height: 1.15 !important;
     color: {{ section.settings.line1_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
   }
 
   .site-hero-line2 {
-    font-size: 32px !important;
+    font-size: 31px !important;
     line-height: 1.1 !important;
     margin-top: 2px !important;
-    margin-bottom: 18px !important;
+    margin-bottom: 22px !important;
     color: {{ section.settings.line2_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
   }
 
   .site-hero-line2 .accent {
@@ -189,9 +232,32 @@ body.template-index #shopify-section-{{ section.id }} {
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    padding: 12px 22px !important;
+    width: min(100%, 250px) !important;
+    height: 48px !important;
+    padding: 0 22px !important;
     font-size: 13px !important;
-    transform: none !important;
+    margin: 0 auto !important;
+    border-radius: 999px !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-hero {
+    min-height: 585px !important;
+    height: 78svh !important;
+  }
+
+  .site-hero-photo {
+    background-position: center 52% !important;
+  }
+
+  .site-hero-inner {
+    padding-inline: 22px !important;
+  }
+
+  .site-hero-eyebrow {
+    margin-bottom: 12px !important;
   }
 }
 </style>
@@ -209,7 +275,7 @@ body.template-index #shopify-section-{{ section.id }} {
       {% if section.settings.video != blank %}
         {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'site-hero-video' }}
       {% elsif section.settings.video_mp4_url != blank %}
-        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}"{% endif %}>
+        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}"{% endif %}>
           <source src="{{ section.settings.video_mp4_url }}" type="video/mp4">
         </video>
       {% elsif section.settings.background_image %}
@@ -220,7 +286,7 @@ body.template-index #shopify-section-{{ section.id }} {
       {% else %}
         <div
           class="site-hero-photo"
-          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}');"
+          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}');"
         ></div>
       {% endif %}
     </div>
@@ -231,7 +297,7 @@ body.template-index #shopify-section-{{ section.id }} {
         {% if section.settings.background_image %}
           background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
         {% else %}
-          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}');
+          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}');
         {% endif %}
       "
     ></div>
@@ -239,18 +305,26 @@ body.template-index #shopify-section-{{ section.id }} {
 
   <div
     class="site-hero-inner"
-    {% if section.settings.text_offset_x != 0 or section.settings.text_offset_y != 0 %}
-      style="
+    style="
+      --hero-text-offset-x-mobile: {{ section.settings.text_offset_x_mobile | default: 0 }}px;
+      --hero-text-offset-y-mobile: {{ section.settings.text_offset_y_mobile | default: 0 }}px;
+      {% if section.settings.text_offset_x != 0 or section.settings.text_offset_y != 0 %}
         transform: translate(
           {{ section.settings.text_offset_x }}px,
           {{ section.settings.text_offset_y }}px
         );
-      "
-    {% endif %}
+      {% endif %}
+    "
   >
     <div
       class="site-hero-eyebrow cc-font-body-{{ section.settings.body_font }}"
-      style="color: {{ section.settings.eyebrow_color }};"
+      style="
+        color: {{ section.settings.eyebrow_color }};
+        --el-x: {{ section.settings.eyebrow_offset_x | default: 0 }}px;
+        --el-y: {{ section.settings.eyebrow_offset_y | default: 0 }}px;
+        --el-x-m: {{ section.settings.eyebrow_offset_x_mobile | default: 0 }}px;
+        --el-y-m: {{ section.settings.eyebrow_offset_y_mobile | default: 0 }}px;
+      "
     >
       {{ section.settings.eyebrow }}
     </div>
@@ -258,14 +332,26 @@ body.template-index #shopify-section-{{ section.id }} {
     <h1>
       <span
         class="site-hero-line1 cc-font-body-{{ section.settings.body_font }}"
-        style="color: {{ section.settings.line1_color }};"
+        style="
+          color: {{ section.settings.line1_color }};
+          --el-x: {{ section.settings.line1_offset_x | default: 0 }}px;
+          --el-y: {{ section.settings.line1_offset_y | default: 0 }}px;
+          --el-x-m: {{ section.settings.line1_offset_x_mobile | default: 0 }}px;
+          --el-y-m: {{ section.settings.line1_offset_y_mobile | default: 0 }}px;
+        "
       >
         {{ section.settings.line1 }}
       </span>
 
       <span
         class="site-hero-line2 cc-font-heading-{{ section.settings.heading_font }}"
-        style="color: {{ section.settings.line2_color }};"
+        style="
+          color: {{ section.settings.line2_color }};
+          --el-x: {{ section.settings.line2_offset_x | default: 0 }}px;
+          --el-y: {{ section.settings.line2_offset_y | default: 0 }}px;
+          --el-x-m: {{ section.settings.line2_offset_x_mobile | default: 0 }}px;
+          --el-y-m: {{ section.settings.line2_offset_y_mobile | default: 0 }}px;
+        "
       >
         {{ section.settings.line2 }}
 
@@ -282,14 +368,12 @@ body.template-index #shopify-section-{{ section.id }} {
       class="site-hero-cta"
       href="{{ section.settings.cta_link }}"
       style="
-        background: {{ section.settings.button_color }};
-        border-color: {{ section.settings.button_color }};
-        {% if section.settings.button_offset_x != 0 or section.settings.button_offset_y != 0 %}
-          transform: translate(
-            {{ section.settings.button_offset_x }}px,
-            {{ section.settings.button_offset_y }}px
-          );
-        {% endif %}
+        background: {{ section.settings.button_color }} !important;
+        border-color: {{ section.settings.button_color }} !important;
+        --el-x: {{ section.settings.button_offset_x | default: 0 }}px;
+        --el-y: {{ section.settings.button_offset_y | default: 0 }}px;
+        --el-x-m: {{ section.settings.button_offset_x_mobile | default: 0 }}px;
+        --el-y-m: {{ section.settings.button_offset_y_mobile | default: 0 }}px;
       "
     >
       {{ section.settings.cta_text }}
@@ -330,6 +414,12 @@ body.template-index #shopify-section-{{ section.id }} {
       "type": "image_picker",
       "id": "background_image",
       "label": "Background Image (or Video Poster Fallback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image",
+      "info": "Optional portrait crop for phones. Recommended size: 1080 x 1440 or 1080 x 1620."
     },
     {
       "type": "video",
@@ -496,26 +586,170 @@ body.template-index #shopify-section-{{ section.id }} {
     {
       "type": "range",
       "id": "text_offset_x",
-      "label": "Fine-tune text — horizontal",
+      "label": "Move whole text block — horizontal",
       "min": -400, "max": 400, "step": 10, "unit": "px", "default": 300
     },
     {
       "type": "range",
       "id": "text_offset_y",
-      "label": "Fine-tune text — vertical",
+      "label": "Move whole text block — vertical",
       "min": -300, "max": 300, "step": 10, "unit": "px", "default": -130
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Eyebrow (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 1 (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 2 (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Button (desktop)"
     },
     {
       "type": "range",
       "id": "button_offset_x",
-      "label": "Fine-tune button — horizontal",
+      "label": "Horizontal",
       "min": -400, "max": 400, "step": 10, "unit": "px", "default": 0
     },
     {
       "type": "range",
       "id": "button_offset_y",
-      "label": "Fine-tune button — vertical",
+      "label": "Vertical",
       "min": -300, "max": 300, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Position — Mobile"
+    },
+    {
+      "type": "select",
+      "id": "text_v_position_mobile",
+      "label": "Text block position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-start",
+      "info": "Sets the overall anchor point, then use the fine-tune sliders below to nudge from there."
+    },
+    {
+      "type": "range",
+      "id": "text_offset_x_mobile",
+      "label": "Move whole text block — horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_offset_y_mobile",
+      "label": "Move whole text block — vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Eyebrow (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 1 (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 2 (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Button (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "button_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "button_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
     }
   ]
 }
