@@ -42,12 +42,13 @@ body.template-index #shopify-section-{{ section.id }} {
   margin: 0 !important;
   padding: 0 !important;
   border-top: 0 !important;
+  background: #f8f6f2;
 }
 
 .site-hero-photo {
   position: absolute;
-  inset: 0 !important;
-  width: 100%;
+  inset: 0 clamp(52px, 5vw, 96px) 0 0 !important;
+  width: auto;
   height: 100%;
   background-repeat: no-repeat;
   background-position: right center;
@@ -162,7 +163,7 @@ body.template-index #shopify-section-{{ section.id }} {
     {% else %}
       background-image: url('{{ 'cameron-co-mobile-engagement-ring-box-hero.webp' | asset_url }}') !important;
     {% endif %}
-    background-position: center 52% !important;
+    background-position: 62% 52% !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     transform: none !important;
@@ -249,7 +250,7 @@ body.template-index #shopify-section-{{ section.id }} {
   }
 
   .site-hero-photo {
-    background-position: center 52% !important;
+    background-position: 64% 52% !important;
   }
 
   .site-hero-inner {
