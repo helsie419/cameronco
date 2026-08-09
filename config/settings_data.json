@@ -20,17 +20,17 @@
       "header": {
         "type": "header",
         "custom_css": [
-          "a:not(.btn-book) {text-decoration-color: #D5B226 !important; }",
-          ".site-header .primary-nav-link::after {background-color: #D5B226 !important; }"
+          "a:not(.btn-book) {text-decoration-color: #0b0b0b !important; }",
+          ".site-header .primary-nav-link::after {background-color: #0b0b0b !important; }"
         ],
         "settings": {
           "main_menu": "main-menu",
           "button_text": "Book an appointment",
           "button_link": "",
           "background_color": "#ffffff",
-          "nav_color": "#171d29",
+          "nav_color": "#0b0b0b",
           "button_color": "#D5B226",
-          "nav_color_mobile": "#171d29",
+          "nav_color_mobile": "#0b0b0b",
           "nav_font": "cormorant",
           "button_font": "glacial",
           "logo_size": 58,
