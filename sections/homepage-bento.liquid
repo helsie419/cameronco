@@ -53,7 +53,7 @@
           {% if section.settings.image_2 %}
             <img alt="{{ section.settings.image_2_alt | default: section.settings.label_2 | escape }}" height="500" loading="eager" src="{{ section.settings.image_2 | image_url: width: 1080 }}" width="1080">
           {% else %}
-            <img alt="{{ section.settings.image_2_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-jewellery-repair-laser-welding.webp' | asset_url }}" width="1080">
+            <img alt="{{ section.settings.image_2_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-repair-workshop-bench.webp' | asset_url }}" width="1080">
           {% endif %}
           <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_2 }}</h3>
         {% if section.settings.link_2 != blank %}</a>{% else %}</div>{% endif %}

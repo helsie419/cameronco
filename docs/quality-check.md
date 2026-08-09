@@ -103,3 +103,15 @@ A comprehensive quality check review was performed across the complete Cameron &
 | Maps | **PASS** | Sydney and Melbourne Google Maps embed URLs returned HTTP 200 on GET. `HEAD` returns 404 from Google, so GET was used for the real iframe-equivalent check. |
 
 **Release Recommendation:** **PASS for this image/integration pass**, with the booking test limited to availability lookup only; no live appointment was created.
+
+## 8. August 9, 2026 Visual QA Correction Retest
+
+| Area | Status | Retest Result |
+| :--- | :---: | :--- |
+| Header/menu | **PASS** | Increased desktop nav size, restored yellow nav/button settings, removed wrapped booking CTA, and anchored dropdowns to their parent menu item. |
+| Homepage hero | **PASS** | Added a wider feather-blended desktop hero derivative so the ring and box remain visible on wide screens. |
+| Testimonial imagery | **PASS** | Replaced half-ring, homepage-reuse and chain-repair testimonial fallbacks with distinct jewellery product images; centered square crops. |
+| Jewellery care imagery | **PASS** | Cropped generated WebP edge gutters, reduced editorial image display sizes and replaced the oversized hand hero with a cleaner jewellery-care image. |
+| Validation | **PASS** | JSON parses, direct template/section WebP references exist, and Shopify theme check passes with only existing remote asset warnings. |
+
+**Release Recommendation:** **PASS for the visual correction pass.**

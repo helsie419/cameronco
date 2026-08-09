@@ -151,7 +151,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #D5B226 !important;
+  color: {{ section.settings.nav_color | default: '#D5B226' }} !important;
   font-weight: 500;
   text-decoration: none !important;
   white-space: nowrap !important;
@@ -192,7 +192,8 @@
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   background: #ffffff;
   box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
   min-width: 210px;
@@ -263,15 +264,15 @@
 @media (min-width: 1201px) {
 
   .site-header {
-    min-height: 136px;
+    min-height: 118px;
   }
 
   .site-header .header-inner {
-    grid-template-columns: 340px 1fr 174px;
-    column-gap: 24px;
+    grid-template-columns: 260px minmax(0, 1fr) 240px;
+    column-gap: 34px;
     min-height: 50px;
-    max-width: 1320px;
-    padding: 0 24px !important;
+    max-width: 1540px;
+    padding: 0 36px !important;
   }
 
   .site-logo {
@@ -297,16 +298,21 @@
     flex-wrap: nowrap;
     white-space: nowrap;
     justify-content: flex-end;
-    gap: 0;
+    gap: 18px;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .site-header .primary-nav > li {
+    position: relative;
     flex: 0 0 auto;
     white-space: nowrap;
   }
 
   .site-header .primary-nav-link {
-    font-size: 13px;
+    font-size: 16px;
+    line-height: 1.2;
     white-space: nowrap !important;
   }
 
@@ -324,12 +330,29 @@
     /* Matches .site-hero-cta's height so the header button and the
        hero button read as the same size. Width is fixed 10px
        narrower than the hero button's fixed 220px. */
-    height: 46px !important;
-    width: 210px !important;
+    min-height: 46px !important;
+    width: auto !important;
+    min-width: 230px !important;
     justify-content: center !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding: 0 30px !important;
     box-sizing: border-box !important;
+    line-height: 1 !important;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1380px) {
+  .site-header .header-inner {
+    grid-template-columns: 230px minmax(0, 1fr) 220px;
+    column-gap: 24px;
+    padding: 0 28px !important;
+  }
+
+  .site-header .primary-nav {
+    gap: 13px;
+  }
+
+  .site-header .primary-nav-link {
+    font-size: 15px;
   }
 }
 
@@ -378,6 +401,7 @@
   .site-header.mobile-open .dropdown {
     display: block;
     position: static;
+    transform: none;
     box-shadow: none;
     padding-left: 18px;
     min-width: 0;

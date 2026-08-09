@@ -50,7 +50,7 @@ body.template-index #shopify-section-{{ section.id }} {
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
-  background-position: center top;
+  background-position: center center;
   background-size: cover;
   overflow: hidden;
 }
@@ -275,7 +275,7 @@ body.template-index #shopify-section-{{ section.id }} {
       {% if section.settings.video != blank %}
         {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'site-hero-video' }}
       {% elsif section.settings.video_mp4_url != blank %}
-        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}"{% endif %}>
+        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}"{% endif %}>
           <source src="{{ section.settings.video_mp4_url }}" type="video/mp4">
         </video>
       {% elsif section.settings.background_image %}
@@ -286,7 +286,7 @@ body.template-index #shopify-section-{{ section.id }} {
       {% else %}
         <div
           class="site-hero-photo"
-          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}');"
+          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}');"
         ></div>
       {% endif %}
     </div>
@@ -297,7 +297,7 @@ body.template-index #shopify-section-{{ section.id }} {
         {% if section.settings.background_image %}
           background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
         {% else %}
-          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-v3.webp' | asset_url }}');
+          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}');
         {% endif %}
       "
     ></div>

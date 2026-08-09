@@ -4756,3 +4756,97 @@ summary:focus-visible,
 .site-footer .footer-bottom {
   background: transparent !important;
 }
+
+/* ============================================================
+   VISUAL QA FIXES — header, CTA and editorial image polish
+   ============================================================ */
+.btn-book,
+.site-hero-cta,
+.btn-black-center,
+.btn-red,
+.page-button-red,
+.home-button,
+.home-button-red {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  min-width: max-content !important;
+}
+
+.site-hero-cta {
+  width: auto !important;
+  min-width: 230px !important;
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+}
+
+.testimonial-img-cc {
+  aspect-ratio: 1 / 1 !important;
+  height: auto !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: #f8f6f2 !important;
+}
+
+.testimonials-page .testimonial-grid {
+  align-items: center !important;
+}
+
+.live-article-hero {
+  align-items: center !important;
+}
+
+.live-article-hero img {
+  width: min(100%, 460px) !important;
+  max-height: 420px !important;
+  justify-self: center !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  aspect-ratio: 1 / 1 !important;
+}
+
+.live-article-section > .article-image {
+  display: block !important;
+  width: min(100%, 360px) !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 28px auto 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.live-image-row {
+  grid-template-columns: repeat(2, minmax(0, 360px)) !important;
+  justify-content: center !important;
+  align-items: start !important;
+}
+
+.live-image-row .article-image {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+.jewellery-care-page .live-article-section > .article-image,
+.jewellery-care-page .live-image-row .article-image {
+  width: min(100%, 320px) !important;
+}
+
+@media (max-width: 760px) {
+  .site-hero-cta {
+    min-width: 250px !important;
+  }
+
+  .live-article-hero img {
+    width: min(100%, 340px) !important;
+  }
+
+  .live-image-row {
+    grid-template-columns: minmax(0, 320px) !important;
+  }
+}
