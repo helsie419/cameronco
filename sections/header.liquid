@@ -200,12 +200,17 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #ffffff;
-  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
   min-width: 210px;
   padding: 10px 0 16px;
   z-index: 300;
   list-style: none;
+  overflow: hidden;
 }
 
 .site-header .primary-nav > li:hover .dropdown,
@@ -218,7 +223,7 @@
   font-family: "Montserrat", Arial, sans-serif;
   font-size: 13px;
   color: #171d29;
-  background: #ffffff;
+  background: transparent;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -235,20 +240,20 @@
 }
 
 .site-header .dropdown a:hover {
-  background: #f7f3ee;
+  background: rgba(247, 243, 238, 0.72);
   color: #D5B226;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .site-header .dropdown {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translate(-50%, 8px);
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
   }
   .site-header .primary-nav > li:hover > .dropdown,
   .site-header .primary-nav > li:focus-within > .dropdown {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
   }
 }
 
