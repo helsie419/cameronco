@@ -12,9 +12,15 @@
     "intro": {
       "type": "page-hero-intro",
       "settings": {
-        "eyebrow": "Design Your Own",
+        "eyebrow": "",
         "heading": "Build Your Ring",
-        "description": "<p>Start with a diamond or a setting and build a piece that's entirely yours — powered by our live diamond and gemstone inventory. Already have a stone in mind? <a href=\"/pages/diamonds\">Browse our diamonds</a> first.</p>",
+        "description": "<p>Start with a diamond or a setting and build a piece that's entirely yours — powered by our live diamond and gemstone inventory. </p><p>Already have a stone in mind?</p>",
+        "button_label": "Browse our diamonds",
+        "button_link": "shopify://pages/natural",
+        "button_background": "#171d29",
+        "button_text_color": "#ffffff",
+        "button_hover_background": "#c79a3b",
+        "button_hover_text_color": "#ffffff",
         "heading_color": "",
         "heading_font": "cormorant",
         "description_color": "",
@@ -27,7 +33,7 @@
         "nivoda_connect_ring_builder_HhhQqw": {
           "type": "shopify://apps/nivoda-connect/blocks/ring_builder/1818f65a-9917-4ef2-bca9-2424a925fc76",
           "settings": {
-            "primary_color": "#9B7E0C",
+            "primary_color": "#d5b226",
             "ring_size_guide": "",
             "ring_size_regions": "UNITED_STATES,UNITED_KINGDOM,AUSTRALIA,ITALY,SPAIN,HONG_KONG,EUROPE,SOUTH_AFRICA,CANADA,JAPAN,KOREA",
             "diamond_type_natural": true,

@@ -16,7 +16,10 @@
         "cta_heading": "Still Have Questions?",
         "cta_text": "Get in touch with our friendly consultants for any enquiries regarding claims, custom designs, or repairs.",
         "cta_button_1_text": "Contact Us",
-        "cta_button_2_text": "Book Appointment"
+        "cta_button_2_text": "Book Appointment",
+        "intro_image_alt": "Illustrated diamond motif for Cameron and Co client questions",
+        "intro_image_fallback": "cameron-co-diamond-brilliant-cut-illustration.webp",
+        "cta_button_color": "#D5B226"
       },
       "blocks": {
         "q1": {
@@ -236,8 +239,38 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11", "q12", "q13", "q14", "q15", "q16", "q17", "q18", "q19", "q20", "q21", "q22", "q23", "q24", "q25", "q26", "q27"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22",
+        "q23",
+        "q24",
+        "q25",
+        "q26",
+        "q27"
+      ]
     }
   },
-  "order": ["faq"]
+  "order": [
+    "faq"
+  ]
 }

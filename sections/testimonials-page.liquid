@@ -1,28 +1,707 @@
-{% assign fallback_images = 'flower-halo-diamond-ring.webp,diamond-halo-stud-earrings.webp,emerald-cut-diamond-halo-ring.webp,emerald-cluster-gold-ring.webp,pear-diamond-yellow-gold-ring.webp,princess-cut-ring-and-eternity-band.webp,sapphire-diamond-halo-earrings.webp' | split: ',' %}
-<div class="section-inner" style="background:{{ section.settings.background_color }};">
-  <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
+{% assign fallback_images = 'cameron-co-aquamarine-emerald-cut-eternity-ring.webp|cameron-co-vintage-opal-gold-ring.webp|cameron-co-diamond-eternity-bridal-set.webp|cameron-co-teal-tourmaline-baguette-ring.webp|cameron-co-golden-pearl-diamond-drop-earrings.webp|cameron-co-ruby-halo-ring.png|cameron-co-amber-statement-ring.png|cameron-co-ruby-trilogy-halo-ring-side.webp|cameron-co-crossover-diamond-pave-rings.webp' | split: '|' %}
+{% assign closing_fallback_image = 'cameron-co-square-diamond-pendant.png' %}
+
+<style>
+  .testimonials-page-shell .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  .testimonials-page-shell .testimonial-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .testimonials-page-shell .testimonial-entry--feature {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(280px, 0.92fr) minmax(0, 1.08fr);
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .testimonials-page-shell .testimonial-entry--media-right {
+    grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  }
+
+  .testimonials-page-shell .testimonial-entry--media-right .testimonial-entry-media {
+    order: 2;
+  }
+
+  .testimonials-page-shell .testimonial-entry--media-right .testimonial-card-cc {
+    order: 1;
+  }
+
+  .testimonials-page-shell .testimonial-entry--closing {
+    align-self: center;
+    justify-self: center;
+  }
+
+  /* Closing necklace image breaks from the shared square sizing —
+     shown larger and in a portrait crop to suit a hanging necklace. */
+  .testimonials-page-shell .testimonial-entry--closing .testimonial-img-cc {
+    width: 320px !important;
+    height: 420px !important;
+    max-width: 320px;
+    aspect-ratio: 3 / 4;
+  }
+
+  .testimonials-page-shell .testimonial-card-cc {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 40px;
+  }
+
+  .testimonials-page-shell .testimonial-card-cc .cc-moved-style-040 {
+    margin-top: 0;
+  }
+
+  .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc {
+    min-height: 0;
+    text-align: left;
+    align-items: flex-start;
+    padding: 24px 8px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .testimonials-page-shell .testimonial-entry--feature .cc-moved-style-041 {
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .testimonials-page-shell .testimonial-entry--feature .cc-moved-style-040 {
+    margin-bottom: 18px;
+  }
+
+  /* Every image on this page shares one fixed size so the page
+     reads as a consistent set, rather than each row picking its
+     own scale. */
+  .testimonials-page-shell .testimonial-img-cc {
+    width: 200px !important;
+    height: 200px !important;
+    min-height: 0 !important;
+    max-width: 200px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .testimonials-page-shell .testimonial-entry-media {
+    display: flex;
+  }
+
+  .testimonials-page-shell .testimonial-row-centered {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 200px 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  /* Larger feature rows (Kate, Jillian, Kristy, Luka) — moderately bigger
+     image so it sits closer to the visual weight of the enlarged text
+     block, without towering over it. */
+  .testimonials-page-shell .testimonial-entry--large.testimonial-entry--feature {
+    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+    gap: 40px;
+    align-items: center;
+  }
+
+  /* Media-right large rows (Jillian, Luka) — keep the image column
+     narrower so the text column gets more room. */
+  .testimonials-page-shell .testimonial-entry--large.testimonial-entry--media-right {
+    grid-template-columns: minmax(0, 1.25fr) minmax(180px, 0.75fr);
+  }
+
+  .testimonials-page-shell .testimonial-entry--large.testimonial-entry--media-right .testimonial-img-cc {
+    max-width: 260px;
+  }
+
+  .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonials-page-shell .testimonial-entry--large .testimonial-img-cc {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 320px;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+  }
+
+  /* Paired row: two full testimonials (each keeping their own image)
+     side by side across four columns — used for Elizabeth + Will. */
+  .testimonials-page-shell .testimonial-entry--paired-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) 200px minmax(0, 1fr);
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .testimonials-page-shell .testimonial-entry--paired-row .testimonial-card-cc {
+    min-height: 0;
+    text-align: left;
+    align-items: flex-start;
+    padding: 24px 8px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .testimonials-page-shell .testimonial-row-centered .testimonial-row-images {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .testimonials-page-shell .testimonial-row-centered .testimonial-row-images img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc {
+    min-height: 0;
+    text-align: left;
+    align-items: flex-start;
+    padding: 24px 8px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  @media (max-width: 980px) {
+    .testimonials-page-shell .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-page-shell .testimonial-row-centered {
+      grid-template-columns: 1fr;
+    }
+
+    .testimonials-page-shell .testimonial-row-centered .testimonial-row-images {
+      flex-direction: row;
+    }
+
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .testimonials-page-shell .testimonial-entry--feature,
+    .testimonials-page-shell .testimonial-entry--media-right {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-entry-media,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-card-cc {
+      order: initial;
+    }
+
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc {
+      padding: 12px 0;
+    }
+
+    .testimonials-page-shell .testimonial-entry--large .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--large.testimonial-entry--media-right .testimonial-img-cc {
+      aspect-ratio: 1 / 1;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+
+    .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media {
+      justify-content: center;
+    }
+
+    .testimonials-page-shell .testimonial-entry--paired-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* Mobile rhythm:
+       testimonial, testimonial, then one testimonial with a centered image
+       and its text directly underneath. Desktop layout is unchanged. */
+    .testimonials-page-shell .testimonial-entry-media,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-row-images,
+    .testimonials-page-shell .testimonial-entry--closing {
+      display: none;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 0 auto 8px;
+      order: 1;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show .testimonial-img-cc {
+      display: block;
+      margin: 0 auto;
+      max-width: 240px;
+    }
+
+    .testimonials-page-shell .testimonial-entry .testimonial-card-cc {
+      order: 2;
+      text-align: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .testimonials-page-shell .testimonial-entry--paired-row .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+      text-align: center;
+      align-items: center;
+    }
+
+    /* Mobile: use the full available width for testimonial text. */
+    .testimonials-page-shell .testimonial-entry,
+    .testimonials-page-shell .testimonial-entry--feature,
+    .testimonials-page-shell .testimonial-entry--large,
+    .testimonials-page-shell .testimonial-entry--paired-row,
+    .testimonials-page-shell .testimonial-row-centered {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .testimonials-page-shell .testimonial-entry .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      text-align: center;
+      align-items: center;
+    }
+
+    .testimonials-page-shell .testimonial-entry .cc-moved-style-041 {
+      width: 100%;
+      max-width: none;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Reduce the default feature-card spacing on mobile. */
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc {
+      padding: 8px;
+    }
+
+    /* When an image is shown on mobile, force it above the matching text
+       and keep the image/text spacing tight. */
+    .testimonials-page-shell .testimonial-entry-media--mobile-show {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      order: 1 !important;
+      margin: 0 auto 4px;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show + .testimonial-card-cc {
+      order: 2 !important;
+      width: 100%;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show .testimonial-img-cc {
+      width: min(240px, 70vw) !important;
+      height: auto !important;
+      max-width: 240px;
+      margin: 0 auto;
+      object-fit: cover;
+    }
+
+    /* Mobile only: remove the remaining theme/container side spacing
+       so testimonial copy can use almost the full screen width. */
+    .testimonials-page-shell {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+    }
+
+    .testimonials-page-shell .testimonial-grid {
+      width: 100% !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc {
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry .cc-moved-style-041,
+    .testimonials-page-shell .testimonial-entry .cc-preserve-line-breaks {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+
+    /* Final mobile consistency pass:
+       - 8px text padding
+       - consistent image size
+       - consistent image-to-text spacing
+       - consistent spacing between testimonials */
+    .testimonials-page-shell .testimonial-entry,
+    .testimonials-page-shell .testimonial-entry--feature,
+    .testimonials-page-shell .testimonial-entry--large,
+    .testimonials-page-shell .testimonial-entry--paired-row,
+    .testimonials-page-shell .testimonial-row-centered {
+      gap: 0 !important;
+      margin-bottom: 20px !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--paired-row .testimonial-card-cc {
+      padding: 8px !important;
+      margin: 0 !important;
+      min-height: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show {
+      margin: 0 auto 8px !important;
+      padding: 0 8px !important;
+      box-sizing: border-box;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--large.testimonial-entry--media-right .testimonial-entry-media--mobile-show .testimonial-img-cc {
+      width: 240px !important;
+      height: 240px !important;
+      max-width: calc(100vw - 32px) !important;
+      aspect-ratio: 1 / 1 !important;
+      object-fit: cover !important;
+      margin: 0 auto !important;
+    }
+
+    .testimonials-page-shell .testimonial-card-cc .cc-moved-style-040 {
+      margin-top: 0 !important;
+      margin-bottom: 8px !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry .cc-moved-style-041,
+    .testimonials-page-shell .testimonial-entry .cc-preserve-line-breaks {
+      padding: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+
+    /* Normalize ALL mobile testimonial image sizes and vertical gaps,
+       including Will/Cate and any feature/closing variants. */
+    .testimonials-page-shell .testimonial-entry-media--mobile-show,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media--mobile-show,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-entry-media--mobile-show,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-entry-media--mobile-show {
+      margin: 0 auto 8px !important;
+      padding: 0 8px !important;
+      width: 100% !important;
+      box-sizing: border-box;
+      justify-content: center !important;
+      align-items: center !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--closing .testimonial-img-cc {
+      width: 220px !important;
+      height: 220px !important;
+      min-width: 220px !important;
+      min-height: 220px !important;
+      max-width: 220px !important;
+      max-height: 220px !important;
+      aspect-ratio: 1 / 1 !important;
+      object-fit: cover !important;
+      margin: 0 auto !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry,
+    .testimonials-page-shell .testimonial-entry--feature,
+    .testimonials-page-shell .testimonial-entry--large,
+    .testimonials-page-shell .testimonial-entry--paired-row,
+    .testimonials-page-shell .testimonial-row-centered {
+      gap: 0 !important;
+      row-gap: 0 !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+      padding: 8px !important;
+      margin: 0 !important;
+    }
+
+
+    /* FINAL mobile override: one consistent rhythm across every testimonial. */
+    .testimonials-page-shell .testimonial-grid {
+      gap: 20px !important;
+      row-gap: 20px !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry,
+    .testimonials-page-shell .testimonial-entry--feature,
+    .testimonials-page-shell .testimonial-entry--large,
+    .testimonials-page-shell .testimonial-entry--paired-row,
+    .testimonials-page-shell .testimonial-row-centered {
+      margin: 0 !important;
+      gap: 0 !important;
+      row-gap: 0 !important;
+    }
+
+    /* The decorative closing image was being re-enabled by a later flex rule. */
+    .testimonials-page-shell .testimonial-entry--closing {
+      display: none !important;
+    }
+
+    /* Every mobile testimonial uses the same 8px text padding. */
+    .testimonials-page-shell .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-entry--paired-row .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc,
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc.testimonial-card-cc--right {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 0 !important;
+      box-sizing: border-box !important;
+      padding: 8px !important;
+      margin: 0 !important;
+      text-align: center !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+    }
+
+    /* Entries that contain two testimonials internally need the same 20px
+       separation that the outer grid provides between normal entries. */
+    .testimonials-page-shell .testimonial-row-centered .testimonial-card-cc:first-child,
+    .testimonials-page-shell .testimonial-entry--paired-row > .testimonial-card-cc:not(:last-child) {
+      margin-bottom: 20px !important;
+    }
+
+    /* Every image that is intentionally shown on mobile is identical. */
+    .testimonials-page-shell .testimonial-entry-media--mobile-show {
+      display: flex !important;
+      width: 100% !important;
+      margin: 0 auto !important;
+      padding: 8px 8px 0 !important;
+      box-sizing: border-box !important;
+      justify-content: center !important;
+      align-items: center !important;
+      order: 1 !important;
+    }
+
+    .testimonials-page-shell .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--large .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--feature .testimonial-entry-media--mobile-show .testimonial-img-cc,
+    .testimonials-page-shell .testimonial-entry--media-right .testimonial-entry-media--mobile-show .testimonial-img-cc {
+      width: 220px !important;
+      height: 220px !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      max-width: calc(100vw - 32px) !important;
+      max-height: 220px !important;
+      aspect-ratio: 1 / 1 !important;
+      object-fit: cover !important;
+      margin: 0 auto !important;
+    }
+
+    /* Image -> name/text gap is always 8px. */
+    .testimonials-page-shell .testimonial-entry-media--mobile-show + .testimonial-card-cc {
+      padding-top: 8px !important;
+      order: 2 !important;
+    }
+
+    .testimonials-page-shell .testimonial-card-cc .cc-moved-style-040 {
+      margin: 0 0 8px !important;
+    }
+
+    .testimonials-page-shell .testimonial-card-cc .cc-moved-style-041,
+    .testimonials-page-shell .testimonial-card-cc .cc-preserve-line-breaks {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+</style>
+
+<div class="section-inner testimonials-page-shell" style="background:{{ section.settings.background_color }};">
+  <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
   <!-- ALTERNATING IMAGE / TESTIMONIAL CARD GRID -->
   <div class="testimonial-grid cc-moved-style-039" role="list">
+    {% assign feature_count = 0 %}
+    {% assign testimonial_count = 0 %}
+    {% assign skip_next = false %}
+    {% comment %} On mobile only every 3rd testimonial keeps its image, giving a "two testimonials, one image" rhythm. {% endcomment %}
+    {% assign mobile_counter = 0 %}
     {% for block in section.blocks %}
       {% if block.type == 'testimonial' %}
-        {% assign fallback_image = fallback_images[forloop.index0] %}
-        {% if block.settings.image %}
-          <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ block.settings.image | image_url: width: 400 }}" width="400">
-        {% elsif fallback_image %}
-          <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ fallback_image | asset_url }}" width="400">
+        {% if skip_next %}
+          {% assign skip_next = false %}
+        {% else %}
+          {% assign fallback_image = fallback_images[forloop.index0] %}
+          {% if testimonial_count == 0 %}
+            {% assign first_block = block %}
+            {% assign first_fallback_image = fallback_image %}
+            {% assign testimonial_count = testimonial_count | plus: 1 %}
+          {% elsif testimonial_count == 1 %}
+            <div class="testimonial-entry testimonial-row-centered" role="listitem" {{ block.shopify_attributes }}>
+              <article class="testimonial-card-cc">
+                <h2 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ first_block.settings.name }}</h2>
+                <p class="cc-moved-style-041 cc-preserve-line-breaks" style="color:{{ section.settings.quote_color }};">&quot;{{ first_block.settings.quote }}&quot;</p>
+              </article>
+              <div class="testimonial-row-images">
+                {% if first_block.settings.image %}
+                  <img alt="{{ first_block.settings.image_alt | default: first_block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ first_block.settings.image | image_url: width: 480 }}" width="480">
+                {% elsif first_fallback_image %}
+                  <img alt="{{ first_block.settings.image_alt | default: first_block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ first_fallback_image | asset_url }}" width="480">
+                {% endif %}
+              </div>
+              <article class="testimonial-card-cc testimonial-card-cc--right">
+                <h2 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h2>
+                <p class="cc-moved-style-041 cc-preserve-line-breaks" style="color:{{ section.settings.quote_color }};">&quot;{{ block.settings.quote }}&quot;</p>
+              </article>
+            </div>
+            {% assign testimonial_count = testimonial_count | plus: 1 %}
+            {% assign mobile_counter = 2 %}
+          {% elsif block.settings.layout == 'pair_start' %}
+            {% assign partner_index = forloop.index0 | plus: 1 %}
+            {% assign partner_block = section.blocks[partner_index] %}
+            {% assign partner_fallback_image = fallback_images[partner_index] %}
+            {% assign mobile_remainder = mobile_counter | modulo: 3 %}
+            {% assign mobile_show_class = '' %}
+            {% if mobile_remainder == 2 %}
+              {% assign mobile_show_class = ' testimonial-entry-media--mobile-show' %}
+            {% endif %}
+            {% assign mobile_counter = mobile_counter | plus: 1 %}
+            {% assign partner_mobile_remainder = mobile_counter | modulo: 3 %}
+            {% assign partner_mobile_show_class = '' %}
+            {% if partner_mobile_remainder == 2 %}
+              {% assign partner_mobile_show_class = ' testimonial-entry-media--mobile-show' %}
+            {% endif %}
+            {% assign mobile_counter = mobile_counter | plus: 1 %}
+            <div class="testimonial-entry testimonial-entry--paired-row" role="listitem" {{ block.shopify_attributes }}>
+              <div class="testimonial-entry-media{{ mobile_show_class }}">
+                {% if block.settings.image %}
+                  <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ block.settings.image | image_url: width: 480 }}" width="480">
+                {% elsif fallback_image %}
+                  <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ fallback_image | asset_url }}" width="480">
+                {% endif %}
+              </div>
+              <article class="testimonial-card-cc">
+                <h2 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h2>
+                <p class="cc-moved-style-041 cc-preserve-line-breaks" style="color:{{ section.settings.quote_color }};">&quot;{{ block.settings.quote }}&quot;</p>
+              </article>
+              {% if partner_block %}
+                <div class="testimonial-entry-media{{ partner_mobile_show_class }}">
+                  {% if partner_block.settings.image %}
+                    <img alt="{{ partner_block.settings.image_alt | default: partner_block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ partner_block.settings.image | image_url: width: 480 }}" width="480">
+                  {% elsif partner_fallback_image %}
+                    <img alt="{{ partner_block.settings.image_alt | default: partner_block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ partner_fallback_image | asset_url }}" width="480">
+                  {% endif %}
+                </div>
+                <article class="testimonial-card-cc">
+                  <h2 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ partner_block.settings.name }}</h2>
+                  <p class="cc-moved-style-041 cc-preserve-line-breaks" style="color:{{ section.settings.quote_color }};">&quot;{{ partner_block.settings.quote }}&quot;</p>
+                </article>
+                {% assign skip_next = true %}
+              {% endif %}
+            </div>
+          {% else %}
+            {% assign quote_size = block.settings.quote | size %}
+            {% assign is_feature = false %}
+            {% assign is_large = false %}
+            {% assign feature_position = feature_count | modulo: 2 %}
+            {% if block.settings.layout == 'large' %}
+              {% assign is_feature = true %}
+              {% assign is_large = true %}
+            {% elsif quote_size > 420 %}
+              {% assign is_feature = true %}
+            {% endif %}
+            {% assign mobile_remainder = mobile_counter | modulo: 3 %}
+            {% assign mobile_show_class = '' %}
+            {% if mobile_remainder == 2 %}
+              {% assign mobile_show_class = ' testimonial-entry-media--mobile-show' %}
+            {% endif %}
+            {% assign mobile_counter = mobile_counter | plus: 1 %}
+            <div class="testimonial-entry{% if is_feature %} testimonial-entry--feature{% if feature_position == 1 %} testimonial-entry--media-right{% endif %}{% endif %}{% if is_large %} testimonial-entry--large{% endif %}" role="listitem" {{ block.shopify_attributes }}>
+              {% if block.settings.image %}
+                <div class="testimonial-entry-media{{ mobile_show_class }}">
+                  <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ block.settings.image | image_url: width: 720 }}" width="720">
+                </div>
+              {% elsif fallback_image %}
+                <div class="testimonial-entry-media{{ mobile_show_class }}">
+                  <img alt="{{ block.settings.image_alt | default: block.settings.name | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ fallback_image | asset_url }}" width="720">
+                </div>
+              {% endif %}
+              <article class="testimonial-card-cc">
+                <h2 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h2>
+                <p class="cc-moved-style-041 cc-preserve-line-breaks" style="color:{{ section.settings.quote_color }};">&quot;{{ block.settings.quote }}&quot;</p>
+              </article>
+            </div>
+            {% if is_feature %}
+              {% assign feature_count = feature_count | plus: 1 %}
+            {% endif %}
+          {% endif %}
         {% endif %}
-        <article class="testimonial-card-cc" role="listitem" {{ block.shopify_attributes }}>
-          <h3 class="cc-moved-style-040 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h3>
-          <p class="cc-moved-style-041" style="color:{{ section.settings.quote_color }};">
-            &quot;{{ block.settings.quote }}&quot;
-          </p>
-        </article>
       {% endif %}
     {% endfor %}
     {% if section.settings.closing_image %}
-      <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ section.settings.closing_image | image_url: width: 400 }}" width="400">
+      <div class="testimonial-entry testimonial-entry--closing">
+        <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ section.settings.closing_image | image_url: width: 400 }}" width="400">
+      </div>
     {% else %}
-      <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ 'sapphire-diamond-halo-earrings.webp' | asset_url }}" width="400">
+      <div class="testimonial-entry testimonial-entry--closing">
+        <img alt="{{ section.settings.closing_image_alt | escape }}" class="testimonial-img-cc image-fade" height="280" loading="lazy" src="{{ closing_fallback_image | asset_url }}" width="400">
+      </div>
     {% endif %}
   </div>
   <div class="btn-row-center cc-moved-style-042">
@@ -38,9 +717,9 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Testimonials from Valued Customers" },
     { "type": "header", "content": "Closing image" },
     { "type": "image_picker", "id": "closing_image", "label": "Closing image", "info": "The final decorative image shown after the last testimonial" },
-    { "type": "text", "id": "closing_image_alt", "label": "Closing image alt text", "default": "Sapphire and diamond halo earrings on satin" },
+    { "type": "text", "id": "closing_image_alt", "label": "Closing image alt text", "default": "Illustrated diamond icon for Cameron and Co testimonials" },
     { "type": "header", "content": "Call to action" },
-    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Chat to us" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Book an appointment" },
     { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave blank to use the Contact page" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background_color", "label": "Section background", "default": "#ffffff" },
@@ -81,11 +760,23 @@
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Image alt text" },
         { "type": "text", "id": "name", "label": "Customer name" },
-        { "type": "textarea", "id": "quote", "label": "Quote" }
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "info": "Large: full-width row with an enlarged image. Paired: shares a four-column row with the next testimonial, each keeping its own image.",
+          "options": [
+            { "value": "auto", "label": "Auto" },
+            { "value": "large", "label": "Large (enlarged image)" },
+            { "value": "pair_start", "label": "Paired with next testimonial" }
+          ],
+          "default": "auto"
+        }
       ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 12,
   "presets": [
     {
       "name": "Testimonials page",

@@ -2,7 +2,7 @@
 @media (max-width: 900px) {
   #testimonials-heading { color: {{ section.settings.heading_color_mobile }} !important; }
   .home-testimonials-preview .section-eyebrow { color: {{ section.settings.eyebrow_color_mobile }} !important; }
-  .home-testimonial-card h3 { color: {{ section.settings.name_color_mobile }} !important; }
+  .home-testimonial-card h2 { color: {{ section.settings.name_color_mobile }} !important; }
   {% if section.settings.quote_color_mobile != blank %}.home-testimonial-card p { color: {{ section.settings.quote_color_mobile }} !important; }{% endif %}
 }
 </style>
@@ -14,8 +14,8 @@
       {% for block in section.blocks %}
         <article class="home-testimonial-card" {{ block.shopify_attributes }}>
           <img alt="" aria-hidden="true" class="testimonial-diamond" src="{{ 'cameron-co-diamond-icon-small.webp' | asset_url }}" width="22" height="22">
-          <h3 class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h3>
-          <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.quote_color != blank %}color:{{ section.settings.quote_color }};{% endif %}">{{ block.settings.quote }}</p>
+          <h2 class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.name_color != blank %}color:{{ section.settings.name_color }};{% endif %}">{{ block.settings.name }}</h2>
+          <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.quote_color != blank %}color:{{ section.settings.quote_color }};{% endif %}">{{ block.settings.quote }}</p>
         </article>
       {% endfor %}
     </div>
@@ -39,7 +39,7 @@
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#171d29", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "name_color", "label": "Customer name color", "default": "#D5B226", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
     { "type": "color", "id": "quote_color", "label": "Quote text color", "info": "Leave blank to use the global Paragraph color (Theme settings → Paragraph)." },
-    { "type": "color", "id": "button_color", "label": "Button color", "default": "#8c6a2f" },
+    { "type": "color", "id": "button_color", "label": "Button color", "default": "#D5B226" },
     { "type": "header", "content": "Colors — mobile only" },
     { "type": "color", "id": "eyebrow_color_mobile", "label": "Eyebrow color (mobile)", "default": "#D5B226" },
     { "type": "color", "id": "heading_color_mobile", "label": "Heading color (mobile)", "default": "#171d29" },

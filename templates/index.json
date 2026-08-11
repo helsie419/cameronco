@@ -19,7 +19,8 @@
         ".site-hero-cta {font-weight: 500;}"
       ],
       "settings": {
-        "background_image": "",
+        "media_type": "image",
+        "video_mp4_url": "",
         "eyebrow": "Jewellery Insurance Specialists",
         "line1": "What was lost,",
         "line2": "beautifully",
@@ -29,8 +30,8 @@
         "eyebrow_color": "#4d493f",
         "line1_color": "#615f5a",
         "line2_color": "#4d493f",
-        "accent_color": "#D5B226",
-        "button_color": "#D5B226",
+        "accent_color": "#d5b226",
+        "button_color": "#d5b226",
         "eyebrow_color_mobile": "#3a362f",
         "line1_color_mobile": "#3a362f",
         "line2_color_mobile": "#3a362f",
@@ -41,8 +42,25 @@
         "text_v_position": "center",
         "text_offset_x": 40,
         "text_offset_y": 0,
+        "eyebrow_offset_x": 0,
+        "eyebrow_offset_y": 0,
+        "line1_offset_x": 0,
+        "line1_offset_y": 0,
+        "line2_offset_x": 0,
+        "line2_offset_y": 0,
         "button_offset_x": 0,
-        "button_offset_y": 0
+        "button_offset_y": 0,
+        "text_v_position_mobile": "flex-start",
+        "text_offset_x_mobile": 0,
+        "text_offset_y_mobile": 0,
+        "eyebrow_offset_x_mobile": 0,
+        "eyebrow_offset_y_mobile": 0,
+        "line1_offset_x_mobile": 0,
+        "line1_offset_y_mobile": 0,
+        "line2_offset_x_mobile": 0,
+        "line2_offset_y_mobile": 0,
+        "button_offset_x_mobile": 0,
+        "button_offset_y_mobile": 0
       }
     },
     "bento": {
@@ -72,7 +90,7 @@
         "body_font": "glacial",
         "label_1": "Jewellery Remodelling",
         "image_1_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
-        "link_1": "/pages/jewelleryremodelling",
+        "link_1": "shopify://pages/jewellery-remodelling",
         "label_2": "Repairs",
         "image_2_alt": "Jewellery repair workbench with tools and a ring being restored",
         "link_2": "/pages/jewelleryrepairs",
@@ -137,13 +155,95 @@
         "eyebrow_color": "#d5b226",
         "heading_color": "#171d29",
         "item_title_color": "",
-        "button_color": "#D5B226",
+        "button_color": "#d5b226",
         "eyebrow_color_mobile": "#d5b226",
         "heading_color_mobile": "#171d29",
         "item_title_color_mobile": "",
         "heading_font": "cormorant",
         "body_font": "glacial",
         "item_title_font": "cormorant"
+      }
+    },
+    "gallery": {
+      "type": "homepage-gallery",
+      "blocks": {
+        "gallery-1": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Pink sapphire pear-cut halo bridal ring set in yellow gold",
+            "image_fallback": "cameron-co-pink-sapphire-pear-bridal-set.webp"
+          }
+        },
+        "gallery-2": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Blue sapphire emerald-cut wide band ring in yellow gold",
+            "image_fallback": "cameron-co-blue-sapphire-wide-band-ring.webp"
+          }
+        },
+        "gallery-3": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Amethyst emerald-cut solitaire ring in yellow gold",
+            "image_fallback": "cameron-co-amethyst-emerald-cut-ring.webp"
+          }
+        },
+        "gallery-4": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Tanzanite and diamond three-stone ring in white gold",
+            "image_fallback": "cameron-co-tanzanite-three-stone-ring.webp"
+          }
+        },
+        "gallery-5": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Opal inlay men's wedding band in yellow gold",
+            "image_fallback": "cameron-co-opal-inlay-mens-wedding-band.webp"
+          }
+        },
+        "gallery-6": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Art Deco style filigree band ring in white gold",
+            "image_fallback": "cameron-co-art-deco-filigree-band-ring.webp"
+          }
+        },
+        "gallery-7": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Heart-cut diamond solitaire ring in yellow gold",
+            "image_fallback": "cameron-co-heart-cut-diamond-solitaire-ring.webp"
+          }
+        },
+        "gallery-8": {
+          "type": "gallery_item",
+          "settings": {
+            "image_alt": "Rectangular diamond cluster statement ring in white gold",
+            "image_fallback": "cameron-co-rectangular-diamond-cluster-ring.webp"
+          }
+        }
+      },
+      "block_order": [
+        "gallery-1",
+        "gallery-2",
+        "gallery-3",
+        "gallery-4",
+        "gallery-5",
+        "gallery-6",
+        "gallery-7",
+        "gallery-8"
+      ],
+      "settings": {
+        "eyebrow": "Our Craftsmanship",
+        "heading": "A Glimpse of Our Jewellery",
+        "subheading": "",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#d5b226",
+        "heading_color": "#171d29",
+        "subheading_color": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
       }
     },
     "brands": {
@@ -207,7 +307,7 @@
         "heading_color": "#171d29",
         "name_color": "#d5b226",
         "quote_color": "",
-        "button_color": "#D5B226",
+        "button_color": "#d5b226",
         "eyebrow_color_mobile": "#d5b226",
         "heading_color_mobile": "#171d29",
         "name_color_mobile": "#d5b226",
@@ -221,6 +321,7 @@
     "hero",
     "bento",
     "services",
+    "gallery",
     "brands",
     "testimonials"
   ]

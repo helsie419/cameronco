@@ -10,52 +10,51 @@
   </figure>
 </section>
 <section aria-labelledby="about-page-title-{{ section.id }}" class="about-title-band section-inner">
-  <h1 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="about-page-title-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
+  <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="about-page-title-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
 </section>
 <section aria-labelledby="about-intro-title-{{ section.id }}" class="about-intro section-inner">
   <div class="about-intro-copy cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.intro_text_color != blank %}color:{{ section.settings.intro_text_color }};{% endif %}">
-    <p id="about-intro-title-{{ section.id }}">{{ section.settings.intro_paragraph_1 }}</p>
-    <p>{{ section.settings.intro_paragraph_2 }}</p>
-    <p>{{ section.settings.intro_paragraph_3 }}</p>
-    <p>{{ section.settings.intro_paragraph_4 }}</p>
-    <p>{{ section.settings.intro_paragraph_5 }}</p>
+    <p class="cc-preserve-line-breaks" id="about-intro-title-{{ section.id }}">{{ section.settings.intro_paragraph_1 }}</p>
+    <p class="cc-preserve-line-breaks">{{ section.settings.intro_paragraph_2 }}</p>
+    <p class="cc-preserve-line-breaks">{{ section.settings.intro_paragraph_3 }}</p>
+    <p class="cc-preserve-line-breaks">{{ section.settings.intro_paragraph_4 }}</p>
+    <p class="cc-preserve-line-breaks">{{ section.settings.intro_paragraph_5 }}</p>
   </div>
 </section>
 <section aria-label="Mission, vision and core values" class="about-mission-grid section-inner">
   <article class="about-text-card about-mission">
-    <h3 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.mission_heading }}</h3>
-    <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}">{{ section.settings.mission_text }}</p>
-    <a class="btn-black-center about-card-button btn-dark" href="{{ section.settings.mission_button_link | default: pages['booking'].url }}">{{ section.settings.mission_button_text }}</a>
+    <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.mission_heading }}</h2>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}">{{ section.settings.mission_text }}</p>
   </article>
-  <figure class="about-image-card">
-    {% if section.settings.mission_image %}
-      <img alt="{{ section.settings.mission_image_alt | escape }}" height="516" loading="lazy" src="{{ section.settings.mission_image | image_url: width: 412 }}" width="412">
-    {% else %}
-      <img alt="{{ section.settings.mission_image_alt | escape }}" height="334" loading="lazy" src="{{ 'emerald-cut-diamond-halo-ring.webp' | asset_url }}" width="315">
-    {% endif %}
-  </figure>
   <article class="about-text-card about-vision">
-    <h3 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.vision_heading }}</h3>
-    <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}">{{ section.settings.vision_text }}</p>
+    <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.vision_heading }}</h2>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}">{{ section.settings.vision_text }}</p>
   </article>
-  <figure class="about-image-card">
-    {% if section.settings.vision_image %}
-      <img alt="{{ section.settings.vision_image_alt | escape }}" height="485" loading="lazy" src="{{ section.settings.vision_image | image_url: width: 286 }}" width="286">
-    {% else %}
-      <img alt="{{ section.settings.vision_image_alt | escape }}" height="333" loading="lazy" src="{{ 'gold-bracelet-and-ring-on-hand.webp' | asset_url }}" width="315">
-    {% endif %}
-  </figure>
   <article class="about-values-card">
-    <h3 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.values_heading }}</h3>
-    <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}"><strong>{{ section.settings.values_intro_label }}:</strong> {{ section.settings.values_intro_text }}</p>
+    <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.values_heading }}</h2>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}"><strong>{{ section.settings.values_intro_label }}:</strong> {{ section.settings.values_intro_text }}</p>
     <ul class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.card_text_color != blank %}color:{{ section.settings.card_text_color }};{% endif %}">
       {% for block in section.blocks %}
         {% if block.type == 'value_item' %}
-          <li {{ block.shopify_attributes }}><strong>{{ block.settings.label }}:</strong> {{ block.settings.text }}</li>
+          <li class="cc-preserve-line-breaks" {{ block.shopify_attributes }}><strong>{{ block.settings.label }}:</strong> {{ block.settings.text }}</li>
         {% endif %}
       {% endfor %}
     </ul>
   </article>
+</section>
+<section aria-label="Our craftsmanship" class="about-image-row section-inner">
+  <figure class="about-image-row-item">
+    <img alt="Pink tourmaline round halo ring in rose gold" height="500" loading="lazy" src="{{ 'cameron-co-pink-tourmaline-halo-ring.webp' | asset_url }}" width="500">
+  </figure>
+  <figure class="about-image-row-item">
+    <img alt="Aquamarine vintage-style halo ring in white gold" height="500" loading="lazy" src="{{ 'cameron-co-aquamarine-vintage-halo-ring.webp' | asset_url }}" width="500">
+  </figure>
+  <figure class="about-image-row-item">
+    <img alt="Princess-cut diamond bridal ring set in rose gold" height="500" loading="lazy" src="{{ 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' | asset_url }}" width="500">
+  </figure>
+  <figure class="about-image-row-item">
+    <img alt="Black sapphire bezel ring in yellow gold" height="500" loading="lazy" src="{{ 'cameron-co-black-sapphire-bezel-ring.webp' | asset_url }}" width="500">
+  </figure>
 </section>
 </div>
 
@@ -78,15 +77,9 @@
     { "type": "header", "content": "Mission" },
     { "type": "text", "id": "mission_heading", "label": "Heading", "default": "Mission" },
     { "type": "textarea", "id": "mission_text", "label": "Text", "default": "Cameron & Co expertly guide and supports clients through the intricate journey of jewellery and watch insurance claims, offering unparalleled craftsmanship, personalised service, and a trusted partnership built on over 25 years of family-owned excellence." },
-    { "type": "text", "id": "mission_button_text", "label": "Button text", "default": "Book an appointment" },
-    { "type": "url", "id": "mission_button_link", "label": "Button link", "info": "Leave blank to use the Booking page" },
-    { "type": "image_picker", "id": "mission_image", "label": "Mission image" },
-    { "type": "text", "id": "mission_image_alt", "label": "Mission image alt text", "default": "Emerald cut diamond halo ring on satin" },
     { "type": "header", "content": "Vision" },
     { "type": "text", "id": "vision_heading", "label": "Heading", "default": "Vision" },
     { "type": "textarea", "id": "vision_text", "label": "Text", "default": "Cameron & Co aspire to be the foremost authority in jewellery insurance claims, recognised for our unwavering commitment to integrity, precision, and seamless restoration of cherished pieces, setting the standard for industry expertise and customer satisfaction." },
-    { "type": "image_picker", "id": "vision_image", "label": "Vision image" },
-    { "type": "text", "id": "vision_image_alt", "label": "Vision image alt text", "default": "Gold bracelet and ring worn on hand" },
     { "type": "header", "content": "Core values" },
     { "type": "text", "id": "values_heading", "label": "Heading", "default": "Core Values" },
     { "type": "text", "id": "values_intro_label", "label": "Intro label (bold)", "default": "Expertise" },

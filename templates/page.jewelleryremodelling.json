@@ -9,6 +9,25 @@
  */
 {
   "sections": {
+    "intro": {
+      "type": "jewellery-remodelling",
+      "settings": {
+        "eyebrow": "REIMAGINE WHAT YOU ALREADY LOVE",
+        "heading": "Jewellery Remodelling",
+        "description": "<p>Give treasured jewellery a new life with a considered redesign. Whether you have an inherited piece, a ring that no longer suits your style, or stones you would like reset, we can transform your existing jewellery into something made to be worn and enjoyed again.</p>",
+        "button_label": "Book a consultation",
+        "button_link": "/pages/booking",
+        "button_background": "#171d29",
+        "button_text_color": "#ffffff",
+        "button_hover_background": "#c79a3b",
+        "button_hover_text_color": "#ffffff",
+        "heading_color": "",
+        "heading_font": "cormorant",
+        "description_color": "",
+        "description_font": "glacial"
+      }
+    },
+
     "main": {
       "type": "article-page",
       "blocks": {
@@ -29,6 +48,7 @@
             "cta_link": "/pages/ring-builder"
           }
         },
+
         "block-2": {
           "type": "content_block",
           "settings": {
@@ -38,14 +58,15 @@
             "list_heading": "Why remodel instead of replace:",
             "list_items": "Keep the emotional connection to an heirloom or gift while updating its style\nSave on cost compared to buying an entirely new piece\nA more sustainable choice, reusing precious metals and gemstones you already own\nCreate a completely unique piece designed around what you already have\nFlexibility to split one piece into several, or combine several into one",
             "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
+            "image_1_alt": "Emerald flower halo ring, an example of a remodelled vintage-inspired design",
+            "image_1_fallback": "cameron-co-emerald-flower-halo-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
         },
+
         "block-3": {
           "type": "content_block",
           "settings": {
@@ -55,8 +76,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Oval diamond halo ring held for resetting and remodelling assessment",
-            "image_1_fallback": "oval-diamond-halo-ring-held.webp",
+            "image_1_alt": "Emerald halo ring on satin showing a refreshed jewellery remodelling direction",
+            "image_1_fallback": "cameron-co-emerald-halo-ring.png",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Book an appointment",
@@ -64,17 +85,19 @@
           }
         }
       },
+
       "block_order": [
         "block-1",
         "block-2",
         "block-3"
       ],
+
       "settings": {
-        "hero_title": "The Art of Jewellery Remodelling",
-        "hero_tagline": "Breathing new life into old treasures",
-        "hero_intro": "<p>Whether it's an inherited heirloom or a piece you've outgrown, remodelling turns jewellery you already own into something you'll want to wear again.</p>",
-        "hero_image_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
-        "hero_image_fallback": "cameron-co-jewellery-remodelling-workbench.webp",
+        "hero_title": "",
+        "hero_tagline": "",
+        "hero_intro": "",
+        "hero_image_alt": "",
+        "hero_image_fallback": "",
         "hero_heading_color": "",
         "hero_tagline_color": "",
         "section_heading_color": "",
@@ -88,7 +111,9 @@
       }
     }
   },
+
   "order": [
+    "intro",
     "main"
   ]
 }

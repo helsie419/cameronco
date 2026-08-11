@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "error-404",
+      "settings": {
+        "eyebrow": "Page Not Found",
+        "heading": "Looks like this piece went missing.",
+        "ring_full": "shopify://shop_images/404-ring-with-diamond-matched.png",
+        "ring_empty": "shopify://shop_images/404-ring-without-diamond-matched.png",
+        "diamond_frame_01": "shopify://shop_images/404-diamond-roll-large-01.png",
+        "diamond_frame_02": "shopify://shop_images/404-diamond-roll-large-02.png",
+        "diamond_frame_03": "shopify://shop_images/404-diamond-roll-large-03.png",
+        "diamond_frame_04": "shopify://shop_images/404-diamond-roll-large-04.png",
+        "diamond_frame_05": "shopify://shop_images/404-diamond-roll-large-05.png",
+        "diamond_frame_06": "shopify://shop_images/404-diamond-roll-large-06.png",
+        "diamond_frame_07": "shopify://shop_images/404-diamond-roll-large-07.png",
+        "diamond_frame_08": "shopify://shop_images/404-diamond-roll-large-08.png",
+        "diamond_frame_09": "shopify://shop_images/404-diamond-roll-large-09.png",
+        "diamond_frame_10": "shopify://shop_images/404-diamond-roll-large-10.png",
+        "diamond_frame_11": "shopify://shop_images/404-diamond-roll-large-11_c9054461-5bdf-45d0-ae3f-1ac17942e8a5.png",
+        "description": "The page you're looking for has been misplaced, remodelled, or never existed. Don't worry — let's get that repaired for you.",
+        "button_1_text": "Back to homepage",
+        "button_2_text": "Book a repair",
+        "button_2_link": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,52 +1,65 @@
 <section aria-labelledby="contact-heading-{{ section.id }}" style="background:{{ section.settings.background_color }};">
   <div class="section-inner">
-    <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="contact-heading-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
-    <p class="cc-moved-style-004 cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.intro_color != blank %}color:{{ section.settings.intro_color }};{% endif %}">{{ section.settings.intro_text }}</p>
-    <div class="offices-row">
-      <div class="office-card">
-        {% assign office1_map_id = 'office-map-1-' | append: section.id %}
-        {% assign office1_address = section.settings.office1_address_line1 | append: ', ' | append: section.settings.office1_address_line2 %}
-        {% assign office1_map_title = section.settings.office1_name | append: ' location map' %}
-        {% render 'styled-map',
-          map_id: office1_map_id,
-          address: office1_address,
-          embed_url: section.settings.office1_map_embed_url,
-          map_title: office1_map_title,
-          aria_label: section.settings.office1_map_aria_label
-        %}
-        <h3 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office1_name }}</h3>
-        <div class="office-details cc-font-body-{{ section.settings.body_font }}">
-          <p>{{ section.settings.office1_address_line1 }}</p>
-          <p>{{ section.settings.office1_address_line2 }}</p>
-          <a href="mailto:{{ section.settings.office1_email }}">{{ section.settings.office1_email }}</a>
-          <p>Phone: <a href="tel:{{ section.settings.office1_phone_href }}">{{ section.settings.office1_phone_display }}</a></p>
+    <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="contact-heading-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
+    <p class="cc-moved-style-004 cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.intro_color != blank %}color:{{ section.settings.intro_color }};{% endif %}">{{ section.settings.intro_text }}</p>
+    {% if section.settings.intro_image %}
+      <img class="cc-page-intro-media" alt="{{ section.settings.intro_image_alt | escape }}" src="{{ section.settings.intro_image | image_url: width: 1200 }}" width="{{ section.settings.intro_image.width }}" height="{{ section.settings.intro_image.height }}" loading="lazy">
+    {% elsif section.settings.intro_image_fallback != blank %}
+      <img class="cc-page-intro-media" alt="{{ section.settings.intro_image_alt | escape }}" src="{{ section.settings.intro_image_fallback | asset_url }}" width="1200" height="680" loading="lazy">
+    {% endif %}
+    <div class="offices-stack">
+      <div class="split-layout office-row">
+        <div class="split-text office-info">
+          <h2 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office1_name }}</h2>
+          <div class="office-details cc-font-body-{{ section.settings.body_font }}">
+            <p>{{ section.settings.office1_address_line1 }}</p>
+            <p>{{ section.settings.office1_address_line2 }}</p>
+            <a href="mailto:{{ section.settings.office1_email }}">{{ section.settings.office1_email }}</a>
+            <p>Phone: <a href="tel:{{ section.settings.office1_phone_href }}">{{ section.settings.office1_phone_display }}</a></p>
+          </div>
+          <div class="office-buttons">
+            <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office1_email }}">{{ section.settings.contact_button_text }}</a>
+            <a class="btn-office btn-outline-red" href="{{ section.settings.office1_book_link | default: pages['sydney-services'].url }}">{{ section.settings.book_button_text }}</a>
+          </div>
         </div>
-        <div class="office-buttons">
-          <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office1_email }}">{{ section.settings.contact_button_text }}</a>
-          <a class="btn-office btn-outline-red" href="{{ section.settings.office1_book_link | default: pages['sydney-services'].url }}">{{ section.settings.book_button_text }}</a>
+        <div class="split-image office-map-wrap">
+          {% assign office1_map_id = 'office-map-1-' | append: section.id %}
+          {% assign office1_address = section.settings.office1_address_line1 | append: ', ' | append: section.settings.office1_address_line2 %}
+          {% assign office1_map_title = section.settings.office1_name | append: ' location map' %}
+          {% render 'styled-map',
+            map_id: office1_map_id,
+            address: office1_address,
+            embed_url: section.settings.office1_map_embed_url,
+            map_title: office1_map_title,
+            aria_label: section.settings.office1_map_aria_label
+          %}
         </div>
       </div>
-      <div class="office-card">
-        {% assign office2_map_id = 'office-map-2-' | append: section.id %}
-        {% assign office2_address = section.settings.office2_address_line1 | append: ', ' | append: section.settings.office2_address_line2 %}
-        {% assign office2_map_title = section.settings.office2_name | append: ' location map' %}
-        {% render 'styled-map',
-          map_id: office2_map_id,
-          address: office2_address,
-          embed_url: section.settings.office2_map_embed_url,
-          map_title: office2_map_title,
-          aria_label: section.settings.office2_map_aria_label
-        %}
-        <h3 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office2_name }}</h3>
-        <div class="office-details cc-font-body-{{ section.settings.body_font }}">
-          <p>{{ section.settings.office2_address_line1 }}</p>
-          <p>{{ section.settings.office2_address_line2 }}</p>
-          <a href="mailto:{{ section.settings.office2_email }}">{{ section.settings.office2_email }}</a>
-          <p>Phone: <a href="tel:{{ section.settings.office2_phone_href }}">{{ section.settings.office2_phone_display }}</a></p>
+      <div class="split-layout reverse office-row">
+        <div class="split-text office-info">
+          <h2 class="cc-moved-style-005{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office2_name }}</h2>
+          <div class="office-details cc-font-body-{{ section.settings.body_font }}">
+            <p>{{ section.settings.office2_address_line1 }}</p>
+            <p>{{ section.settings.office2_address_line2 }}</p>
+            <a href="mailto:{{ section.settings.office2_email }}">{{ section.settings.office2_email }}</a>
+            <p>Phone: <a href="tel:{{ section.settings.office2_phone_href }}">{{ section.settings.office2_phone_display }}</a></p>
+          </div>
+          <div class="office-buttons">
+            <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office2_email }}">{{ section.settings.contact_button_text }}</a>
+            <a class="btn-office btn-outline-red" href="{{ section.settings.office2_book_link | default: pages['melbourne-services'].url }}">{{ section.settings.book_button_text }}</a>
+          </div>
         </div>
-        <div class="office-buttons">
-          <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office2_email }}">{{ section.settings.contact_button_text }}</a>
-          <a class="btn-office btn-outline-red" href="{{ section.settings.office2_book_link | default: pages['melbourne-services'].url }}">{{ section.settings.book_button_text }}</a>
+        <div class="split-image office-map-wrap">
+          {% assign office2_map_id = 'office-map-2-' | append: section.id %}
+          {% assign office2_address = section.settings.office2_address_line1 | append: ', ' | append: section.settings.office2_address_line2 %}
+          {% assign office2_map_title = section.settings.office2_name | append: ' location map' %}
+          {% render 'styled-map',
+            map_id: office2_map_id,
+            address: office2_address,
+            embed_url: section.settings.office2_map_embed_url,
+            map_title: office2_map_title,
+            aria_label: section.settings.office2_map_aria_label
+          %}
         </div>
       </div>
     </div>
@@ -93,6 +106,10 @@
     { "type": "header", "content": "Heading" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Contact Us" },
     { "type": "textarea", "id": "intro_text", "label": "Intro text", "default": "Reach out to our Sydney or Melbourne office — all appointments are obligation free." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "intro_image", "label": "Image" },
+    { "type": "text", "id": "intro_image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "intro_image_fallback", "label": "Image fallback filename", "info": "Asset filename used if no image is selected above." },
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "contact_button_text", "label": "\"Contact us\" button text", "default": "Contact Us" },
     { "type": "text", "id": "book_button_text", "label": "\"Book services\" button text", "default": "Book Services" },

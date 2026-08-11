@@ -1,0 +1,1255 @@
+<style>
+  /* ==========================================================
+     CAMERON & CO — TIMELESS VS TRENDY
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} {
+    width: 100%;
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     SHARED PAGE WIDTH
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-intro,
+  #timeless-trendy-{{ section.id }} .tt-section-inner {
+    width: 100%;
+    max-width: 1120px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     INTRO
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-intro {
+    padding: 50px 32px 34px;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-tagline,
+  #timeless-trendy-{{ section.id }} .tt-title,
+  #timeless-trendy-{{ section.id }} .tt-intro-copy,
+  #timeless-trendy-{{ section.id }} .tt-intro-copy p {
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-tagline {
+    margin: 0 0 12px;
+
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-title {
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    font-size: clamp(32px, 3.2vw, 42px);
+    line-height: 1.15;
+    font-weight: 400;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-intro-copy {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-intro-copy p {
+    margin: 0;
+
+    font-family: inherit !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+
+  /* ==========================================================
+     ARTICLE SECTIONS
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-section {
+    width: 100%;
+
+    padding: 42px 32px;
+
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-section-inner {
+    padding: 0;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     TEXTURED CALLOUT SECTIONS
+
+     Uses the same visual language as the footer, but with a
+     very light cream overlay so article text remains dark.
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-callout {
+    position: relative;
+
+    background-color: {{ section.settings.callout_bg_color }};
+
+    background-image:
+      linear-gradient(
+        rgba(247, 245, 243, 0.93),
+        rgba(247, 245, 243, 0.93)
+      ),
+      url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }});
+
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    color: #171d29;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-callout h2,
+  #timeless-trendy-{{ section.id }} .tt-callout h3,
+  #timeless-trendy-{{ section.id }} .tt-callout p,
+  #timeless-trendy-{{ section.id }} .tt-callout li {
+    color: #171d29;
+  }
+
+
+  /* ==========================================================
+     H2 SECTION HEADINGS
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-heading,
+  #timeless-trendy-{{ section.id }} .tt-heading-small,
+  #timeless-trendy-{{ section.id }} .tt-list-heading {
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-heading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0 0 16px;
+
+    font-size: clamp(28px, 2.8vw, 38px);
+    line-height: 1.16;
+    font-weight: 400;
+  }
+
+
+  /* ==========================================================
+     FIRST H2 — VISUALLY SMALLER, STILL SEMANTICALLY H2
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-heading-small {
+    width: 100%;
+
+    margin: 0 0 16px;
+
+    font-size: clamp(24px, 2.2vw, 31px);
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+
+  /* ==========================================================
+     BODY COPY
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-copy,
+  #timeless-trendy-{{ section.id }} .tt-copy p,
+  #timeless-trendy-{{ section.id }} .tt-list,
+  #timeless-trendy-{{ section.id }} .tt-list li {
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-copy {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-copy p {
+    margin: 0 0 14px;
+
+    font-family: inherit !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* ==========================================================
+     H3 / LIST SUBHEADING
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-list-heading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 26px 0 10px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+    font-weight: 500;
+  }
+
+
+  /* ==========================================================
+     LISTS
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-list {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 8px 0 0;
+    padding-left: 21px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-list li {
+    margin: 0 0 6px;
+
+    font-family: inherit !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+  }
+
+
+  /* ==========================================================
+     CHARACTERISTICS SECTION
+     TEXT LEFT / IMAGE RIGHT
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-characteristics-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 54px;
+
+    align-items: center;
+
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-characteristics-copy {
+    min-width: 0;
+
+    text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-characteristics-media {
+    width: 300px;
+    max-width: 100%;
+
+    align-self: center;
+  }
+
+  #timeless-trendy-{{ section.id }}
+  .tt-characteristics-media
+  .tt-image-frame {
+    width: 100%;
+
+    margin: 0;
+  }
+
+
+  /* ==========================================================
+     IMAGE FRAME
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-image-frame {
+    width: 300px;
+    max-width: 100%;
+
+    margin: 24px 0 0;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-image-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     TWO IMAGE ROW
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-image-row {
+    display: flex;
+
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    width: 100%;
+
+    margin: 26px 0 0;
+  }
+
+  #timeless-trendy-{{ section.id }}
+  .tt-image-row
+  .tt-image-frame {
+    width: 300px;
+    height: 300px;
+
+    margin: 0;
+
+    aspect-ratio: 1 / 1;
+  }
+
+  #timeless-trendy-{{ section.id }}
+  .tt-image-row
+  .tt-image-frame img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+  }
+
+
+  /* ==========================================================
+     FINAL CTA
+     ========================================================== */
+
+  #timeless-trendy-{{ section.id }} .tt-cta-wrap {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 30px;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+
+    margin: 0;
+    padding: 14px 28px;
+
+    box-sizing: border-box;
+
+    background: {{ section.settings.button_bg_color }};
+    border: 1px solid {{ section.settings.button_bg_color }};
+
+    color: {{ section.settings.button_text_color }};
+
+    border-radius: var(--cc-button-radius, 999px);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+
+  /* ==========================================================
+     MOBILE
+     ========================================================== */
+
+  @media screen and (max-width: 749px) {
+
+    #timeless-trendy-{{ section.id }} .tt-intro,
+    #timeless-trendy-{{ section.id }} .tt-section {
+      padding-left: 18px;
+      padding-right: 18px;
+
+      text-align: left !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-intro {
+      padding-top: 34px;
+      padding-bottom: 26px;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-title {
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+
+      text-align: left !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-intro-copy,
+    #timeless-trendy-{{ section.id }} .tt-intro-copy p,
+    #timeless-trendy-{{ section.id }} .tt-copy,
+    #timeless-trendy-{{ section.id }} .tt-copy p,
+    #timeless-trendy-{{ section.id }} .tt-list,
+    #timeless-trendy-{{ section.id }} .tt-list li,
+    #timeless-trendy-{{ section.id }} .tt-list-heading,
+    #timeless-trendy-{{ section.id }} .tt-heading,
+    #timeless-trendy-{{ section.id }} .tt-heading-small {
+      text-align: left !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-intro-copy,
+    #timeless-trendy-{{ section.id }} .tt-intro-copy p,
+    #timeless-trendy-{{ section.id }} .tt-copy,
+    #timeless-trendy-{{ section.id }} .tt-copy p,
+    #timeless-trendy-{{ section.id }} .tt-list,
+    #timeless-trendy-{{ section.id }} .tt-list li,
+    #timeless-trendy-{{ section.id }} .tt-list-heading {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-heading {
+      max-width: none;
+
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-heading-small {
+      margin-bottom: 14px;
+
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+
+    /* CHARACTERISTICS */
+
+    #timeless-trendy-{{ section.id }} .tt-characteristics-grid {
+      display: flex;
+      flex-direction: column;
+
+      align-items: stretch;
+
+      gap: 22px;
+
+      text-align: left !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-characteristics-copy {
+      width: 100%;
+
+      text-align: left !important;
+    }
+
+    #timeless-trendy-{{ section.id }} .tt-characteristics-media {
+      width: 100%;
+      max-width: none;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    #timeless-trendy-{{ section.id }}
+    .tt-characteristics-media
+    .tt-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* SINGLE IMAGES */
+
+    #timeless-trendy-{{ section.id }} .tt-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* IMAGE PAIRS */
+
+    #timeless-trendy-{{ section.id }} .tt-image-row {
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 14px;
+
+      margin-top: 20px;
+    }
+
+    #timeless-trendy-{{ section.id }}
+    .tt-image-row
+    .tt-image-frame {
+      width: 260px;
+      height: 260px;
+
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* CTA */
+
+    #timeless-trendy-{{ section.id }} .tt-cta-wrap {
+      justify-content: center;
+    }
+
+  }
+</style>
+
+
+<section
+  id="timeless-trendy-{{ section.id }}"
+  class="timeless-trendy-page"
+>
+
+
+  <!-- ========================================================
+       INTRO
+       ======================================================== -->
+
+  <div class="tt-intro">
+
+
+    {% if section.settings.hero_tagline != blank %}
+
+      <p
+        class="tt-tagline cc-font-heading-{{ section.settings.heading_font }}"
+      >
+        {{ section.settings.hero_tagline }}
+      </p>
+
+    {% endif %}
+
+
+    {% if section.settings.hero_title != blank %}
+
+      <h1
+        class="tt-title cc-font-heading-{{ section.settings.heading_font }}"
+      >
+        {{ section.settings.hero_title }}
+      </h1>
+
+    {% endif %}
+
+
+    {% if section.settings.hero_intro != blank %}
+
+      <div
+        class="tt-intro-copy cc-font-body-{{ section.settings.body_font }}"
+      >
+        {{ section.settings.hero_intro }}
+      </div>
+
+    {% endif %}
+
+
+  </div>
+
+
+
+  <!-- ========================================================
+       CONTENT BLOCKS
+       ======================================================== -->
+
+  {% for block in section.blocks %}
+
+    {% if block.type == 'content_block' %}
+
+      <section
+        class="tt-section{% if block.settings.callout %} tt-callout{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+
+        <div class="tt-section-inner">
+
+
+          <!-- =================================================
+               BLOCK 1 — CHARACTERISTICS
+               ================================================= -->
+
+          {% if block.id == 'block-1' %}
+
+            <div class="tt-characteristics-grid">
+
+
+              <div class="tt-characteristics-copy">
+
+
+                {% if block.settings.heading != blank %}
+
+                  <h2
+                    class="tt-heading-small cc-font-heading-{{ section.settings.heading_font }}"
+                  >
+                    {{ block.settings.heading }}
+                  </h2>
+
+                {% endif %}
+
+
+                {% if block.settings.body != blank %}
+
+                  <div
+                    class="tt-copy cc-font-body-{{ section.settings.body_font }}"
+                  >
+                    {{ block.settings.body }}
+                  </div>
+
+                {% endif %}
+
+
+                {% if block.settings.list_heading != blank %}
+
+                  <h3 class="tt-list-heading">
+                    {{ block.settings.list_heading }}
+                  </h3>
+
+                {% endif %}
+
+
+                {% if block.settings.list_items != blank %}
+
+                  {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+
+                  {% if block.settings.list_style == 'numbered' %}
+
+                    <ol class="tt-list">
+
+                      {% for item in list_lines %}
+
+                        {% assign clean_item = item | strip %}
+
+                        {% if clean_item != blank %}
+                          <li>{{ clean_item }}</li>
+                        {% endif %}
+
+                      {% endfor %}
+
+                    </ol>
+
+
+                  {% else %}
+
+                    <ul class="tt-list">
+
+                      {% for item in list_lines %}
+
+                        {% assign clean_item = item | strip %}
+
+                        {% if clean_item != blank %}
+                          <li>{{ clean_item }}</li>
+                        {% endif %}
+
+                      {% endfor %}
+
+                    </ul>
+
+                  {% endif %}
+
+                {% endif %}
+
+
+              </div>
+
+
+
+              <div class="tt-characteristics-media">
+
+
+                {% if block.settings.image_1 != blank %}
+
+                  <div class="tt-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="{{ block.settings.image_1.width }}"
+                      height="{{ block.settings.image_1.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+
+                {% elsif block.settings.image_1_fallback != blank %}
+
+                  <div class="tt-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1_fallback | asset_url }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="700"
+                      height="700"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% endif %}
+
+
+              </div>
+
+
+            </div>
+
+
+          <!-- =================================================
+               ALL OTHER BLOCKS
+               ================================================= -->
+
+          {% else %}
+
+
+            {% if block.settings.heading != blank %}
+
+              <h2
+                class="tt-heading cc-font-heading-{{ section.settings.heading_font }}"
+              >
+                {{ block.settings.heading }}
+              </h2>
+
+            {% endif %}
+
+
+            {% if block.settings.body != blank %}
+
+              <div
+                class="tt-copy cc-font-body-{{ section.settings.body_font }}"
+              >
+                {{ block.settings.body }}
+              </div>
+
+            {% endif %}
+
+
+            {% if block.settings.list_heading != blank %}
+
+              <h3 class="tt-list-heading">
+                {{ block.settings.list_heading }}
+              </h3>
+
+            {% endif %}
+
+
+            {% if block.settings.list_items != blank %}
+
+              {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+
+              {% if block.settings.list_style == 'numbered' %}
+
+                <ol class="tt-list">
+
+                  {% for item in list_lines %}
+
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ol>
+
+
+              {% else %}
+
+                <ul class="tt-list">
+
+                  {% for item in list_lines %}
+
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ul>
+
+              {% endif %}
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 TWO SELECTED IMAGES
+                 ================================================= -->
+
+            {% if block.settings.image_1 != blank and block.settings.image_2 != blank %}
+
+              <div class="tt-image-row">
+
+
+                <div class="tt-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                    alt="{{ block.settings.image_1_alt | escape }}"
+                    width="{{ block.settings.image_1.width }}"
+                    height="{{ block.settings.image_1.height }}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+                <div class="tt-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_2 | image_url: width: 700 }}"
+                    alt="{{ block.settings.image_2_alt | escape }}"
+                    width="{{ block.settings.image_2.width }}"
+                    height="{{ block.settings.image_2.height }}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+              </div>
+
+
+            <!-- =================================================
+                 ONE SELECTED IMAGE
+                 ================================================= -->
+
+            {% elsif block.settings.image_1 != blank %}
+
+              <div class="tt-image-frame">
+
+                <img
+                  src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="{{ block.settings.image_1.width }}"
+                  height="{{ block.settings.image_1.height }}"
+                  loading="lazy"
+                >
+
+              </div>
+
+
+            <!-- =================================================
+                 TWO FALLBACK IMAGES
+                 ================================================= -->
+
+            {% elsif block.settings.image_1_fallback != blank and block.settings.image_2_fallback != blank %}
+
+              <div class="tt-image-row">
+
+
+                <div class="tt-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_1_fallback | asset_url }}"
+                    alt="{{ block.settings.image_1_alt | escape }}"
+                    width="700"
+                    height="700"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+                <div class="tt-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_2_fallback | asset_url }}"
+                    alt="{{ block.settings.image_2_alt | escape }}"
+                    width="700"
+                    height="700"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+              </div>
+
+
+            <!-- =================================================
+                 ONE FALLBACK IMAGE
+                 ================================================= -->
+
+            {% elsif block.settings.image_1_fallback != blank %}
+
+              <div class="tt-image-frame">
+
+                <img
+                  src="{{ block.settings.image_1_fallback | asset_url }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="700"
+                  height="700"
+                  loading="lazy"
+                >
+
+              </div>
+
+            {% endif %}
+
+
+
+            <!-- =================================================
+                 FINAL CTA
+                 ================================================= -->
+
+            {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+
+              <div class="tt-cta-wrap">
+
+                <a
+                  class="tt-button cc-font-body-{{ section.settings.body_font }}"
+                  href="{{ block.settings.cta_link }}"
+                >
+                  {{ block.settings.cta_text }}
+                </a>
+
+              </div>
+
+            {% endif %}
+
+
+          {% endif %}
+
+
+        </div>
+
+      </section>
+
+    {% endif %}
+
+  {% endfor %}
+
+
+</section>
+
+
+
+{% schema %}
+{
+  "name": "Timeless vs Trendy",
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Choosing Jewellery That Stands the Test of Time"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_tagline",
+      "label": "Tagline",
+      "default": "Timeless vs Trendy"
+    },
+
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>In the ever-evolving world of fashion, jewellery stands as both a personal statement and a potential investment.</p>"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+
+    {
+      "type": "color",
+      "id": "callout_bg_color",
+      "label": "Callout background",
+      "default": "#f7f5f3"
+    },
+
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#D5B226"
+    },
+
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+
+      "default": "cormorant"
+    },
+
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+
+      "default": "glacial"
+    }
+
+  ],
+
+
+  "blocks": [
+
+    {
+      "type": "content_block",
+      "name": "Content block",
+
+      "settings": [
+
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body copy"
+        },
+
+        {
+          "type": "checkbox",
+          "id": "callout",
+          "label": "Textured shaded background",
+          "default": false
+        },
+
+
+        {
+          "type": "header",
+          "content": "List"
+        },
+
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List heading"
+        },
+
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items",
+          "info": "Enter one item per line."
+        },
+
+        {
+          "type": "select",
+          "id": "list_style",
+          "label": "List style",
+
+          "options": [
+            {
+              "value": "bullet",
+              "label": "Bulleted"
+            },
+            {
+              "value": "numbered",
+              "label": "Numbered"
+            }
+          ],
+
+          "default": "bullet"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Call to action"
+        },
+
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button text"
+        },
+
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        }
+
+      ]
+
+    }
+
+  ],
+
+
+  "presets": [
+    {
+      "name": "Timeless vs Trendy"
+    }
+  ]
+
+}
+{% endschema %}

@@ -12,6 +12,11 @@
     gap: 20px;
   }
 
+  .home-services-shell .hero-card {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
   .home-services-shell .hero-card img {
     width: 100%;
     height: auto;
@@ -38,7 +43,7 @@
   <div class="section-inner">
     <div class="section-eyebrow cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.eyebrow_color }};">{{ section.settings.eyebrow }}</div>
     <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="bento-heading" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
-    <p class="section-subtitle cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
+    <p class="section-subtitle cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
     <div class="home-hero-grid">
       <div class="hero-left-col">
         {% if section.settings.link_1 != blank %}<a class="hero-card tall" href="{{ section.settings.link_1 }}">{% else %}<div class="hero-card tall">{% endif %}
@@ -47,7 +52,7 @@
           {% else %}
             <img alt="{{ section.settings.image_1_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-jewellery-remodelling-workbench.webp' | asset_url }}" width="1080">
           {% endif %}
-          <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_1 }}</h3>
+          <h2 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_1 }}</h2>
         {% if section.settings.link_1 != blank %}</a>{% else %}</div>{% endif %}
         {% if section.settings.link_2 != blank %}<a class="hero-card" href="{{ section.settings.link_2 }}">{% else %}<div class="hero-card">{% endif %}
           {% if section.settings.image_2 %}
@@ -55,7 +60,7 @@
           {% else %}
             <img alt="{{ section.settings.image_2_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-repair-workshop-bench.webp' | asset_url }}" width="1080">
           {% endif %}
-          <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_2 }}</h3>
+          <h2 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_2 }}</h2>
         {% if section.settings.link_2 != blank %}</a>{% else %}</div>{% endif %}
       </div>
       <div class="hero-right-col">
@@ -65,7 +70,7 @@
           {% else %}
             <img alt="{{ section.settings.image_3_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-appraisal-consultation.webp' | asset_url }}" width="1080">
           {% endif %}
-          <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_3 }}</h3>
+          <h2 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_3 }}</h2>
         {% if section.settings.link_3 != blank %}</a>{% else %}</div>{% endif %}
         {% if section.settings.link_4 != blank %}<a class="hero-card tall" href="{{ section.settings.link_4 }}">{% else %}<div class="hero-card tall">{% endif %}
           {% if section.settings.image_4 %}
@@ -73,7 +78,7 @@
           {% else %}
             <img alt="{{ section.settings.image_4_alt | escape }}" height="500" loading="eager" src="{{ 'cameron-co-replacement-ring-selection.webp' | asset_url }}" width="1080">
           {% endif %}
-          <h3 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_4 }}</h3>
+          <h2 class="hero-card-label{% if section.settings.card_heading_font != blank %} cc-font-heading-{{ section.settings.card_heading_font }}{% endif %}" style="{% if section.settings.card_heading_color != blank %}color:{{ section.settings.card_heading_color }};{% endif %}">{{ section.settings.label_4 }}</h2>
         {% if section.settings.link_4 != blank %}</a>{% else %}</div>{% endif %}
       </div>
     </div>

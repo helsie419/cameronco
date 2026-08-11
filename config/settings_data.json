@@ -9,19 +9,25 @@
  */
 {
   "current": {
-    "google_maps_api_key": "AIzaSyAfy-Wk7rWb-UKuSK2jMPUzkWKKwGjcP5k",
     "h1_color": "#4D493F",
+    "h1_size": 40,
     "h2_color": "#4D493F",
+    "h2_size": 32,
     "h3_color": "#4D493F",
+    "h3_size": 24,
     "h4_color": "#4D493F",
+    "h4_size": 20,
     "h5_color": "#4D493F",
+    "h5_size": 19,
     "h6_color": "#4D493F",
+    "h6_size": 18,
+    "google_maps_api_key": "AIzaSyAfy-Wk7rWb-UKuSK2jMPUzkWKKwGjcP5k",
     "sections": {
       "header": {
         "type": "header",
         "custom_css": [
-          "a:not(.btn-book) {text-decoration-color: #0b0b0b !important; }",
-          ".site-header .primary-nav-link::after {background-color: #0b0b0b !important; }"
+          "a:not(.btn-book) {text-decoration-color: #0b0b0b !important;}",
+          ".site-header .primary-nav-link::after {background-color: #0b0b0b !important;}"
         ],
         "settings": {
           "main_menu": "main-menu",
@@ -29,14 +35,16 @@
           "button_link": "",
           "background_color": "#ffffff",
           "nav_color": "#0b0b0b",
-          "button_color": "#D5B226",
+          "button_color": "#d5b226",
           "nav_color_mobile": "#0b0b0b",
           "nav_font": "cormorant",
           "button_font": "glacial",
-          "logo_size": 58,
-          "logo_size_mobile": 34,
+          "logo_size": 60,
           "logo_offset_x": 0,
           "logo_offset_y": 0,
+          "logo_size_mobile": 42,
+          "logo_offset_x_mobile": 0,
+          "logo_offset_y_mobile": 0,
           "nav_offset_x": 0,
           "nav_offset_y": 0,
           "button_offset_x": 0,
@@ -76,6 +84,8 @@
           "disclaimer_url": "",
           "copyright_text": "Cameron & Co.",
           "background_color": "#1a202b",
+          "background_opacity": 80,
+          "texture_opacity": 14,
           "heading_color": "#ffffff",
           "text_color": "#ffffff",
           "heading_color_mobile": "#ffffff",
@@ -85,7 +95,14 @@
         }
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "3886181796285292942": {
+        "type": "shopify://apps/cowlendar-booking/blocks/app-embed/6d8b8f6a-9b3c-42b8-b2e6-a758c38d45bf",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Default": {}

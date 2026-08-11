@@ -1,0 +1,886 @@
+<style>
+  /* ==========================================================
+     CAMERON & CO — ARTICLES LANDING PAGE
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} {
+    width: 100%;
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     PAGE WIDTH
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-inner {
+    width: calc(100% - 64px);
+    max-width: 1120px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
+  }
+
+
+  /* ==========================================================
+     INTRODUCTION
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-intro {
+    padding: 54px 0 46px;
+  }
+
+  #articles-landing-{{ section.id }} .al-eyebrow {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-title {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 0 18px;
+
+    font-size: clamp(32px, 3.2vw, 42px);
+    line-height: 1.15;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-intro-copy {
+    width: 100%;
+    max-width: 920px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-intro-copy p {
+    margin: 0;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     ARTICLES AREA
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-articles {
+    padding: 18px 0 72px;
+  }
+
+
+  /* ==========================================================
+     THREE EQUAL CARDS
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 46px 28px;
+
+    width: 100%;
+
+    align-items: start;
+  }
+
+
+  /* ==========================================================
+     ARTICLE CARD
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-card {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+  }
+
+  #articles-landing-{{ section.id }} .al-card-image-link {
+    display: block;
+
+    width: 100%;
+
+    text-decoration: none;
+  }
+
+
+  /* ==========================================================
+     CONSISTENT ARTICLE IMAGE SIZE
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-card-image {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    background: #f7f5f3;
+
+    line-height: 0;
+  }
+
+  #articles-landing-{{ section.id }} .al-card-image img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    border-radius: 0 !important;
+
+    transition: transform 0.35s ease;
+  }
+
+  #articles-landing-{{ section.id }} .al-card:hover .al-card-image img {
+    transform: scale(1.025);
+  }
+
+
+  /* ==========================================================
+     CARD CONTENT
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-card-content {
+    display: flex;
+    flex-direction: column;
+
+    flex-grow: 1;
+
+    padding: 20px 2px 0;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-card-eyebrow {
+    margin: 0 0 8px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    letter-spacing: 0.09em;
+
+    text-transform: uppercase;
+
+    color: #6d6d6d;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     CARD H2
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-card-title {
+    width: 100%;
+
+    margin: 0 0 12px;
+
+    font-size: clamp(23px, 1.8vw, 28px);
+    line-height: 1.2;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-card-title a {
+    color: inherit;
+
+    text-decoration: none;
+  }
+
+
+  /* ==========================================================
+     CARD DESCRIPTION
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-card-copy {
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 16px;
+    line-height: 1.68;
+
+    text-align: left;
+  }
+
+  #articles-landing-{{ section.id }} .al-card-copy p {
+    margin: 0;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     READ ARTICLE LINK
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-read-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    width: fit-content;
+
+    margin-top: auto;
+
+    padding-bottom: 3px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    color: #171d29;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #D5B226;
+  }
+
+  #articles-landing-{{ section.id }} .al-read-link:hover {
+    opacity: 0.7;
+  }
+
+
+  /* ==========================================================
+     BOTTOM BRAND SECTION
+     ========================================================== */
+
+  #articles-landing-{{ section.id }} .al-bottom {
+    padding: 52px 0;
+
+    background-color: #f7f5f3;
+
+    background-image:
+      linear-gradient(
+        rgba(247, 245, 243, 0.94),
+        rgba(247, 245, 243, 0.94)
+      ),
+      url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }});
+
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  #articles-landing-{{ section.id }} .al-bottom-inner {
+    max-width: 760px;
+
+    text-align: center;
+  }
+
+  #articles-landing-{{ section.id }} .al-bottom-title {
+    margin: 0 0 14px;
+
+    font-size: clamp(27px, 2.5vw, 34px);
+    line-height: 1.18;
+    font-weight: 400;
+
+    text-align: center;
+  }
+
+  #articles-landing-{{ section.id }} .al-bottom-copy {
+    margin: 0 auto;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 16px;
+    line-height: 1.68;
+
+    text-align: center;
+  }
+
+  #articles-landing-{{ section.id }} .al-bottom-copy p {
+    margin: 0;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: center;
+  }
+
+
+  /* ==========================================================
+     TABLET — TWO CARDS
+     ========================================================== */
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+
+    #articles-landing-{{ section.id }} .al-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 42px 26px;
+    }
+
+    #articles-landing-{{ section.id }} .al-card-title {
+      font-size: 25px;
+    }
+
+  }
+
+
+  /* ==========================================================
+     MOBILE
+     ========================================================== */
+
+  @media screen and (max-width: 749px) {
+
+    #articles-landing-{{ section.id }} .al-inner {
+      width: calc(100% - 36px);
+    }
+
+
+    /* INTRO */
+
+    #articles-landing-{{ section.id }} .al-intro {
+      padding-top: 36px;
+      padding-bottom: 30px;
+    }
+
+    #articles-landing-{{ section.id }} .al-eyebrow {
+      font-size: 14px;
+    }
+
+    #articles-landing-{{ section.id }} .al-title {
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    #articles-landing-{{ section.id }} .al-intro-copy,
+    #articles-landing-{{ section.id }} .al-intro-copy p {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+    }
+
+
+    /* ARTICLES */
+
+    #articles-landing-{{ section.id }} .al-articles {
+      padding-top: 8px;
+      padding-bottom: 50px;
+    }
+
+    #articles-landing-{{ section.id }} .al-grid {
+      display: flex;
+      flex-direction: column;
+
+      gap: 42px;
+    }
+
+
+    /* IMAGE */
+
+    #articles-landing-{{ section.id }} .al-card-image {
+      width: 100%;
+
+      aspect-ratio: 4 / 3;
+
+      border-radius: 16px;
+    }
+
+
+    /* CONTENT */
+
+    #articles-landing-{{ section.id }} .al-card-content {
+      padding: 17px 0 0;
+    }
+
+    #articles-landing-{{ section.id }} .al-card-title {
+      margin-bottom: 10px;
+
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+    #articles-landing-{{ section.id }} .al-card-copy {
+      margin-bottom: 15px;
+
+      font-size: 16px;
+      line-height: 1.68;
+    }
+
+
+    /* BOTTOM */
+
+    #articles-landing-{{ section.id }} .al-bottom {
+      padding: 40px 0;
+    }
+
+    #articles-landing-{{ section.id }} .al-bottom-title {
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+  }
+</style>
+
+
+<section
+  id="articles-landing-{{ section.id }}"
+  class="articles-landing"
+>
+
+
+  <!-- ========================================================
+       INTRO
+       ======================================================== -->
+
+  <div class="al-inner al-intro">
+
+    {% if section.settings.eyebrow != blank %}
+
+      <p class="al-eyebrow cc-font-heading-{{ section.settings.heading_font }}">
+        {{ section.settings.eyebrow }}
+      </p>
+
+    {% endif %}
+
+
+    {% if section.settings.heading != blank %}
+
+      <h1 class="al-title cc-font-heading-{{ section.settings.heading_font }}">
+        {{ section.settings.heading }}
+      </h1>
+
+    {% endif %}
+
+
+    {% if section.settings.intro != blank %}
+
+      <div class="al-intro-copy cc-font-body-{{ section.settings.body_font }}">
+        {{ section.settings.intro }}
+      </div>
+
+    {% endif %}
+
+  </div>
+
+
+  <!-- ========================================================
+       ARTICLES
+       ======================================================== -->
+
+  <div class="al-articles">
+
+    <div class="al-inner">
+
+      <div class="al-grid">
+
+
+        {% for block in section.blocks %}
+
+          {% if block.type == 'article_card' %}
+
+            <article
+              class="al-card"
+              {{ block.shopify_attributes }}
+            >
+
+
+              <!-- IMAGE -->
+
+              {% if block.settings.link != blank %}
+
+                <a
+                  class="al-card-image-link"
+                  href="{{ block.settings.link }}"
+                  aria-label="{{ block.settings.heading | escape }}"
+                >
+
+              {% endif %}
+
+
+              <div class="al-card-image">
+
+                {% if block.settings.image != blank %}
+
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1000 }}"
+                    alt="{{ block.settings.image_alt | escape }}"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    loading="lazy"
+                  >
+
+                {% elsif block.settings.image_fallback != blank %}
+
+                  <img
+                    src="{{ block.settings.image_fallback | asset_url }}"
+                    alt="{{ block.settings.image_alt | escape }}"
+                    width="1000"
+                    height="750"
+                    loading="lazy"
+                  >
+
+                {% endif %}
+
+              </div>
+
+
+              {% if block.settings.link != blank %}
+
+                </a>
+
+              {% endif %}
+
+
+
+              <!-- CONTENT -->
+
+              <div class="al-card-content">
+
+
+                {% if block.settings.eyebrow != blank %}
+
+                  <p class="al-card-eyebrow">
+                    {{ block.settings.eyebrow }}
+                  </p>
+
+                {% endif %}
+
+
+                {% if block.settings.heading != blank %}
+
+                  <h2 class="al-card-title cc-font-heading-{{ section.settings.heading_font }}">
+
+                    {% if block.settings.link != blank %}
+
+                      <a href="{{ block.settings.link }}">
+                        {{ block.settings.heading }}
+                      </a>
+
+                    {% else %}
+
+                      {{ block.settings.heading }}
+
+                    {% endif %}
+
+                  </h2>
+
+                {% endif %}
+
+
+                {% if block.settings.description != blank %}
+
+                  <div class="al-card-copy cc-font-body-{{ section.settings.body_font }}">
+                    {{ block.settings.description }}
+                  </div>
+
+                {% endif %}
+
+
+                {% if block.settings.link != blank %}
+
+                  <a
+                    class="al-read-link"
+                    href="{{ block.settings.link }}"
+                  >
+                    {% if block.settings.link_text != blank %}
+                      {{ block.settings.link_text }}
+                    {% else %}
+                      Read article
+                    {% endif %}
+                  </a>
+
+                {% endif %}
+
+
+              </div>
+
+            </article>
+
+          {% endif %}
+
+        {% endfor %}
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================
+       BOTTOM BRAND SECTION
+       ======================================================== -->
+
+  {% if section.settings.bottom_heading != blank or section.settings.bottom_copy != blank %}
+
+    <div class="al-bottom">
+
+      <div class="al-inner al-bottom-inner">
+
+
+        {% if section.settings.bottom_heading != blank %}
+
+          <h2 class="al-bottom-title cc-font-heading-{{ section.settings.heading_font }}">
+            {{ section.settings.bottom_heading }}
+          </h2>
+
+        {% endif %}
+
+
+        {% if section.settings.bottom_copy != blank %}
+
+          <div class="al-bottom-copy cc-font-body-{{ section.settings.body_font }}">
+            {{ section.settings.bottom_copy }}
+          </div>
+
+        {% endif %}
+
+
+      </div>
+
+    </div>
+
+  {% endif %}
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Articles landing page",
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Cameron & Co Journal"
+    },
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "default": "Jewellery Guides & Insights"
+    },
+
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Explore practical guides from Cameron & Co covering jewellery care, diamonds, design and choosing pieces that will remain meaningful for years to come.</p>"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Bottom section"
+    },
+
+    {
+      "type": "text",
+      "id": "bottom_heading",
+      "label": "Bottom heading",
+      "default": "Jewellery Worth Understanding"
+    },
+
+    {
+      "type": "richtext",
+      "id": "bottom_copy",
+      "label": "Bottom copy",
+      "default": "<p>Whether you are caring for a treasured piece, comparing diamonds or considering your next design, informed choices make good jewellery even more meaningful.</p>"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+
+      "default": "cormorant"
+    },
+
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+
+      "default": "glacial"
+    }
+
+  ],
+
+
+  "blocks": [
+
+    {
+      "type": "article_card",
+      "name": "Article",
+
+      "settings": [
+
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Category"
+        },
+
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Article title"
+        },
+
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Choose article image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_fallback",
+          "label": "Fallback image filename",
+          "info": "Optional. Used when no image is selected above."
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link"
+        },
+
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Article page"
+        },
+
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Read article"
+        }
+
+      ]
+
+    }
+
+  ],
+
+
+  "presets": [
+    {
+      "name": "Articles landing page"
+    }
+  ]
+}
+{% endschema %}

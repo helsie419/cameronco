@@ -10,19 +10,19 @@
 {
   "sections": {
     "main": {
-      "type": "article-page",
+      "type": "jewellery-care-page",
       "blocks": {
         "block-1": {
           "type": "content_block",
           "settings": {
-            "heading": "The Importance of Regular Jewellery Cleaning",
+            "heading": "",
             "body": "<p>Regular cleaning is the cornerstone of jewellery care. Even with careful wear, jewellery can accumulate dirt, oils, and grime from daily use. This buildup can dull the appearance of metals and gemstones, and in some cases, even lead to long-term damage.</p>",
             "callout": false,
             "list_heading": "Benefits of regular cleaning:",
             "list_items": "Maintaining the brilliance and shine of your jewellery\nPreventing the buildup of harmful substances\nEarly detection of loose stones or damaged settings\nProlonging the life of your jewellery",
             "list_style": "bullet",
-            "image_1_alt": "Gold hoop pearl drop earrings on satin ready for gentle cleaning",
-            "image_1_fallback": "gold-hoop-pearl-drop-earrings.webp",
+            "image_1_alt": "Hand brushing two gold rings clean in a bowl of jewellery cleaning solution",
+            "image_1_fallback": "cameron-co-jewellery-cleaning-brush-bowl.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -38,8 +38,8 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Silver ring showing metal care and polishing needs",
-            "image_1_fallback": "silver-ring-care.webp",
+            "image_1_alt": "",
+            "image_1_fallback": "",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -55,12 +55,12 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Opal vintage gold ring requiring careful gemstone care",
-            "image_1_fallback": "opal-vintage-gold-ring.webp",
+            "image_1_alt": "Vintage opal gold ring requiring careful gemstone care",
+            "image_1_fallback": "cameron-co-vintage-opal-gold-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
-            "cta_text": "Book an appointment",
-            "cta_link": "/pages/booking"
+            "cta_text": "",
+            "cta_link": ""
           }
         },
         "block-4": {
@@ -72,10 +72,12 @@
             "list_heading": "",
             "list_items": "Keep pieces separate in soft pouches or a jewellery box with separate compartments.\nStore jewellery in a cool, dry place to reduce tarnishing.\nUse silica gel packets to absorb moisture.\nHang necklaces to prevent tangling.\nStore silver pieces in airtight bags to reduce tarnishing.",
             "list_style": "bullet",
-            "image_1_alt": "Single diamond ring stored safely in a light jewellery box",
-            "image_1_fallback": "single-diamond-ring-box.webp",
-            "image_2_alt": "Diamond halo stud earrings stored separately on satin",
-            "image_2_fallback": "diamond-halo-stud-earrings.webp",
+            "image_1": "shopify://shop_images/cameron-co-jewellery-storage-gemstone-bangle-box.webp",
+            "image_1_alt": "Gold gemstone bangle stored securely in a Cameron & Co jewellery box on white satin and marble",
+            "image_1_fallback": "cameron-co-jewellery-storage-gemstone-bangle-box.webp",
+            "image_2": "shopify://shop_images/cameron-co-jewellery-storage-diamond-ring-velvet-pouch.webp",
+            "image_2_alt": "Diamond ring stored in a black velvet jewellery pouch on pale marble",
+            "image_2_fallback": "cameron-co-jewellery-storage-diamond-ring-velvet-pouch.webp",
             "cta_text": "",
             "cta_link": ""
           }
@@ -89,8 +91,8 @@
             "list_heading": "Common Jewellery Care Mistakes to Avoid",
             "list_items": "Wearing jewellery during heavy physical activity\nExposing jewellery to chlorine, swimming pools, lotions or household cleaners\nUsing abrasive or harsh chemical cleaners\nNeglecting professional inspections\nStoring different pieces together without protection",
             "list_style": "bullet",
-            "image_1_alt": "Sapphire and diamond halo earrings for professional jewellery inspection",
-            "image_1_fallback": "sapphire-diamond-halo-earrings.webp",
+            "image_1_alt": "",
+            "image_1_fallback": "",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
@@ -106,10 +108,10 @@
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Titanium rings for a regular jewellery maintenance schedule",
-            "image_1_fallback": "titanium-ring-care.webp",
-            "image_2_alt": "",
-            "image_2_fallback": "",
+            "image_1_alt": "Gold charm bracelet as an example of jewellery requiring regular clasp and setting checks",
+            "image_1_fallback": "cameron-co-gold-heart-charm-bracelet.webp",
+            "image_2_alt": "Graduated Tahitian pearl necklace requiring gentle regular jewellery care",
+            "image_2_fallback": "cameron-co-tahitian-pearl-necklace.webp",
             "cta_text": "Book an appointment",
             "cta_link": "/pages/booking"
           }
@@ -127,15 +129,15 @@
         "hero_title": "Essential Jewellery Care Tips",
         "hero_tagline": "Keeping your precious pieces sparkling",
         "hero_intro": "<p>Jewellery is more than just an accessory; it is an investment in beauty and often holds sentimental value. Proper care is essential to maintain its beauty and value over time.</p>",
-        "hero_image_alt": "Gold hoop pearl drop earrings on satin ready for gentle jewellery care",
-        "hero_image_fallback": "gold-hoop-pearl-drop-earrings.webp",
+        "hero_image_alt": "",
+        "hero_image_fallback": "",
         "hero_heading_color": "",
         "hero_tagline_color": "",
         "section_heading_color": "",
         "subheading_color": "",
         "body_text_color": "",
         "callout_bg_color": "#f7f5f3",
-        "button_bg_color": "#D5B226",
+        "button_bg_color": "#d5b226",
         "button_text_color": "#ffffff",
         "heading_font": "cormorant",
         "body_font": "glacial"

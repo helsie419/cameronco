@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "booking": {
@@ -7,7 +16,9 @@
         "subheading": "Choose a Sydney or Melbourne time, synced live with our Google&nbsp;Calendar.",
         "api_endpoint": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
         "heading_font": "garamond",
-        "body_font": "montserrat"
+        "body_font": "montserrat",
+        "intro_image_alt": "Engagement ring box opened on satin before a Cameron and Co appointment",
+        "intro_image_fallback": "cameron-co-mobile-engagement-ring-box-hero.webp"
       }
     }
   },

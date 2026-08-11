@@ -1,0 +1,1550 @@
+<style>
+  /* ==========================================================
+     CAMERON & CO — UNDERSTANDING DIAMONDS
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} {
+    width: 100%;
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     CONSISTENT CONTENT WIDTH
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-intro,
+  #diamonds-guide-{{ section.id }} .dg-section-inner {
+    width: calc(100% - 64px);
+    max-width: 1120px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    box-sizing: border-box;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     INTRO
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-intro {
+    padding: 50px 0 38px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-title {
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    font-size: clamp(32px, 3.2vw, 42px);
+    line-height: 1.15;
+    font-weight: 400;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-intro-copy {
+    width: 100%;
+    max-width: 1050px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-intro-copy p {
+    margin: 0;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     SECTIONS
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-section {
+    width: 100%;
+
+    padding: 46px 0;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-section-inner {
+    padding: 0;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     TEXTURED SECTIONS
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-callout {
+    position: relative;
+
+    background-color: {{ section.settings.callout_bg_color }};
+
+    background-image:
+      linear-gradient(
+        rgba(247, 245, 243, 0.93),
+        rgba(247, 245, 243, 0.93)
+      ),
+      url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }});
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    color: #171d29;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-callout h2,
+  #diamonds-guide-{{ section.id }} .dg-callout h3,
+  #diamonds-guide-{{ section.id }} .dg-callout p,
+  #diamonds-guide-{{ section.id }} .dg-callout li {
+    color: #171d29;
+  }
+
+
+  /* ==========================================================
+     H2
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-heading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0 0 16px;
+
+    font-size: clamp(27px, 2.5vw, 34px);
+    line-height: 1.18;
+    font-weight: 400;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     H3
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-subheading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 26px 0 10px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+    font-weight: 600;
+
+    text-align: left !important;
+  }
+
+
+  /* ==========================================================
+     BODY
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-copy {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-copy p {
+    margin: 0 0 15px;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* ==========================================================
+     LISTS
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-list {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 12px 0 0;
+    padding-left: 22px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-list li {
+    margin: 0 0 8px;
+
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    text-align: left !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-list li:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* ==========================================================
+     SPLIT CONTENT
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-split {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 48px;
+
+    align-items: center;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-split-copy {
+    min-width: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-split-media {
+    width: 320px;
+    max-width: 100%;
+
+    align-self: center;
+  }
+
+
+  /* ==========================================================
+     COLOUR
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-colour-grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-colour-grid .dg-split-media {
+    width: 340px;
+  }
+
+
+  /* ==========================================================
+     PHOTOGRAPH
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-image-frame {
+    width: 300px;
+    max-width: 100%;
+
+    margin: 26px 0 0;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-image-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     TECHNICAL DIAGRAM
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-diagram-frame {
+    width: 100%;
+    max-width: 340px;
+
+    margin: 0;
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-diagram-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: 100% !important;
+
+    margin: 0 auto !important;
+
+    object-fit: contain !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     SHAPES
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-shapes-copy {
+    max-width: 1050px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-shapes-frame {
+    width: 700px;
+    max-width: 100%;
+
+    margin: 30px auto 0;
+    padding: 14px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-shapes-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    margin: 0 auto !important;
+
+    object-fit: contain !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     CUT
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-cut-content {
+    width: 100%;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-cut-content .dg-copy,
+  #diamonds-guide-{{ section.id }} .dg-cut-content .dg-list {
+    max-width: 1050px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-cut-diagrams {
+    display: grid;
+
+    grid-template-columns: 340px 340px;
+    justify-content: center;
+
+    gap: 28px;
+
+    width: 100%;
+
+    margin: 34px 0 0;
+
+    align-items: start;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-cut-diagram {
+    width: 340px;
+    max-width: 100%;
+
+    padding: 10px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-cut-diagram img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: 100% !important;
+
+    margin: 0 auto !important;
+
+    object-fit: contain !important;
+  }
+
+
+  /* ==========================================================
+     4 C'S TOGETHER
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-together-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 48px;
+
+    align-items: center;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-together-copy {
+    min-width: 0;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-together-media {
+    width: 320px;
+    max-width: 100%;
+
+    align-self: center;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-together-media .dg-image-frame {
+    width: 100%;
+
+    margin: 0;
+  }
+
+
+  /* ==========================================================
+     LAB VS NATURAL
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-lab-content {
+    width: 100%;
+    max-width: 1040px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-lab-content .dg-copy,
+  #diamonds-guide-{{ section.id }} .dg-lab-content .dg-list {
+    max-width: 1040px;
+  }
+
+
+  /* ==========================================================
+     CTA
+     ========================================================== */
+
+  #diamonds-guide-{{ section.id }} .dg-final {
+    text-align: center !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-final .dg-heading {
+    max-width: 800px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-final .dg-copy {
+    max-width: 760px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-final .dg-copy p {
+    text-align: center !important;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-cta-wrap {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 30px;
+  }
+
+  #diamonds-guide-{{ section.id }} .dg-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 210px;
+
+    margin: 0;
+    padding: 14px 28px;
+
+    box-sizing: border-box;
+
+    background: {{ section.settings.button_bg_color }};
+    border: 1px solid {{ section.settings.button_bg_color }};
+
+    color: {{ section.settings.button_text_color }};
+
+    border-radius: var(--cc-button-radius, 999px);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+
+  /* ==========================================================
+     MOBILE
+     ========================================================== */
+
+  @media screen and (max-width: 749px) {
+
+    #diamonds-guide-{{ section.id }} .dg-intro,
+    #diamonds-guide-{{ section.id }} .dg-section-inner {
+      width: calc(100% - 36px);
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-intro {
+      padding-top: 34px;
+      padding-bottom: 28px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-section {
+      padding-top: 38px;
+      padding-bottom: 38px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-title {
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+
+      text-align: left !important;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-heading {
+      max-width: none;
+
+      margin-bottom: 14px;
+
+      font-size: 25px;
+      line-height: 1.2;
+
+      text-align: left !important;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-intro-copy,
+    #diamonds-guide-{{ section.id }} .dg-intro-copy p,
+    #diamonds-guide-{{ section.id }} .dg-copy,
+    #diamonds-guide-{{ section.id }} .dg-copy p,
+    #diamonds-guide-{{ section.id }} .dg-list,
+    #diamonds-guide-{{ section.id }} .dg-list li,
+    #diamonds-guide-{{ section.id }} .dg-subheading {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+
+      text-align: left !important;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-subheading {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-split,
+    #diamonds-guide-{{ section.id }} .dg-colour-grid,
+    #diamonds-guide-{{ section.id }} .dg-together-grid {
+      display: flex;
+      flex-direction: column;
+
+      align-items: stretch;
+
+      gap: 24px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-split-media,
+    #diamonds-guide-{{ section.id }} .dg-colour-grid .dg-split-media,
+    #diamonds-guide-{{ section.id }} .dg-together-media {
+      width: 100%;
+      max-width: none;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-image-frame,
+    #diamonds-guide-{{ section.id }} .dg-split-media .dg-image-frame,
+    #diamonds-guide-{{ section.id }} .dg-together-media .dg-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-diagram-frame {
+      width: 100%;
+      max-width: 320px;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      padding: 8px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-shapes-frame {
+      width: 100%;
+      max-width: 520px;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      padding: 8px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-cut-diagrams {
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 16px;
+
+      margin-top: 24px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-cut-diagram {
+      width: 280px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      padding: 8px;
+    }
+
+    #diamonds-guide-{{ section.id }} .dg-final,
+    #diamonds-guide-{{ section.id }} .dg-final .dg-heading,
+    #diamonds-guide-{{ section.id }} .dg-final .dg-copy,
+    #diamonds-guide-{{ section.id }} .dg-final .dg-copy p {
+      text-align: center !important;
+    }
+  }
+</style>
+
+
+<section
+  id="diamonds-guide-{{ section.id }}"
+  class="diamonds-guide-page"
+>
+
+  <div class="dg-intro">
+
+    {% if section.settings.hero_title != blank %}
+      <h1 class="dg-title cc-font-heading-{{ section.settings.heading_font }}">
+        {{ section.settings.hero_title }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.hero_intro != blank %}
+      <div class="dg-intro-copy cc-font-body-{{ section.settings.body_font }}">
+        {{ section.settings.hero_intro }}
+      </div>
+    {% endif %}
+
+  </div>
+
+
+  {% for block in section.blocks %}
+
+    {% if block.type == 'content_block' %}
+
+      <section
+        class="dg-section{% if block.settings.callout %} dg-callout{% endif %}{% if block.id == 'block-final' %} dg-final{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+
+        <div class="dg-section-inner">
+
+
+          <!-- =================================================
+               COLOUR
+               ================================================= -->
+
+          {% if block.id == 'block-colour' %}
+
+            <div class="dg-split dg-colour-grid">
+
+              <div class="dg-split-copy">
+
+                {% if block.settings.heading != blank %}
+                  <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                    {{ block.settings.heading }}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.body != blank %}
+                  <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                    {{ block.settings.body }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.list_heading != blank %}
+                  <h3 class="dg-subheading">
+                    {{ block.settings.list_heading }}
+                  </h3>
+                {% endif %}
+
+                {% if block.settings.list_items != blank %}
+
+                  {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                  {% if block.settings.list_style == 'numbered' %}
+
+                    <ol class="dg-list">
+
+                      {% for item in list_lines %}
+                        {% assign clean_item = item | strip %}
+
+                        {% if clean_item != blank %}
+                          <li>{{ clean_item }}</li>
+                        {% endif %}
+
+                      {% endfor %}
+
+                    </ol>
+
+                  {% else %}
+
+                    <ul class="dg-list">
+
+                      {% for item in list_lines %}
+                        {% assign clean_item = item | strip %}
+
+                        {% if clean_item != blank %}
+                          <li>{{ clean_item }}</li>
+                        {% endif %}
+
+                      {% endfor %}
+
+                    </ul>
+
+                  {% endif %}
+
+                {% endif %}
+
+              </div>
+
+
+              <div class="dg-split-media">
+
+                {% if block.settings.image_1 != blank %}
+
+                  <div class="dg-diagram-frame">
+
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 900 }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="{{ block.settings.image_1.width }}"
+                      height="{{ block.settings.image_1.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% elsif block.settings.image_1_fallback != blank %}
+
+                  <div class="dg-diagram-frame">
+
+                    <img
+                      src="{{ block.settings.image_1_fallback | asset_url }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="900"
+                      height="700"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% endif %}
+
+              </div>
+
+            </div>
+
+
+          <!-- =================================================
+               CARAT
+               ================================================= -->
+
+          {% elsif block.id == 'block-carat' %}
+
+            <div class="dg-split">
+
+              <div class="dg-split-copy">
+
+                {% if block.settings.heading != blank %}
+                  <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                    {{ block.settings.heading }}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.body != blank %}
+                  <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                    {{ block.settings.body }}
+                  </div>
+                {% endif %}
+
+              </div>
+
+
+              <div class="dg-split-media">
+
+                {% if block.settings.image_1 != blank %}
+
+                  <div class="dg-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 800 }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="{{ block.settings.image_1.width }}"
+                      height="{{ block.settings.image_1.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% elsif block.settings.image_1_fallback != blank %}
+
+                  <div class="dg-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1_fallback | asset_url }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="800"
+                      height="800"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% endif %}
+
+              </div>
+
+            </div>
+
+
+          <!-- =================================================
+               SHAPES
+               ================================================= -->
+
+          {% elsif block.id == 'block-shapes' %}
+
+            {% if block.settings.heading != blank %}
+              <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                {{ block.settings.heading }}
+              </h2>
+            {% endif %}
+
+            {% if block.settings.body != blank %}
+              <div class="dg-copy dg-shapes-copy cc-font-body-{{ section.settings.body_font }}">
+                {{ block.settings.body }}
+              </div>
+            {% endif %}
+
+
+            {% if block.settings.image_1 != blank %}
+
+              <div class="dg-shapes-frame">
+
+                <img
+                  src="{{ block.settings.image_1 | image_url: width: 1400 }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="{{ block.settings.image_1.width }}"
+                  height="{{ block.settings.image_1.height }}"
+                  loading="lazy"
+                >
+
+              </div>
+
+            {% elsif block.settings.image_1_fallback != blank %}
+
+              <div class="dg-shapes-frame">
+
+                <img
+                  src="{{ block.settings.image_1_fallback | asset_url }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="1400"
+                  height="1000"
+                  loading="lazy"
+                >
+
+              </div>
+
+            {% endif %}
+
+
+          <!-- =================================================
+               CUT — TWO IMAGES
+               ================================================= -->
+
+          {% elsif block.id == 'block-cut' %}
+
+            <div class="dg-cut-content">
+
+              {% if block.settings.heading != blank %}
+                <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                  {{ block.settings.heading }}
+                </h2>
+              {% endif %}
+
+              {% if block.settings.body != blank %}
+                <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                  {{ block.settings.body }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.list_heading != blank %}
+                <h3 class="dg-subheading">
+                  {{ block.settings.list_heading }}
+                </h3>
+              {% endif %}
+
+              {% if block.settings.list_items != blank %}
+
+                {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                <ul class="dg-list">
+
+                  {% for item in list_lines %}
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ul>
+
+              {% endif %}
+
+
+              {% if block.settings.image_1 != blank or block.settings.image_1_fallback != blank or block.settings.image_2 != blank or block.settings.image_2_fallback != blank %}
+
+                <div class="dg-cut-diagrams">
+
+
+                  <!-- IMAGE 1 -->
+
+                  {% if block.settings.image_1 != blank %}
+
+                    <div class="dg-cut-diagram">
+
+                      <img
+                        src="{{ block.settings.image_1 | image_url: width: 800 }}"
+                        alt="{{ block.settings.image_1_alt | escape }}"
+                        width="{{ block.settings.image_1.width }}"
+                        height="{{ block.settings.image_1.height }}"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+                  {% elsif block.settings.image_1_fallback != blank %}
+
+                    <div class="dg-cut-diagram">
+
+                      <img
+                        src="{{ block.settings.image_1_fallback | asset_url }}"
+                        alt="{{ block.settings.image_1_alt | escape }}"
+                        width="800"
+                        height="800"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+                  {% endif %}
+
+
+                  <!-- IMAGE 2 -->
+
+                  {% if block.settings.image_2 != blank %}
+
+                    <div class="dg-cut-diagram">
+
+                      <img
+                        src="{{ block.settings.image_2 | image_url: width: 800 }}"
+                        alt="{{ block.settings.image_2_alt | escape }}"
+                        width="{{ block.settings.image_2.width }}"
+                        height="{{ block.settings.image_2.height }}"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+                  {% elsif block.settings.image_2_fallback != blank %}
+
+                    <div class="dg-cut-diagram">
+
+                      <img
+                        src="{{ block.settings.image_2_fallback | asset_url }}"
+                        alt="{{ block.settings.image_2_alt | escape }}"
+                        width="800"
+                        height="800"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+                  {% endif %}
+
+
+                </div>
+
+              {% endif %}
+
+            </div>
+
+
+          <!-- =================================================
+               4 C'S TOGETHER
+               ================================================= -->
+
+          {% elsif block.id == 'block-together' %}
+
+            <div class="dg-together-grid">
+
+              <div class="dg-together-copy">
+
+                {% if block.settings.heading != blank %}
+                  <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                    {{ block.settings.heading }}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.body != blank %}
+                  <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                    {{ block.settings.body }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.list_items != blank %}
+
+                  {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                  <ul class="dg-list">
+
+                    {% for item in list_lines %}
+                      {% assign clean_item = item | strip %}
+
+                      {% if clean_item != blank %}
+                        <li>{{ clean_item }}</li>
+                      {% endif %}
+
+                    {% endfor %}
+
+                  </ul>
+
+                {% endif %}
+
+              </div>
+
+
+              <div class="dg-together-media">
+
+                {% if block.settings.image_1 != blank %}
+
+                  <div class="dg-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 800 }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="{{ block.settings.image_1.width }}"
+                      height="{{ block.settings.image_1.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% elsif block.settings.image_1_fallback != blank %}
+
+                  <div class="dg-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1_fallback | asset_url }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="800"
+                      height="800"
+                      loading="lazy"
+                    >
+
+                  </div>
+
+                {% endif %}
+
+              </div>
+
+            </div>
+
+
+          <!-- =================================================
+               NATURAL VS LAB
+               ================================================= -->
+
+          {% elsif block.id == 'block-lab' %}
+
+            <div class="dg-lab-content">
+
+              {% if block.settings.heading != blank %}
+                <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                  {{ block.settings.heading }}
+                </h2>
+              {% endif %}
+
+              {% if block.settings.body != blank %}
+                <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                  {{ block.settings.body }}
+                </div>
+              {% endif %}
+
+              {% if block.settings.list_heading != blank %}
+                <h3 class="dg-subheading">
+                  {{ block.settings.list_heading }}
+                </h3>
+              {% endif %}
+
+              {% if block.settings.list_items != blank %}
+
+                {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                <ul class="dg-list">
+
+                  {% for item in list_lines %}
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ul>
+
+              {% endif %}
+
+            </div>
+
+
+          <!-- =================================================
+               STANDARD BLOCK
+               ================================================= -->
+
+          {% else %}
+
+            {% if block.settings.heading != blank %}
+              <h2 class="dg-heading cc-font-heading-{{ section.settings.heading_font }}">
+                {{ block.settings.heading }}
+              </h2>
+            {% endif %}
+
+            {% if block.settings.body != blank %}
+              <div class="dg-copy cc-font-body-{{ section.settings.body_font }}">
+                {{ block.settings.body }}
+              </div>
+            {% endif %}
+
+            {% if block.settings.list_heading != blank %}
+              <h3 class="dg-subheading">
+                {{ block.settings.list_heading }}
+              </h3>
+            {% endif %}
+
+            {% if block.settings.list_items != blank %}
+
+              {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+              {% if block.settings.list_style == 'numbered' %}
+
+                <ol class="dg-list">
+
+                  {% for item in list_lines %}
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ol>
+
+              {% else %}
+
+                <ul class="dg-list">
+
+                  {% for item in list_lines %}
+                    {% assign clean_item = item | strip %}
+
+                    {% if clean_item != blank %}
+                      <li>{{ clean_item }}</li>
+                    {% endif %}
+
+                  {% endfor %}
+
+                </ul>
+
+              {% endif %}
+
+            {% endif %}
+
+
+            <!-- STANDARD IMAGE 1 -->
+
+            {% if block.settings.image_1 != blank %}
+
+              <div class="dg-image-frame">
+
+                <img
+                  src="{{ block.settings.image_1 | image_url: width: 800 }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="{{ block.settings.image_1.width }}"
+                  height="{{ block.settings.image_1.height }}"
+                  loading="lazy"
+                >
+
+              </div>
+
+            {% elsif block.settings.image_1_fallback != blank %}
+
+              <div class="dg-image-frame">
+
+                <img
+                  src="{{ block.settings.image_1_fallback | asset_url }}"
+                  alt="{{ block.settings.image_1_alt | escape }}"
+                  width="800"
+                  height="800"
+                  loading="lazy"
+                >
+
+              </div>
+
+            {% endif %}
+
+
+            {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+
+              <div class="dg-cta-wrap">
+
+                <a
+                  class="dg-button cc-font-body-{{ section.settings.body_font }}"
+                  href="{{ block.settings.cta_link }}"
+                >
+                  {{ block.settings.cta_text }}
+                </a>
+
+              </div>
+
+            {% endif %}
+
+          {% endif %}
+
+        </div>
+
+      </section>
+
+    {% endif %}
+
+  {% endfor %}
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Understanding Diamonds",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Understanding Diamonds: The 4 C's"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>Diamonds are extraordinary natural materials, valued for their hardness, brilliance and ability to interact with light. Understanding the 4 C's — Cut, Colour, Clarity and Carat Weight — provides a practical framework for comparing diamonds and understanding their quality.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "callout_bg_color",
+      "label": "Callout background",
+      "default": "#f7f5f3"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#D5B226"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+      "default": "glacial"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "content_block",
+      "name": "Content block",
+
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body copy"
+        },
+
+        {
+          "type": "checkbox",
+          "id": "callout",
+          "label": "Textured shaded background",
+          "default": false
+        },
+
+        {
+          "type": "header",
+          "content": "List"
+        },
+
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List heading"
+        },
+
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items",
+          "info": "Enter one item per line."
+        },
+
+        {
+          "type": "select",
+          "id": "list_style",
+          "label": "List style",
+          "options": [
+            {
+              "value": "bullet",
+              "label": "Bulleted"
+            },
+            {
+              "value": "numbered",
+              "label": "Numbered"
+            }
+          ],
+          "default": "bullet"
+        },
+
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Choose Image 1"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_alt",
+          "label": "Image 1 alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_fallback",
+          "label": "Image 1 fallback filename",
+          "info": "Optional. Used if no image is selected above."
+        },
+
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Choose Image 2"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_alt",
+          "label": "Image 2 alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_fallback",
+          "label": "Image 2 fallback filename",
+          "info": "Optional. Used if no image is selected above."
+        },
+
+        {
+          "type": "header",
+          "content": "Call to action"
+        },
+
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button text"
+        },
+
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Understanding Diamonds"
+    }
+  ]
+}
+{% endschema %}

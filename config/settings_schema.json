@@ -20,6 +20,7 @@
         ],
         "default": "cormorant"
       },
+      { "type": "range", "id": "h1_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       { "type": "header", "content": "Heading 2 — section titles" },
       { "type": "color", "id": "h2_color", "label": "Color", "default": "#D5B226" },
       {
@@ -34,6 +35,7 @@
         ],
         "default": "cormorant"
       },
+      { "type": "range", "id": "h2_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       { "type": "header", "content": "Heading 3 — card & item titles" },
       { "type": "color", "id": "h3_color", "label": "Color", "default": "#171d29" },
       {
@@ -49,6 +51,7 @@
         ],
         "default": "cormorant"
       },
+      { "type": "range", "id": "h3_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       { "type": "header", "content": "Heading 4 — sub-headings" },
       { "type": "color", "id": "h4_color", "label": "Color", "default": "#171d29" },
       {
@@ -63,6 +66,7 @@
         ],
         "default": "cormorant"
       },
+      { "type": "range", "id": "h4_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       {
         "type": "paragraph",
         "content": "Heading 5 and 6 aren't used anywhere on the site yet, but are wired up and ready for whenever they're needed."
@@ -81,6 +85,7 @@
         ],
         "default": "cormorant"
       },
+      { "type": "range", "id": "h5_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       { "type": "header", "content": "Heading 6" },
       { "type": "color", "id": "h6_color", "label": "Color", "default": "#171d29" },
       {
@@ -94,7 +99,8 @@
           { "value": "baskerville", "label": "Libre Baskerville" }
         ],
         "default": "cormorant"
-      }
+      },
+      { "type": "range", "id": "h6_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 }
     ]
   },
   {

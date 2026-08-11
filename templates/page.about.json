@@ -47,7 +47,9 @@
         "value-3",
         "value-4"
       ],
-      "settings": {}
+      "settings": {
+        "storefront_image_alt": "Cameron and Co showroom exterior in black and white"
+      }
     }
   },
   "order": [

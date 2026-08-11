@@ -163,7 +163,7 @@
       {%- when 'poppins' -%}
         'Poppins', Arial, sans-serif
       {%- else -%}
-        'Glacial Indifference', Arial, sans-serif
+        'Montserrat', Arial, sans-serif
     {%- endcase -%}
   {%- endcapture -%}
 
@@ -171,21 +171,27 @@
     :root {
       --heading-1-color: {{ settings.h1_color }};
       --heading-1-font: {{ h1_font_stack }};
+      --heading-1-size: {{ settings.h1_size | default: 40 }}px;
 
       --heading-2-color: {{ settings.h2_color }};
       --heading-2-font: {{ h2_font_stack }};
+      --heading-2-size: {{ settings.h2_size | default: 40 }}px;
 
       --heading-3-color: {{ settings.h3_color }};
       --heading-3-font: {{ h3_font_stack }};
+      --heading-3-size: {{ settings.h3_size | default: 40 }}px;
 
       --heading-4-color: {{ settings.h4_color }};
       --heading-4-font: {{ h4_font_stack }};
+      --heading-4-size: {{ settings.h4_size | default: 40 }}px;
 
       --heading-5-color: {{ settings.h5_color }};
       --heading-5-font: {{ h5_font_stack }};
+      --heading-5-size: {{ settings.h5_size | default: 40 }}px;
 
       --heading-6-color: {{ settings.h6_color }};
       --heading-6-font: {{ h6_font_stack }};
+      --heading-6-size: {{ settings.h6_size | default: 40 }}px;
 
       --paragraph-color: {{ settings.paragraph_color }};
       --paragraph-font: {{ paragraph_font_stack }};
@@ -220,32 +226,38 @@
     h1.section-title {
       color: var(--heading-1-color);
       font-family: var(--heading-1-font);
+      font-size: var(--heading-1-size);
     }
 
     h2,
     h2.section-title {
       color: var(--heading-2-color);
       font-family: var(--heading-2-font);
+      font-size: var(--heading-2-size);
     }
 
     h3 {
       color: var(--heading-3-color);
       font-family: var(--heading-3-font);
+      font-size: var(--heading-3-size);
     }
 
     h4 {
       color: var(--heading-4-color);
       font-family: var(--heading-4-font);
+      font-size: var(--heading-4-size);
     }
 
     h5 {
       color: var(--heading-5-color);
       font-family: var(--heading-5-font);
+      font-size: var(--heading-5-size);
     }
 
     h6 {
       color: var(--heading-6-color);
       font-family: var(--heading-6-font);
+      font-size: var(--heading-6-size);
     }
 
     /*
@@ -268,10 +280,10 @@
        ABOUT AND ARTICLE PAGE SELECTORS
        ===================================================== */
 
-    .about-title-band h1,
+    .about-title-band h2,
     .live-article-hero h1 {
-      color: var(--heading-1-color);
-      font-family: var(--heading-1-font);
+      color: var(--heading-2-color);
+      font-family: var(--heading-2-font);
     }
 
     .about-expertise h2,
@@ -285,9 +297,13 @@
       font-family: var(--heading-2-font);
     }
 
-    .live-article-section h4 {
-      color: var(--heading-4-color);
-      font-family: var(--heading-4-font);
+    .live-article-section h2,
+    .about-mission-grid h2,
+    .about-text-card h2,
+    .about-values-card h2,
+    .faq-column-cc h2 {
+      color: var(--heading-2-color);
+      font-family: var(--heading-2-font);
     }
 
     .about-intro-copy p,
@@ -311,14 +327,9 @@
        FAQ AND OFFICE SERVICE SELECTORS
        ===================================================== */
 
-    .faq-column-cc h3 {
-      color: var(--heading-3-color);
-      font-family: var(--heading-3-font);
-    }
-
     .faq-list summary,
     .faq-list details p,
-    .service-list-item h3 {
+    .service-list-item h2 {
       font-family: var(--paragraph-font);
     }
 

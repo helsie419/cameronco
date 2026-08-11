@@ -23,11 +23,15 @@
 .cc-font-body-inter { font-family: 'Inter', Arial, sans-serif !important; }
 .cc-font-body-poppins { font-family: 'Poppins', Arial, sans-serif !important; }
 
+.cc-preserve-line-breaks {
+  white-space: pre-line;
+}
+
 /* ---- Design Tokens ---- */
 :root {
   --color-white: #ffffff;
   --color-dark: #19202c;
-  --color-brand-red: #8c6a2f;
+  --color-brand-red: #D5B226;
   --color-brand-red-light: #b89a5f;
   --color-grey-light: #f7f5f3;
   --color-border: rgba(0, 0, 0, 0.08);
@@ -395,7 +399,7 @@ a {
   margin-top: 40px;
 }
 
-.faq-column-cc h3 {
+.faq-column-cc h2 {
   font-family: var(--font-heading);
   font-size: 26px;
   color: var(--color-dark);
@@ -408,7 +412,7 @@ a {
   padding-bottom: 8px;
 }
 
-.faq-column-cc h3 img {
+.faq-column-cc h2 img {
   width: 22px;
   height: auto;
 }
@@ -493,7 +497,7 @@ a {
   border-bottom: 1px solid var(--color-border);
 }
 
-.service-list-item h3 {
+.service-list-item h2 {
   font-family: var(--font-body);
   font-size: 17px;
   font-weight: normal;
@@ -638,7 +642,7 @@ a {
   content: '';
   position: absolute;
   inset: 0;
-  background: url({{ 'cameron-co-luxury-jewellery-background-texture.webp' | asset_url }}) center/cover no-repeat;
+  background: url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }}) center/cover no-repeat;
   opacity: 0.14;
   pointer-events: none;
 }
@@ -685,8 +689,8 @@ a {
   display: block;
 }
 
-.footer-nav-col h3,
-.footer-col h3 {
+.footer-nav-col h2,
+.footer-col h2 {
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
@@ -1001,7 +1005,7 @@ a {
 .cookie-actions button.accept {
   background: var(--color-white);
   color: #D5B226;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .cookie-actions button.accept:hover {
@@ -1149,8 +1153,8 @@ a {
   align-items: start;
 }
 
-.booking-calendar-panel h2,
-.result-panel h2 {
+.booking-calendar-panel h3,
+.result-panel h3 {
   margin: 0 0 30px;
   color: #0f2b49;
   font-family: var(--font-body);
@@ -1312,8 +1316,8 @@ a {
     gap: 28px;
   }
 
-  .booking-calendar-panel h2,
-  .result-panel h2 {
+  .booking-calendar-panel h3,
+  .result-panel h3 {
     margin-bottom: 22px;
     font-size: 20px;
   }
@@ -1489,7 +1493,7 @@ a {
   text-align: center;
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 400;
 }
 
 .slot-button:hover,
@@ -1686,24 +1690,20 @@ a {
 
 /* ============================================================
    CONTACT PAGE — OFFICES ROW
+   Each office is a split-layout row (reusing the same pattern as
+   the Office & Services pages): text one side, a large map on the
+   other. Sydney's map sits on the right, Melbourne's on the left
+   (.split-layout.reverse), so the two rows mirror each other.
    ============================================================ */
-.offices-row {
+.offices-stack {
   display: flex;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 56px;
   margin-top: 40px;
 }
 
-.office-card {
-  flex: 1;
-  max-width: 425px;
-  min-width: 280px;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 36px;
-  box-shadow: var(--shadow-glass);
+.office-row .office-map-wrap .office-map {
+  height: 420px;
 }
 
 .office-card h4 {
@@ -1828,15 +1828,12 @@ summary:focus-visible {
   /* Misc */
   .app-grid { grid-template-columns: 1fr; }
 
-  .offices-row {
-    flex-direction: column;
-    align-items: center;
+  .offices-stack {
     gap: 40px;
   }
 
-  .office-card {
-    width: 100%;
-    max-width: 425px;
+  .office-row .office-map-wrap .office-map {
+    height: 260px;
   }
 
   .logos-strip { padding: 24px; }
@@ -1873,7 +1870,7 @@ summary:focus-visible {
    uploaded page structure and the approved footer component.
    ============================================================ */
 :root{
-  --cc-red:#8c6a2f;
+  --cc-red:#D5B226;
   --cc-black:#19202c;
   --cc-muted:#767676;
   --cc-cream:#f7f5f3;
@@ -2039,8 +2036,8 @@ body{
 .btn-red,
 .page-button-red,
 .brand-button.btn-red {
-  background: #8c6a2f !important;
-  border-color: #8c6a2f !important;
+  background: #D5B226 !important;
+  border-color: #D5B226 !important;
   color: #ffffff !important;
 }
 
@@ -2048,20 +2045,20 @@ body{
 .btn-red:hover,
 .page-button-red:hover,
 .brand-button.btn-red:hover {
-  background: #6e5324 !important;
-  border-color: #6e5324 !important;
+  background: #b9971f !important;
+  border-color: #b9971f !important;
   color: #ffffff !important;
 }
 
 .btn-hero {
-  background: #8c6a2f;
-  border-color: #8c6a2f;
+  background: #D5B226;
+  border-color: #D5B226;
   color: #ffffff;
 }
 
 .btn-hero:hover {
-  background: #6e5324;
-  border-color: #6e5324;
+  background: #b9971f;
+  border-color: #b9971f;
   color: #ffffff;
 }
 
@@ -2139,7 +2136,7 @@ body{
 .cc-moved-style-004 { text-align: center; color: var(--color-text-muted); margin-bottom: 8px; font-size: 15px; }
 .cc-moved-style-005 { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #4D493F; margin-bottom: 16px; }
 .cc-moved-style-006 { padding-top: 0; }
-.cc-moved-style-007 { margin-top: 64px; text-align: center; padding: 40px; background: var(--color-grey-light); border-radius: var(--radius-md); }
+.cc-moved-style-007 { margin-top: 64px; margin-bottom: 64px; text-align: center; padding: 40px; background: var(--color-grey-light); border-radius: var(--radius-md); }
 .cc-moved-style-008 { font-family: var(--font-heading); font-size: 28px; margin-bottom: 12px; font-weight: normal; }
 .cc-moved-style-009 { margin-bottom: 24px; color: var(--color-text-muted); }
 .cc-moved-style-010 { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
@@ -2339,8 +2336,8 @@ iframe.office-map {
 }
 
 .about-expertise h2,
-.about-title-band h1,
-.about-mission-grid h3 {
+.about-title-band h2,
+.about-mission-grid h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 400;
   color: #171d29;
@@ -2363,7 +2360,7 @@ iframe.office-map {
   padding: 30px 24px 20px;
 }
 
-.about-title-band h1 {
+.about-title-band h2 {
   font-size: clamp(42px, 5vw, 72px);
   color: #D5B226;
 }
@@ -2384,8 +2381,8 @@ iframe.office-map {
   padding: 34px;
 }
 
-.about-text-card h3,
-.about-values-card h3 {
+.about-text-card h2,
+.about-values-card h2 {
   color: #D5B226;
   font-size: clamp(34px, 4vw, 52px);
   margin-bottom: 16px;
@@ -2412,6 +2409,27 @@ iframe.office-map {
   margin: 12px 0 0 20px;
   display: grid;
   gap: 10px;
+}
+
+.about-image-row {
+  max-width: 1060px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-bottom: 70px;
+}
+
+.about-image-row-item {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+}
+
+.about-image-row-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .article-page .article-shell {
@@ -2531,6 +2549,9 @@ iframe.office-map {
   .article-card-grid-two {
     grid-template-columns: 1fr;
   }
+  .about-image-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .article-reverse .article-copy,
   .article-reverse .article-image {
     order: initial;
@@ -2546,6 +2567,10 @@ iframe.office-map {
   .about-values-card,
   .article-card-grid article {
     padding: 24px;
+  }
+  .about-image-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 }
 
@@ -2675,7 +2700,7 @@ iframe.office-map {
   align-items: center;
 }
 .live-article-hero h1,
-.about-title-band h1,
+.about-title-band h2,
 .about-expertise h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   color: #4D493F;
@@ -2698,8 +2723,8 @@ iframe.office-map {
    heading used to have, so hiding it doesn't leave the page looking
    incomplete. */
 .live-article-hero .live-article-tagline {
-  font-size: clamp(42px, 5vw, 72px);
-  line-height: 1.02;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.1;
   font-weight: 400;
   margin: 0 0 18px;
 }
@@ -2728,8 +2753,7 @@ iframe.office-map {
   font-weight: 600;
   margin: 0 0 14px;
 }
-.live-article-section h3,
-.live-article-section h4 {
+.live-article-section h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   color: #171d29;
   font-size: 28px;
@@ -2871,8 +2895,8 @@ iframe.office-map {
   background: #ffffff;
   padding: 28px;
 }
-.about-text-card h3,
-.about-values-card h3 {
+.about-text-card h2,
+.about-values-card h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
   color: #D5B226;
   font-size: 38px;
@@ -3313,7 +3337,7 @@ iframe.office-map {
   border: none;
   font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 400;
   color: #8A857F;
   cursor: pointer;
   display: flex;
@@ -4044,8 +4068,8 @@ iframe.office-map {
    swaps the site's accent from red to a brass/gold, site-wide.
    ============================================================ */
 :root {
-  --cc-gold: #8c6a2f;
-  --cc-gold-deep: #6e5324;
+  --cc-gold: #D5B226;
+  --cc-gold-deep: #b9971f;
   --cc-ivory: #f7f5f3;
   --cc-ink: #3a362f;
 }
@@ -4166,7 +4190,7 @@ body, p {
   background: var(--cc-gold);
   color: #ffffff;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 14px;
   padding: 16px 32px;
   border-radius: 999px;
@@ -4240,7 +4264,7 @@ body, p {
   margin-bottom: 14px;
   display: block;
 }
-.home-testimonial-card h3 {
+.home-testimonial-card h2 {
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 19px;
@@ -4263,7 +4287,7 @@ body, p {
   padding: 15px 32px;
   border-radius: 999px;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 14px;
   text-decoration: none;
   border: 1px solid transparent;
@@ -4412,7 +4436,7 @@ body, p {
     font-size: 11px !important;
   }
   .site-footer .footer-offices h2,
-  .site-footer .footer-col h3 {
+  .site-footer .footer-col h2 {
     /* "Melbourne Office" is longer than "Sydney Office" and was
        wrapping to two lines in the narrow column while Sydney's
        fit on one — shrink so both match. Menu/About headings sized
@@ -4464,7 +4488,7 @@ body, p {
 .section-title,
 h1.section-title,
 h2.section-title,
-.page-intro-section h1,
+.page-intro-section h2,
 .insurance-title,
 .home-services-shell .section-title,
 .what-we-do-section .section-title,
@@ -4483,7 +4507,7 @@ h2.section-title,
 /* Darker gold for normal-sized text on light backgrounds. */
 .section-eyebrow,
 .service-item-num,
-.home-testimonial-card h3,
+.home-testimonial-card h2,
 .faq-list summary::after,
 .office-details a,
 .split-text a {
@@ -4518,7 +4542,7 @@ summary:focus-visible,
   .section-title,
   h1.section-title,
   h2.section-title,
-  .page-intro-section h1,
+  .page-intro-section h2,
   .insurance-title,
   .home-services-shell .section-title,
   .what-we-do-section .section-title,
@@ -4577,7 +4601,6 @@ summary:focus-visible,
   background: #cba922 !important;
   border-color: #cba922 !important;
   color: #ffffff !important;
-  font-weight: 700 !important;
 }
 
 .btn-book:not(.btn-outline-red):hover,
@@ -4636,7 +4659,7 @@ summary:focus-visible,
 /* ============================================================
    UNIVERSAL BUTTON COLOR — true final word, appended after
    everything else. Every primary CTA class in the theme had drifted
-   to a different gold over time (#8c6a2f, #cba922, var(--cc-gold),
+   to a different gold over time (#D5B226, #cba922, var(--cc-gold),
    var(--color-brand-red)...) depending on which of a dozen older
    "correction pass" rules happened to win for that particular class.
    One color, site-wide: #D5B226. Secondary/outline/dark-variant
@@ -4725,7 +4748,7 @@ summary:focus-visible,
   background-color: var(--cc-footer, #1a202b) !important;
   background-image:
     linear-gradient(rgba(26, 32, 43, .82), rgba(26, 32, 43, .82)),
-    url({{ 'cameron-co-luxury-jewellery-background-texture.webp' | asset_url }}) !important;
+    url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }}) !important;
   background-position: center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
@@ -4814,6 +4837,15 @@ summary:focus-visible,
   object-position: center center !important;
 }
 
+/* Diagrams/charts (e.g. the diamond shapes reference) are wide reference
+   images, not square photography -- forcing the 1:1 crop above cuts off
+   the shapes at the edges, so show these uncropped at their own ratio. */
+.live-article-section > .article-image.article-image-diagram {
+  width: min(100%, 640px) !important;
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+}
+
 .live-image-row {
   grid-template-columns: repeat(2, minmax(0, 360px)) !important;
   justify-content: center !important;
@@ -4833,9 +4865,76 @@ summary:focus-visible,
   width: min(100%, 320px) !important;
 }
 
+.cc-page-intro-media {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  max-height: 380px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center;
+  margin: 30px auto 0;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(23, 29, 41, 0.13);
+}
+
+.contact-page .cc-page-intro-media,
+.booking-page .cc-page-intro-media,
+.faq-page .cc-page-intro-media {
+  width: min(100%, 560px);
+  max-height: 340px;
+}
+
+.live-article-hero .tagline {
+  font-size: clamp(26px, 3vw, 40px) !important;
+  line-height: 1.1 !important;
+}
+
+.live-article-section h2 {
+  font-size: clamp(26px, 2.5vw, 38px) !important;
+  line-height: 1.14 !important;
+}
+
+.live-article-section .article-callout h2,
+.live-article-section h2 + h2 {
+  font-size: clamp(22px, 2vw, 30px) !important;
+}
+
 @media (max-width: 760px) {
   .site-hero-cta {
     min-width: 250px !important;
+  }
+
+  .article-page .page-content,
+  .jewellery-care-page .page-content,
+  .diamonds-education-page .page-content,
+  .timeless-trendy-page .page-content {
+    overflow-x: hidden !important;
+  }
+
+  .live-article-hero,
+  .live-article-body {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .live-article-hero > *,
+  .live-article-section,
+  .article-callout,
+  .diamond-colour-scale,
+  .diamond-anatomy {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .live-article-section p,
+  .live-article-section li,
+  .live-article-hero .tagline {
+    overflow-wrap: anywhere !important;
   }
 
   .live-article-hero img {
@@ -4844,5 +4943,132 @@ summary:focus-visible,
 
   .live-image-row {
     grid-template-columns: minmax(0, 320px) !important;
+  }
+
+  .cc-page-intro-media {
+    width: min(100%, 340px);
+    max-height: 260px;
+  }
+}
+
+/* Final heading normalization: visible page and section headings use the
+   H2 type treatment consistently across templates. */
+.section-title,
+h2.section-title,
+.page-intro-section h2,
+.about-expertise h2,
+.about-title-band h2,
+.split-text > h2,
+  .cc-moved-style-008 {
+  font-family: var(--heading-2-font, var(--font-heading)) !important;
+  font-size: var(--heading-2-size, 40px) !important;
+  line-height: 1.12 !important;
+  font-weight: 700 !important;
+}
+
+/* Final CTA color normalization. */
+.btn-book,
+.btn-black-center,
+.btn-office,
+.btn-submit,
+.brand-button,
+.btn-hero,
+.home-button,
+.home-button-red,
+.site-hero-cta {
+  background: #D5B226 !important;
+  border-color: #D5B226 !important;
+  color: #ffffff !important;
+}
+
+.btn-book:hover,
+.btn-black-center:hover,
+.btn-office:hover,
+.btn-submit:hover,
+.brand-button:hover,
+.btn-hero:hover,
+.home-button:hover,
+.home-button-red:hover,
+.site-hero-cta:hover {
+  background: #b9971f !important;
+  border-color: #b9971f !important;
+  color: #ffffff !important;
+}
+
+/* ============================================================
+   HEADER NAV — FINAL ACTIVE / HOVER UNDERLINE
+   Keep this at the absolute bottom of theme.css.liquid
+   ============================================================ */
+
+/* Remove every older underline method */
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:hover,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:focus,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:focus-visible,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="page"],
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="true"] {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  text-decoration-color: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any old ::before underline */
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Our ONLY underline */
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: -3px !important;
+  width: 100% !important;
+  height: 1px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #D5B226 !important;
+  background-color: #D5B226 !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: scaleX(0) !important;
+  transform-origin: left center !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Show gold line on hover / keyboard focus / current page */
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:hover::after,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:focus-visible::after,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="page"]::after,
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="true"]::after {
+  background: #D5B226 !important;
+  background-color: #D5B226 !important;
+  transform: scaleX(1) !important;
+}
+
+/* ============================================================
+   HEADER SUBMENU SIZE + FONT CONSISTENCY
+   Same typography desktop + mobile
+   ============================================================ */
+
+#shopify-section-header .site-header .primary-nav > li > a.primary-nav-link,
+#shopify-section-header .site-header .dropdown a {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+}
+
+#shopify-section-header .site-header .dropdown a {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+}
+
+@media (max-width: 1200px) {
+  #shopify-section-header .site-header.mobile-open .dropdown a {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+    padding: 11px 0 !important;
   }
 }

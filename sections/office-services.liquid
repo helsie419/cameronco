@@ -2,16 +2,16 @@
   <div class="section-inner">
     <div class="split-layout">
       <div class="split-text">
-        <h1 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="office-heading-{{ section.id }}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office_name }}</h1>
-        <p class="cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.body_text_color }};">{{ section.settings.intro_text }}</p>
+        <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="office-heading-{{ section.id }}" style="{% if section.settings.office_name_color != blank %}color:{{ section.settings.office_name_color }};{% endif %}">{{ section.settings.office_name }}</h2>
+        <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.body_text_color }};">{{ section.settings.intro_text }}</p>
         <p class="cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.body_text_color }};">
           {{ section.settings.address }}<br>
           Phone <a href="tel:{{ section.settings.phone_href }}" style="color:{{ section.settings.link_color }};">{{ section.settings.phone_display }}</a>.<br>
           Email <a href="mailto:{{ section.settings.email }}" style="color:{{ section.settings.link_color }};">{{ section.settings.email }}</a>.
         </p>
         <div class="office-buttons cc-moved-style-015">
-          <a class="btn-office" href="mailto:{{ section.settings.email }}" style="background:{{ section.settings.contact_button_color }} !important;border-color:{{ section.settings.contact_button_color }} !important;">{{ section.settings.contact_button_text }}</a>
-          <a class="btn-office" href="{{ section.settings.book_button_link }}" style="background:{{ section.settings.contact_button_color }} !important;border-color:{{ section.settings.contact_button_color }} !important;">{{ section.settings.book_button_text }}</a>
+          <a class="btn-office" href="mailto:{{ section.settings.email }}" style="background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ section.settings.contact_button_text }}</a>
+          <a class="btn-office" href="{{ section.settings.book_button_link }}" style="background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ section.settings.book_button_text }}</a>
         </div>
       </div>
       <div class="split-image">
@@ -30,15 +30,15 @@
 <section aria-labelledby="services-heading-{{ section.id }}" style="background:{{ section.settings.services_section_background_color }};">
   <div class="section-inner cc-moved-style-032">
     <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="services-heading-{{ section.id }}" style="{% if section.settings.services_heading_color != blank %}color:{{ section.settings.services_heading_color }};{% endif %}text-align:left;margin-bottom:20px;">{{ section.settings.services_heading }}</h2>
-    <p class="cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.services_intro_color }};margin-bottom:10px;">{{ section.settings.services_intro }}</p>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.services_intro_color }};margin-bottom:10px;">{{ section.settings.services_intro }}</p>
     <div class="service-list">
       {% for block in section.blocks %}
         <div class="service-list-item" {{ block.shopify_attributes }}>
           <div>
-            <h3 class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.service_title_color != blank %}color:{{ section.settings.service_title_color }};{% endif %}">{{ block.settings.title }}</h3>
-            <p style="color:{{ section.settings.service_description_color }};margin-top:4px;font-size:14px;">{{ block.settings.description }}</p>
+            <h2 class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.service_title_color != blank %}color:{{ section.settings.service_title_color }};{% endif %}">{{ block.settings.title }}</h2>
+            <p class="cc-preserve-line-breaks" style="color:{{ section.settings.service_description_color }};margin-top:4px;font-size:14px;">{{ block.settings.description }}</p>
           </div>
-          <a class="btn-book" href="{{ block.settings.booking_link }}" style="padding:10px 24px;height:auto;min-width:auto;flex-shrink:0;background:{{ section.settings.book_button_color }} !important;border-color:{{ section.settings.book_button_color }} !important;">{{ block.settings.button_text | default: 'Book Now' }}</a>
+          <a class="btn-book" href="{{ block.settings.booking_link }}" style="padding:10px 24px;height:auto;min-width:auto;flex-shrink:0;background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ block.settings.button_text | default: 'Book Now' }}</a>
         </div>
       {% endfor %}
     </div>
@@ -71,13 +71,13 @@
     { "type": "color", "id": "office_name_color", "label": "Office name color", "default": "#19202c", "info": "Leave blank to use the global Heading 1 color (Theme settings → Headings)." },
     { "type": "color", "id": "body_text_color", "label": "Body text color", "default": "#2c2f33" },
     { "type": "color", "id": "link_color", "label": "Phone/email link color", "default": "#D5B226" },
-    { "type": "color", "id": "contact_button_color", "label": "\"Contact us\" / \"Book services\" button color", "default": "#171d29" },
+    { "type": "color", "id": "contact_button_color", "label": "\"Contact us\" / \"Book services\" button color", "default": "#D5B226" },
     { "type": "color", "id": "services_section_background_color", "label": "Services section background", "default": "#f7f5f3" },
     { "type": "color", "id": "services_heading_color", "label": "Services heading color", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "services_intro_color", "label": "Services intro text color", "default": "#6b7280" },
     { "type": "color", "id": "service_title_color", "label": "Service item title color", "default": "#19202c", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
     { "type": "color", "id": "service_description_color", "label": "Service item description color", "default": "#6b7280" },
-    { "type": "color", "id": "book_button_color", "label": "\"Book now\" button color", "default": "#8c6a2f" },
+    { "type": "color", "id": "book_button_color", "label": "\"Book now\" button color", "default": "#D5B226" },
     { "type": "header", "content": "Fonts" },
     {
       "type": "select",

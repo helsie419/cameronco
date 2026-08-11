@@ -1,0 +1,1639 @@
+<style>
+  /* ==================================================
+     PAGE
+     ================================================== */
+
+  .error-404-shell {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 24px 90px;
+    text-align: center;
+  }
+
+
+  /* ==================================================
+     ANIMATION SCENE
+     ================================================== */
+
+  .error-404-scene {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: 310px;
+    margin: 0 auto 24px;
+    overflow: visible;
+    isolation: isolate;
+    z-index: 20;
+  }
+
+
+  /* ==================================================
+     RING SHADOW
+     ================================================== */
+
+  .error-404-ground {
+    position: absolute;
+    left: 50%;
+    bottom: 32px;
+
+    width: 225px;
+    height: 12px;
+
+    transform: translateX(-50%);
+    border-radius: 50%;
+
+    background: radial-gradient(
+      ellipse at center,
+      rgba(23,29,41,.10) 0%,
+      rgba(23,29,41,.04) 45%,
+      rgba(23,29,41,0) 76%
+    );
+
+    filter: blur(2px);
+
+    z-index: 0;
+  }
+
+
+  /* ==================================================
+     RING
+     ================================================== */
+
+  .error-404-ring {
+    position: absolute;
+
+    left: 50%;
+    bottom: 36px;
+
+    width: 230px;
+    height: 210px;
+
+    transform: translateX(-50%);
+
+    z-index: 2;
+  }
+
+
+  .error-404-ring img {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+
+  /* ==================================================
+     RING WITH DIAMOND
+     ================================================== */
+
+  .error-404-ring-full {
+    opacity: 1;
+
+    animation:
+      cc404RingFull
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404RingFull {
+    0%,
+    20% {
+      opacity: 1;
+    }
+
+    21%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     EMPTY RING
+     ================================================== */
+
+  .error-404-ring-empty {
+    opacity: 0;
+
+    animation:
+      cc404RingEmpty
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404RingEmpty {
+    0%,
+    20% {
+      opacity: 0;
+    }
+
+    21%,
+    100% {
+      opacity: 1;
+    }
+  }
+
+
+  /* ==================================================
+     SPARKLE
+     ================================================== */
+
+  .cc404-sparkle {
+    position: absolute;
+
+    left: 50%;
+    top: 44px;
+
+    width: 18px;
+    height: 18px;
+
+    margin-left: 5px;
+
+    z-index: 12;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    animation:
+      cc404Sparkle
+      3s
+      ease-in-out
+      1
+      forwards;
+  }
+
+
+  .cc404-sparkle::before,
+  .cc404-sparkle::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #ffffff;
+
+    border-radius: 999px;
+
+    box-shadow:
+      0 0 4px rgba(255,255,255,.95),
+      0 0 8px rgba(213,178,38,.26);
+  }
+
+
+  .cc404-sparkle::before {
+    width: 2px;
+    height: 18px;
+  }
+
+
+  .cc404-sparkle::after {
+    width: 18px;
+    height: 2px;
+  }
+
+
+  @keyframes cc404Sparkle {
+    0%,
+    5% {
+      opacity: 0;
+      transform: scale(.15) rotate(0deg);
+    }
+
+    9% {
+      opacity: 1;
+      transform: scale(1.1) rotate(25deg);
+    }
+
+    13% {
+      opacity: .3;
+      transform: scale(.55) rotate(35deg);
+    }
+
+    17% {
+      opacity: 1;
+      transform: scale(.85) rotate(45deg);
+    }
+
+    20%,
+    100% {
+      opacity: 0;
+      transform: scale(.15) rotate(45deg);
+    }
+  }
+
+
+  /* ==================================================
+     DIAMOND CONTAINER
+     ================================================== */
+
+  .cc404-diamond-motion {
+    position: absolute;
+
+    left: 50%;
+    top: 41px;
+
+    width: 78px;
+    height: 78px;
+
+    margin-left: -39px;
+
+    z-index: 8;
+
+    transform-origin: 50% 50%;
+
+    animation:
+      cc404DiamondMotion
+      3s
+      cubic-bezier(.32,.02,.18,1)
+      1
+      forwards;
+
+    will-change: transform;
+  }
+
+
+  /* ==================================================
+     DIAMOND FRAME BASE
+     ================================================== */
+
+  .cc404-frame {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+
+    opacity: 0;
+
+    filter: none;
+
+    transform-origin: 50% 50%;
+
+    will-change: opacity;
+  }
+
+
+  /* ==================================================
+     DIAMOND MOVEMENT
+     ================================================== */
+
+  @keyframes cc404DiamondMotion {
+
+    /* mounted */
+
+    0%,
+    20% {
+      transform:
+        translate(0,0)
+        rotate(0deg);
+    }
+
+
+    /* wobble */
+
+    23% {
+      transform:
+        translate(-2px,0)
+        rotate(-4deg);
+    }
+
+
+    26% {
+      transform:
+        translate(2px,1px)
+        rotate(4deg);
+    }
+
+
+    29% {
+      transform:
+        translate(-1px,2px)
+        rotate(-3deg);
+    }
+
+
+    32% {
+      transform:
+        translate(1px,4px)
+        rotate(4deg);
+    }
+
+
+    /* starts falling */
+
+    36% {
+      transform:
+        translate(5px,16px)
+        rotate(10deg);
+    }
+
+
+    41% {
+      transform:
+        translate(14px,40px)
+        rotate(28deg);
+    }
+
+
+    46% {
+      transform:
+        translate(27px,74px)
+        rotate(52deg);
+    }
+
+
+    51% {
+      transform:
+        translate(40px,108px)
+        rotate(80deg);
+    }
+
+
+    56% {
+      transform:
+        translate(53px,138px)
+        rotate(112deg);
+    }
+
+
+    /* first contact */
+
+    61% {
+      transform:
+        translate(63px,156px)
+        rotate(148deg);
+    }
+
+
+    /* small bounce */
+
+    66% {
+      transform:
+        translate(73px,139px)
+        rotate(188deg);
+    }
+
+
+    /* back onto ground */
+
+    71% {
+      transform:
+        translate(84px,156px)
+        rotate(228deg);
+    }
+
+
+    /* roll */
+
+    76% {
+      transform:
+        translate(95px,157px)
+        rotate(268deg);
+    }
+
+
+    81% {
+      transform:
+        translate(105px,157px)
+        rotate(304deg);
+    }
+
+
+    86% {
+      transform:
+        translate(114px,158px)
+        rotate(334deg);
+    }
+
+
+    /* settling */
+
+    91% {
+      transform:
+        translate(120px,158px)
+        rotate(350deg);
+    }
+
+
+    95% {
+      transform:
+        translate(124px,158px)
+        rotate(357deg);
+    }
+
+
+    /*
+      FINAL POSITION
+      Lower than before so diamond sits
+      visually beside the ring shadow.
+    */
+
+    98%,
+    100% {
+      transform:
+        translate(126px,158px)
+        rotate(360deg);
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 01
+     ================================================== */
+
+  .cc404-frame-01 {
+    animation:
+      cc404Frame01
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame01 {
+    0%,
+    19% {
+      opacity: 0;
+    }
+
+    21% {
+      opacity: 1;
+    }
+
+    26% {
+      opacity: 1;
+    }
+
+    28%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 02
+     ================================================== */
+
+  .cc404-frame-02 {
+    animation:
+      cc404Frame02
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame02 {
+    0%,
+    24% {
+      opacity: 0;
+    }
+
+    26% {
+      opacity: 1;
+    }
+
+    31% {
+      opacity: 1;
+    }
+
+    33%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 03
+     ================================================== */
+
+  .cc404-frame-03 {
+    animation:
+      cc404Frame03
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame03 {
+    0%,
+    29% {
+      opacity: 0;
+    }
+
+    31% {
+      opacity: 1;
+    }
+
+    36% {
+      opacity: 1;
+    }
+
+    38%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 04
+     ================================================== */
+
+  .cc404-frame-04 {
+    animation:
+      cc404Frame04
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame04 {
+    0%,
+    34% {
+      opacity: 0;
+    }
+
+    36% {
+      opacity: 1;
+    }
+
+    41% {
+      opacity: 1;
+    }
+
+    43%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 05
+     ================================================== */
+
+  .cc404-frame-05 {
+    animation:
+      cc404Frame05
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame05 {
+    0%,
+    39% {
+      opacity: 0;
+    }
+
+    41% {
+      opacity: 1;
+    }
+
+    46% {
+      opacity: 1;
+    }
+
+    48%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 06
+     ================================================== */
+
+  .cc404-frame-06 {
+    animation:
+      cc404Frame06
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame06 {
+    0%,
+    44% {
+      opacity: 0;
+    }
+
+    46% {
+      opacity: 1;
+    }
+
+    51% {
+      opacity: 1;
+    }
+
+    53%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 07
+     ================================================== */
+
+  .cc404-frame-07 {
+    animation:
+      cc404Frame07
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame07 {
+    0%,
+    49% {
+      opacity: 0;
+    }
+
+    51% {
+      opacity: 1;
+    }
+
+    56% {
+      opacity: 1;
+    }
+
+    58%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 08
+     ================================================== */
+
+  .cc404-frame-08 {
+    animation:
+      cc404Frame08
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame08 {
+    0%,
+    54% {
+      opacity: 0;
+    }
+
+    56% {
+      opacity: 1;
+    }
+
+    62% {
+      opacity: 1;
+    }
+
+    64%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 09
+     ================================================== */
+
+  .cc404-frame-09 {
+    animation:
+      cc404Frame09
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame09 {
+    0%,
+    60% {
+      opacity: 0;
+    }
+
+    62% {
+      opacity: 1;
+    }
+
+    68% {
+      opacity: 1;
+    }
+
+    70%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 10
+     ================================================== */
+
+  .cc404-frame-10 {
+    animation:
+      cc404Frame10
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame10 {
+    0%,
+    66% {
+      opacity: 0;
+    }
+
+    68% {
+      opacity: 1;
+    }
+
+    77% {
+      opacity: 1;
+    }
+
+    79%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FRAME 11
+     ================================================== */
+
+  .cc404-frame-11 {
+    animation:
+      cc404Frame11
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404Frame11 {
+    0%,
+    75% {
+      opacity: 0;
+    }
+
+    77% {
+      opacity: 1;
+    }
+
+    88% {
+      opacity: 1;
+    }
+
+    90%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+
+  /* ==================================================
+     FINAL RESTING FRAME
+     REUSES DIAMOND FRAME 05
+     ================================================== */
+
+  .cc404-frame-final {
+    animation:
+      cc404FrameFinal
+      3s
+      linear
+      1
+      forwards;
+  }
+
+
+  @keyframes cc404FrameFinal {
+    0%,
+    88% {
+      opacity: 0;
+    }
+
+    90% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+
+  /* ==================================================
+     TEXT
+     ================================================== */
+
+  .error-404-content {
+    position: relative;
+    z-index: 1;
+    clear: both;
+  }
+
+
+  .error-404-eyebrow {
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #d5b226;
+    margin-bottom: 6px;
+  }
+
+
+  .error-404-code {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: clamp(64px,12vw,120px);
+    line-height: 1;
+    color: #171d29;
+    margin: 0;
+  }
+
+
+  .error-404-heading {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: clamp(24px,3vw,34px);
+    line-height: 1.2;
+    color: #171d29;
+    margin: 10px 0 6px;
+  }
+
+
+  .error-404-copy {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    color: #4d493f;
+    max-width: 460px;
+    margin: 0 auto 34px;
+  }
+
+
+  /* ==================================================
+     BUTTONS
+     ================================================== */
+
+  .error-404-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+
+  .error-404-actions .btn-black-center {
+    width: 190px;
+    min-width: 190px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+  }
+
+
+  /* ==================================================
+     MOBILE
+     ================================================== */
+
+  @media (max-width:480px) {
+
+    .error-404-shell {
+      padding: 22px 16px 70px;
+    }
+
+
+    .error-404-scene {
+      height: 270px;
+      margin-bottom: 18px;
+    }
+
+
+    .error-404-ring {
+      width: 190px;
+      height: 174px;
+      bottom: 39px;
+    }
+
+
+    .error-404-ground {
+      width: 185px;
+      bottom: 35px;
+    }
+
+
+    .cc404-diamond-motion {
+      width: 66px;
+      height: 66px;
+
+      margin-left: -33px;
+
+      top: 40px;
+
+      animation-name: cc404DiamondMotionMobile;
+    }
+
+
+    @keyframes cc404DiamondMotionMobile {
+
+      0%,
+      20% {
+        transform:
+          translate(0,0)
+          rotate(0deg);
+      }
+
+
+      23% {
+        transform:
+          translate(-1px,0)
+          rotate(-4deg);
+      }
+
+
+      26% {
+        transform:
+          translate(1px,1px)
+          rotate(4deg);
+      }
+
+
+      29% {
+        transform:
+          translate(-1px,2px)
+          rotate(-3deg);
+      }
+
+
+      32% {
+        transform:
+          translate(1px,3px)
+          rotate(4deg);
+      }
+
+
+      36% {
+        transform:
+          translate(4px,13px)
+          rotate(10deg);
+      }
+
+
+      41% {
+        transform:
+          translate(11px,33px)
+          rotate(28deg);
+      }
+
+
+      46% {
+        transform:
+          translate(21px,59px)
+          rotate(52deg);
+      }
+
+
+      51% {
+        transform:
+          translate(32px,86px)
+          rotate(80deg);
+      }
+
+
+      56% {
+        transform:
+          translate(42px,110px)
+          rotate(112deg);
+      }
+
+
+      61% {
+        transform:
+          translate(50px,127px)
+          rotate(148deg);
+      }
+
+
+      66% {
+        transform:
+          translate(58px,113px)
+          rotate(188deg);
+      }
+
+
+      71% {
+        transform:
+          translate(67px,127px)
+          rotate(228deg);
+      }
+
+
+      76% {
+        transform:
+          translate(76px,128px)
+          rotate(268deg);
+      }
+
+
+      81% {
+        transform:
+          translate(84px,129px)
+          rotate(304deg);
+      }
+
+
+      86% {
+        transform:
+          translate(91px,129px)
+          rotate(334deg);
+      }
+
+
+      91% {
+        transform:
+          translate(96px,129px)
+          rotate(350deg);
+      }
+
+
+      95% {
+        transform:
+          translate(99px,129px)
+          rotate(357deg);
+      }
+
+
+      98%,
+      100% {
+        transform:
+          translate(101px,129px)
+          rotate(360deg);
+      }
+
+    }
+
+
+    .error-404-code {
+      font-size: 64px;
+    }
+
+
+    .error-404-heading {
+      font-size: 23px;
+    }
+
+
+    .error-404-actions {
+      width: 100%;
+      gap: 10px;
+    }
+
+
+    .error-404-actions .btn-black-center {
+      width: 100%;
+      max-width: 260px;
+      min-width: 0;
+    }
+
+  }
+
+
+  /* ==================================================
+     REDUCED MOTION
+     ================================================== */
+
+  @media (prefers-reduced-motion:reduce) {
+
+    .error-404-ring-full {
+      animation: none;
+      opacity: 0;
+    }
+
+
+    .error-404-ring-empty {
+      animation: none;
+      opacity: 1;
+    }
+
+
+    .cc404-sparkle {
+      display: none;
+    }
+
+
+    .cc404-diamond-motion {
+      animation: none;
+
+      transform:
+        translate(126px,158px)
+        rotate(360deg);
+    }
+
+
+    .cc404-frame {
+      display: none;
+    }
+
+
+    .cc404-frame-final {
+      display: block;
+      opacity: 1;
+    }
+
+  }
+</style>
+
+
+
+<div class="error-404-shell">
+
+
+  <div class="error-404-scene" aria-hidden="true">
+
+
+    <div class="error-404-ground"></div>
+
+
+
+    <!-- RING -->
+
+    <div class="error-404-ring">
+
+
+      {% if section.settings.ring_full != blank %}
+
+        <img
+          class="error-404-ring-full"
+          src="{{ section.settings.ring_full | image_url: width: 700 }}"
+          width="{{ section.settings.ring_full.width }}"
+          height="{{ section.settings.ring_full.height }}"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        >
+
+      {% endif %}
+
+
+
+      {% if section.settings.ring_empty != blank %}
+
+        <img
+          class="error-404-ring-empty"
+          src="{{ section.settings.ring_empty | image_url: width: 700 }}"
+          width="{{ section.settings.ring_empty.width }}"
+          height="{{ section.settings.ring_empty.height }}"
+          alt=""
+          loading="eager"
+        >
+
+      {% endif %}
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         DIAMOND ANIMATION
+         ================================================== -->
+
+    <div class="cc404-diamond-motion">
+
+
+      {% if section.settings.diamond_frame_01 != blank %}
+        <img
+          class="cc404-frame cc404-frame-01"
+          src="{{ section.settings.diamond_frame_01 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_01.width }}"
+          height="{{ section.settings.diamond_frame_01.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_02 != blank %}
+        <img
+          class="cc404-frame cc404-frame-02"
+          src="{{ section.settings.diamond_frame_02 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_02.width }}"
+          height="{{ section.settings.diamond_frame_02.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_03 != blank %}
+        <img
+          class="cc404-frame cc404-frame-03"
+          src="{{ section.settings.diamond_frame_03 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_03.width }}"
+          height="{{ section.settings.diamond_frame_03.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_04 != blank %}
+        <img
+          class="cc404-frame cc404-frame-04"
+          src="{{ section.settings.diamond_frame_04 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_04.width }}"
+          height="{{ section.settings.diamond_frame_04.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_05 != blank %}
+        <img
+          class="cc404-frame cc404-frame-05"
+          src="{{ section.settings.diamond_frame_05 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_05.width }}"
+          height="{{ section.settings.diamond_frame_05.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_06 != blank %}
+        <img
+          class="cc404-frame cc404-frame-06"
+          src="{{ section.settings.diamond_frame_06 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_06.width }}"
+          height="{{ section.settings.diamond_frame_06.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_07 != blank %}
+        <img
+          class="cc404-frame cc404-frame-07"
+          src="{{ section.settings.diamond_frame_07 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_07.width }}"
+          height="{{ section.settings.diamond_frame_07.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_08 != blank %}
+        <img
+          class="cc404-frame cc404-frame-08"
+          src="{{ section.settings.diamond_frame_08 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_08.width }}"
+          height="{{ section.settings.diamond_frame_08.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_09 != blank %}
+        <img
+          class="cc404-frame cc404-frame-09"
+          src="{{ section.settings.diamond_frame_09 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_09.width }}"
+          height="{{ section.settings.diamond_frame_09.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_10 != blank %}
+        <img
+          class="cc404-frame cc404-frame-10"
+          src="{{ section.settings.diamond_frame_10 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_10.width }}"
+          height="{{ section.settings.diamond_frame_10.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      {% if section.settings.diamond_frame_11 != blank %}
+        <img
+          class="cc404-frame cc404-frame-11"
+          src="{{ section.settings.diamond_frame_11 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_11.width }}"
+          height="{{ section.settings.diamond_frame_11.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+
+      <!--
+        FINAL RESTING IMAGE:
+        REUSE FRAME 05
+      -->
+
+      {% if section.settings.diamond_frame_05 != blank %}
+        <img
+          class="cc404-frame cc404-frame-final"
+          src="{{ section.settings.diamond_frame_05 | image_url: width: 420 }}"
+          width="{{ section.settings.diamond_frame_05.width }}"
+          height="{{ section.settings.diamond_frame_05.height }}"
+          alt=""
+          loading="eager"
+        >
+      {% endif %}
+
+
+    </div>
+
+
+
+    <span class="cc404-sparkle"></span>
+
+
+  </div>
+
+
+
+  <!-- ==================================================
+       CONTENT
+       ================================================== -->
+
+  <div class="error-404-content">
+
+
+    <div class="error-404-eyebrow">
+      {{ section.settings.eyebrow }}
+    </div>
+
+
+    <p class="error-404-code">
+      404
+    </p>
+
+
+    <h1 class="error-404-heading">
+      {{ section.settings.heading }}
+    </h1>
+
+
+    <p class="error-404-copy">
+      {{ section.settings.description }}
+    </p>
+
+
+
+    <div class="error-404-actions">
+
+
+      <a
+        class="btn-black-center btn-dark"
+        href="{{ routes.root_url }}"
+      >
+        {{ section.settings.button_1_text }}
+      </a>
+
+
+      <a
+        class="btn-black-center"
+        href="{{ section.settings.button_2_link | default: pages['jewelleryrepairs'].url }}"
+      >
+        {{ section.settings.button_2_text }}
+      </a>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+
+{% schema %}
+{
+  "name": "404 page",
+
+  "settings": [
+
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Page Not Found"
+    },
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Looks like this piece went missing."
+    },
+
+    {
+      "type": "image_picker",
+      "id": "ring_full",
+      "label": "Ring with diamond",
+      "info": "Use 404-ring-with-diamond-matched.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "ring_empty",
+      "label": "Ring without diamond",
+      "info": "Use 404-ring-without-diamond-matched.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_01",
+      "label": "Diamond roll frame 01",
+      "info": "Use 404-diamond-roll-large-01.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_02",
+      "label": "Diamond roll frame 02",
+      "info": "Use 404-diamond-roll-large-02.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_03",
+      "label": "Diamond roll frame 03",
+      "info": "Use 404-diamond-roll-large-03.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_04",
+      "label": "Diamond roll frame 04",
+      "info": "Use 404-diamond-roll-large-04.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_05",
+      "label": "Diamond roll frame 05",
+      "info": "Frame 05 is also used as the final resting position."
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_06",
+      "label": "Diamond roll frame 06",
+      "info": "Use 404-diamond-roll-large-06.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_07",
+      "label": "Diamond roll frame 07",
+      "info": "Use 404-diamond-roll-large-07.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_08",
+      "label": "Diamond roll frame 08",
+      "info": "Use 404-diamond-roll-large-08.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_09",
+      "label": "Diamond roll frame 09",
+      "info": "Use 404-diamond-roll-large-09.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_10",
+      "label": "Diamond roll frame 10",
+      "info": "Use 404-diamond-roll-large-10-regenerated.png"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "diamond_frame_11",
+      "label": "Diamond roll frame 11",
+      "info": "Use 404-diamond-roll-large-11-regenerated.png"
+    },
+
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "The page you're looking for has been misplaced, remodelled, or never existed. Don't worry — let's get that repaired for you."
+    },
+
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Primary button text",
+      "default": "Back to homepage"
+    },
+
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Secondary button text",
+      "default": "Book a repair"
+    },
+
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary button link",
+      "info": "Leave blank to use the Jewellery Repairs page"
+    }
+
+  ],
+
+  "presets": [
+    {
+      "name": "404 page"
+    }
+  ]
+}
+{% endschema %}

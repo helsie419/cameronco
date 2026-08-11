@@ -10,15 +10,31 @@
   {% when 'poppins' %}{% assign footer_body_family = "'Poppins', Arial, sans-serif" %}
   {% else %}{% assign footer_body_family = "'Glacial Indifference', Arial, sans-serif" %}
 {% endcase %}
+{% assign footer_background_alpha = section.settings.background_opacity | default: 80 | divided_by: 100.0 %}
+{% assign footer_texture_alpha = section.settings.texture_opacity | default: 14 | divided_by: 100.0 %}
+{% assign footer_background = section.settings.background_color | color_modify: 'alpha', footer_background_alpha %}
 <style>
-.site-footer { background: {{ section.settings.background_color }} !important; }
-.site-footer h2, .site-footer h3 { color: {{ section.settings.heading_color }} !important; font-family: {{ footer_heading_family }} !important; }
+#shopify-section-{{ section.id }},
+#shopify-section-{{ section.id }}.shopify-section,
+#shopify-section-{{ section.id }} .site-footer {
+  background-color: {{ footer_background }} !important;
+  background-image: none !important;
+}
+#shopify-section-{{ section.id }} .site-footer::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }}) center/cover no-repeat !important;
+  opacity: {{ footer_texture_alpha }} !important;
+  pointer-events: none !important;
+}
+.site-footer h2 { color: {{ section.settings.heading_color }} !important; font-family: {{ footer_heading_family }} !important; }
 .site-footer,
 .site-footer p,
 .site-footer a,
 .site-footer li { color: {{ section.settings.text_color }}; font-family: {{ footer_body_family }} !important; }
 @media (max-width: 900px) {
-  .site-footer h2, .site-footer h3 { color: {{ section.settings.heading_color_mobile }} !important; }
+  .site-footer h2 { color: {{ section.settings.heading_color_mobile }} !important; }
   .site-footer,
   .site-footer p,
   .site-footer a,
@@ -50,7 +66,7 @@
 </div>
 </div>
 <div class="footer-col">
-<h3>{{ section.settings.menu_col_heading }}</h3>
+<h2>{{ section.settings.menu_col_heading }}</h2>
 <ul>
 {% if section.settings.menu_col_links.links.size > 0 %}
   {% for link in section.settings.menu_col_links.links %}
@@ -72,7 +88,7 @@
 </ul>
 </div>
 <div class="footer-col">
-<h3>{{ section.settings.about_col_heading }}</h3>
+<h2>{{ section.settings.about_col_heading }}</h2>
 <ul>
 {% if section.settings.about_col_links.links.size > 0 %}
   {% for link in section.settings.about_col_links.links %}
@@ -88,7 +104,7 @@
 </ul>
 </div>
 <div class="footer-col footer-col-education">
-<h3>{{ section.settings.education_col_heading }}</h3>
+<h2>{{ section.settings.education_col_heading }}</h2>
 <ul>
 {% if section.settings.education_col_links.links.size > 0 %}
   {% for link in section.settings.education_col_links.links %}
@@ -158,6 +174,8 @@
     { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Cameron & Co." },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background_color", "label": "Footer background", "default": "#1a202b" },
+    { "type": "range", "id": "background_opacity", "label": "Footer background opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 80 },
+    { "type": "range", "id": "texture_opacity", "label": "Footer texture opacity", "min": 0, "max": 40, "step": 2, "unit": "%", "default": 14 },
     { "type": "color", "id": "heading_color", "label": "Column heading color", "default": "#ffffff" },
     { "type": "color", "id": "text_color", "label": "Body text color", "default": "#ffffff" },
     { "type": "header", "content": "Colors — mobile only" },

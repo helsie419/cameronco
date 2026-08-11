@@ -1,7 +1,7 @@
 <div class="booking-live-page">
   <section class="brand-hero section-inner">
-    <h1 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h1>
-    <p class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
+    <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
   </section>
 
   <section class="app-grid section-inner" aria-label="Appointment Booking System">
@@ -27,7 +27,7 @@
 
       <div class="booking-scheduler">
         <div class="booking-calendar-panel">
-          <h2>Select a Date &amp; Time</h2>
+          <h3>Select a Date &amp; Time</h3>
           <div class="calendar-month-row">
             <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">‹</button>
             <strong id="calendar-month-label">Loading</strong>
@@ -43,15 +43,10 @@
             <span>Sun</span>
           </div>
           <div class="calendar-days" id="calendar-days"></div>
-          <div class="booking-timezone">
-            <strong>Time zone</strong>
-            <span aria-hidden="true">◉</span>
-            <span>Sydney, Melbourne Time (<span id="timezone-now">--:--</span>)</span>
-          </div>
         </div>
 
         <section class="result-panel" aria-label="Available appointment timeslots">
-          <h2 id="selected-date-heading">Select a date</h2>
+          <h3 id="selected-date-heading">Select a date</h3>
           <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
         </section>
       </div>
@@ -88,7 +83,7 @@
   </section>
 
   <section class="booking-card section-inner" hidden id="manage-booking" style="margin-top: 30px;">
-    <h2>Manage Appointment</h2>
+    <h3>Manage Appointment</h3>
     <p id="manage-summary"></p>
     <div class="button-row">
       <button class="btn-black-center secondary" id="manage-reschedule" type="button">Reschedule to selected time</button>
