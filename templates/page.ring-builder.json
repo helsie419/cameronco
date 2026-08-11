@@ -38,7 +38,7 @@
             "ring_size_regions": "UNITED_STATES,UNITED_KINGDOM,AUSTRALIA,ITALY,SPAIN,HONG_KONG,EUROPE,SOUTH_AFRICA,CANADA,JAPAN,KOREA",
             "diamond_type_natural": true,
             "diamond_type_lab": true,
-            "diamond_type_gem_v2": false,
+            "diamond_type_gem_v2": true,
             "default_stone_type": "Natural",
             "color_min": "J",
             "color_max": "D",
@@ -68,7 +68,8 @@
             "certificate_lab": "GIA,IGI,WISE",
             "default_sort_key": "price_asc",
             "enable_tj_configurator": false,
-            "tj_tile_text": "DESIGN YOUR RING"
+            "tj_tile_text": "DESIGN YOUR RING",
+            "translations_enabled": false
           }
         }
       },
