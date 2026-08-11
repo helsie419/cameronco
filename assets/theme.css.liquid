@@ -2320,6 +2320,35 @@ iframe.office-map {
   color: #171d29;
 }
 
+.about-intro-with-image {
+  display: flow-root;
+}
+
+.about-intro-with-image .about-storefront-frame.about-storefront-float {
+  float: right !important;
+  width: 44% !important;
+  margin: 4px 0 24px 40px !important;
+}
+
+.about-intro-with-image .about-storefront-frame.about-storefront-float img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+.about-intro-with-image .about-intro-copy {
+  max-width: none;
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .about-intro-with-image .about-storefront-frame.about-storefront-float {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 24px !important;
+  }
+}
+
 .about-lead {
   font-family: "Cormorant Garamond", Georgia, serif !important;
   font-size: clamp(30px, 3.6vw, 46px) !important;

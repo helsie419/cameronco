@@ -1,18 +1,18 @@
 <div class="about-live-page">
 <section aria-labelledby="about-expertise-title-{{ section.id }}" class="about-expertise section-inner">
   <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="about-expertise-title-{{ section.id }}" style="{% if section.settings.expertise_heading_color != blank %}color:{{ section.settings.expertise_heading_color }};{% endif %}">{{ section.settings.expertise_heading }}</h2>
-  <figure class="about-storefront-frame">
-    {% if section.settings.storefront_image %}
-      <img alt="{{ section.settings.storefront_image_alt | escape }}" height="1140" loading="eager" src="{{ section.settings.storefront_image | image_url: width: 1803 }}" width="1803">
-    {% else %}
-      <img alt="{{ section.settings.storefront_image_alt | escape }}" height="1140" loading="eager" src="{{ 'cameron-co-brand-book-showroom.webp' | asset_url }}" width="1803">
-    {% endif %}
-  </figure>
 </section>
 <section aria-labelledby="about-page-title-{{ section.id }}" class="about-title-band section-inner">
   <h2 class="{% if section.settings.heading_font != blank %}cc-font-heading-{{ section.settings.heading_font }}{% endif %}" id="about-page-title-{{ section.id }}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
 </section>
-<section aria-labelledby="about-intro-title-{{ section.id }}" class="about-intro section-inner">
+<section aria-labelledby="about-intro-title-{{ section.id }}" class="about-intro about-intro-with-image section-inner">
+  <figure class="about-storefront-frame about-storefront-float">
+    {% if section.settings.storefront_image %}
+      <img alt="{{ section.settings.storefront_image_alt | escape }}" height="1140" loading="eager" src="{{ section.settings.storefront_image | image_url: width: 900 }}" width="900">
+    {% else %}
+      <img alt="{{ section.settings.storefront_image_alt | escape }}" height="1140" loading="eager" src="{{ 'cameron-co-brand-book-showroom.webp' | asset_url }}" width="900">
+    {% endif %}
+  </figure>
   <div class="about-intro-copy cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.intro_text_color != blank %}color:{{ section.settings.intro_text_color }};{% endif %}">
     <p class="cc-preserve-line-breaks" id="about-intro-title-{{ section.id }}">{{ section.settings.intro_paragraph_1 }}</p>
     <p class="cc-preserve-line-breaks">{{ section.settings.intro_paragraph_2 }}</p>
