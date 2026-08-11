@@ -25,6 +25,12 @@
         </label>
       </div>
 
+      <p class="booking-timezone">
+        <strong>Times shown in <span id="timezone-label">Sydney time</span></strong>
+        <span aria-hidden="true">•</span>
+        <span>Current time there: <span id="timezone-now"></span> &mdash; <button class="timezone-toggle" id="timezone-toggle" type="button">Show in your local time</button></span>
+      </p>
+
       <div class="booking-scheduler">
         <div class="booking-calendar-panel">
           <h3>Select a Date &amp; Time</h3>
@@ -113,6 +119,8 @@
   var calendarMonthLabel = document.getElementById("calendar-month-label");
   var selectedDateHeading = document.getElementById("selected-date-heading");
   var timezoneNow = document.getElementById("timezone-now");
+  var timezoneLabel = document.getElementById("timezone-label");
+  var timezoneToggle = document.getElementById("timezone-toggle");
   var calendarPrev = document.getElementById("calendar-prev");
   var calendarNext = document.getElementById("calendar-next");
   var activeToken = params.get("booking");
@@ -121,6 +129,15 @@
   var selectedDateKey = "";
   var calendarYear = new Date().getFullYear();
   var calendarMonth = new Date().getMonth();
+
+  var OFFICE_TZ = "Australia/Sydney";
+  var LOCAL_TZ = OFFICE_TZ;
+  try {
+    LOCAL_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || OFFICE_TZ;
+  } catch (e) {
+    LOCAL_TZ = OFFICE_TZ;
+  }
+  var DISPLAY_TZ = OFFICE_TZ;
 
   if (params.get("office") && office) office.value = params.get("office");
   if (serviceSelect) {
@@ -168,7 +185,7 @@
       month: "short",
       hour: "numeric",
       minute: "2-digit",
-      timeZone: "Australia/Sydney"
+      timeZone: DISPLAY_TZ
     }).format(new Date(value));
   }
 
@@ -178,7 +195,7 @@
       day: "numeric",
       month: "long",
       year: "numeric",
-      timeZone: "Australia/Sydney"
+      timeZone: DISPLAY_TZ
     }).formatToParts(new Date(value));
     return parts.reduce(function (memo, part) {
       if (part.type !== "literal") memo[part.type] = part.value;
@@ -191,7 +208,7 @@
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-      timeZone: "Australia/Sydney"
+      timeZone: DISPLAY_TZ
     }).formatToParts(new Date(value)).reduce(function (memo, part) {
       if (part.type !== "literal") memo[part.type] = part.value;
       return memo;
@@ -204,7 +221,7 @@
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
-      timeZone: "Australia/Sydney"
+      timeZone: DISPLAY_TZ
     }).format(new Date(value)).replace(" ", "").toLowerCase();
   }
 
@@ -228,8 +245,26 @@
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
-      timeZone: "Australia/Sydney"
+      timeZone: DISPLAY_TZ
     }).format(new Date()).replace(" ", "").toLowerCase();
+  }
+
+  // Office time is the default (unchanged behaviour for the vast majority of
+  // customers, who are already in Sydney/Melbourne time). Rarely, a customer
+  // browsing from elsewhere wants times in their own timezone instead --
+  // this toggle switches every displayed time (calendar, slot grid, clock)
+  // without changing what actually gets submitted, since slot values are
+  // always the raw ISO instant regardless of how they're displayed.
+  function applyTimezone(tz) {
+    DISPLAY_TZ = tz;
+    if (timezoneLabel) {
+      timezoneLabel.textContent = tz === OFFICE_TZ ? "Sydney time" : "your local time (" + tz.replace(/_/g, " ").split("/").pop() + ")";
+    }
+    if (timezoneToggle) {
+      timezoneToggle.textContent = tz === OFFICE_TZ ? "Show in your local time" : "Show in Sydney time";
+    }
+    updateTimezoneClock();
+    if (availableSlots.length) setSlots(availableSlots);
   }
 
   function setStatus(msg) {
@@ -500,7 +535,17 @@
 
   if (office) office.addEventListener("change", loadSlots);
   if (refreshButton) refreshButton.addEventListener("click", loadSlots);
-  updateTimezoneClock();
+  if (timezoneToggle) {
+    if (LOCAL_TZ === OFFICE_TZ) {
+      // Customer's own timezone already matches the office -- nothing to offer.
+      timezoneToggle.hidden = true;
+    } else {
+      timezoneToggle.addEventListener("click", function () {
+        applyTimezone(DISPLAY_TZ === OFFICE_TZ ? LOCAL_TZ : OFFICE_TZ);
+      });
+    }
+  }
+  applyTimezone(OFFICE_TZ);
   window.setInterval(updateTimezoneClock, 60000);
   loadSlots();
   loadManagedBooking();
