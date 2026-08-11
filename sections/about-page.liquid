@@ -44,16 +44,32 @@
 </section>
 <section aria-label="Our craftsmanship" class="about-image-row section-inner">
   <figure class="about-image-row-item">
-    <img alt="Pink tourmaline round halo ring in rose gold" height="500" loading="lazy" src="{{ 'cameron-co-pink-tourmaline-halo-ring.webp' | asset_url }}" width="500">
+    {% if section.settings.craft_image_1 %}
+      <img alt="{{ section.settings.craft_image_1_alt | escape }}" height="500" loading="lazy" src="{{ section.settings.craft_image_1 | image_url: width: 500 }}" width="500">
+    {% else %}
+      <img alt="{{ section.settings.craft_image_1_alt | escape }}" height="500" loading="lazy" src="{{ 'cameron-co-pink-tourmaline-halo-ring.webp' | asset_url }}" width="500">
+    {% endif %}
   </figure>
   <figure class="about-image-row-item">
-    <img alt="Aquamarine vintage-style halo ring in white gold" height="500" loading="lazy" src="{{ 'cameron-co-aquamarine-vintage-halo-ring.webp' | asset_url }}" width="500">
+    {% if section.settings.craft_image_2 %}
+      <img alt="{{ section.settings.craft_image_2_alt | escape }}" height="500" loading="lazy" src="{{ section.settings.craft_image_2 | image_url: width: 500 }}" width="500">
+    {% else %}
+      <img alt="{{ section.settings.craft_image_2_alt | escape }}" height="500" loading="lazy" src="{{ 'cameron-co-aquamarine-vintage-halo-ring.webp' | asset_url }}" width="500">
+    {% endif %}
   </figure>
   <figure class="about-image-row-item">
-    <img alt="Princess-cut diamond bridal ring set in rose gold" height="500" loading="lazy" src="{{ 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' | asset_url }}" width="500">
+    {% if section.settings.craft_image_3 %}
+      <img alt="{{ section.settings.craft_image_3_alt | escape }}" height="500" loading="lazy" src="{{ section.settings.craft_image_3 | image_url: width: 500 }}" width="500">
+    {% else %}
+      <img alt="{{ section.settings.craft_image_3_alt | escape }}" height="500" loading="lazy" src="{{ 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' | asset_url }}" width="500">
+    {% endif %}
   </figure>
   <figure class="about-image-row-item">
-    <img alt="Black sapphire bezel ring in yellow gold" height="500" loading="lazy" src="{{ 'cameron-co-black-sapphire-bezel-ring.webp' | asset_url }}" width="500">
+    {% if section.settings.craft_image_4 %}
+      <img alt="{{ section.settings.craft_image_4_alt | escape }}" height="500" loading="lazy" src="{{ section.settings.craft_image_4 | image_url: width: 500 }}" width="500">
+    {% else %}
+      <img alt="{{ section.settings.craft_image_4_alt | escape }}" height="500" loading="lazy" src="{{ 'cameron-co-black-sapphire-bezel-ring.webp' | asset_url }}" width="500">
+    {% endif %}
   </figure>
 </section>
 </div>
@@ -66,6 +82,15 @@
     { "type": "text", "id": "expertise_heading", "label": "Heading", "default": "Expertise. Excellence. Experience." },
     { "type": "image_picker", "id": "storefront_image", "label": "Storefront image" },
     { "type": "text", "id": "storefront_image_alt", "label": "Storefront image alt text", "default": "Cameron & Co head office in Melbourne" },
+    { "type": "header", "content": "Craftsmanship image row" },
+    { "type": "image_picker", "id": "craft_image_1", "label": "Image 1" },
+    { "type": "text", "id": "craft_image_1_alt", "label": "Image 1 alt text", "default": "Pink tourmaline round halo ring in rose gold" },
+    { "type": "image_picker", "id": "craft_image_2", "label": "Image 2" },
+    { "type": "text", "id": "craft_image_2_alt", "label": "Image 2 alt text", "default": "Aquamarine vintage-style halo ring in white gold" },
+    { "type": "image_picker", "id": "craft_image_3", "label": "Image 3" },
+    { "type": "text", "id": "craft_image_3_alt", "label": "Image 3 alt text", "default": "Princess-cut diamond bridal ring set in rose gold" },
+    { "type": "image_picker", "id": "craft_image_4", "label": "Image 4" },
+    { "type": "text", "id": "craft_image_4_alt", "label": "Image 4 alt text", "default": "Black sapphire bezel ring in yellow gold" },
     { "type": "header", "content": "Page heading" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "About Us" },
     { "type": "header", "content": "Intro copy" },
