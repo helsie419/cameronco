@@ -2,6 +2,19 @@
   "use strict";
 
   var STORAGE_KEY = "cameronCoCrmMvpState";
+  var API = "/api";
+  var CUSTOMER_TYPE_TO_API = {
+    "Private client": "private",
+    "Insurance client": "insurance",
+    "Retail partner": "retail_partner",
+    "Trade": "trade"
+  };
+  var CUSTOMER_TYPE_FROM_API = {
+    "private": "Private client",
+    "insurance": "Insurance client",
+    "retail_partner": "Retail partner",
+    "trade": "Trade"
+  };
   var stages = [
     "New enquiry",
     "Quote sent",
@@ -13,15 +26,6 @@
     "Completed"
   ];
 
-  var nextStage = {
-    "New enquiry": "Quote sent",
-    "Quote sent": "Awaiting deposit",
-    "Awaiting deposit": "CAD approval",
-    "CAD approval": "In production",
-    "In production": "Quality check",
-    "Quality check": "Ready for collection",
-    "Ready for collection": "Completed"
-  };
 
   var templates = {
     quoteFollowup: {
@@ -51,10 +55,6 @@
     key: "name",
     direction: "asc"
   };
-  var workSort = {
-    key: "dueDate",
-    direction: "asc"
-  };
   var selectedCommList = [];
   var editingAutomationRuleId = "";
 
@@ -72,48 +72,16 @@
     pipelineRail: byId("pipelineRail"),
     todaySummary: byId("todaySummary"),
     todayTasks: byId("todayTasks"),
-    customerForm: byId("customerForm"),
     customerSearch: byId("customerSearch"),
     customerTypeFilter: byId("customerTypeFilter"),
     customerConsentFilter: byId("customerConsentFilter"),
     customerTableBody: byId("customerTableBody"),
     addCustomerButton: byId("addCustomerButton"),
     bulkUploadCustomerButton: byId("bulkUploadCustomerButton"),
-    customerModal: byId("customerModal"),
-    customerModalClose: byId("customerModalClose"),
     bulkCustomerModal: byId("bulkCustomerModal"),
     bulkCustomerModalClose: byId("bulkCustomerModalClose"),
     bulkCustomerForm: byId("bulkCustomerForm"),
     bulkCustomerCsv: byId("bulkCustomerCsv"),
-    workForm: byId("workForm"),
-    workCustomer: byId("workCustomer"),
-    workStage: byId("workStage"),
-    workTitle: byId("workTitle"),
-    workMetal: byId("workMetal"),
-    workStoneShape: byId("workStoneShape"),
-    workStoneType: byId("workStoneType"),
-    workStoneProvided: byId("workStoneProvided"),
-    workStoneOrigin: byId("workStoneOrigin"),
-    workSize: byId("workSize"),
-    workDue: byId("workDue"),
-    workMaterials: byId("workMaterials"),
-    workLabour: byId("workLabour"),
-    workSupplier: byId("workSupplier"),
-    workPrice: byId("workPrice"),
-    workDeposit: byId("workDeposit"),
-    workOwner: byId("workOwner"),
-    workImages: byId("workImages"),
-    workNotes: byId("workNotes"),
-    workFilter: byId("workFilter"),
-    workSearch: byId("workSearch"),
-    workOwnerFilter: byId("workOwnerFilter"),
-    workTableBody: byId("workTableBody"),
-    newWorkButton: byId("newWorkButton"),
-    workModal: byId("workModal"),
-    workModalClose: byId("workModalClose"),
-    boardSearch: byId("boardSearch"),
-    boardOwner: byId("boardOwner"),
-    jobBoardColumns: byId("jobBoardColumns"),
     commContactMode: byId("commContactMode"),
     commRecipientMode: byId("commRecipientMode"),
     commCustomer: byId("commCustomer"),
@@ -168,6 +136,15 @@
 
   bindEvents();
   render();
+  bindHashRouting();
+  loadCustomersFromApi();
+  syncHeaderHeightVar();
+  window.addEventListener("resize", syncHeaderHeightVar);
+
+  function syncHeaderHeightVar() {
+    var header = document.querySelector(".site-header");
+    if (header) document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px");
+  }
 
   function byId(id) {
     return document.getElementById(id);
@@ -187,46 +164,31 @@
     });
 
     els.resetDemo.addEventListener("click", function () {
+      // Customers live in the real database now — reset everything else,
+      // then immediately re-sync the customer list so it doesn't show
+      // stale demo seed data until the next page load.
       state = createDemoState();
       save("Demo reset");
       render();
+      loadCustomersFromApi();
     });
 
     els.customerSearch.addEventListener("input", renderCustomers);
     els.customerTypeFilter.addEventListener("change", renderCustomers);
     els.customerConsentFilter.addEventListener("change", renderCustomers);
-    els.addCustomerButton.addEventListener("click", openCustomerModal);
+    els.addCustomerButton.addEventListener("click", function () {
+      window.location.href = "quote-entry.html";
+    });
     els.bulkUploadCustomerButton.addEventListener("click", openBulkCustomerModal);
-    els.newWorkButton.addEventListener("click", function () {
-      openWorkModal();
-    });
-    els.customerModalClose.addEventListener("click", closeCustomerModal);
     els.bulkCustomerModalClose.addEventListener("click", closeBulkCustomerModal);
-    els.workModalClose.addEventListener("click", closeWorkModal);
-    els.customerModal.addEventListener("click", function (event) {
-      if (event.target === els.customerModal) closeCustomerModal();
-    });
     els.bulkCustomerModal.addEventListener("click", function (event) {
       if (event.target === els.bulkCustomerModal) closeBulkCustomerModal();
-    });
-    els.workModal.addEventListener("click", function (event) {
-      if (event.target === els.workModal) closeWorkModal();
     });
     document.querySelectorAll("[data-customer-sort]").forEach(function (button) {
       button.addEventListener("click", function () {
         updateCustomerSort(button.dataset.customerSort);
       });
     });
-    els.workFilter.addEventListener("change", renderWork);
-    els.workSearch.addEventListener("input", renderWork);
-    els.workOwnerFilter.addEventListener("change", renderWork);
-    document.querySelectorAll("[data-work-sort]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        updateWorkSort(button.dataset.workSort);
-      });
-    });
-    els.boardSearch.addEventListener("input", renderJobBoard);
-    els.boardOwner.addEventListener("change", renderJobBoard);
     els.commContactMode.addEventListener("change", function () {
       renderContactMode();
       updateTemplateFields();
@@ -275,170 +237,34 @@
       if (edit) editAutomationRule(edit.dataset.ruleId);
     });
 
-    els.customerForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      state.customers.unshift({
-        id: makeId("cus"),
-        createdAt: todayIso(),
-        name: value("customerName"),
-        type: value("customerType"),
-        phone: value("customerPhone"),
-        email: value("customerEmail"),
-        address: value("customerAddress"),
-        preferred: value("customerPreferred"),
-        source: value("customerSource"),
-        ringSize: value("customerRingSize"),
-        partner: value("customerPartner"),
-        notes: value("customerNotes"),
-        consent: {
-          email: byId("customerEmailConsent").checked,
-          sms: byId("customerSmsConsent").checked,
-          marketing: byId("customerMarketingConsent").checked,
-          updatedAt: todayIso(),
-          source: "CRM capture"
-        }
-      });
-      els.customerForm.reset();
-      byId("customerEmailConsent").checked = true;
-      byId("customerSmsConsent").checked = true;
-      byId("customerMarketingConsent").checked = true;
-      closeCustomerModal();
-      save("Customer added");
-      render();
-    });
-
     els.bulkCustomerForm.addEventListener("submit", function (event) {
       event.preventDefault();
-      var imported = importCustomersFromCsv(els.bulkCustomerCsv.value);
-      if (!imported) {
-        save("No customers imported");
-        return;
-      }
-      els.bulkCustomerForm.reset();
-      closeBulkCustomerModal();
-      save(imported + " customers imported");
-      render();
-    });
-
-    els.workForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-      var price = numberValue("workPrice");
-      var deposit = numberValue("workDeposit");
-      var stoneDetails = selectedStoneDetails();
-      var images = await readImageFiles(els.workImages.files);
-      var work = {
-        id: makeId("wrk"),
-        number: "CC-" + String(state.nextWorkNumber++).padStart(4, "0"),
-        customerId: els.workCustomer.value,
-        stage: value("workStage"),
-        title: value("workTitle"),
-        metal: value("workMetal"),
-        stones: stoneSummary(stoneDetails),
-        stoneShape: stoneDetails.shape,
-        stoneType: stoneDetails.type,
-        stoneProvided: stoneDetails.provided,
-        stoneOrigin: stoneDetails.origin,
-        size: value("workSize"),
-        dueDate: value("workDue"),
-        materials: numberValue("workMaterials"),
-        labour: numberValue("workLabour"),
-        supplier: numberValue("workSupplier"),
-        price: price,
-        deposit: deposit,
-        balance: Math.max(price - deposit, 0),
-        owner: value("workOwner"),
-        images: images,
-        notes: value("workNotes"),
-        satisfaction: "Not recorded",
-        createdAt: todayIso(),
-        stageUpdatedAt: todayIso(),
-        completedAt: "",
-        nextCleanDate: "",
-        approvals: {
-          quote: stageIndex(value("workStage")) >= stageIndex("Awaiting deposit"),
-          deposit: deposit > 0,
-          cad: stageIndex(value("workStage")) >= stageIndex("In production"),
-          stone: stoneDetails.type !== "Not selected" || stoneDetails.shape !== "Not selected",
-          qa: false
-        },
-        timeline: [{ date: todayIso(), text: "Work created at " + value("workStage") }]
-      };
-      state.work.unshift(work);
-      runDueAutomations(work.id);
-      els.workForm.reset();
-      closeWorkModal();
-      save("Work added");
-      render();
-    });
-
-    els.workTableBody.addEventListener("click", function (event) {
-      var customerButton = event.target.closest("[data-customer-id]");
-      if (customerButton) {
-        openCustomerDetail(customerButton.dataset.customerId);
-        return;
-      }
-      var row = event.target.closest("[data-work-row]");
-      if (row) openWorkDetail(row.dataset.workId);
+      importCustomersFromCsv(els.bulkCustomerCsv.value).then(function (imported) {
+        if (!imported) {
+          save("No customers imported");
+          return;
+        }
+        els.bulkCustomerForm.reset();
+        closeBulkCustomerModal();
+        save(imported + " customers imported");
+        render();
+      });
     });
 
     els.customerTableBody.addEventListener("click", function (event) {
+      if (event.target.closest(".phone-link")) return;
       var contact = event.target.closest("[data-customer-contact]");
       if (contact) {
         openCorrespondenceForCustomer(contact.dataset.customerContact);
         return;
       }
-      var row = event.target.closest("[data-customer-row]");
-      if (row) openCustomerDetail(row.dataset.customerId);
-    });
-
-    els.jobBoardColumns.addEventListener("dragstart", function (event) {
-      var card = event.target.closest("[data-work-card]");
-      if (!card) return;
-      card.classList.add("dragging");
-      event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("text/plain", card.dataset.workId);
-    });
-
-    els.jobBoardColumns.addEventListener("dragend", function (event) {
-      var card = event.target.closest("[data-work-card]");
-      if (card) card.classList.remove("dragging");
-      document.querySelectorAll(".kanban-column").forEach(function (column) {
-        column.classList.remove("drag-over");
-      });
-    });
-
-    els.jobBoardColumns.addEventListener("dragover", function (event) {
-      var column = event.target.closest("[data-stage]");
-      if (!column) return;
-      event.preventDefault();
-      column.classList.add("drag-over");
-    });
-
-    els.jobBoardColumns.addEventListener("dragleave", function (event) {
-      var column = event.target.closest("[data-stage]");
-      if (column && !column.contains(event.relatedTarget)) column.classList.remove("drag-over");
-    });
-
-    els.jobBoardColumns.addEventListener("drop", function (event) {
-      var column = event.target.closest("[data-stage]");
-      if (!column) return;
-      event.preventDefault();
-      column.classList.remove("drag-over");
-      var work = findWork(event.dataTransfer.getData("text/plain"));
-      if (!work || work.stage === column.dataset.stage) return;
-      setWorkStage(work, column.dataset.stage, "Dragged on job board");
-      save("Job moved");
-      render();
-    });
-
-    els.jobBoardColumns.addEventListener("click", function (event) {
-      var customerButton = event.target.closest("[data-customer-id]");
-      if (customerButton) {
-        openCustomerDetail(customerButton.dataset.customerId);
+      var newQuote = event.target.closest("[data-new-quote]");
+      if (newQuote) {
+        window.location.href = "quote-entry.html?customer=" + encodeURIComponent(newQuote.dataset.newQuote);
         return;
       }
-      var card = event.target.closest("[data-work-card]");
-      if (card) openWorkDetail(card.dataset.workId);
+      var row = event.target.closest("[data-customer-row]");
+      if (row) openCustomerDetail(row.dataset.customerId);
     });
 
     els.detailModalClose.addEventListener("click", closeDetailModal);
@@ -446,23 +272,14 @@
       if (event.target === els.detailModal) closeDetailModal();
       var action = event.target.closest("[data-modal-action]");
       if (!action) return;
-      if (action.dataset.modalAction === "save-work") saveWorkDetail(action.dataset.workId);
-      if (action.dataset.modalAction === "upload-job-images") uploadJobImages(action.dataset.workId);
       if (action.dataset.modalAction === "open-customer") openCustomerDetail(action.dataset.customerId);
-      if (action.dataset.modalAction === "open-work") openWorkDetail(action.dataset.workId);
-      if (action.dataset.modalAction === "create-work-customer") {
-        closeDetailModal();
-        openWorkModal(action.dataset.customerId);
-      }
       if (action.dataset.modalAction === "send-customer-correspondence") {
         openCorrespondenceForCustomer(action.dataset.customerId);
       }
+      if (action.dataset.modalAction === "refresh-customer-email") {
+        loadCustomerEmails(action.dataset.customerId);
+      }
       if (action.dataset.modalAction === "save-customer-record") saveCustomerRecord(action.dataset.customerId);
-    });
-
-    els.detailModal.addEventListener("change", function (event) {
-      var rating = event.target.closest("[data-rating-select]");
-      if (rating) updateWorkSatisfaction(rating.dataset.workId, rating.value);
     });
 
     els.commForm.addEventListener("submit", function (event) {
@@ -530,17 +347,39 @@
     document.querySelectorAll(".panel").forEach(function (panel) {
       panel.classList.toggle("active", panel.id === tabName + "Panel");
     });
+    document.querySelectorAll(".main-nav a[data-tab-link]").forEach(function (link) {
+      link.classList.toggle("active", link.dataset.tabLink === tabName);
+    });
+  }
+
+  // The other pages (job-board.html, quotes.html, rates.html) link back here
+  // via index.html#customers, #contact, etc. — same panels, addressable by hash.
+  function bindHashRouting() {
+    var hashTabs = {
+      "": "dashboard",
+      customers: "customers",
+      contact: "communications",
+      automation: "automation",
+      reports: "reports"
+    };
+
+    function applyHash() {
+      var hash = window.location.hash.replace("#", "");
+      if (Object.prototype.hasOwnProperty.call(hashTabs, hash)) {
+        switchTab(hashTabs[hash]);
+      }
+    }
+
+    window.addEventListener("hashchange", applyHash);
+    applyHash();
   }
 
   function render() {
     renderSelects();
     renderContactMode();
     renderRecipientMode();
-    renderMetrics();
-    renderDashboard();
+    loadDashboardSummary();
     renderCustomers();
-    renderWork();
-    renderJobBoard();
     updateTemplateFields();
     renderCommunications();
     renderAutomation();
@@ -548,13 +387,7 @@
   }
 
   function renderSelects() {
-    var selectedWorkCustomer = els.workCustomer.value;
     var selectedCommCustomer = els.commCustomer.value || (state.customers[0] && state.customers[0].id);
-    els.workCustomer.innerHTML = "";
-    state.customers.forEach(function (customer) {
-      els.workCustomer.appendChild(new Option(customer.name, customer.id));
-    });
-    if (selectedWorkCustomer) els.workCustomer.value = selectedWorkCustomer;
     if (selectedCommCustomer) selectCommCustomer(selectedCommCustomer, true);
     renderCommCustomerChips();
     renderWorkSelects();
@@ -599,7 +432,11 @@
     }).slice(0, 8);
     container.innerHTML = matches.length ? matches.map(function (customer) {
       var selected = mode === "list" && selectedCommList.indexOf(customer.id) !== -1;
-      return '<button class="search-result" data-pick-customer="' + customer.id + '" type="button"' + (selected ? " disabled" : "") + '><strong>' + escapeHtml(customer.name) + '</strong><span>' + escapeHtml([customer.phone, customer.email].filter(Boolean).join(" - ") || customer.type) + '</span></button>';
+      // Plain formatted text, not a tel: link — this sits inside a
+      // "pick this customer" button, and a nested <a> would fight the
+      // button's own click for the tap.
+      var detail = [customer.phone ? formatPhoneAU(customer.phone) : "", customer.email].filter(Boolean).join(" - ") || customer.type;
+      return '<button class="search-result" data-pick-customer="' + customer.id + '" type="button"' + (selected ? " disabled" : "") + '><strong>' + escapeHtml(customer.name) + '</strong><span>' + escapeHtml(detail) + '</span></button>';
     }).join("") : empty("No customers found.");
   }
 
@@ -608,7 +445,7 @@
     if (!customer) return;
     els.commCustomer.value = customer.id;
     els.commCustomerSearch.value = customer.name;
-    els.commCustomerSelected.textContent = [customer.phone, customer.email].filter(Boolean).join(" - ");
+    els.commCustomerSelected.innerHTML = [customer.phone ? phoneLinkHtml(customer.phone) : "", escapeHtml(customer.email || "")].filter(Boolean).join(" - ");
     els.commCustomerResults.innerHTML = "";
     if (!skipRender) {
       renderWorkSelects();
@@ -653,56 +490,45 @@
     if (selected) els.commWork.value = selected;
   }
 
-  function renderMetrics() {
-    var activeQuotes = state.work.filter(function (work) {
-      return work.stage === "New enquiry" || work.stage === "Quote sent";
-    });
-    var workshop = state.work.filter(function (work) {
-      return stageIndex(work.stage) >= stageIndex("CAD approval") && work.stage !== "Completed";
-    });
-    var overdue = state.work.filter(isOverdue);
-    var balances = state.work.reduce(function (sum, work) {
-      return sum + work.balance;
-    }, 0);
-    var dueTasks = state.tasks.filter(function (task) {
-      return task.status === "Open" && task.dueDate <= todayIso();
-    });
-    var schedules = buildSchedules();
-    var dueAutomations = schedules.filter(function (item) {
-      return item.dueDate <= todayIso();
-    });
-
-    els.metricQuoteValue.textContent = money(activeQuotes.reduce(function (sum, work) {
-      return sum + work.price;
-    }, 0));
-    els.metricQuoteCount.textContent = activeQuotes.length + " active quotes";
-    els.metricWorkshop.textContent = workshop.length;
-    els.metricOverdue.textContent = overdue.length + " overdue jobs";
-    els.metricBalances.textContent = money(balances);
-    els.metricTasks.textContent = dueTasks.length;
-    els.metricAutomation.textContent = dueAutomations.length;
+  // Metrics + pipeline + today's actions are now one real, database-backed
+  // view (GET /api/dashboard/summary) instead of being computed from the
+  // localStorage-only state.work/state.tasks. "Today's actions" substitutes
+  // jobs due and quotes awaiting a decision for the old task list, since
+  // generic tasks don't exist on the real backend yet.
+  function loadDashboardSummary() {
+    return fetch(API + "/dashboard/summary")
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to load dashboard summary");
+        return res.json();
+      })
+      .then(renderDashboardSummary)
+      .catch(function (err) {
+        console.error(err);
+        els.pipelineSummary.textContent = "Couldn't load";
+        els.todaySummary.textContent = "Couldn't load";
+      });
   }
 
-  function renderDashboard() {
-    var max = Math.max.apply(null, stages.map(function (stage) {
-      return countStage(stage);
-    }).concat([1]));
+  function renderDashboardSummary(summary) {
+    els.metricQuoteValue.textContent = money(summary.openQuoteValue);
+    els.metricQuoteCount.textContent = summary.activeQuoteCount + " active quotes";
+    els.metricWorkshop.textContent = summary.workshopLoad;
+    els.metricOverdue.textContent = summary.overdueJobs + " overdue jobs";
+    els.metricBalances.textContent = money(summary.unpaidBalances);
 
-    els.pipelineSummary.textContent = state.work.length + " records";
-    els.pipelineRail.innerHTML = stages.map(function (stage) {
-      var count = countStage(stage);
-      var width = Math.max((count / max) * 100, count ? 10 : 0);
-      return '<div class="pipeline-stage stage-' + stageClass(stage) + '"><strong>' + escapeHtml(stage) + '</strong><div class="bar"><span style="width:' + width + '%"></span></div><span>' + count + '</span></div>';
+    var max = Math.max.apply(null, summary.pipeline.map(function (p) { return p.count; }).concat([1]));
+    els.pipelineSummary.textContent = summary.totalRecords + " records";
+    els.pipelineRail.innerHTML = summary.pipeline.map(function (p) {
+      var width = Math.max((p.count / max) * 100, p.count ? 10 : 0);
+      return '<div class="pipeline-stage stage-' + stageClass(p.stage) + '"><strong>' + escapeHtml(p.stage) + '</strong><div class="meter-bar"><span style="width:' + width + '%"></span></div><span>' + p.count + '</span></div>';
     }).join("");
 
-    var todayTasks = state.tasks.filter(function (task) {
-      return task.status === "Open" && task.dueDate <= todayIso();
-    }).slice(0, 8);
-    els.todaySummary.textContent = todayTasks.length + " actions";
-    els.todayTasks.innerHTML = todayTasks.length ? todayTasks.map(function (task) {
-      var customer = findCustomer(task.customerId);
-      var work = findWork(task.workId);
-      return '<article class="timeline-item"><header><div><h4>' + escapeHtml(task.title) + '</h4><p class="meta">' + escapeHtml(task.owner) + ' - due ' + formatDate(task.dueDate) + '</p></div><span class="status-pill">' + escapeHtml(task.status) + '</span></header><p class="fineprint">' + escapeHtml(customer ? customer.name : "No customer") + (work ? " - " + escapeHtml(work.number) : "") + '</p></article>';
+    els.todaySummary.textContent = summary.todayItems.length + " actions";
+    els.todayTasks.innerHTML = summary.todayItems.length ? summary.todayItems.map(function (item) {
+      var meta = /^Job due /.test(item.meta) ? "Job due " + formatDate(item.meta.replace("Job due ", "")) : item.meta;
+      var tag = item.claim_id ? "a" : "article";
+      var href = item.claim_id ? ' href="quote-entry.html?claim=' + item.claim_id + '"' : "";
+      return '<' + tag + ' class="timeline-item"' + href + '><header><div><h4>' + escapeHtml(item.title) + '</h4><p class="meta">' + escapeHtml(meta) + '</p></div></header><p class="fineprint">' + escapeHtml(item.customer || "No customer") + '</p></' + tag + '>';
     }).join("") : empty("No actions due today.");
   }
 
@@ -754,9 +580,11 @@
     };
   }
 
+  var ENVELOPE_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"></rect><path d="M3 6.5l9 6.5 9-6.5"></path></svg>';
+
   function renderCustomerRow(record) {
     var customer = record.customer;
-    return '<tr data-customer-row data-customer-id="' + customer.id + '" tabindex="0"><td><strong>' + escapeHtml(customer.name) + '</strong><span>' + escapeHtml(customer.address || customer.source || "No address") + '</span></td><td>' + escapeHtml(customer.type || "Unknown") + '</td><td>' + escapeHtml(customer.phone || "-") + '</td><td>' + escapeHtml(customer.email || "-") + '</td><td>' + (record.lastJobDue ? formatDate(record.lastJobDue) : "No jobs") + '</td><td><span class="stage-pill">' + record.jobCount + '</span></td><td>' + escapeHtml(record.consent.join(", ") || "Missing") + '</td><td><button class="icon-button" data-customer-contact="' + customer.id + '" type="button" title="Send correspondence" aria-label="Send correspondence to ' + escapeHtml(customer.name) + '">✉️</button></td></tr>';
+    return '<tr data-customer-row data-customer-id="' + customer.id + '" tabindex="0"><td><strong>' + escapeHtml(customer.name) + '</strong><span>' + escapeHtml(customer.address || customer.source || "No address") + '</span></td><td>' + escapeHtml(customer.type || "Unknown") + '</td><td>' + (customer.phone ? phoneLinkHtml(customer.phone, "-") : "-") + '</td><td>' + escapeHtml(customer.email || "-") + '</td><td>' + (record.lastJobDue ? formatDate(record.lastJobDue) : "No jobs") + '</td><td><div class="jobs-cell"><span class="stage-pill">' + record.jobCount + '</span><button class="icon-button small" data-new-quote="' + customer.id + '" type="button" title="New quote for ' + escapeHtml(customer.name) + '" aria-label="New quote for ' + escapeHtml(customer.name) + '">+</button></div></td><td>' + escapeHtml(record.consent.join(", ") || "Missing") + '</td><td><button class="icon-button" data-customer-contact="' + customer.id + '" type="button" title="Send correspondence" aria-label="Send correspondence to ' + escapeHtml(customer.name) + '">' + ENVELOPE_ICON_SVG + '</button></td></tr>';
   }
 
   function sortCustomerRecords(a, b) {
@@ -793,148 +621,124 @@
     });
   }
 
-  function renderWork() {
-    var filter = els.workFilter.value;
-    var owner = els.workOwnerFilter.value;
-    var search = els.workSearch.value.trim().toLowerCase();
-    var rows = state.work.map(workTableRecord).filter(function (record) {
-      var work = record.work;
-      var haystack = [
-        work.number,
-        work.title,
-        work.stage,
-        work.metal,
-        stoneSummary(work),
-        work.owner,
-        record.customerName
-      ].join(" ").toLowerCase();
-      return (filter === "All" || work.stage === filter) &&
-        (owner === "All" || work.owner === owner) &&
-        haystack.indexOf(search) !== -1;
-    }).sort(sortWorkRecords);
-
-    els.workTableBody.innerHTML = rows.length ? rows.map(renderWorkRow).join("") : '<tr><td colspan="7">' + empty("No jobs match these filters.") + '</td></tr>';
-    updateWorkSortIndicators();
-  }
-
-  function workTableRecord(work) {
-    var customer = findCustomer(work.customerId);
-    return {
-      work: work,
-      customer: customer,
-      customerName: customer ? customer.name : "Unknown customer",
-      margin: work.price - work.materials - work.labour - work.supplier
-    };
-  }
-
-  function renderWorkRow(record) {
-    var work = record.work;
-    return '<tr data-work-row data-work-id="' + work.id + '" tabindex="0"><td><strong>' + escapeHtml(work.number) + '</strong><span>' + escapeHtml(work.title) + '</span><span>' + escapeHtml(stoneSummary(work) || "Stone details TBC") + '</span></td><td><button class="clickable-name" data-customer-id="' + (record.customer ? record.customer.id : "") + '" type="button">' + escapeHtml(record.customerName) + '</button></td><td><span class="stage-pill">' + escapeHtml(work.stage) + '</span></td><td>' + formatDate(work.dueDate) + '</td><td>' + escapeHtml(work.owner) + '</td><td><strong>' + money(work.balance) + '</strong><span>Margin ' + money(record.margin) + '</span></td><td>' + satisfactionBadge(work.satisfaction) + '</td></tr>';
-  }
-
-  function sortWorkRecords(a, b) {
-    var key = workSort.key;
-    var av = workSortValue(a, key);
-    var bv = workSortValue(b, key);
-    if (typeof av === "number" || typeof bv === "number") {
-      return (Number(av || 0) - Number(bv || 0)) * (workSort.direction === "asc" ? 1 : -1);
-    }
-    return String(av || "").localeCompare(String(bv || "")) * (workSort.direction === "asc" ? 1 : -1);
-  }
-
-  function workSortValue(record, key) {
-    if (key === "customer") return record.customerName;
-    if (key === "balance") return record.work.balance;
-    if (key === "satisfaction") return record.work.satisfaction || "";
-    return record.work[key] || "";
-  }
-
-  function updateWorkSort(key) {
-    if (workSort.key === key) {
-      workSort.direction = workSort.direction === "asc" ? "desc" : "asc";
-    } else {
-      workSort.key = key;
-      workSort.direction = key === "dueDate" || key === "balance" ? "desc" : "asc";
-    }
-    renderWork();
-  }
-
-  function updateWorkSortIndicators() {
-    document.querySelectorAll("[data-work-sort]").forEach(function (button) {
-      var active = button.dataset.workSort === workSort.key;
-      button.dataset.sortDirection = active ? workSort.direction : "";
-    });
-  }
-
-  function renderJobBoard() {
-    var search = els.boardSearch.value.trim().toLowerCase();
-    var owner = els.boardOwner.value;
-    els.jobBoardColumns.innerHTML = stages.map(function (stage) {
-      var cards = state.work.filter(function (work) {
-        var customer = findCustomer(work.customerId);
-        var haystack = [work.number, work.title, stoneSummary(work), work.owner, work.stage, customer && customer.name].join(" ").toLowerCase();
-        return shouldShowOnBoard(work) && work.stage === stage && (owner === "All" || work.owner === owner) && haystack.indexOf(search) !== -1;
-      });
-      return '<section class="kanban-column" data-stage="' + escapeHtml(stage) + '"><div class="kanban-heading"><h3>' + escapeHtml(stage) + '</h3><span class="stage-pill">' + cards.length + '</span></div><div class="kanban-cards">' + (cards.length ? cards.map(renderBoardCard).join("") : empty("Drop jobs here.")) + '</div></section>';
-    }).join("");
-  }
-
-  function renderBoardCard(work) {
-    var customer = findCustomer(work.customerId) || { id: "", name: "Unknown customer" };
-    var overdue = isOverdue(work) ? '<span class="status-pill">Overdue</span>' : "";
-    return '<article class="job-card stage-' + stageClass(work.stage) + '" draggable="true" data-work-card data-work-id="' + work.id + '" tabindex="0"><div class="job-card-header"><div><h4>' + escapeHtml(work.number) + '</h4><p class="meta">' + escapeHtml(work.title) + '</p></div>' + satisfactionBadge(work.satisfaction) + '</div><button class="clickable-name" data-customer-id="' + customer.id + '" type="button">' + escapeHtml(customer.name) + '</button><div class="job-card-meta"><span>Due ' + formatDate(work.dueDate) + '</span><span>' + escapeHtml(work.owner) + '</span><span>' + escapeHtml(work.metal) + '</span><span>' + money(work.balance) + ' owing</span></div><p class="fineprint">' + escapeHtml(stoneSummary(work) || "Stone details TBC") + '</p>' + overdue + '</article>';
-  }
-
-  function openWorkDetail(workId) {
-    var work = findWork(workId);
-    if (!work) return;
-    var customer = findCustomer(work.customerId) || { id: "", name: "Unknown customer" };
-    var communications = state.communications.filter(function (item) { return item.workId === work.id; });
-    var tasks = state.tasks.filter(function (task) { return task.workId === work.id; });
-    els.detailContent.innerHTML = '<div class="modal-title-row"><div><p class="eyebrow">Job detail</p><h2 id="detailModalTitle">' + escapeHtml(work.number) + '</h2><p class="hero-copy">' + escapeHtml(work.title) + '</p></div>' + satisfactionSelect(work) + '</div><div class="modal-section"><div class="detail-grid"><div class="detail"><span>Customer</span><strong><button class="clickable-name" data-modal-action="open-customer" data-customer-id="' + customer.id + '" type="button">' + escapeHtml(customer.name) + '</button></strong></div><div class="detail"><span>Stage</span><strong>' + escapeHtml(work.stage) + '</strong></div><div class="detail"><span>Due</span><strong>' + formatDate(work.dueDate) + '</strong></div><div class="detail"><span>Metal</span><strong>' + escapeHtml(work.metal) + '</strong></div><div class="detail"><span>Stone</span><strong>' + escapeHtml(stoneSummary(work) || "TBC") + '</strong></div><div class="detail"><span>Balance</span><strong>' + money(work.balance) + '</strong></div></div></div>' + renderWorkImageSection(work) + '<div class="modal-section"><h3>Manual update</h3><div class="edit-row"><label>Status<select id="modalStage">' + optionList(stages, work.stage) + '</select></label><label>Customer happiness<select id="modalSatisfaction">' + optionList(satisfactionOptions(work.satisfaction), work.satisfaction) + '</select></label><button class="button primary" data-modal-action="save-work" data-work-id="' + work.id + '" type="button">Save update</button></div></div><div class="modal-section"><h3>Workshop notes</h3><p>' + escapeHtml(work.notes || "No notes.") + '</p></div><div class="history-grid modal-section"><section><h3>Correspondence</h3><div class="customer-history-list">' + renderMiniCommunications(communications) + '</div></section><section><h3>Tasks</h3><div class="customer-history-list">' + renderMiniTasks(tasks) + '</div></section></div>';
-    els.detailModal.hidden = false;
-  }
-
   function openCustomerDetail(customerId) {
     var customer = findCustomer(customerId);
     if (!customer) return;
-    var works = state.work.filter(function (work) { return work.customerId === customer.id; });
     var communications = state.communications.filter(function (item) { return item.customerId === customer.id; });
     els.detailContent.innerHTML = [
       '<div class="modal-title-row">',
-      '<div><p class="eyebrow">Customer profile</p><h2 id="detailModalTitle">' + escapeHtml(customer.name) + '</h2><p class="hero-copy">' + escapeHtml(customer.type) + ' - ' + escapeHtml(customer.source) + '</p></div>',
-      '<div class="modal-action-stack"><span class="stage-pill">' + works.length + ' jobs</span><button class="button primary" data-modal-action="create-work-customer" data-customer-id="' + customer.id + '" type="button">Create job</button><button class="button secondary" data-modal-action="send-customer-correspondence" data-customer-id="' + customer.id + '" type="button">Send correspondence</button></div>',
+      '<div><h2 id="detailModalTitle">' + escapeHtml(customer.name) + ' <a class="help-link" href="user-manuals.html#customer-record" title="Open the Customer Record manual" aria-label="Open the Customer Record manual">?</a></h2><p class="hero-copy">' + escapeHtml([customer.type, customer.source].filter(Boolean).join(" - ")) + '</p></div>',
+      '<div class="modal-header-actions">',
+      '<div class="button-row">',
+      '<button class="button primary" data-modal-action="save-customer-record" data-customer-id="' + customer.id + '" type="button">Save customer</button>',
+      '<button class="button secondary" data-modal-action="send-customer-correspondence" data-customer-id="' + customer.id + '" type="button">Send correspondence</button>',
       '</div>',
-      '<div class="modal-section"><h3>Customer record</h3><div class="form-grid customer-edit-grid">',
+      '<div class="consent-row"><label><input id="modalCustomerEmailConsent" type="checkbox"' + checked(customer.consent.email) + '> Email consent</label><label><input id="modalCustomerSmsConsent" type="checkbox"' + checked(customer.consent.sms) + '> SMS consent</label><label><input id="modalCustomerMarketingConsent" type="checkbox"' + checked(customer.consent.marketing) + '> Marketing consent</label></div>',
+      '</div>',
+      '</div>',
+      '<div class="modal-section">',
+      '<h3>Customer record</h3>',
+      '<div class="form-grid customer-edit-grid quad">',
       '<label>Full name<input id="modalCustomerName" value="' + escapeHtml(customer.name || "") + '"></label>',
       '<label>Customer type<select id="modalCustomerType">' + optionList(["Private client", "Insurance client", "Retail partner", "Trade"], customer.type) + '</select></label>',
-      '<label>Phone<input id="modalCustomerPhone" value="' + escapeHtml(customer.phone || "") + '"></label>',
+      '<label>Phone<div class="field-with-action"><input id="modalCustomerPhone" value="' + escapeHtml(customer.phone || "") + '">' + (customer.phone ? '<a class="call-button" href="' + telHrefAU(customer.phone) + '" title="Call ' + escapeHtml(customer.name) + '" aria-label="Call ' + escapeHtml(customer.name) + '">☎</a>' : "") + '</div></label>',
       '<label>Email<input id="modalCustomerEmail" type="email" value="' + escapeHtml(customer.email || "") + '"></label>',
-      '<label class="wide">Address<input id="modalCustomerAddress" value="' + escapeHtml(customer.address || "") + '"></label>',
+      '</div>',
+      '<div class="form-grid customer-edit-grid">',
+      '<label>Address<input id="modalCustomerAddress" value="' + escapeHtml(customer.address || "") + '"></label>',
       '<label>Preferred contact<select id="modalCustomerPreferred">' + optionList(["Phone", "Email", "SMS", "In-store"], customer.preferred) + '</select></label>',
-      '<label>Lead source<select id="modalCustomerSource">' + optionList(["Referral", "Insurance", "Website", "Walk-in", "Retail partner", "Instagram"], customer.source) + '</select></label>',
+      '</div>',
+      '<div class="form-grid customer-edit-grid triple">',
       '<label>Ring size<input id="modalCustomerRingSize" value="' + escapeHtml(customer.ringSize || "") + '"></label>',
       '<label>Partner / occasion<input id="modalCustomerPartner" value="' + escapeHtml(customer.partner || "") + '"></label>',
+      '<label>Lead source<select id="modalCustomerSource">' + optionList(["Referral", "Insurance", "Website", "Walk-in", "Retail partner", "Instagram"], customer.source) + '</select></label>',
+      '</div>',
+      '<div class="form-grid customer-edit-grid">',
       '<label class="wide">Free text notes<textarea id="modalCustomerNotes" rows="5">' + escapeHtml(customer.notes || "") + '</textarea></label>',
-      '<div class="consent-row wide"><label><input id="modalCustomerEmailConsent" type="checkbox"' + checked(customer.consent.email) + '> Email consent</label><label><input id="modalCustomerSmsConsent" type="checkbox"' + checked(customer.consent.sms) + '> SMS consent</label><label><input id="modalCustomerMarketingConsent" type="checkbox"' + checked(customer.consent.marketing) + '> Marketing consent</label></div>',
-      '<button class="button primary wide" data-modal-action="save-customer-record" data-customer-id="' + customer.id + '" type="button">Save customer</button>',
-      '</div></div>',
-      '<div class="history-grid modal-section"><section><h3>Previous jobs</h3><div class="customer-history-list">' + renderMiniWorks(works) + '</div></section><section><h3>Correspondence</h3><div class="customer-history-list">' + renderMiniCommunications(communications) + '</div></section></div>'
+      '</div>',
+      '</div>',
+      '<div class="history-grid modal-section"><section><h3>Work Orders</h3><div class="customer-history-list" id="customerClaimsList">' + empty("Loading...") + '</div></section><section><div class="surface-heading"><h3>Correspondence</h3><button class="button secondary compact" data-modal-action="refresh-customer-email" data-customer-id="' + customer.id + '" type="button">Refresh email</button></div><div class="customer-history-list" id="customerEmailList">' + empty(customer.email ? "Loading mailbox..." : "Add an email address to search the mailbox.") + '</div><h4 class="mini-section-title">Logged notes</h4><div class="customer-history-list">' + renderMiniCommunications(communications) + '</div></section></div>'
     ].join("");
     els.detailModal.hidden = false;
+    loadCustomerClaims(customer.id);
+    if (customer.email) loadCustomerEmails(customer.id);
+  }
+
+  function loadCustomerClaims(customerId) {
+    var container = byId("customerClaimsList");
+    fetch(API + "/claims?customer_id=" + encodeURIComponent(customerId))
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to load claims");
+        return res.json();
+      })
+      .then(function (claims) {
+        if (!container) return; // modal was closed/replaced before this resolved
+        container.innerHTML = renderMiniClaims(claims);
+      })
+      .catch(function (err) {
+        console.error(err);
+        if (container) container.innerHTML = empty("Couldn't load claims.");
+      });
+  }
+
+  function renderMiniClaims(claims) {
+    return claims.length ? claims.map(function (claim) {
+      var total = claim.quoted_nett != null ? money(claim.quoted_nett) : "No quote yet";
+      // No dedicated "order type" field exists yet — the clearest signal
+      // available today is whether an insurer is attached at all.
+      var orderType = claim.insurer ? "Insurance work - " + escapeHtml(claim.insurer) : "Private work";
+      var status = escapeHtml(claim.status || "").replace(/_/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+      return '<a class="timeline-item" href="quote-entry.html?claim=' + claim.claim_id + '"><header><div><h4>' + orderType + '</h4><p class="meta">' + escapeHtml(claim.claim_number) + ' - ' + status + ' - ' + formatDate(claim.date_received) + '</p></div><span class="status-pill">' + total + '</span></header></a>';
+    }).join("") : empty("No work orders yet.");
+  }
+
+  function loadCustomerEmails(customerId) {
+    var container = byId("customerEmailList");
+    if (!container) return;
+    container.innerHTML = empty("Loading mailbox...");
+
+    fetch(API + "/email/customer/" + encodeURIComponent(customerId) + "?limit=20")
+      .then(function (res) {
+        return res.json().then(function (body) {
+          if (!res.ok) {
+            var err = new Error(body.error || "Failed to load mailbox");
+            err.status = res.status;
+            err.body = body;
+            throw err;
+          }
+          return body;
+        });
+      })
+      .then(function (body) {
+        if (!container) return;
+        container.innerHTML = renderMailboxMessages(body.messages || []);
+      })
+      .catch(function (err) {
+        console.error(err);
+        if (!container) return;
+        if (err.status === 503) {
+          container.innerHTML = empty("SiteGround email is not configured yet.");
+          return;
+        }
+        if (err.status === 400) {
+          container.innerHTML = empty("Add an email address to search the mailbox.");
+          return;
+        }
+        container.innerHTML = empty("Couldn't load SiteGround email.");
+      });
+  }
+
+  function renderMailboxMessages(messages) {
+    return messages.length ? messages.map(function (message) {
+      var people = message.direction === "Outbound" ? "To: " + (message.to || "-") : "From: " + (message.from || "-");
+      var attachment = message.hasAttachments ? " - Attachments" : "";
+      return '<article class="timeline-item"><header><div><h4>' + escapeHtml(message.subject || "(No subject)") + '</h4><p class="meta">' + escapeHtml(message.direction) + ' - ' + formatDate(message.date) + ' - ' + escapeHtml(message.mailbox || "Mailbox") + attachment + '</p></div><span class="status-pill">Email</span></header><p class="fineprint">' + escapeHtml(people) + '</p><div class="fineprint message-body">' + escapeHtml(message.snippet || "No preview available.") + '</div></article>';
+    }).join("") : empty("No recent SiteGround emails found.");
   }
 
   function closeDetailModal() {
     els.detailModal.hidden = true;
     els.detailContent.innerHTML = "";
-  }
-
-  function openCustomerModal() {
-    els.customerModal.hidden = false;
-  }
-
-  function closeCustomerModal() {
-    els.customerModal.hidden = true;
   }
 
   function openBulkCustomerModal() {
@@ -945,48 +749,59 @@
     els.bulkCustomerModal.hidden = true;
   }
 
-  function openWorkModal(customerId) {
-    if (customerId) els.workCustomer.value = customerId;
-    els.workModal.hidden = false;
-  }
-
-  function closeWorkModal() {
-    els.workModal.hidden = true;
-  }
-
   function importCustomersFromCsv(csv) {
     var rows = csv.split(/\r?\n/).map(function (row) {
       return row.trim();
     }).filter(Boolean);
-    if (!rows.length) return 0;
+    if (!rows.length) return Promise.resolve(0);
     if (/^name\s*,/i.test(rows[0])) rows.shift();
-    var imported = 0;
-    rows.forEach(function (row) {
-      var cells = parseCsvRow(row);
-      if (!cells[0]) return;
-      state.customers.unshift({
-        id: makeId("cus"),
-        createdAt: todayIso(),
-        name: cells[0] || "",
-        type: cells[1] || "Private client",
-        phone: cells[2] || "",
-        email: cells[3] || "",
-        preferred: cells[4] || "Email",
-        source: cells[5] || "Imported",
-        ringSize: cells[6] || "",
-        partner: cells[7] || "",
-        notes: cells[8] || "",
-        consent: {
-          email: true,
-          sms: false,
-          marketing: false,
-          updatedAt: todayIso(),
-          source: "Bulk upload"
-        }
-      });
-      imported += 1;
+    var records = rows.map(parseCsvRow).filter(function (cells) {
+      return cells[0];
     });
-    return imported;
+    var imported = 0;
+    // Posted one at a time (not concurrently) so a CSV of any size doesn't
+    // fire a burst of simultaneous requests at the API.
+    return records.reduce(function (chain, cells) {
+      return chain.then(function () {
+        var fields = {
+          name: cells[0] || "",
+          type: cells[1] || "Private client",
+          phone: cells[2] || "",
+          email: cells[3] || "",
+          preferred: cells[4] || "Email",
+          source: cells[5] || "Imported",
+          ringSize: cells[6] || "",
+          partner: cells[7] || "",
+          notes: cells[8] || "",
+          consent: {
+            email: true,
+            sms: false,
+            marketing: false,
+            updatedAt: todayIso(),
+            source: "Bulk upload"
+          }
+        };
+        return fetch(API + "/customers", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(customerApiPayload(fields))
+        })
+          .then(function (res) {
+            return res.ok ? res.json() : null;
+          })
+          .then(function (row) {
+            if (row) {
+              state.customers.unshift(normalizeApiCustomer(row));
+              imported += 1;
+            }
+          })
+          .catch(function (err) {
+            console.error(err);
+          });
+      });
+    }, Promise.resolve()).then(function () {
+      return imported;
+    });
   }
 
   function parseCsvRow(row) {
@@ -1012,83 +827,47 @@
     return cells;
   }
 
-  function saveWorkDetail(workId) {
-    var work = findWork(workId);
-    if (!work) return;
-    setWorkStage(work, byId("modalStage").value, "Manual detail edit");
-    updateWorkSatisfaction(workId, byId("modalSatisfaction").value, true);
-    save("Job detail updated");
-    render();
-    openWorkDetail(work.id);
-  }
-
-  function renderWorkImageSection(work) {
-    var images = work.images || [];
-    return '<div class="modal-section"><h3>Job images</h3><div class="image-upload-row"><input id="modalWorkImages" type="file" accept="image/*" multiple><button class="button secondary" data-modal-action="upload-job-images" data-work-id="' + work.id + '" type="button">Upload images</button></div><div class="image-gallery">' + (images.length ? images.map(function (image) {
-      return '<figure><img src="' + escapeHtml(image.dataUrl) + '" alt="' + escapeHtml(image.name || "Job image") + '"><figcaption>' + escapeHtml(image.name || "Job image") + '</figcaption></figure>';
-    }).join("") : empty("No images uploaded for this job.")) + '</div></div>';
-  }
-
-  async function uploadJobImages(workId) {
-    var work = findWork(workId);
-    var input = byId("modalWorkImages");
-    if (!work || !input || !input.files.length) return;
-    work.images = (work.images || []).concat(await readImageFiles(input.files));
-    save("Job images uploaded");
-    render();
-    openWorkDetail(work.id);
-  }
-
-  function readImageFiles(fileList) {
-    var files = Array.prototype.slice.call(fileList || []).filter(function (file) {
-      return /^image\//.test(file.type);
-    }).slice(0, 8);
-    return Promise.all(files.map(function (file) {
-      return new Promise(function (resolve) {
-        var reader = new FileReader();
-        reader.onload = function () {
-          resolve({
-            id: makeId("img"),
-            name: file.name,
-            type: file.type,
-            size: file.size,
-            dataUrl: reader.result,
-            createdAt: todayIso()
-          });
-        };
-        reader.onerror = function () {
-          resolve(null);
-        };
-        reader.readAsDataURL(file);
-      });
-    })).then(function (images) {
-      return images.filter(Boolean);
-    });
-  }
-
   function saveCustomerRecord(customerId) {
     var customer = findCustomer(customerId);
     if (!customer) return;
-    customer.name = value("modalCustomerName");
-    customer.type = value("modalCustomerType");
-    customer.phone = value("modalCustomerPhone");
-    customer.email = value("modalCustomerEmail");
-    customer.address = value("modalCustomerAddress");
-    customer.preferred = value("modalCustomerPreferred");
-    customer.source = value("modalCustomerSource");
-    customer.ringSize = value("modalCustomerRingSize");
-    customer.partner = value("modalCustomerPartner");
-    customer.notes = value("modalCustomerNotes");
-    customer.consent = {
-      email: byId("modalCustomerEmailConsent").checked,
-      sms: byId("modalCustomerSmsConsent").checked,
-      marketing: byId("modalCustomerMarketingConsent").checked,
-      updatedAt: todayIso(),
-      source: "CRM detail edit"
+    var fields = {
+      name: value("modalCustomerName"),
+      type: value("modalCustomerType"),
+      phone: value("modalCustomerPhone"),
+      email: value("modalCustomerEmail"),
+      address: value("modalCustomerAddress"),
+      preferred: value("modalCustomerPreferred"),
+      source: value("modalCustomerSource"),
+      ringSize: value("modalCustomerRingSize"),
+      partner: value("modalCustomerPartner"),
+      notes: value("modalCustomerNotes"),
+      consent: {
+        email: byId("modalCustomerEmailConsent").checked,
+        sms: byId("modalCustomerSmsConsent").checked,
+        marketing: byId("modalCustomerMarketingConsent").checked,
+        updatedAt: todayIso(),
+        source: "CRM detail edit"
+      }
     };
-    save("Customer saved");
-    render();
-    openCustomerDetail(customer.id);
+    fetch(API + "/customers/" + customerId, {
+      method: "PUT",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(customerApiPayload(fields))
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to update customer");
+        return res.json();
+      })
+      .then(function (row) {
+        Object.assign(customer, normalizeApiCustomer(row));
+        save("Customer saved");
+        render();
+        openCustomerDetail(customer.id);
+      })
+      .catch(function (err) {
+        console.error(err);
+        window.alert("Couldn't save changes - check the database connection and try again.");
+      });
   }
 
   function openCorrespondenceForCustomer(customerId) {
@@ -1102,70 +881,16 @@
     renderCommunications();
   }
 
-  function updateWorkSatisfaction(workId, value, skipRender) {
-    var work = findWork(workId);
-    if (!work) return;
-    work.satisfaction = value;
-    work.timeline.unshift({ date: todayIso(), text: "Customer happiness set to " + work.satisfaction });
-    save("Rating updated");
-    if (!skipRender) {
-      render();
-      openWorkDetail(work.id);
-    }
-  }
-
-  function renderMiniWorks(works) {
-    return works.length ? works.map(function (work) {
-      return '<article class="timeline-item"><header><div><h4><button class="clickable-name" data-modal-action="open-work" data-work-id="' + work.id + '" type="button">' + escapeHtml(work.number + " - " + work.title) + '</button></h4><p class="meta">' + escapeHtml(work.stage) + ' - due ' + formatDate(work.dueDate) + '</p></div>' + satisfactionBadge(work.satisfaction) + '</header><p class="fineprint">' + escapeHtml(work.notes || "No notes.") + '</p></article>';
-    }).join("") : empty("No previous jobs.");
-  }
-
   function renderMiniCommunications(items) {
     return items.length ? items.map(function (item) {
       return '<article class="timeline-item ' + (item.restricted ? "restricted" : "") + '"><header><div><h4>' + escapeHtml(item.subject || item.channel) + '</h4><p class="meta">' + escapeHtml(item.channel) + ' - ' + formatDate(item.createdAt) + '</p></div><span class="status-pill">' + escapeHtml(item.status) + '</span></header><div class="fineprint message-body">' + renderMessageBody(item.body || "No message.") + '</div></article>';
     }).join("") : empty("No correspondence recorded.");
   }
 
-  function renderMiniTasks(tasks) {
-    return tasks.length ? tasks.map(function (task) {
-      return '<article class="timeline-item"><header><div><h4>' + escapeHtml(task.title) + '</h4><p class="meta">' + escapeHtml(task.owner) + ' - due ' + formatDate(task.dueDate) + '</p></div><span class="status-pill">' + escapeHtml(task.status) + '</span></header></article>';
-    }).join("") : empty("No tasks for this job.");
-  }
-
-  function satisfactionBadge(value) {
-    var label = value || "Not recorded";
-    var klass = label.toLowerCase().replace(/\s+/g, "-");
-    return '<span class="satisfaction ' + escapeHtml(klass) + '" title="Customer happiness: ' + escapeHtml(label) + '"><span class="satisfaction-face" aria-hidden="true">' + escapeHtml(satisfactionFace(label)) + '</span>' + escapeHtml(label) + '</span>';
-  }
-
-  function satisfactionSelect(work) {
-    var label = work.satisfaction || "Not recorded";
-    var klass = label.toLowerCase().replace(/\s+/g, "-");
-    return '<label class="rating-select-wrap satisfaction ' + escapeHtml(klass) + '" title="Customer happiness"><span class="satisfaction-face" aria-hidden="true">' + escapeHtml(satisfactionFace(label)) + '</span><span class="rating-select-label">Customer rating</span><select data-rating-select data-work-id="' + escapeHtml(work.id) + '" id="modalTopSatisfaction">' + optionList(satisfactionOptions(label), label) + '</select></label>';
-  }
-
-  function satisfactionFace(value) {
-    if (value === "Delighted") return "🤩";
-    if (value === "Happy") return "😊";
-    if (value === "Neutral") return "😐";
-    if (value === "Concern" || value === "Unsatisfied") return "☹️";
-    return "⚪️";
-  }
-
-  function satisfactionOptions(current) {
-    var options = ["Not recorded", "Delighted", "Happy", "Neutral", "Unsatisfied"];
-    if (current === "Concern") options.push("Concern");
-    return options;
-  }
-
   function optionList(options, selected) {
     return options.map(function (option) {
       return '<option' + (option === selected ? " selected" : "") + '>' + escapeHtml(option) + '</option>';
     }).join("");
-  }
-
-  function approvalPill(work, key, label) {
-    return '<button class="approval ' + (work.approvals[key] ? "done" : "") + '" data-action="approval" data-key="' + key + '" data-id="' + work.id + '" type="button">' + label + ': ' + (work.approvals[key] ? "Done" : "Open") + '</button>';
   }
 
   function handleEditorToolbar(event) {
@@ -1193,8 +918,7 @@
   }
 
   function logoSrc() {
-    var logo = document.querySelector(".brand-mark img");
-    return logo ? logo.getAttribute("src") : "";
+    return "assets/cameron-co-logo-cropped.png";
   }
 
   function editorHtml(editor) {
@@ -1449,52 +1173,6 @@
     });
   }
 
-  function advanceWork(work) {
-    var target = nextStage[work.stage];
-    if (!target) return;
-    setWorkStage(work, target, "Advanced");
-  }
-
-  function setWorkStage(work, target, source) {
-    if (!target || work.stage === target) return;
-    work.stage = target;
-    work.stageUpdatedAt = todayIso();
-    work.timeline.unshift({ date: todayIso(), text: source + " to " + target });
-    if (target === "Awaiting deposit") work.approvals.quote = true;
-    if (target === "CAD approval" && work.deposit > 0) work.approvals.deposit = true;
-    if (target === "In production") work.approvals.cad = true;
-    if (target === "Quality check") work.approvals.stone = true;
-    if (target === "Ready for collection") work.approvals.qa = true;
-    if (target === "Completed") {
-      work.completedAt = todayIso();
-      work.nextCleanDate = addDaysIso(180);
-      work.balance = 0;
-      state.tasks.unshift({
-        id: makeId("tsk"),
-        title: "Prepare 30-day care follow-up for " + work.number,
-        owner: "Admin",
-        dueDate: addDaysIso(30),
-        status: "Open",
-        customerId: work.customerId,
-        workId: work.id
-      });
-    }
-    runDueAutomations(work.id);
-  }
-
-  function markDepositPaid(work) {
-    var targetDeposit = Math.max(work.deposit, Math.round(work.price * .4));
-    work.deposit = Math.min(targetDeposit, work.price);
-    work.balance = Math.max(work.price - work.deposit, 0);
-    work.approvals.deposit = work.deposit > 0;
-    work.timeline.unshift({ date: todayIso(), text: "Deposit marked paid" });
-  }
-
-  function toggleApproval(work, key) {
-    work.approvals[key] = !work.approvals[key];
-    work.timeline.unshift({ date: todayIso(), text: key.toUpperCase() + " approval toggled" });
-  }
-
   function dataQualityIssues() {
     return [
       { label: "Customers missing email", count: state.customers.filter(function (customer) { return !customer.email; }).length },
@@ -1505,15 +1183,6 @@
     ].filter(function (issue) {
       return issue.count > 0;
     });
-  }
-
-  function selectedStoneDetails() {
-    return {
-      shape: value("workStoneShape"),
-      type: value("workStoneType"),
-      provided: value("workStoneProvided"),
-      origin: value("workStoneOrigin")
-    };
   }
 
   function stoneSummary(work) {
@@ -1588,18 +1257,6 @@
     return work.dueDate && work.dueDate < todayIso() && work.stage !== "Completed";
   }
 
-  function shouldShowOnBoard(work) {
-    if (work.stage !== "Completed") return true;
-    return isCurrentMonth(work.completedAt || work.dueDate);
-  }
-
-  function isCurrentMonth(iso) {
-    if (!iso) return false;
-    var date = new Date(iso + "T00:00:00");
-    var today = new Date();
-    return date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth();
-  }
-
   function stageIndex(stage) {
     return stages.indexOf(stage);
   }
@@ -1612,6 +1269,76 @@
     return state.customers.find(function (customer) {
       return customer.id === id;
     });
+  }
+
+  // Customers are the one entity now backed by the real database (the rest
+  // of state still runs on localStorage). These keep the same in-memory
+  // Customer shape everything else in this file already expects, so only
+  // the load/create/update paths change — every render/sort/filter
+  // function downstream is untouched.
+  function normalizeApiCustomer(c) {
+    return {
+      id: String(c.id),
+      createdAt: c.created_at || todayIso(),
+      name: [c.first_name, c.last_name].filter(Boolean).join(" ").trim(),
+      type: CUSTOMER_TYPE_FROM_API[c.customer_type] || c.customer_type || "Private client",
+      phone: c.phone || "",
+      email: c.email || "",
+      address: c.address_line1 || "",
+      preferred: c.preferred_contact || "",
+      source: c.source || "",
+      ringSize: c.ring_size || "",
+      partner: c.partner_or_occasion || "",
+      notes: c.notes || "",
+      consent: {
+        email: !!c.consent_email,
+        sms: !!c.consent_sms,
+        marketing: !!c.consent_marketing,
+        updatedAt: c.consent_updated_at || c.created_at || todayIso(),
+        source: c.consent_source || ""
+      }
+    };
+  }
+
+  function customerApiPayload(fields) {
+    var nameParts = (fields.name || "").trim().split(/\s+/).filter(Boolean);
+    return {
+      first_name: nameParts.shift() || "",
+      last_name: nameParts.join(" "),
+      phone: fields.phone || null,
+      email: fields.email || null,
+      address_line1: fields.address || null,
+      customer_type: CUSTOMER_TYPE_TO_API[fields.type] || "private",
+      preferred_contact: fields.preferred || null,
+      source: fields.source || null,
+      ring_size: fields.ringSize || null,
+      partner_or_occasion: fields.partner || null,
+      notes: fields.notes || null,
+      consent_email: !!fields.consent.email,
+      consent_sms: !!fields.consent.sms,
+      consent_marketing: !!fields.consent.marketing,
+      consent_updated_at: fields.consent.updatedAt || null,
+      consent_source: fields.consent.source || null
+    };
+  }
+
+  function loadCustomersFromApi() {
+    els.saveState.textContent = "Checking database...";
+    return fetch(API + "/customers", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("API " + res.status + " from " + API + "/customers");
+        return res.json();
+      })
+      .then(function (rows) {
+        state.customers = rows.map(normalizeApiCustomer);
+        els.saveState.textContent = "Connected";
+        render();
+      })
+      .catch(function (err) {
+        console.error(err);
+        els.saveState.textContent = "Offline - API not reachable";
+        els.saveState.title = err.message || "Couldn't reach " + API + "/customers";
+      });
   }
 
   function findWork(id) {
@@ -1654,7 +1381,10 @@
 
   function formatDate(iso) {
     if (!iso) return "No date";
-    return new Intl.DateTimeFormat("en-AU", { day: "2-digit", month: "short" }).format(new Date(iso + "T00:00:00"));
+    var value = String(iso);
+    var date = new Date(value.indexOf("T") === -1 ? value + "T00:00:00" : value);
+    if (Number.isNaN(date.getTime())) return "No date";
+    return new Intl.DateTimeFormat("en-AU", { day: "2-digit", month: "short" }).format(date);
   }
 
   function nowLabel() {
@@ -1685,10 +1415,10 @@
 
   function save(message) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    els.saveState.textContent = message || "Saved locally";
+    els.saveState.textContent = message || "Connected";
     window.clearTimeout(save._timer);
     save._timer = window.setTimeout(function () {
-      els.saveState.textContent = "Saved locally";
+      els.saveState.textContent = "Connected";
     }, 1400);
   }
 
