@@ -15,11 +15,18 @@
         "h2 {font-size: 32px;}",
         ".site-hero-eyebrow {font-weight: 500;}",
         ".site-hero-line1 {font-family: \"EB Garamond\", Georgia, serif; font-weight: 400; font-style: normal;}",
-        ".site-hero-line2 {font-weight: 400; font-style: italic;}",
-        ".site-hero-cta {font-weight: 500;}"
+        ".site-hero-line2 {font-weight: 400; font-style: italic;}"
       ],
       "settings": {
         "media_type": "image",
+        "background_image": "shopify://shop_images/cameron-co-homepage-hero-desktop.png",
+        "mobile_background_image": "shopify://shop_images/cameron-co-mobile-engagement-ring-box-hero.webp",
+        "hero_background_position_x": 65,
+        "hero_background_position_y": 26,
+        "hero_background_position_x_mobile": 62,
+        "hero_background_position_y_mobile": 52,
+        "hero_background_zoom": 138,
+        "hero_background_zoom_mobile": 120,
         "video_mp4_url": "",
         "eyebrow": "Jewellery Insurance Specialists",
         "line1": "What was lost,",
@@ -27,15 +34,15 @@
         "line2_accent": "restored.",
         "cta_text": "Book an appointment",
         "cta_link": "/pages/booking",
+        "button_style": "primary",
         "eyebrow_color": "#4d493f",
         "line1_color": "#615f5a",
         "line2_color": "#4d493f",
-        "accent_color": "#d5b226",
-        "button_color": "#d5b226",
+        "accent_color": "#B09A6F",
         "eyebrow_color_mobile": "#3a362f",
         "line1_color_mobile": "#3a362f",
         "line2_color_mobile": "#3a362f",
-        "accent_color_mobile": "#d5b226",
+        "accent_color_mobile": "#B09A6F",
         "heading_font": "garamond",
         "body_font": "montserrat",
         "text_h_position": "flex-start",
@@ -48,8 +55,6 @@
         "line1_offset_y": 0,
         "line2_offset_x": 0,
         "line2_offset_y": 0,
-        "button_offset_x": 0,
-        "button_offset_y": 0,
         "text_v_position_mobile": "flex-start",
         "text_offset_x_mobile": 0,
         "text_offset_y_mobile": 0,
@@ -58,9 +63,7 @@
         "line1_offset_x_mobile": 0,
         "line1_offset_y_mobile": 0,
         "line2_offset_x_mobile": 0,
-        "line2_offset_y_mobile": 0,
-        "button_offset_x_mobile": 0,
-        "button_offset_y_mobile": 0
+        "line2_offset_y_mobile": 0
       }
     },
     "bento": {
@@ -75,29 +78,33 @@
       ],
       "settings": {
         "eyebrow": "What we can do for you",
-        "heading": "Remodelling, repairs & replacement",
+        "heading": "Remodelling, Repairs & Replacement",
         "subheading": "Working with Australia's major insurers and loss adjusters for over 25 years — current appraisals, trusted replacement, and bespoke remaking, all under one roof.",
         "background_color": "#ffffff",
-        "eyebrow_color": "#d5b226",
+        "eyebrow_color": "#B09A6F",
         "heading_color": "#171d29",
         "subheading_color": "",
         "card_heading_color": "",
-        "eyebrow_color_mobile": "#d5b226",
+        "eyebrow_color_mobile": "#B09A6F",
         "heading_color_mobile": "#171d29",
         "subheading_color_mobile": "",
         "heading_font": "cormorant",
         "card_heading_font": "cormorant",
         "body_font": "glacial",
         "label_1": "Jewellery Remodelling",
+        "image_1": "shopify://shop_images/cameron-co-jewellery-remodelling-workbench.webp",
         "image_1_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
         "link_1": "shopify://pages/jewellery-remodelling",
         "label_2": "Repairs",
+        "image_2": "shopify://shop_images/cameron-co-jewellery-repair-laser-welding.webp",
         "image_2_alt": "Jewellery repair workbench with tools and a ring being restored",
         "link_2": "/pages/jewelleryrepairs",
         "label_3": "Appraisals",
+        "image_3": "shopify://shop_images/cameron-co-appraisal-consultation.webp",
         "image_3_alt": "Jeweller examining a diamond ring with a loupe during an appraisal inspection",
         "link_3": "/pages/appraisals",
         "label_4": "Jewellery Replacement",
+        "image_4": "shopify://shop_images/cameron-co-replacement-ring-selection.webp",
         "image_4_alt": "Solitaire diamond engagement ring beside hand-drawn design sketches for a replacement piece",
         "link_4": "/pages/jewelleryreplacement"
       }
@@ -151,12 +158,12 @@
         "rings_image_alt": "Stack of gold and silver bezel-set gemstone rings",
         "button_text": "Book an appointment",
         "button_link": "/pages/contact",
+        "button_style": "secondary",
         "background_color": "#ffffff",
-        "eyebrow_color": "#d5b226",
+        "eyebrow_color": "#B09A6F",
         "heading_color": "#171d29",
         "item_title_color": "",
-        "button_color": "#d5b226",
-        "eyebrow_color_mobile": "#d5b226",
+        "eyebrow_color_mobile": "#B09A6F",
         "heading_color_mobile": "#171d29",
         "item_title_color_mobile": "",
         "heading_font": "cormorant",
@@ -170,6 +177,7 @@
         "gallery-1": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-pink-sapphire-pear-bridal-set.webp",
             "image_alt": "Pink sapphire pear-cut halo bridal ring set in yellow gold",
             "image_fallback": "cameron-co-pink-sapphire-pear-bridal-set.webp"
           }
@@ -177,6 +185,7 @@
         "gallery-2": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-blue-sapphire-wide-band-ring.webp",
             "image_alt": "Blue sapphire emerald-cut wide band ring in yellow gold",
             "image_fallback": "cameron-co-blue-sapphire-wide-band-ring.webp"
           }
@@ -184,6 +193,7 @@
         "gallery-3": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-amethyst-emerald-cut-ring.webp",
             "image_alt": "Amethyst emerald-cut solitaire ring in yellow gold",
             "image_fallback": "cameron-co-amethyst-emerald-cut-ring.webp"
           }
@@ -191,6 +201,7 @@
         "gallery-4": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-tanzanite-three-stone-ring.webp",
             "image_alt": "Tanzanite and diamond three-stone ring in white gold",
             "image_fallback": "cameron-co-tanzanite-three-stone-ring.webp"
           }
@@ -198,6 +209,7 @@
         "gallery-5": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-opal-inlay-mens-wedding-band.webp",
             "image_alt": "Opal inlay men's wedding band in yellow gold",
             "image_fallback": "cameron-co-opal-inlay-mens-wedding-band.webp"
           }
@@ -205,6 +217,7 @@
         "gallery-6": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-art-deco-filigree-band-ring.webp",
             "image_alt": "Art Deco style filigree band ring in white gold",
             "image_fallback": "cameron-co-art-deco-filigree-band-ring.webp"
           }
@@ -212,6 +225,7 @@
         "gallery-7": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-heart-cut-diamond-solitaire-ring.webp",
             "image_alt": "Heart-cut diamond solitaire ring in yellow gold",
             "image_fallback": "cameron-co-heart-cut-diamond-solitaire-ring.webp"
           }
@@ -219,6 +233,7 @@
         "gallery-8": {
           "type": "gallery_item",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-rectangular-diamond-cluster-ring.webp",
             "image_alt": "Rectangular diamond cluster statement ring in white gold",
             "image_fallback": "cameron-co-rectangular-diamond-cluster-ring.webp"
           }
@@ -239,32 +254,11 @@
         "heading": "A Glimpse of Our Jewellery",
         "subheading": "",
         "background_color": "#ffffff",
-        "eyebrow_color": "#d5b226",
+        "eyebrow_color": "#B09A6F",
         "heading_color": "#171d29",
         "subheading_color": "",
         "heading_font": "cormorant",
         "body_font": "glacial"
-      }
-    },
-    "brands": {
-      "type": "homepage-brands",
-      "disabled": true,
-      "settings": {
-        "heading": "Our Brands",
-        "background_color": "#dcdcdc",
-        "heading_color": "#171d29",
-        "heading_color_mobile": "#171d29",
-        "heading_font": "cormorant",
-        "logo_1_alt": "Ikecho Pearls",
-        "logo_2_alt": "Ice Watch",
-        "logo_3_alt": "Citizen Watches",
-        "logo_4_alt": "Classique Jewellery",
-        "logo_5_alt": "Burberry",
-        "logo_6_alt": "Fossil",
-        "logo_7_alt": "Dora International",
-        "logo_8_alt": "Georgini Jewellery",
-        "logo_9_alt": "Thomas Sabo",
-        "logo_10_alt": "Peter W Beck"
       }
     },
     "testimonials": {
@@ -302,15 +296,15 @@
         "heading": "Client stories",
         "button_text": "Read more",
         "button_link": "/pages/testimonials",
+        "button_style": "primary",
         "background_color": "#ffffff",
-        "eyebrow_color": "#d5b226",
+        "eyebrow_color": "#B09A6F",
         "heading_color": "#171d29",
-        "name_color": "#d5b226",
+        "name_color": "#B09A6F",
         "quote_color": "",
-        "button_color": "#d5b226",
-        "eyebrow_color_mobile": "#d5b226",
+        "eyebrow_color_mobile": "#B09A6F",
         "heading_color_mobile": "#171d29",
-        "name_color_mobile": "#d5b226",
+        "name_color_mobile": "#B09A6F",
         "quote_color_mobile": "",
         "heading_font": "cormorant",
         "body_font": "glacial"
@@ -322,7 +316,6 @@
     "bento",
     "services",
     "gallery",
-    "brands",
     "testimonials"
   ]
 }

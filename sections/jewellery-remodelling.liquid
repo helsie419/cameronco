@@ -46,9 +46,6 @@
     justify-content: center;
     min-height: 46px;
     padding: 12px 28px;
-    background: {{ section.settings.button_background | default: '#171d29' }};
-    color: {{ section.settings.button_text_color | default: '#ffffff' }};
-    border: 1px solid {{ section.settings.button_background | default: '#171d29' }};
     border-radius: 0;
     font-family: inherit;
     font-size: 14px;
@@ -63,9 +60,6 @@
   }
 
   #page-intro-{{ section.id }} .page-intro-cta:hover {
-    background: {{ section.settings.button_hover_background | default: '#c79a3b' }};
-    border-color: {{ section.settings.button_hover_background | default: '#c79a3b' }};
-    color: {{ section.settings.button_hover_text_color | default: '#ffffff' }};
   }
 
   @media screen and (max-width: 749px) {
@@ -123,7 +117,7 @@
     {% if section.settings.button_label != blank and section.settings.button_link != blank %}
       <div class="page-intro-cta-wrap">
         <a
-          class="page-intro-cta"
+          class="page-intro-cta cc-button-{{ section.settings.button_style | default: 'primary' }}"
           href="{{ section.settings.button_link }}"
         >
           {{ section.settings.button_label }}
@@ -174,28 +168,15 @@
       "label": "Button link"
     },
     {
-      "type": "color",
-      "id": "button_background",
-      "label": "Button background",
-      "default": "#171d29"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button text",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_background",
-      "label": "Button hover background",
-      "default": "#c79a3b"
-    },
-    {
-      "type": "color",
-      "id": "button_hover_text_color",
-      "label": "Button hover text",
-      "default": "#ffffff"
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
     },
 
     {

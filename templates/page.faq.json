@@ -11,16 +11,6 @@
   "sections": {
     "faq": {
       "type": "faq",
-      "settings": {
-        "heading": "Frequently Asked Questions",
-        "cta_heading": "Still Have Questions?",
-        "cta_text": "Get in touch with our friendly consultants for any enquiries regarding claims, custom designs, or repairs.",
-        "cta_button_1_text": "Contact Us",
-        "cta_button_2_text": "Book Appointment",
-        "intro_image_alt": "Illustrated diamond motif for Cameron and Co client questions",
-        "intro_image_fallback": "cameron-co-diamond-brilliant-cut-illustration.webp",
-        "cta_button_color": "#D5B226"
-      },
       "blocks": {
         "q1": {
           "type": "question",
@@ -107,7 +97,7 @@
           "settings": {
             "category": "repairs-care",
             "question": "How long will the repairs take?",
-            "answer": "Repairs usually take approximately 2–3 weeks. Special stones, custom cutting, intricate work or extensive damage can require additional time."
+            "answer": "Repairs usually take approximately 10 days. Special stones, custom cutting, intricate work or extensive damage can require additional time."
           }
         },
         "q12": {
@@ -179,7 +169,7 @@
           "settings": {
             "category": "credits-upgrades",
             "question": "When does my in-store credit voucher expire?",
-            "answer": "Your in-store credit voucher is valid for three years and can be extended by arrangement."
+            "answer": "Your in-store credit voucher is valid for three years."
           }
         },
         "q21": {
@@ -206,28 +196,12 @@
             "answer": "You can contact our team directly, or ask your insurer to refer your claim to us. From there, we'll book an appraisal appointment and guide you through each step of the process."
           }
         },
-        "q24": {
-          "type": "question",
-          "settings": {
-            "category": "claim-process",
-            "question": "What is an NCJV valuer?",
-            "answer": "NCJV stands for the National Council of Jewellery Valuers. Where a replacement item's retail value exceeds $1,000, we arrange an independent valuation from a registered NCJV valuer, giving you accredited documentation for re-insurance purposes."
-          }
-        },
         "q25": {
           "type": "question",
           "settings": {
             "category": "claim-process",
             "question": "Which areas do Cameron & Co service?",
             "answer": "We have showrooms and workshops in Sydney and Melbourne. If you can't visit in person, we also offer secure, fully trackable and fully insured delivery for sending items to us from anywhere in Australia."
-          }
-        },
-        "q26": {
-          "type": "question",
-          "settings": {
-            "category": "repairs-care",
-            "question": "Do you repair watches as well as jewellery?",
-            "answer": "Yes — alongside jewellery repairs, remodelling and appraisals, we also service and repair watches. Get in touch with your nearest office to discuss what you need."
           }
         },
         "q27": {
@@ -263,11 +237,36 @@
         "q21",
         "q22",
         "q23",
-        "q24",
         "q25",
-        "q26",
         "q27"
-      ]
+      ],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "intro": "",
+        "intro_image": "shopify://shop_images/cameron-co-diamond-brilliant-cut-illustration.webp",
+        "intro_image_alt": "Illustrated diamond motif for Cameron and Co client questions",
+        "intro_image_fallback": "cameron-co-diamond-brilliant-cut-illustration.webp",
+        "category_1_label": "Claim Process",
+        "category_2_label": "Repairs & Care",
+        "category_3_label": "Credits & Upgrades",
+        "cta_heading": "Still Have Questions?",
+        "cta_text": "Get in touch with our friendly consultants for any enquiries regarding claims, custom designs, or repairs.",
+        "cta_button_1_text": "Contact Us",
+        "cta_button_1_link": "",
+        "cta_button_1_style": "outline",
+        "cta_button_2_text": "Book Appointment",
+        "cta_button_2_link": "",
+        "cta_button_2_style": "primary",
+        "heading_color": "",
+        "category_color": "#19202c",
+        "question_color": "#19202c",
+        "answer_color": "#2c2f33",
+        "cta_background_color": "#f7f5f3",
+        "cta_heading_color": "#19202c",
+        "cta_text_color": "#6b7280",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
     }
   },
   "order": [

@@ -31,6 +31,40 @@
     object-fit: contain;
   }
 
+  .article-content-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: center;
+  }
+
+  .article-content-copy {
+    min-width: 0;
+  }
+
+  .article-content-media {
+    min-width: 0;
+  }
+
+  .article-content-row--image-left {
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  }
+
+  .article-content-row--image-left .article-content-media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .article-content-row--image-left .article-content-copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .article-content-row > .btn-black-center {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
   .live-image-row {
     display: flex;
     justify-content: flex-start !important;
@@ -60,6 +94,17 @@
       display: block;
     }
 
+    .article-content-row,
+    .article-content-row--image-left {
+      display: block;
+    }
+
+    .article-content-row--image-left .article-content-media,
+    .article-content-row--image-left .article-content-copy {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
     .live-image-row .article-image + .article-image {
       margin-top: 16px !important;
     }
@@ -73,8 +118,8 @@
 {% assign hero_image_fallback = section.settings.hero_image_fallback %}
 {% assign hero_image_alt = section.settings.hero_image_alt %}
 
-{% if hero_image_fallback == 'inspecting-diamonds-magnification.webp' %}
-  {% assign hero_image_fallback = 'cameron-co-square-diamond-pendant.png' %}
+{% if hero_image_fallback contains 'inspecting-diamonds-magnification' %}
+  {% assign hero_image_fallback = 'cameron-co-square-diamond-pendant.webp' %}
   {% assign hero_image_alt = 'Square diamond pendant on satin introducing diamond education' %}
 {% endif %}
 
@@ -133,12 +178,14 @@
       {% when 'content_block' %}
 
         <section
-          class="live-article-section{% if block.settings.callout %} article-callout{% endif %}"
+          class="live-article-section article-content-row article-content-row--{% if forloop.index == 1 or forloop.index == 2 %}image-left{% else %}image-right{% endif %}{% if block.settings.callout %} article-callout{% endif %}"
           {% if block.settings.callout %}
             style="background:{{ section.settings.callout_bg_color }};"
           {% endif %}
           {{ block.shopify_attributes }}
         >
+
+          <div class="article-content-copy">
 
           {% if block.settings.heading != blank %}
             <h2
@@ -203,6 +250,10 @@
 
           {% endif %}
 
+          </div>
+
+          <div class="article-content-media">
+
           {% if block.settings.image_1_fallback == 'diamond-colour-grades-chart.webp' %}
 
             {% render 'diamond-colour-scale' %}
@@ -257,7 +308,7 @@
                 {% assign fb1_w = 418 %}
                 {% assign fb1_h = 182 %}
 
-              {% when 'cameron-co-coloured-gemstone-bezel-rings.webp' %}
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
                 {% assign fb1_w = 236 %}
                 {% assign fb1_h = 371 %}
 
@@ -265,7 +316,7 @@
                 {% assign fb1_w = 675 %}
                 {% assign fb1_h = 675 %}
 
-              {% when 'silver-ring-care.webp' %}
+              {% when 'titanium-ring-care.webp' %}
                 {% assign fb1_w = 1310 %}
                 {% assign fb1_h = 540 %}
 
@@ -273,19 +324,19 @@
                 {% assign fb1_w = 1024 %}
                 {% assign fb1_h = 692 %}
 
-              {% when 'cameron-co-jewellery-collection.webp' %}
+              {% when 'cameron-co-brand-book-showroom.webp' %}
                 {% assign fb1_w = 1080 %}
                 {% assign fb1_h = 486 %}
 
-              {% when 'cameron-co-loose-green-sapphire-gemstones.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb1_w = 802 %}
                 {% assign fb1_h = 249 %}
 
-              {% when 'cameron-co-teal-sapphire-diamond-halo-rings.webp' %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
                 {% assign fb1_w = 802 %}
                 {% assign fb1_h = 394 %}
 
-              {% when 'inspecting-diamonds-magnification.webp' %}
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
                 {% assign fb1_w = 1002 %}
                 {% assign fb1_h = 582 %}
 
@@ -321,7 +372,11 @@
                 {% assign fb1_w = 1537 %}
                 {% assign fb1_h = 1023 %}
 
-              {% when 'aquamarine-solitaire-ring-side.webp' %}
+              {% when 'cameron-co-jewellery-repair-ring-gemstones-white-satin-marble.webp' %}
+                {% assign fb1_w = 1448 %}
+                {% assign fb1_h = 1080 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
                 {% assign fb1_w = 294 %}
                 {% assign fb1_h = 318 %}
 
@@ -341,27 +396,27 @@
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 316 %}
 
-              {% when 'emerald-cut-diamond-halo-ring.webp' %}
-                {% assign fb1_w = 305 %}
-                {% assign fb1_h = 326 %}
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb1_w = 2000 %}
+                {% assign fb1_h = 2000 %}
 
-              {% when 'flower-halo-diamond-ring.webp' %}
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 316 %}
 
-              {% when 'gold-bracelet-and-ring-on-hand.webp' %}
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
                 {% assign fb1_w = 291 %}
                 {% assign fb1_h = 315 %}
 
-              {% when 'gold-hoop-pearl-drop-earrings.webp' %}
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
                 {% assign fb1_w = 304 %}
                 {% assign fb1_h = 325 %}
 
-              {% when 'opal-vintage-gold-ring.webp' %}
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 315 %}
 
-              {% when 'oval-diamond-halo-ring-held.webp' %}
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
                 {% assign fb1_w = 304 %}
                 {% assign fb1_h = 325 %}
 
@@ -373,17 +428,17 @@
                 {% assign fb1_w = 289 %}
                 {% assign fb1_h = 308 %}
 
-              {% when 'princess-cut-ring-and-eternity-band.webp' %}
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 308 %}
 
-              {% when 'rose-gold-green-emerald-rings.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb1_w = 412 %}
                 {% assign fb1_h = 516 %}
 
-              {% when 'sapphire-diamond-halo-earrings.webp' %}
-                {% assign fb1_w = 289 %}
-                {% assign fb1_h = 316 %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 1254 %}
+                {% assign fb1_h = 1254 %}
 
               {% when 'titanium-ring-care.webp' %}
                 {% assign fb1_w = 820 %}
@@ -413,7 +468,7 @@
                 {% assign fb2_w = 418 %}
                 {% assign fb2_h = 182 %}
 
-              {% when 'cameron-co-coloured-gemstone-bezel-rings.webp' %}
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
                 {% assign fb2_w = 236 %}
                 {% assign fb2_h = 371 %}
 
@@ -421,7 +476,7 @@
                 {% assign fb2_w = 675 %}
                 {% assign fb2_h = 675 %}
 
-              {% when 'silver-ring-care.webp' %}
+              {% when 'titanium-ring-care.webp' %}
                 {% assign fb2_w = 1310 %}
                 {% assign fb2_h = 540 %}
 
@@ -429,19 +484,19 @@
                 {% assign fb2_w = 1024 %}
                 {% assign fb2_h = 692 %}
 
-              {% when 'cameron-co-jewellery-collection.webp' %}
+              {% when 'cameron-co-brand-book-showroom.webp' %}
                 {% assign fb2_w = 1080 %}
                 {% assign fb2_h = 486 %}
 
-              {% when 'cameron-co-loose-green-sapphire-gemstones.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb2_w = 802 %}
                 {% assign fb2_h = 249 %}
 
-              {% when 'cameron-co-teal-sapphire-diamond-halo-rings.webp' %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
                 {% assign fb2_w = 802 %}
                 {% assign fb2_h = 394 %}
 
-              {% when 'inspecting-diamonds-magnification.webp' %}
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
                 {% assign fb2_w = 1002 %}
                 {% assign fb2_h = 582 %}
 
@@ -477,7 +532,7 @@
                 {% assign fb2_w = 1537 %}
                 {% assign fb2_h = 1023 %}
 
-              {% when 'aquamarine-solitaire-ring-side.webp' %}
+              {% when 'aquamarine-solitaire-ring.webp' %}
                 {% assign fb2_w = 294 %}
                 {% assign fb2_h = 318 %}
 
@@ -497,27 +552,27 @@
                 {% assign fb2_w = 288 %}
                 {% assign fb2_h = 316 %}
 
-              {% when 'emerald-cut-diamond-halo-ring.webp' %}
-                {% assign fb2_w = 305 %}
-                {% assign fb2_h = 326 %}
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb2_w = 2000 %}
+                {% assign fb2_h = 2000 %}
 
-              {% when 'flower-halo-diamond-ring.webp' %}
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
                 {% assign fb2_w = 288 %}
                 {% assign fb2_h = 316 %}
 
-              {% when 'gold-bracelet-and-ring-on-hand.webp' %}
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
                 {% assign fb2_w = 291 %}
                 {% assign fb2_h = 315 %}
 
-              {% when 'gold-hoop-pearl-drop-earrings.webp' %}
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
                 {% assign fb2_w = 304 %}
                 {% assign fb2_h = 325 %}
 
-              {% when 'opal-vintage-gold-ring.webp' %}
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
                 {% assign fb2_w = 288 %}
                 {% assign fb2_h = 315 %}
 
-              {% when 'oval-diamond-halo-ring-held.webp' %}
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
                 {% assign fb2_w = 304 %}
                 {% assign fb2_h = 325 %}
 
@@ -529,17 +584,17 @@
                 {% assign fb2_w = 289 %}
                 {% assign fb2_h = 308 %}
 
-              {% when 'princess-cut-ring-and-eternity-band.webp' %}
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
                 {% assign fb2_w = 288 %}
                 {% assign fb2_h = 308 %}
 
-              {% when 'rose-gold-green-emerald-rings.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb2_w = 412 %}
                 {% assign fb2_h = 516 %}
 
-              {% when 'sapphire-diamond-halo-earrings.webp' %}
-                {% assign fb2_w = 289 %}
-                {% assign fb2_h = 316 %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb2_w = 1254 %}
+                {% assign fb2_h = 1254 %}
 
               {% when 'titanium-ring-care.webp' %}
                 {% assign fb2_w = 820 %}
@@ -593,7 +648,7 @@
                 {% assign fb1_w = 418 %}
                 {% assign fb1_h = 182 %}
 
-              {% when 'cameron-co-coloured-gemstone-bezel-rings.webp' %}
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
                 {% assign fb1_w = 236 %}
                 {% assign fb1_h = 371 %}
 
@@ -601,7 +656,7 @@
                 {% assign fb1_w = 675 %}
                 {% assign fb1_h = 675 %}
 
-              {% when 'silver-ring-care.webp' %}
+              {% when 'titanium-ring-care.webp' %}
                 {% assign fb1_w = 1310 %}
                 {% assign fb1_h = 540 %}
 
@@ -609,19 +664,19 @@
                 {% assign fb1_w = 1024 %}
                 {% assign fb1_h = 692 %}
 
-              {% when 'cameron-co-jewellery-collection.webp' %}
+              {% when 'cameron-co-brand-book-showroom.webp' %}
                 {% assign fb1_w = 1080 %}
                 {% assign fb1_h = 486 %}
 
-              {% when 'cameron-co-loose-green-sapphire-gemstones.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb1_w = 802 %}
                 {% assign fb1_h = 249 %}
 
-              {% when 'cameron-co-teal-sapphire-diamond-halo-rings.webp' %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
                 {% assign fb1_w = 802 %}
                 {% assign fb1_h = 394 %}
 
-              {% when 'inspecting-diamonds-magnification.webp' %}
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
                 {% assign fb1_w = 1002 %}
                 {% assign fb1_h = 582 %}
 
@@ -657,7 +712,7 @@
                 {% assign fb1_w = 1537 %}
                 {% assign fb1_h = 1023 %}
 
-              {% when 'aquamarine-solitaire-ring-side.webp' %}
+              {% when 'aquamarine-solitaire-ring.webp' %}
                 {% assign fb1_w = 294 %}
                 {% assign fb1_h = 318 %}
 
@@ -677,27 +732,27 @@
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 316 %}
 
-              {% when 'emerald-cut-diamond-halo-ring.webp' %}
-                {% assign fb1_w = 305 %}
-                {% assign fb1_h = 326 %}
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb1_w = 2000 %}
+                {% assign fb1_h = 2000 %}
 
-              {% when 'flower-halo-diamond-ring.webp' %}
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 316 %}
 
-              {% when 'gold-bracelet-and-ring-on-hand.webp' %}
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
                 {% assign fb1_w = 291 %}
                 {% assign fb1_h = 315 %}
 
-              {% when 'gold-hoop-pearl-drop-earrings.webp' %}
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
                 {% assign fb1_w = 304 %}
                 {% assign fb1_h = 325 %}
 
-              {% when 'opal-vintage-gold-ring.webp' %}
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 315 %}
 
-              {% when 'oval-diamond-halo-ring-held.webp' %}
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
                 {% assign fb1_w = 304 %}
                 {% assign fb1_h = 325 %}
 
@@ -709,17 +764,17 @@
                 {% assign fb1_w = 289 %}
                 {% assign fb1_h = 308 %}
 
-              {% when 'princess-cut-ring-and-eternity-band.webp' %}
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
                 {% assign fb1_w = 288 %}
                 {% assign fb1_h = 308 %}
 
-              {% when 'rose-gold-green-emerald-rings.webp' %}
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
                 {% assign fb1_w = 412 %}
                 {% assign fb1_h = 516 %}
 
-              {% when 'sapphire-diamond-halo-earrings.webp' %}
-                {% assign fb1_w = 289 %}
-                {% assign fb1_h = 316 %}
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 1254 %}
+                {% assign fb1_h = 1254 %}
 
               {% when 'titanium-ring-care.webp' %}
                 {% assign fb1_w = 820 %}
@@ -750,16 +805,13 @@
 
           {% endif %}
 
+          </div>
+
           {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
 
             <a
-              class="btn-black-center btn-dark cc-font-body-{{ section.settings.body_font }}"
+              class="btn-black-center btn-dark cc-button-{{ block.settings.button_style | default: 'secondary' }} cc-font-body-{{ section.settings.body_font }}"
               href="{{ block.settings.cta_link }}"
-              style="
-                background:{{ section.settings.button_bg_color }} !important;
-                border-color:{{ section.settings.button_bg_color }} !important;
-                color:{{ section.settings.button_text_color }} !important;
-              "
             >
               {{ block.settings.cta_text }}
             </a>
@@ -873,20 +925,6 @@
       "id": "callout_bg_color",
       "label": "Callout background color",
       "default": "#f7f5f3"
-    },
-
-    {
-      "type": "color",
-      "id": "button_bg_color",
-      "label": "Button background color",
-      "default": "#171d29"
-    },
-
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button text color",
-      "default": "#ffffff"
     },
 
     {
@@ -1072,6 +1110,17 @@
           "type": "url",
           "id": "cta_link",
           "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "secondary"
         }
 
       ]

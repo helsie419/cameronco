@@ -1,5 +1,5 @@
-{% assign fallback_images = 'cameron-co-aquamarine-emerald-cut-eternity-ring.webp|cameron-co-vintage-opal-gold-ring.webp|cameron-co-diamond-eternity-bridal-set.webp|cameron-co-teal-tourmaline-baguette-ring.webp|cameron-co-golden-pearl-diamond-drop-earrings.webp|cameron-co-ruby-halo-ring.png|cameron-co-amber-statement-ring.png|cameron-co-ruby-trilogy-halo-ring-side.webp|cameron-co-crossover-diamond-pave-rings.webp' | split: '|' %}
-{% assign closing_fallback_image = 'cameron-co-square-diamond-pendant.png' %}
+{% assign fallback_images = 'cameron-co-aquamarine-emerald-cut-eternity-ring.webp|cameron-co-vintage-opal-gold-ring.webp|cameron-co-diamond-eternity-bridal-set.webp|cameron-co-teal-tourmaline-baguette-ring.webp|cameron-co-golden-pearl-diamond-drop-earrings.webp|cameron-co-ruby-halo-ring.webp|cameron-co-amber-statement-ring.webp|cameron-co-ruby-trilogy-halo-ring-side.webp|cameron-co-crossover-diamond-pave-rings.webp' | split: '|' %}
+{% assign closing_fallback_image = 'cameron-co-square-diamond-pendant.webp' %}
 
 <style>
   .testimonials-page-shell .testimonial-grid {
@@ -705,7 +705,7 @@
     {% endif %}
   </div>
   <div class="btn-row-center cc-moved-style-042">
-    <a class="btn-black-center btn-dark" href="{{ section.settings.cta_link | default: pages['contact'].url }}">{{ section.settings.cta_text }}</a>
+    <a class="btn-black-center btn-dark cc-button-{{ section.settings.button_style | default: 'secondary' }}" href="{{ section.settings.cta_link | default: pages['contact'].url }}">{{ section.settings.cta_text }}</a>
   </div>
 </div>
 
@@ -721,6 +721,9 @@
     { "type": "header", "content": "Call to action" },
     { "type": "text", "id": "cta_text", "label": "Button text", "default": "Book an appointment" },
     { "type": "url", "id": "cta_link", "label": "Button link", "info": "Leave blank to use the Contact page" },
+    { "type": "select", "id": "button_style", "label": "Button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "secondary" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background_color", "label": "Section background", "default": "#ffffff" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "info": "Leave blank to use the global Heading 1 color (Theme settings → Headings)." },

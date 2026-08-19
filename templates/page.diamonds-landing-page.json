@@ -65,8 +65,7 @@
         "help_copy": "<p>The right choice depends on what matters most to you — rarity, budget, size, colour, origin or simply the stone you are drawn to. Our team can help you compare your options and choose a stone that works beautifully with both your design and your priorities.</p>",
         "cta_text": "Book an Appointment",
         "cta_link": "/pages/booking",
-        "button_bg_color": "#d5b226",
-        "button_text_color": "#ffffff",
+        "button_style": "primary",
         "heading_font": "cormorant",
         "body_font": "glacial"
       }

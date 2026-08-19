@@ -7,7 +7,7 @@
         "content": "Sets the default color and font for every heading on the site (page titles, section titles, card/item titles, sub-headings). Individual sections still have their own heading color and font pickers — leave those blank to use the value set here, or pick a value there to override it just on that page. The footer and homepage hero headline have their own dedicated colors and are not affected by this panel."
       },
       { "type": "header", "content": "Heading 1 — page titles" },
-      { "type": "color", "id": "h1_color", "label": "Color", "default": "#D5B226" },
+      { "type": "color", "id": "h1_color", "label": "Color", "default": "#B09A6F" },
       {
         "type": "select",
         "id": "h1_font",
@@ -22,7 +22,7 @@
       },
       { "type": "range", "id": "h1_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
       { "type": "header", "content": "Heading 2 — section titles" },
-      { "type": "color", "id": "h2_color", "label": "Color", "default": "#D5B226" },
+      { "type": "color", "id": "h2_color", "label": "Color", "default": "#B09A6F" },
       {
         "type": "select",
         "id": "h2_font",
@@ -133,6 +133,53 @@
         "content": "Powers the custom-styled office maps on the Contact page and office/services pages. Needs a Google Maps Platform API key with the Maps JavaScript API enabled. Leave blank and every map falls back to the plain embedded map (no custom styling, but still works)."
       },
       { "type": "text", "id": "google_maps_api_key", "label": "Maps JavaScript API key" }
+    ]
+  },
+  {
+    "name": "Button styles",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Configure the three reusable CTA button styles below. Changes apply site-wide wherever the matching button type is used. Booking slots, filters and other functional controls keep their own interaction styling."
+      },
+      { "type": "header", "content": "Primary buttons" },
+      { "type": "color", "id": "button_primary_background", "label": "Background", "default": "#B09A6F" },
+      { "type": "color", "id": "button_primary_text", "label": "Text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_primary_border", "label": "Border", "default": "#B09A6F" },
+      { "type": "range", "id": "button_primary_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_primary_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_primary_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_primary_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_primary_hover_background", "label": "Hover background", "default": "#B9971F" },
+      { "type": "color", "id": "button_primary_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_primary_hover_border", "label": "Hover border", "default": "#B9971F" },
+      { "type": "range", "id": "button_primary_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+
+      { "type": "header", "content": "Secondary buttons" },
+      { "type": "color", "id": "button_secondary_background", "label": "Background", "default": "#171D29" },
+      { "type": "color", "id": "button_secondary_text", "label": "Text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_secondary_border", "label": "Border", "default": "#171D29" },
+      { "type": "range", "id": "button_secondary_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_secondary_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_secondary_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_secondary_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_secondary_hover_background", "label": "Hover background", "default": "#0F141D" },
+      { "type": "color", "id": "button_secondary_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_secondary_hover_border", "label": "Hover border", "default": "#0F141D" },
+      { "type": "range", "id": "button_secondary_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+
+      { "type": "header", "content": "Outline buttons" },
+      { "type": "color", "id": "button_outline_background", "label": "Background", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_outline_text", "label": "Text", "default": "#171D29" },
+      { "type": "color", "id": "button_outline_border", "label": "Border", "default": "#171D29" },
+      { "type": "range", "id": "button_outline_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_outline_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_outline_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_outline_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_outline_hover_background", "label": "Hover background", "default": "#171D29" },
+      { "type": "color", "id": "button_outline_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_outline_hover_border", "label": "Hover border", "default": "#171D29" },
+      { "type": "range", "id": "button_outline_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 }
     ]
   }
 ]

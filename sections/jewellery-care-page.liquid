@@ -15,10 +15,18 @@
   #jewellery-care-{{ section.id }} .jcare-hero,
   #jewellery-care-{{ section.id }} .jcare-section-inner {
     width: 100%;
-    max-width: 1120px;
+    box-sizing: border-box;
 
     margin-left: auto;
     margin-right: auto;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-hero {
+    max-width: 1184px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-section-inner {
+    max-width: 1120px;
   }
 
 
@@ -116,6 +124,7 @@
 
   #jewellery-care-{{ section.id }} .jcare-section {
     width: 100%;
+    box-sizing: border-box;
 
     padding: 42px 32px;
 
@@ -246,8 +255,11 @@
   }
 
   #jewellery-care-{{ section.id }} .jcare-first-media {
-    width: 320px;
+    width: 260px;
     max-width: 100%;
+
+    display: flex;
+    justify-content: center;
 
     align-self: center;
   }
@@ -264,7 +276,7 @@
      ========================================================== */
 
   #jewellery-care-{{ section.id }} .jcare-image-frame {
-    width: 320px;
+    width: 260px;
     max-width: 100%;
 
     margin: 24px 0 0;
@@ -300,7 +312,7 @@
   #jewellery-care-{{ section.id }} .jcare-image-row {
     display: flex;
 
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
 
     flex-wrap: wrap;
@@ -313,7 +325,7 @@
   }
 
   #jewellery-care-{{ section.id }} .jcare-image-row .jcare-image-frame {
-    width: 290px;
+    width: 260px;
 
     margin: 0;
   }
@@ -328,7 +340,7 @@
   }
 
   #jewellery-care-{{ section.id }} .jcare-storage-row .jcare-image-frame {
-    width: 290px;
+    width: 260px;
     height: auto;
 
     aspect-ratio: 4 / 5;
@@ -352,8 +364,8 @@
   }
 
   #jewellery-care-{{ section.id }} .jcare-maintenance-row .jcare-image-frame {
-    width: 290px !important;
-    height: 290px !important;
+    width: 260px !important;
+    height: 260px !important;
 
     aspect-ratio: 1 / 1;
 
@@ -396,11 +408,6 @@
     padding: 14px 26px;
 
     box-sizing: border-box;
-
-    background: {{ section.settings.button_bg_color }};
-    border: 1px solid {{ section.settings.button_bg_color }};
-
-    color: {{ section.settings.button_text_color }};
 
     border-radius: var(--cc-button-radius, 999px);
 
@@ -885,15 +892,15 @@
               {% endif %}
 
 
-              <!-- TWO SELECTED IMAGES -->
+              <!-- SELECTED IMAGES -->
 
-              {% if block.settings.image_1 != blank and block.settings.image_2 != blank %}
+              {% if block.settings.image_1 != blank or block.settings.image_2 != blank or block.settings.image_3 != blank %}
 
                 <div
                   class="jcare-image-row{% if block.id == 'block-4' %} jcare-storage-row{% endif %}{% if block.id == 'block-6' %} jcare-maintenance-row{% endif %}"
                 >
 
-                  <div class="jcare-image-frame">
+                  {% if block.settings.image_1 != blank %}<div class="jcare-image-frame">
 
                     <img
                       src="{{ block.settings.image_1 | image_url: width: 700 }}"
@@ -903,10 +910,10 @@
                       loading="lazy"
                     >
 
-                  </div>
+                  </div>{% endif %}
 
 
-                  <div class="jcare-image-frame">
+                  {% if block.settings.image_2 != blank %}<div class="jcare-image-frame">
 
                     <img
                       src="{{ block.settings.image_2 | image_url: width: 700 }}"
@@ -916,7 +923,21 @@
                       loading="lazy"
                     >
 
-                  </div>
+                  </div>{% endif %}
+
+                  {% if block.settings.image_3 != blank %}
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_3 | image_url: width: 700 }}"
+                        alt="{{ block.settings.image_3_alt | escape }}"
+                        width="{{ block.settings.image_3.width }}"
+                        height="{{ block.settings.image_3.height }}"
+                        loading="lazy"
+                      >
+
+                    </div>
+                  {% endif %}
 
                 </div>
 
@@ -938,15 +959,15 @@
                 </div>
 
 
-              <!-- TWO FALLBACK IMAGES -->
+              <!-- FALLBACK IMAGES -->
 
-              {% elsif block.settings.image_1_fallback != blank and block.settings.image_2_fallback != blank %}
+              {% elsif block.settings.image_1_fallback != blank or block.settings.image_2_fallback != blank or block.settings.image_3_fallback != blank %}
 
                 <div
                   class="jcare-image-row{% if block.id == 'block-4' %} jcare-storage-row{% endif %}{% if block.id == 'block-6' %} jcare-maintenance-row{% endif %}"
                 >
 
-                  <div class="jcare-image-frame">
+                  {% if block.settings.image_1_fallback != blank %}<div class="jcare-image-frame">
 
                     <img
                       src="{{ block.settings.image_1_fallback | asset_url }}"
@@ -956,10 +977,10 @@
                       loading="lazy"
                     >
 
-                  </div>
+                  </div>{% endif %}
 
 
-                  <div class="jcare-image-frame">
+                  {% if block.settings.image_2_fallback != blank %}<div class="jcare-image-frame">
 
                     <img
                       src="{{ block.settings.image_2_fallback | asset_url }}"
@@ -969,7 +990,21 @@
                       loading="lazy"
                     >
 
-                  </div>
+                  </div>{% endif %}
+
+                  {% if block.settings.image_3_fallback != blank %}
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_3_fallback | asset_url }}"
+                        alt="{{ block.settings.image_3_alt | escape }}"
+                        width="700"
+                        height="700"
+                        loading="lazy"
+                      >
+
+                    </div>
+                  {% endif %}
 
                 </div>
 
@@ -998,7 +1033,7 @@
                 <div class="jcare-cta-wrap">
 
                   <a
-                    class="jcare-button cc-font-body-{{ section.settings.body_font }}"
+                    class="jcare-button cc-button-{{ block.settings.button_style | default: 'primary' }} cc-font-body-{{ section.settings.body_font }}"
                     href="{{ block.settings.cta_link }}"
                   >
                     {{ block.settings.cta_text }}
@@ -1115,20 +1150,6 @@
       "id": "callout_bg_color",
       "label": "Callout background",
       "default": "#f7f5f3"
-    },
-
-    {
-      "type": "color",
-      "id": "button_bg_color",
-      "label": "Button background",
-      "default": "#D5B226"
-    },
-
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button text",
-      "default": "#ffffff"
     },
 
 
@@ -1310,6 +1331,30 @@
 
         {
           "type": "header",
+          "content": "Image 3"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_3_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_3_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
           "content": "Call to action"
         },
 
@@ -1323,6 +1368,17 @@
           "type": "url",
           "id": "cta_link",
           "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "primary"
         }
 
       ]

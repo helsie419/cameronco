@@ -35,8 +35,8 @@
       <h2 class="cc-moved-style-008{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.cta_heading_color != blank %}color:{{ section.settings.cta_heading_color }};{% endif %}">{{ section.settings.cta_heading }}</h2>
       <p class="cc-moved-style-009 cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="color:{{ section.settings.cta_text_color }};">{{ section.settings.cta_text }}</p>
       <div class="cc-moved-style-010">
-        <a class="btn-book btn-outline-red btn-red cc-moved-style-011 cc-font-body-{{ section.settings.body_font }}" href="{{ section.settings.cta_button_1_link | default: pages['contact'].url }}" style="background:#cba922 !important;border-color:#cba922 !important;color:#ffffff !important;font-weight:400 !important;">{{ section.settings.cta_button_1_text }}</a>
-        <a class="btn-book btn-red cc-moved-style-012 cc-font-body-{{ section.settings.body_font }}" href="{{ section.settings.cta_button_2_link | default: pages['booking'].url }}" style="background:#cba922 !important;border-color:#cba922 !important;color:#ffffff !important;font-weight:400 !important;">{{ section.settings.cta_button_2_text }}</a>
+        <a class="btn-book btn-outline-red btn-red cc-button-{{ section.settings.cta_button_1_style | default: 'outline' }} cc-moved-style-011 cc-font-body-{{ section.settings.body_font }}" href="{{ section.settings.cta_button_1_link | default: pages['contact'].url }}">{{ section.settings.cta_button_1_text }}</a>
+        <a class="btn-book btn-red cc-button-{{ section.settings.cta_button_2_style | default: 'primary' }} cc-moved-style-012 cc-font-body-{{ section.settings.body_font }}" href="{{ section.settings.cta_button_2_link | default: pages['booking'].url }}">{{ section.settings.cta_button_2_text }}</a>
       </div>
     </div>
   </div>
@@ -61,8 +61,14 @@
     { "type": "textarea", "id": "cta_text", "label": "CTA text", "default": "Get in touch with our friendly consultants for any enquiries regarding claims, custom designs, or repairs." },
     { "type": "text", "id": "cta_button_1_text", "label": "First button text", "default": "Contact Us" },
     { "type": "url", "id": "cta_button_1_link", "label": "First button link (defaults to Contact page)" },
+    { "type": "select", "id": "cta_button_1_style", "label": "First button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "outline" },
     { "type": "text", "id": "cta_button_2_text", "label": "Second button text", "default": "Book Appointment" },
     { "type": "url", "id": "cta_button_2_link", "label": "Second button link (defaults to Booking page)" },
+    { "type": "select", "id": "cta_button_2_style", "label": "Second button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "primary" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "category_color", "label": "Category heading color", "default": "#19202c", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
@@ -71,7 +77,6 @@
     { "type": "color", "id": "cta_background_color", "label": "CTA background", "default": "#f7f5f3" },
     { "type": "color", "id": "cta_heading_color", "label": "CTA heading color", "default": "#19202c", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "cta_text_color", "label": "CTA text color", "default": "#6b7280" },
-    { "type": "color", "id": "cta_button_color", "label": "CTA button color", "default": "#D5B226" },
     { "type": "header", "content": "Fonts" },
     {
       "type": "select",

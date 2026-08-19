@@ -123,9 +123,9 @@
 <p class="footer-copyright">{{ section.settings.copyright_text }} © {{ "now" | date: "%Y" }}</p>
 <div class="footer-links-row">
 <a href="mailto:{{ section.settings.contact_email }}?subject=Contact">{{ section.settings.legal_contact_text }}</a>
-<a href="{{ section.settings.privacy_policy_url | default: 'https://www.cameronco.com.au/privacy-policy' }}" rel="nofollow" target="_blank">{{ section.settings.legal_privacy_text }}</a>
-<a href="{{ section.settings.terms_url | default: 'https://www.cameronco.com.au/termsandconditions' }}" rel="nofollow" target="_blank">{{ section.settings.legal_terms_text }}</a>
-<a href="{{ section.settings.disclaimer_url | default: 'https://www.cameronco.com.au/disclaimer' }}" rel="nofollow" target="_blank">{{ section.settings.legal_disclaimer_text }}</a>
+<a href="{{ section.settings.privacy_policy_url | default: '/pages/privacy-policy' }}" rel="nofollow">{{ section.settings.legal_privacy_text }}</a>
+<a href="{{ section.settings.terms_url | default: '/pages/termsandconditions' }}" rel="nofollow">{{ section.settings.legal_terms_text }}</a>
+<a href="{{ section.settings.disclaimer_url | default: '/pages/disclaimer' }}" rel="nofollow">{{ section.settings.legal_disclaimer_text }}</a>
 </div>
 <p class="footer-credit">Made by <a href="https://bravabird.com" rel="noreferrer noopener" target="_blank">bravabird</a></p>
 </div>

@@ -4,98 +4,110 @@
     <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
   </section>
 
-  <section class="app-grid section-inner" aria-label="Appointment Booking System">
-    <section class="booking-card booking-picker" aria-label="Select a date and time">
-      <div class="booking-picker-controls">
-        <label for="booking-office">Office
-          <select id="booking-office" name="office" required aria-required="true">
-            <option value="melbourne">Melbourne Office</option>
-            <option value="sydney">Sydney Office</option>
-          </select>
-        </label>
+  <div class="booking-header-grid section-inner">
+    <div class="booking-header-text">
+      <section class="booking-card" hidden id="manage-booking" style="border: 0; box-shadow: none;">
+        <p id="manage-summary"></p>
+        <div class="button-row">
+          <button class="btn-black-center cc-button-{{ section.settings.reschedule_button_style | default: 'primary' }}" id="manage-reschedule" type="button" disabled>Reschedule</button>
+          <button class="btn-black-center cc-button-{{ section.settings.cancel_button_style | default: 'secondary' }}" id="manage-cancel" type="button">Cancel appointment</button>
+        </div>
+      </section>
 
-        <label for="booking-service">Appointment type
-          <select id="booking-service" name="service" required aria-required="true">
-            <option>Virtual Enquiry</option>
-            <option>Engagement Ring Enquiry</option>
-            <option>Wedding Ring Enquiry</option>
-            <option>Jewellery Repairs</option>
-            <option>Remake or Custom Item</option>
-          </select>
-        </label>
-      </div>
+      <form class="booking-form booking-details-form" id="booking-form" novalidate>
+        <div class="booking-picker-controls">
+          <label for="booking-office">Office
+            <select id="booking-office" name="office" required aria-required="true">
+              <option value="melbourne">Melbourne Office</option>
+              <option value="sydney">Sydney Office</option>
+            </select>
+          </label>
 
-      <p class="booking-timezone">
-        <strong>Times shown in <span id="timezone-label">Sydney time</span></strong>
-        <span aria-hidden="true">•</span>
-        <span>Current time there: <span id="timezone-now"></span> &mdash; <button class="timezone-toggle" id="timezone-toggle" type="button">Show in your local time</button></span>
-      </p>
-
-      <div class="booking-scheduler">
-        <div class="booking-calendar-panel">
-          <h3>Select a Date &amp; Time</h3>
-          <div class="calendar-month-row">
-            <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">‹</button>
-            <strong id="calendar-month-label">Loading</strong>
-            <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">›</button>
-          </div>
-          <div class="calendar-weekdays" aria-hidden="true">
-            <span>Mon</span>
-            <span>Tue</span>
-            <span>Wed</span>
-            <span>Thu</span>
-            <span>Fri</span>
-            <span>Sat</span>
-            <span>Sun</span>
-          </div>
-          <div class="calendar-days" id="calendar-days"></div>
+          <label for="booking-service">Appointment type
+            <select id="booking-service" name="service" required aria-required="true">
+              <option>Virtual Enquiry</option>
+              <option>Engagement Ring Enquiry</option>
+              <option>Wedding Ring Enquiry</option>
+              <option>Jewellery Repairs</option>
+              <option>Collection</option>
+              <option>Remake or Custom Item</option>
+            </select>
+          </label>
         </div>
 
-        <section class="result-panel" aria-label="Available appointment timeslots">
-          <h3 id="selected-date-heading">Select a date</h3>
-          <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
-        </section>
-      </div>
-    </section>
+        <div class="form-row-2">
+          <label for="booking-name">Name *
+            <input id="booking-name" autocomplete="name" name="name" required aria-required="true" type="text" placeholder="Your full name" />
+          </label>
 
-    <form class="booking-card booking-form booking-details-form" id="booking-form" novalidate>
-      <div class="form-row-3">
-        <label for="booking-name">Name *
-          <input id="booking-name" autocomplete="name" name="name" required aria-required="true" type="text" placeholder="Your full name" />
-        </label>
+          <label for="booking-phone">Mobile
+            <input id="booking-phone" autocomplete="tel" name="phone" placeholder="+61 400 000 000" type="tel" />
+          </label>
+        </div>
 
         <label for="booking-email">Email *
           <input id="booking-email" autocomplete="email" name="email" required aria-required="true" type="email" placeholder="your@email.com" />
         </label>
 
-        <label for="booking-phone">Mobile
-          <input id="booking-phone" autocomplete="tel" name="phone" placeholder="+61 400 000 000" type="tel" />
+        <label for="booking-notes">Notes
+          <textarea id="booking-notes" name="notes" placeholder="Tell us briefly what you would like to discuss."></textarea>
         </label>
-      </div>
 
-      <label for="booking-notes">Notes
-        <textarea id="booking-notes" name="notes" placeholder="Tell us briefly what you would like to discuss."></textarea>
-      </label>
+        <input id="selected-slot" name="slot" required type="hidden" />
 
-      <input id="selected-slot" name="slot" required type="hidden" />
+        <div class="button-row">
+          <button class="btn-black-center cc-button-{{ section.settings.confirm_button_style | default: 'primary' }}" type="submit">Confirm appointment</button>
+          <button class="btn-black-center cc-button-{{ section.settings.refresh_button_style | default: 'outline' }}" id="refresh-slots" type="button">Refresh available times</button>
+        </div>
 
-      <div class="button-row">
-        <button class="btn-black-center btn-dark" type="submit">Confirm appointment</button>
-        <button class="btn-black-center secondary" id="refresh-slots" type="button">Refresh available times</button>
-      </div>
-
-      <p class="status-line" id="booking-status" aria-live="polite">Select an available time from the schedule.</p>
-    </form>
-  </section>
-
-  <section class="booking-card section-inner" hidden id="manage-booking" style="margin-top: 30px;">
-    <h3>Manage Appointment</h3>
-    <p id="manage-summary"></p>
-    <div class="button-row">
-      <button class="btn-black-center secondary" id="manage-reschedule" type="button">Reschedule to selected time</button>
-      <button class="btn-black-center btn-dark" id="manage-cancel" type="button">Cancel appointment</button>
+      </form>
+      <p class="status-line" id="booking-status" aria-live="polite"></p>
     </div>
-  </section>
+
+    <section class="booking-card booking-picker" aria-label="Select a date and time">
+      <div class="booking-calendar-column">
+        <span id="timezone-label" hidden>Sydney time</span>
+
+        <div class="booking-scheduler">
+          <div class="booking-calendar-panel">
+            <h3 class="sr-only">Select a Date &amp; Time</h3>
+            <div class="calendar-month-row">
+              <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">‹</button>
+              <strong id="calendar-month-label">Loading</strong>
+              <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">›</button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun</span>
+            </div>
+            <div class="calendar-days" id="calendar-days"></div>
+          </div>
+
+          <section class="result-panel" aria-label="Available appointment timeslots">
+            <h3 class="sr-only" id="selected-date-heading">Select a date</h3>
+            <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div hidden id="manage-reschedule-modal" role="dialog" aria-modal="true" aria-labelledby="reschedule-modal-title" style="position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 20px; background: rgba(15, 25, 40, .58);">
+    <section class="booking-card" id="manage-reschedule-modal-card" style="width: min(100%, 460px); margin: 0; background: #fff; text-align: center;">
+      <h3 id="reschedule-modal-title" style="cursor: grab; user-select: none;">Reschedule appointment?</h3>
+      <p>Reschedule to</p>
+      <p><strong id="reschedule-slot-summary"></strong></p>
+      <div class="button-row" style="justify-content: center; margin-top: 24px;">
+        <button class="btn-black-center cc-button-{{ section.settings.reschedule_button_style | default: 'primary' }}" id="confirm-reschedule" type="button">Yes, reschedule</button>
+        <button class="btn-black-center cc-button-{{ section.settings.cancel_button_style | default: 'secondary' }}" id="cancel-reschedule" type="button">No, go back</button>
+      </div>
+    </section>
+  </div>
 </div>
 
 <script>
@@ -115,15 +127,23 @@
   var refreshButton = document.getElementById("refresh-slots");
   var managePanel = document.getElementById("manage-booking");
   var manageSummary = document.getElementById("manage-summary");
+  var rescheduleConfirmPanel = document.getElementById("manage-reschedule-modal");
+  var rescheduleSlotSummary = document.getElementById("reschedule-slot-summary");
+  var rescheduleModalCard = document.getElementById("manage-reschedule-modal-card");
+  var rescheduleModalTitle = document.getElementById("reschedule-modal-title");
   var calendarDays = document.getElementById("calendar-days");
   var calendarMonthLabel = document.getElementById("calendar-month-label");
   var selectedDateHeading = document.getElementById("selected-date-heading");
-  var timezoneNow = document.getElementById("timezone-now");
   var timezoneLabel = document.getElementById("timezone-label");
   var timezoneToggle = document.getElementById("timezone-toggle");
+  var timezoneToggleRow = document.getElementById("timezone-toggle-row");
   var calendarPrev = document.getElementById("calendar-prev");
   var calendarNext = document.getElementById("calendar-next");
   var activeToken = params.get("booking");
+  var liveAvailabilityLoaded = false;
+  var reschedulePending = false;
+  var modalDrag = null;
+  var managePanelHome = managePanel ? managePanel.parentNode : null;
   var availableSlots = [];
   var slotsByDate = {};
   var selectedDateKey = "";
@@ -147,6 +167,17 @@
       serviceSelect.value = "Engagement Ring Enquiry";
     }
   }
+
+  function syncOfficeTimezone() {
+    OFFICE_TZ = office && office.value === "melbourne" ? "Australia/Melbourne" : "Australia/Sydney";
+    DISPLAY_TZ = OFFICE_TZ;
+  }
+
+  function officeTimeLabel() {
+    return office && office.value === "melbourne" ? "Melbourne time" : "Sydney time";
+  }
+
+  syncOfficeTimezone();
 
   var notesField = form ? form.querySelector("[name='notes']") : null;
   if (notesField) {
@@ -239,69 +270,90 @@
     }).format(new Date(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2])));
   }
 
-  function updateTimezoneClock() {
-    if (!timezoneNow) return;
-    timezoneNow.textContent = new Intl.DateTimeFormat("en-AU", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-      timeZone: DISPLAY_TZ
-    }).format(new Date()).replace(" ", "").toLowerCase();
-  }
-
   // Office time is the default (unchanged behaviour for the vast majority of
   // customers, who are already in Sydney/Melbourne time). Rarely, a customer
   // browsing from elsewhere wants times in their own timezone instead --
-  // this toggle switches every displayed time (calendar, slot grid, clock)
-  // without changing what actually gets submitted, since slot values are
-  // always the raw ISO instant regardless of how they're displayed.
+  // this toggle switches every displayed time (calendar, slot grid) without
+  // changing what actually gets submitted, since slot values are always the
+  // raw ISO instant regardless of how they're displayed.
   function applyTimezone(tz) {
     DISPLAY_TZ = tz;
     if (timezoneLabel) {
-      timezoneLabel.textContent = tz === OFFICE_TZ ? "Sydney time" : "your local time (" + tz.replace(/_/g, " ").split("/").pop() + ")";
+      timezoneLabel.textContent = tz === OFFICE_TZ ? officeTimeLabel() : "your local time (" + tz.replace(/_/g, " ").split("/").pop() + ")";
     }
     if (timezoneToggle) {
-      timezoneToggle.textContent = tz === OFFICE_TZ ? "Show in your local time" : "Show in Sydney time";
+      timezoneToggle.textContent = tz === OFFICE_TZ ? "Show in your local time" : "Show in " + officeTimeLabel();
     }
-    updateTimezoneClock();
     if (availableSlots.length) setSlots(availableSlots);
   }
 
-  function setStatus(msg) {
-    if (status) status.textContent = msg;
+  function setStatus(msg, isError, isLoading) {
+    if (!status) return;
+    status.textContent = "";
+    status.classList.toggle("status-line--error", Boolean(isError));
+    status.classList.toggle("status-line--loading", Boolean(isLoading));
+    if (isLoading) {
+      var spinner = document.createElement("span");
+      spinner.className = "booking-status-spinner";
+      spinner.setAttribute("aria-hidden", "true");
+      var loadingText = document.createElement("span");
+      loadingText.className = "sr-only";
+      loadingText.textContent = msg;
+      status.appendChild(spinner);
+      status.appendChild(loadingText);
+      return;
+    }
+    status.textContent = msg;
   }
 
-  function loadSlots() {
-    setStatus("Loading available times...");
+  function selectedOfficeContact() {
+    return office && office.value === "sydney"
+      ? "the Sydney office on\u00a0(02)\u00a09699\u00a02266"
+      : "the Melbourne office on\u00a0(03)\u00a09836\u00a09922";
+  }
+
+  function updateRescheduleButton() {
+    var button = document.getElementById("manage-reschedule");
+    if (button) button.disabled = !activeToken || !liveAvailabilityLoaded || reschedulePending;
+  }
+
+  function hideRescheduleConfirmation() {
+    if (rescheduleConfirmPanel) rescheduleConfirmPanel.hidden = true;
+    if (rescheduleModalCard) rescheduleModalCard.style.transform = "";
+  }
+
+  function placeManageActions() {
+    if (!managePanel || !managePanelHome || !slotGrid) return;
+    var isMobile = window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
+    var resultPanel = slotGrid.parentNode;
+    if (isMobile && resultPanel && managePanel.parentNode !== resultPanel.parentNode) {
+      resultPanel.parentNode.appendChild(managePanel);
+    } else if (!isMobile && managePanel.parentNode !== managePanelHome) {
+      managePanelHome.insertBefore(managePanel, form);
+    }
+  }
+
+  function loadSlots(preserveStatus) {
+    liveAvailabilityLoaded = false;
+    hideRescheduleConfirmation();
+    updateRescheduleButton();
+    if (!preserveStatus) setStatus("Loading available times...");
     if (slotGrid) slotGrid.innerHTML = "";
     if (slotInput) slotInput.value = "";
-    fetch(API_BASE + "/api/booking/availability?office=" + encodeURIComponent(office.value))
+    fetch(API_BASE + "/api/booking/availability?office=" + encodeURIComponent(office.value) + "&service=" + encodeURIComponent(serviceSelect ? serviceSelect.value : ""))
       .then(function (res) {
         if (!res.ok) throw new Error("Availability failed");
         return res.json();
       })
       .then(function (json) {
+        liveAvailabilityLoaded = true;
         setSlots(json.slots || []);
-        setStatus("Select an available time.");
+        if (!preserveStatus) setStatus("");
       })
       .catch(function () {
-        setSlots(sampleSlots());
-        setStatus("Showing sample local times because live calendar backend is reconnecting.");
+        setSlots([]);
+        setStatus("Live appointment times are temporarily unavailable. Please reload the page or contact " + selectedOfficeContact() + ".", true);
       });
-  }
-
-  function sampleSlots() {
-    var slots = [];
-    var day = new Date();
-    day.setDate(day.getDate() + 1);
-    day.setHours(10, 0, 0, 0);
-    while (slots.length < 10) {
-      if (day.getDay() !== 0 && day.getDay() !== 6) {
-        slots.push({ start: day.toISOString(), end: new Date(day.getTime() + 45 * 60000).toISOString() });
-      }
-      day = new Date(day.getTime() + 90 * 60000);
-    }
-    return slots;
   }
 
   function setSlots(slots) {
@@ -358,6 +410,8 @@
       button.addEventListener("click", function (event) {
         selectedDateKey = event.currentTarget.getAttribute("data-date");
         if (slotInput) slotInput.value = "";
+        hideRescheduleConfirmation();
+        updateRescheduleButton();
         renderCalendar();
         renderSlotsForDate(selectedDateKey);
       });
@@ -392,6 +446,9 @@
         });
         button.classList.add("selected");
         if (slotInput) slotInput.value = slot.start;
+        hideRescheduleConfirmation();
+        updateRescheduleButton();
+        if (activeToken) setStatus("New time selected: " + fmt(slot.start) + ". Press Reschedule to continue.");
       });
       slotGrid.appendChild(button);
     });
@@ -439,36 +496,57 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!slotInput || !slotInput.value) {
-        setStatus("Please select an appointment time from the grid first.");
+        setStatus("Please select an appointment time from the grid first.", true);
         return;
       }
-      setStatus("Creating your appointment with Google Calendar...");
+      setStatus("Creating your appointment…", false, true);
       fetch(API_BASE + "/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formPayload())
       })
         .then(function (res) {
-          if (!res.ok) throw new Error("Booking failed");
-          return res.json();
+          return res.json().catch(function () { return {}; }).then(function (json) {
+            if (!res.ok) throw new Error(json.error || "Unable to create appointment");
+            return json;
+          });
         })
         .then(function (json) {
           activeToken = json.manageToken;
           setStatus("Appointment confirmed! Confirmation and calendar invite queued.");
           showManage(json.booking);
         })
-        .catch(function () {
-          setStatus("Unable to reach the live booking server. Please call (02) 9699 2266 or email info@cameronco.com.au.");
+        .catch(function (error) {
+          setStatus((error.message || "Unable to create appointment") + ". Please call " + selectedOfficeContact() + ".", true);
         });
     });
   }
 
-  function showManage(booking) {
+  function showManage(booking, preserveStatus) {
     if (!booking || !managePanel) return;
     managePanel.hidden = false;
     if (manageSummary) {
       manageSummary.textContent = booking.service + " at " + fmt(booking.start) + " (" + booking.office.toUpperCase() + " Office).";
     }
+
+    // Whether they just created this booking or arrived via a manage link,
+    // there's no reason to keep showing the office/service picker or the
+    // "create a new booking" form -- only the calendar (for picking a
+    // reschedule time) and the manage panel are relevant now. The office/
+    // service selects stay in the DOM (hidden) since loadSlots() still reads
+    // office.value, so they're synced to this booking rather than left on
+    // whatever they defaulted to.
+    if (office) office.value = booking.office;
+    if (serviceSelect) serviceSelect.value = booking.service;
+    var pickerControls = document.querySelector(".booking-picker-controls");
+    if (pickerControls) pickerControls.hidden = true;
+    if (form) form.hidden = true;
+    var heading = document.querySelector(".section-title");
+    if (heading) heading.textContent = "Manage Your Appointment";
+    var subheading = document.querySelector(".brand-hero p");
+    if (subheading) subheading.textContent = "Cancel below, or pick a new date further down to reschedule.";
+    placeManageActions();
+    loadSlots(preserveStatus);
   }
 
   function loadManagedBooking() {
@@ -483,16 +561,20 @@
         setStatus("Select a new time if you need to reschedule.");
       })
       .catch(function () {
-        setStatus("We could not load that appointment. Please contact the office.");
+        setStatus("We could not load that appointment. Please call Sydney on\u00a0(02)\u00a09699\u00a02266 or Melbourne on\u00a0(03)\u00a09836\u00a09922.", true);
       });
   }
 
   var manageCancelButton = document.getElementById("manage-cancel");
   var manageRescheduleButton = document.getElementById("manage-reschedule");
+  var confirmRescheduleButton = document.getElementById("confirm-reschedule");
+  var cancelRescheduleButton = document.getElementById("cancel-reschedule");
 
   if (manageCancelButton) {
     manageCancelButton.addEventListener("click", function () {
-      if (!activeToken) return;
+      if (!activeToken || manageCancelButton.disabled) return;
+      manageCancelButton.disabled = true;
+      setStatus("Cancelling appointment…", false, true);
       fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/cancel", { method: "POST" })
         .then(function (res) {
           if (!res.ok) throw new Error("Cancel failed");
@@ -500,20 +582,42 @@
         })
         .then(function () {
           if (managePanel) managePanel.hidden = true;
-          setStatus("Appointment cancelled. A cancellation email has been queued.");
+          setStatus("Appointment cancelled. A cancellation email has been sent.");
         })
         .catch(function () {
-          setStatus("Unable to cancel online. Please contact the office.");
+          setStatus("Unable to cancel online. Please call " + selectedOfficeContact() + ".", true);
+          manageCancelButton.disabled = false;
         });
     });
   }
 
   if (manageRescheduleButton) {
     manageRescheduleButton.addEventListener("click", function () {
-      if (!activeToken || !slotInput || !slotInput.value) {
-        setStatus("Select a new time first.");
+      if (!activeToken || !liveAvailabilityLoaded || !slotInput || !slotInput.value || reschedulePending) {
+        setStatus("Please select a new appointment time before rescheduling.", true);
         return;
       }
+      if (rescheduleSlotSummary) rescheduleSlotSummary.textContent = fmt(slotInput.value);
+      if (rescheduleConfirmPanel) {
+        rescheduleConfirmPanel.hidden = false;
+        if (confirmRescheduleButton) confirmRescheduleButton.focus();
+      }
+    });
+  }
+
+  if (cancelRescheduleButton) {
+    cancelRescheduleButton.addEventListener("click", function () {
+      hideRescheduleConfirmation();
+      setStatus("Choose another time from the available appointments.");
+    });
+  }
+
+  if (confirmRescheduleButton) {
+    confirmRescheduleButton.addEventListener("click", function () {
+      if (!activeToken || !liveAvailabilityLoaded || !slotInput || !slotInput.value || reschedulePending) return;
+      reschedulePending = true;
+      updateRescheduleButton();
+      setStatus("Rescheduling your appointment...");
       fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/reschedule", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -524,21 +628,62 @@
           return res.json();
         })
         .then(function (json) {
-          showManage(json.booking);
-          setStatus("Appointment rescheduled. Updated confirmation and reminders are queued.");
+          if (!json.booking) throw new Error("Reschedule response was incomplete");
+          showManage(json.booking, true);
+          setStatus("Appointment rescheduled to " + fmt(json.booking.start) + ". Your calendar event has been updated and an updated confirmation email is being sent.");
         })
         .catch(function () {
-          setStatus("Unable to reschedule online. Please contact the office.");
+          hideRescheduleConfirmation();
+          setStatus("We could not reschedule your appointment. Your existing appointment has not changed. Please call " + selectedOfficeContact() + " for help.", true);
+        })
+        .then(function () {
+          reschedulePending = false;
+          updateRescheduleButton();
         });
     });
   }
 
-  if (office) office.addEventListener("change", loadSlots);
+  if (office) office.addEventListener("change", function () {
+    syncOfficeTimezone();
+    applyTimezone(OFFICE_TZ);
+    loadSlots();
+  });
+  // Duration (and therefore which start times are offered) differs per
+  // appointment type, so the slot list must reload when it changes too.
+  if (serviceSelect) serviceSelect.addEventListener("change", function () {
+    loadSlots();
+  });
   if (refreshButton) refreshButton.addEventListener("click", loadSlots);
+  window.addEventListener("resize", placeManageActions);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") hideRescheduleConfirmation();
+  });
+  if (rescheduleModalTitle && rescheduleModalCard) {
+    rescheduleModalTitle.addEventListener("pointerdown", function (event) {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      modalDrag = { x: event.clientX, y: event.clientY, offsetX: 0, offsetY: 0 };
+      rescheduleModalTitle.setPointerCapture(event.pointerId);
+      rescheduleModalTitle.style.cursor = "grabbing";
+    });
+    rescheduleModalTitle.addEventListener("pointermove", function (event) {
+      if (!modalDrag) return;
+      modalDrag.offsetX += event.clientX - modalDrag.x;
+      modalDrag.offsetY += event.clientY - modalDrag.y;
+      modalDrag.x = event.clientX;
+      modalDrag.y = event.clientY;
+      rescheduleModalCard.style.transform = "translate(" + modalDrag.offsetX + "px, " + modalDrag.offsetY + "px)";
+    });
+    function endModalDrag() {
+      modalDrag = null;
+      rescheduleModalTitle.style.cursor = "grab";
+    }
+    rescheduleModalTitle.addEventListener("pointerup", endModalDrag);
+    rescheduleModalTitle.addEventListener("pointercancel", endModalDrag);
+  }
   if (timezoneToggle) {
     if (LOCAL_TZ === OFFICE_TZ) {
       // Customer's own timezone already matches the office -- nothing to offer.
-      timezoneToggle.hidden = true;
+      if (timezoneToggleRow) timezoneToggleRow.hidden = true;
     } else {
       timezoneToggle.addEventListener("click", function () {
         applyTimezone(DISPLAY_TZ === OFFICE_TZ ? LOCAL_TZ : OFFICE_TZ);
@@ -546,7 +691,6 @@
     }
   }
   applyTimezone(OFFICE_TZ);
-  window.setInterval(updateTimezoneClock, 60000);
   loadSlots();
   loadManagedBooking();
 })();
@@ -594,6 +738,54 @@
       "label": "Booking API URL",
       "default": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
       "info": "The Firebase Functions backend URL connecting to Google Calendar for Sydney & Melbourne."
+    },
+    {
+      "type": "header",
+      "content": "Button styles"
+    },
+    {
+      "type": "select",
+      "id": "confirm_button_style",
+      "label": "Confirm appointment button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "refresh_button_style",
+      "label": "Refresh times button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "select",
+      "id": "reschedule_button_style",
+      "label": "Reschedule button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "select",
+      "id": "cancel_button_style",
+      "label": "Cancel appointment button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "secondary"
     },
     {
       "type": "color",

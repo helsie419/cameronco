@@ -22,6 +22,25 @@
     "h6_color": "#4D493F",
     "h6_size": 18,
     "google_maps_api_key": "AIzaSyAfy-Wk7rWb-UKuSK2jMPUzkWKKwGjcP5k",
+    "button_primary_radius": 18,
+    "button_primary_font_size": 14,
+    "button_primary_transparency": 0,
+    "button_primary_hover_background": "#FFFFFF",
+    "button_primary_hover_text": "#B09A6F",
+    "button_primary_hover_border": "#B09A6F",
+    "button_primary_hover_transparency": 83,
+    "button_secondary_background": "#171D29",
+    "button_secondary_border": "#171D29",
+    "button_secondary_radius": 18,
+    "button_secondary_font_size": 14,
+    "button_secondary_transparency": 0,
+    "button_secondary_hover_background": "#171D29",
+    "button_secondary_hover_border": "#171D29",
+    "button_secondary_hover_transparency": 0,
+    "button_outline_radius": 18,
+    "button_outline_font_size": 14,
+    "button_outline_transparency": 0,
+    "button_outline_hover_transparency": 0,
     "sections": {
       "header": {
         "type": "header",
@@ -33,12 +52,11 @@
           "main_menu": "main-menu",
           "button_text": "Book an appointment",
           "button_link": "",
+          "button_style": "primary",
           "background_color": "#ffffff",
           "nav_color": "#0b0b0b",
-          "button_color": "#d5b226",
           "nav_color_mobile": "#0b0b0b",
           "nav_font": "cormorant",
-          "button_font": "glacial",
           "logo_size": 60,
           "logo_offset_x": 0,
           "logo_offset_y": 0,
@@ -46,9 +64,7 @@
           "logo_offset_x_mobile": 0,
           "logo_offset_y_mobile": 0,
           "nav_offset_x": 0,
-          "nav_offset_y": 0,
-          "button_offset_x": 0,
-          "button_offset_y": 0
+          "nav_offset_y": 0
         }
       },
       "footer": {
@@ -97,10 +113,21 @@
     },
     "content_for_index": [],
     "blocks": {
-      "3886181796285292942": {
-        "type": "shopify://apps/cowlendar-booking/blocks/app-embed/6d8b8f6a-9b3c-42b8-b2e6-a758c38d45bf",
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
         "disabled": false,
         "settings": {}
+      },
+      "6946623662726630353": {
+        "type": "shopify://apps/nivoda-connect/blocks/cart_extended/1818f65a-9917-4ef2-bca9-2424a925fc76",
+        "disabled": false,
+        "settings": {
+          "drawer_selector": "cart-drawer-component, .cart-drawer",
+          "enable_redirect": true,
+          "diamond_name": "diamonds",
+          "ringbuilder_name": "ring-setting",
+          "gemstone_name": "gemstones"
+        }
       }
     }
   },

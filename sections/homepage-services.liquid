@@ -16,21 +16,20 @@
         {% else %}
           <article class="service-item" {{ block.shopify_attributes }}>
         {% endif %}
-          <span class="service-item-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
           <h2 class="{% if section.settings.item_title_font != blank %}cc-font-heading-{{ section.settings.item_title_font }}{% endif %}" style="{% if section.settings.item_title_color != blank %}color:{{ section.settings.item_title_color }};{% endif %}">{{ block.settings.title }}</h2>
           <p class="cc-preserve-line-breaks">{{ block.settings.description }}</p>
         {% if block.settings.link != blank %}</a>{% else %}</article>{% endif %}
       {% endfor %}
     </div>
     <div class="btn-row-center home-chat-button-row">
-      <a class="home-button home-button-dark" href="{{ section.settings.button_link }}" style="background:{{ section.settings.button_color }} !important;border-color:{{ section.settings.button_color }} !important;">{{ section.settings.button_text }}</a>
+      <a class="home-button home-button-dark cc-button-{{ section.settings.button_style | default: 'primary' }}" href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
     </div>
   </div>
   {% if section.settings.show_side_image %}
     {% if section.settings.rings_image %}
       <img alt="{{ section.settings.rings_image_alt | escape }}" class="what-we-do-rings" height="369" loading="lazy" src="{{ section.settings.rings_image | image_url: width: 236 }}" width="236">
     {% else %}
-      <img alt="{{ section.settings.rings_image_alt | escape }}" class="what-we-do-rings" height="369" loading="lazy" src="{{ 'cameron-co-coloured-gemstone-bezel-rings.webp' | asset_url }}" width="236">
+      <img alt="{{ section.settings.rings_image_alt | escape }}" class="what-we-do-rings" height="369" loading="lazy" src="{{ 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' | asset_url }}" width="236">
     {% endif %}
   {% endif %}
 </section>
@@ -46,14 +45,16 @@
     { "type": "text", "id": "rings_image_alt", "label": "Side image alt text", "default": "Stack of gold and silver bezel-set gemstone rings" },
     { "type": "text", "id": "button_text", "label": "Button text", "default": "Chat to us" },
     { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "select", "id": "button_style", "label": "Button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "primary" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background_color", "label": "Section background", "default": "#ffffff" },
-    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#D5B226" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#B09A6F" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#171d29", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "item_title_color", "label": "Item title color", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
-    { "type": "color", "id": "button_color", "label": "Button color", "default": "#D5B226" },
     { "type": "header", "content": "Colors — mobile only" },
-    { "type": "color", "id": "eyebrow_color_mobile", "label": "Eyebrow color (mobile)", "default": "#D5B226" },
+    { "type": "color", "id": "eyebrow_color_mobile", "label": "Eyebrow color (mobile)", "default": "#B09A6F" },
     { "type": "color", "id": "heading_color_mobile", "label": "Heading color (mobile)", "default": "#171d29" },
     { "type": "color", "id": "item_title_color_mobile", "label": "Item title color (mobile)", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
     { "type": "header", "content": "Fonts" },

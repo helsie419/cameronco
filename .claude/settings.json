@@ -7,7 +7,13 @@
       "Bash(/Users/helen/.npm-global/bin/shopify version *)",
       "Bash(/Users/helen/.npm-global/bin/shopify theme *)",
       "Bash(python3 -c ' *)",
-      "Bash(curl -sL \"https://1bgeet-da.myshopify.com?preview_theme_id=188686500138\" -o /tmp/preview2.html -w \"HTTP %{http_code}\\\\n\")"
+      "Bash(curl -sL \"https://1bgeet-da.myshopify.com?preview_theme_id=188686500138\" -o /tmp/preview2.html -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -m 15 \"https://us-central1-cameronco-booking.cloudfunctions.net/api/admin/email-settings\")",
+      "Bash(curl -s -m 15 \"https://us-central1-cameronco-booking.cloudfunctions.net/api/api/admin/email-settings\" -H \"X-Admin-Key: 7f44caf4628de7ce843d4df96c74ee00ae21b9523981002f\")",
+      "Bash(curl -s \"https://us-central1-cameronco-booking.cloudfunctions.net/api/api/booking/manage_bdd8cb8907d36a7cd3f3591d\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://1bgeet-da.myshopify.com/pages/booking?booking=manage_bdd8cb8907d36a7cd3f3591d\")",
+      "Bash(curl -s -X POST https://us-central1-cameronco-booking.cloudfunctions.net/api/api/booking/manage_bdd8cb8907d36a7cd3f3591d/reschedule -H 'Content-Type: application/json' -d '{\"slot\": \"2026-08-19T05:00:00.000Z\"}')",
+      "Bash(curl -s -X POST \"https://us-central1-cameronco-booking.cloudfunctions.net/api/api/booking/manage_bdd8cb8907d36a7cd3f3591d/cancel\")"
     ]
   }
 }

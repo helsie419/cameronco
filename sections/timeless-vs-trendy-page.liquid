@@ -16,13 +16,20 @@
   #timeless-trendy-{{ section.id }} .tt-intro,
   #timeless-trendy-{{ section.id }} .tt-section-inner {
     width: 100%;
-    max-width: 1184px;
     box-sizing: border-box;
 
     margin-left: auto;
     margin-right: auto;
 
     text-align: left !important;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-intro {
+    max-width: 1184px;
+  }
+
+  #timeless-trendy-{{ section.id }} .tt-section-inner {
+    max-width: 1120px;
   }
 
 
@@ -85,6 +92,7 @@
 
   #timeless-trendy-{{ section.id }} .tt-section {
     width: 100%;
+    box-sizing: border-box;
 
     padding: 42px 32px;
 
@@ -343,10 +351,10 @@
   #timeless-trendy-{{ section.id }}
   .tt-image-row
   .tt-image-frame {
-    flex: 1 1 0;
-    width: auto;
+    flex: 0 0 260px;
+    width: 260px;
     min-width: 0;
-    height: auto;
+    height: 260px;
 
     margin: 0;
 

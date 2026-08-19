@@ -115,3 +115,28 @@ A comprehensive quality check review was performed across the complete Cameron &
 | Validation | **PASS** | JSON parses, direct template/section WebP references exist, and Shopify theme check passes with only existing remote asset warnings. |
 
 **Release Recommendation:** **PASS for the visual correction pass.**
+
+## 9. August 16, 2026 Complete Page Retest
+
+| Area | Status | Retest Result |
+| :--- | :---: | :--- |
+| Template coverage | **PASS** | All 25 JSON templates parsed successfully and all local section references resolved. The `apps` section in the ring-builder template remains Shopify app-managed. |
+| Hero image and metadata | **PASS** | Homepage editor setting, desktop Liquid fallback, CSS fallback and Open Graph fallback all use `cameron-co-homepage-hero-desktop.png`; the mobile hero remains separate. |
+| Page image assignments | **PASS** | Jewellery-care maintenance now uses `cameron-co-gold-bracelet-green-ring-hand.webp`, avoiding the testimonial heart-bracelet image. Cleaning sections use distinct images within the page. |
+| Asset fallbacks | **NOTE** | `templates/page.articles.json` still contains the fallback filename `double-band-diamond-cluster-ring.webp`, which is not in `assets/`. Its editor-selected Shopify image is present, so the live card remains populated. |
+| Theme Check | **PASS** | 64 files inspected; 20 warnings and 0 errors. Remaining warnings are existing remote-asset, dynamic-block-ID and orphaned-snippet warnings. |
+| Live browser QA | **NOT TESTED** | Static checks completed. Live page interaction, console and network checks were not run in this pass. |
+
+**Release Recommendation:** **PASS for static page integrity, with live browser verification still outstanding.**
+
+## 10. August 16, 2026 Live URL Retest
+
+| Area | Status | Retest Result |
+| :--- | :---: | :--- |
+| Live published pages | **PASS** | Homepage, About, Appraisals, Booking, Contact, Diamonds, FAQ, Jewellery Care, Jewellery Remodelling, Repairs, Replacement, Natural, Lab Grown, Gemstones, Ring Builder, Sydney Services, Testimonials, Timeless vs Trendy and Understanding Diamonds returned HTTP 200. |
+| Unpublished/missing Shopify pages | **ACTION REQUIRED** | `/pages/articles`, `/pages/legal`, `/pages/manage-appointment`, `/pages/manage-appointment-2`, `/pages/melbourne-services`, `/pages/nivoda-gemstones`, `/pages/nivoda-lab`, `/pages/nivoda-natural` and the three legal footer handles returned HTTP 404 because the corresponding Shopify Page objects/handles are not live. |
+| Alternate live handles | **PASS** | `/pages/jewellery-remodelling`, `/pages/timelesstrendyjewellery`, `/pages/natural`, `/pages/lab-grown` and `/pages/gems` returned HTTP 200 and are the live handles used by the relevant content. |
+| Source validation | **PASS** | 25 templates parsed; local section references resolved; Theme Check reports 0 errors and 20 warnings. |
+| Browser visual/interaction QA | **NOT TESTED** | HTTP/title checks were completed; browser console, responsive interaction and image-network verification remain outstanding. |
+
+**Release Recommendation:** **CONDITIONAL PASS** — published page handles are responding, but the listed unpublished templates and legal/footer routes need Shopify Page objects or an explicit decision to remove those routes.

@@ -16,15 +16,19 @@
           "type": "content_block",
           "settings": {
             "heading": "",
+            "image_1": "shopify://shop_images/cameron-co-jewellery-cleaning-service-rings.webp",
             "body": "<p>Regular cleaning is the cornerstone of jewellery care. Even with careful wear, jewellery can accumulate dirt, oils, and grime from daily use. This buildup can dull the appearance of metals and gemstones, and in some cases, even lead to long-term damage.</p>",
             "callout": false,
             "list_heading": "Benefits of regular cleaning:",
             "list_items": "Maintaining the brilliance and shine of your jewellery\nPreventing the buildup of harmful substances\nEarly detection of loose stones or damaged settings\nProlonging the life of your jewellery",
             "list_style": "bullet",
-            "image_1_alt": "Hand brushing two gold rings clean in a bowl of jewellery cleaning solution",
-            "image_1_fallback": "cameron-co-jewellery-cleaning-brush-bowl.webp",
+            "image_1_alt": "Jewellery being professionally cleaned with a soft brush",
+            "image_1_fallback": "cameron-co-jewellery-cleaning-service-rings.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
@@ -42,6 +46,9 @@
             "image_1_fallback": "",
             "image_2_alt": "",
             "image_2_fallback": "",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
@@ -50,6 +57,7 @@
           "type": "content_block",
           "settings": {
             "heading": "Gemstone Jewellery",
+            "image_1": "shopify://shop_images/cameron-co-vintage-opal-gold-ring.webp",
             "body": "<p>Different gemstones require different care. Diamonds can be cleaned with a solution of ammonia and water, while sapphires and rubies can be cleaned similarly. Softer stones such as emeralds and opals should only be cleaned with a damp, soft cloth. Avoid soaking delicate gemstones or using ultrasonic cleaners without professional advice.</p>",
             "callout": false,
             "list_heading": "",
@@ -59,6 +67,9 @@
             "image_1_fallback": "cameron-co-vintage-opal-gold-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
@@ -78,6 +89,9 @@
             "image_2": "shopify://shop_images/cameron-co-jewellery-storage-diamond-ring-velvet-pouch.webp",
             "image_2_alt": "Diamond ring stored in a black velvet jewellery pouch on pale marble",
             "image_2_fallback": "cameron-co-jewellery-storage-diamond-ring-velvet-pouch.webp",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
@@ -86,15 +100,19 @@
           "type": "content_block",
           "settings": {
             "heading": "When to Seek Professional Cleaning Services",
+            "image_1": "shopify://shop_images/cameron-co-jewellery-cleaning-brush-bowl.webp",
             "body": "<p>Professional cleaning should be part of your jewellery care routine, especially for frequently worn pieces, antique pieces, valuable items, or any jewellery showing signs of damage or loose stones.</p>",
             "callout": false,
             "list_heading": "Common Jewellery Care Mistakes to Avoid",
             "list_items": "Wearing jewellery during heavy physical activity\nExposing jewellery to chlorine, swimming pools, lotions or household cleaners\nUsing abrasive or harsh chemical cleaners\nNeglecting professional inspections\nStoring different pieces together without protection",
             "list_style": "bullet",
-            "image_1_alt": "",
-            "image_1_fallback": "",
+            "image_1_alt": "Jewellery being cleaned with a soft brush in a bowl of soapy water",
+            "image_1_fallback": "cameron-co-jewellery-cleaning-brush-bowl.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "",
             "cta_link": ""
           }
@@ -103,15 +121,20 @@
           "type": "content_block",
           "settings": {
             "heading": "Maintenance Schedule for Different Types of Jewellery",
+            "image_1": "shopify://shop_images/cameron-co-gold-bracelet-green-ring-hand.webp",
+            "image_2": "shopify://shop_images/cameron-co-tahitian-pearl-necklace.webp",
             "body": "<p><strong>Daily:</strong> Wipe jewellery with a soft cloth after wearing.</p><p><strong>Weekly:</strong> Give frequently worn pieces a gentle clean with mild soap and water.</p><p><strong>Monthly:</strong> Check for signs of damage, loose stones, worn claws or damaged clasps.</p><p><strong>Bi-annually:</strong> Have valuable or frequently worn pieces professionally cleaned and checked.</p><p><strong>Annually:</strong> Schedule a professional cleaning and inspection for all fine jewellery.</p>",
             "callout": true,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
-            "image_1_alt": "Gold charm bracelet as an example of jewellery requiring regular clasp and setting checks",
-            "image_1_fallback": "cameron-co-gold-heart-charm-bracelet.webp",
+            "image_1_alt": "Gold bracelet and ring being checked as part of regular jewellery maintenance",
+            "image_1_fallback": "cameron-co-gold-bracelet-green-ring-hand.webp",
             "image_2_alt": "Graduated Tahitian pearl necklace requiring gentle regular jewellery care",
             "image_2_fallback": "cameron-co-tahitian-pearl-necklace.webp",
+            "image_3": "",
+            "image_3_alt": "",
+            "image_3_fallback": "",
             "cta_text": "Book an appointment",
             "cta_link": "/pages/booking"
           }
@@ -137,8 +160,6 @@
         "subheading_color": "",
         "body_text_color": "",
         "callout_bg_color": "#f7f5f3",
-        "button_bg_color": "#d5b226",
-        "button_text_color": "#ffffff",
         "heading_font": "cormorant",
         "body_font": "glacial"
       }

@@ -18,8 +18,8 @@
             <p>Phone: <a href="tel:{{ section.settings.office1_phone_href }}">{{ section.settings.office1_phone_display }}</a></p>
           </div>
           <div class="office-buttons">
-            <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office1_email }}">{{ section.settings.contact_button_text }}</a>
-            <a class="btn-office btn-outline-red" href="{{ section.settings.office1_book_link | default: pages['sydney-services'].url }}">{{ section.settings.book_button_text }}</a>
+            <a class="btn-office btn-outline-red cc-button-{{ section.settings.contact_button_style | default: 'outline' }}" href="mailto:{{ section.settings.office1_email }}">{{ section.settings.contact_button_text }}</a>
+            <a class="btn-office btn-outline-red cc-button-{{ section.settings.book_button_style | default: 'outline' }}" href="{{ section.settings.office1_book_link | default: pages['sydney-services'].url }}">{{ section.settings.book_button_text }}</a>
           </div>
         </div>
         <div class="split-image office-map-wrap">
@@ -45,8 +45,8 @@
             <p>Phone: <a href="tel:{{ section.settings.office2_phone_href }}">{{ section.settings.office2_phone_display }}</a></p>
           </div>
           <div class="office-buttons">
-            <a class="btn-office btn-outline-red" href="mailto:{{ section.settings.office2_email }}">{{ section.settings.contact_button_text }}</a>
-            <a class="btn-office btn-outline-red" href="{{ section.settings.office2_book_link | default: pages['melbourne-services'].url }}">{{ section.settings.book_button_text }}</a>
+            <a class="btn-office btn-outline-red cc-button-{{ section.settings.contact_button_style | default: 'outline' }}" href="mailto:{{ section.settings.office2_email }}">{{ section.settings.contact_button_text }}</a>
+            <a class="btn-office btn-outline-red cc-button-{{ section.settings.book_button_style | default: 'outline' }}" href="{{ section.settings.office2_book_link | default: pages['melbourne-services'].url }}">{{ section.settings.book_button_text }}</a>
           </div>
         </div>
         <div class="split-image office-map-wrap">
@@ -113,6 +113,12 @@
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "contact_button_text", "label": "\"Contact us\" button text", "default": "Contact Us" },
     { "type": "text", "id": "book_button_text", "label": "\"Book services\" button text", "default": "Book Services" },
+    { "type": "select", "id": "contact_button_style", "label": "Contact button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "outline" },
+    { "type": "select", "id": "book_button_style", "label": "Book services button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "outline" },
     { "type": "header", "content": "Sydney office" },
     { "type": "text", "id": "office1_name", "label": "Office name", "default": "Sydney Office" },
     { "type": "text", "id": "office1_address_line1", "label": "Address line 1", "default": "Suite 2, Level 7, 37 York Street" },

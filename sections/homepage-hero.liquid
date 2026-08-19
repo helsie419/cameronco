@@ -51,8 +51,8 @@ body.template-index #shopify-section-{{ section.id }} {
   width: auto;
   height: 100%;
   background-repeat: no-repeat;
-  background-position: right center;
-  background-size: auto 100%;
+  background-position: var(--hero-bg-x, 100%) var(--hero-bg-y, 50%) !important;
+  background-size: contain !important;
   overflow: hidden;
 }
 
@@ -84,11 +84,11 @@ body.template-index #shopify-section-{{ section.id }} {
 }
 
 .site-hero-eyebrow {
-  font-family: "EB Garamond", Georgia, serif;
-  font-size: 15px;
-  font-weight: 500;
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
   line-height: 1.2;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.25em !important;
   text-transform: uppercase;
   margin-bottom: 30px;
   transform: translate(var(--el-x, 0px), var(--el-y, 0px));
@@ -96,23 +96,28 @@ body.template-index #shopify-section-{{ section.id }} {
 
 .site-hero-line1 {
   display: block;
-  font-family: "EB Garamond", Georgia, serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: clamp(42px, 3.6vw, 54px) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.98 !important;
   transform: translate(var(--el-x, 0px), var(--el-y, 0px));
 }
 
 .site-hero-line2 {
   display: block;
-  font-family: "EB Garamond", Georgia, serif;
-  font-weight: 400;
-  font-style: italic;
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: clamp(68px, 5.2vw, 74px) !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.98 !important;
   margin-top: 6px;
   transform: translate(var(--el-x, 0px), var(--el-y, 0px));
 }
 
 .site-hero-cta {
-  font-weight: 500;
   height: 46px !important;
   width: 220px !important;
   justify-content: center !important;
@@ -163,10 +168,10 @@ body.template-index #shopify-section-{{ section.id }} {
     {% else %}
       background-image: url('{{ 'cameron-co-mobile-engagement-ring-box-hero.webp' | asset_url }}') !important;
     {% endif %}
-    background-position: 62% 52% !important;
-    background-size: cover !important;
+    background-position: var(--hero-bg-x-mobile, 62%) var(--hero-bg-y-mobile, 52%) !important;
+    background-size: contain !important;
     background-repeat: no-repeat !important;
-    transform: none !important;
+    transform: scale(var(--hero-bg-scale-mobile, 1)) !important;
   }
 
   .site-hero-video {
@@ -209,14 +214,14 @@ body.template-index #shopify-section-{{ section.id }} {
   }
 
   .site-hero-line1 {
-    font-size: 21px !important;
+    font-size: clamp(42px, 11vw, 62px) !important;
     line-height: 1.15 !important;
     color: {{ section.settings.line1_color_mobile }} !important;
     transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
   }
 
   .site-hero-line2 {
-    font-size: 31px !important;
+    font-size: clamp(42px, 11vw, 62px) !important;
     line-height: 1.1 !important;
     margin-top: 2px !important;
     margin-bottom: 22px !important;
@@ -236,7 +241,7 @@ body.template-index #shopify-section-{{ section.id }} {
     width: min(100%, 250px) !important;
     height: 48px !important;
     padding: 0 22px !important;
-    font-size: 13px !important;
+    font-size: 18px !important;
     margin: 0 auto !important;
     border-radius: 999px !important;
     transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
@@ -250,7 +255,8 @@ body.template-index #shopify-section-{{ section.id }} {
   }
 
   .site-hero-photo {
-    background-position: 64% 52% !important;
+    background-position: var(--hero-bg-x-mobile, 64%) var(--hero-bg-y-mobile, 52%) !important;
+    background-size: contain !important;
   }
 
   .site-hero-inner {
@@ -272,11 +278,11 @@ body.template-index #shopify-section-{{ section.id }} {
   "
 >
   {% if section.settings.media_type == 'video' %}
-    <div class="site-hero-photo">
+    <div class="site-hero-photo" style="--hero-bg-x: {{ section.settings.hero_background_position_x | default: 100 }}%; --hero-bg-y: {{ section.settings.hero_background_position_y | default: 50 }}%; --hero-bg-x-mobile: {{ section.settings.hero_background_position_x_mobile | default: 62 }}%; --hero-bg-y-mobile: {{ section.settings.hero_background_position_y_mobile | default: 52 }}%; --hero-bg-scale: {{ section.settings.hero_background_zoom | default: 100 | divided_by: 100.0 }}; --hero-bg-scale-mobile: {{ section.settings.hero_background_zoom_mobile | default: 100 | divided_by: 100.0 }};">
       {% if section.settings.video != blank %}
         {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'site-hero-video' }}
       {% elsif section.settings.video_mp4_url != blank %}
-        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}"{% endif %}>
+        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}"{% endif %}>
           <source src="{{ section.settings.video_mp4_url }}" type="video/mp4">
         </video>
       {% elsif section.settings.background_image %}
@@ -287,7 +293,7 @@ body.template-index #shopify-section-{{ section.id }} {
       {% else %}
         <div
           class="site-hero-photo"
-          style="background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}');"
+          style="background-image: url('{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}');"
         ></div>
       {% endif %}
     </div>
@@ -295,10 +301,16 @@ body.template-index #shopify-section-{{ section.id }} {
     <div
       class="site-hero-photo"
       style="
+        --hero-bg-x: {{ section.settings.hero_background_position_x | default: 100 }}%;
+        --hero-bg-y: {{ section.settings.hero_background_position_y | default: 50 }}%;
+        --hero-bg-x-mobile: {{ section.settings.hero_background_position_x_mobile | default: 62 }}%;
+        --hero-bg-y-mobile: {{ section.settings.hero_background_position_y_mobile | default: 52 }}%;
+        --hero-bg-scale: {{ section.settings.hero_background_zoom | default: 100 | divided_by: 100.0 }};
+        --hero-bg-scale-mobile: {{ section.settings.hero_background_zoom_mobile | default: 100 | divided_by: 100.0 }};
         {% if section.settings.background_image %}
           background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
         {% else %}
-          background-image: url('{{ 'cameron-co-engagement-ring-box-satin-background-hero-wide.webp' | asset_url }}');
+          background-image: url('{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}');
         {% endif %}
       "
     ></div>
@@ -366,15 +378,9 @@ body.template-index #shopify-section-{{ section.id }} {
     </h2>
 
     <a
-      class="site-hero-cta"
+      class="site-hero-cta cc-button-{{ section.settings.button_style | default: 'primary' }}"
       href="{{ section.settings.cta_link }}"
       style="
-        background: {{ section.settings.button_color }} !important;
-        border-color: {{ section.settings.button_color }} !important;
-        --el-x: {{ section.settings.button_offset_x | default: 0 }}px;
-        --el-y: {{ section.settings.button_offset_y | default: 0 }}px;
-        --el-x-m: {{ section.settings.button_offset_x_mobile | default: 0 }}px;
-        --el-y-m: {{ section.settings.button_offset_y_mobile | default: 0 }}px;
       "
     >
       {{ section.settings.cta_text }}
@@ -423,6 +429,76 @@ body.template-index #shopify-section-{{ section.id }} {
       "info": "Optional portrait crop for phones. Recommended size: 1080 x 1440 or 1080 x 1620."
     },
     {
+      "type": "header",
+      "content": "Background image position"
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_x",
+      "label": "Desktop horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "info": "0% is far left, 100% is far right."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_y",
+      "label": "Desktop vertical position",
+      "min": -50,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "default": 50,
+      "info": "50% is centered. Lower values move the image up; higher values move it down."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_x_mobile",
+      "label": "Mobile horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 62,
+      "info": "0% is far left, 100% is far right."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_y_mobile",
+      "label": "Mobile vertical position",
+      "min": -50,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "default": 52,
+      "info": "52% is centered. Lower values move the image up; higher values move it down."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_zoom",
+      "label": "Desktop background zoom",
+      "min": 50,
+      "max": 200,
+      "step": 2,
+      "unit": "%",
+      "default": 120,
+      "info": "50% shows more of the image. Higher values zoom in."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_zoom_mobile",
+      "label": "Mobile background zoom",
+      "min": 50,
+      "max": 200,
+      "step": 2,
+      "unit": "%",
+      "default": 120,
+      "info": "50% shows more of the image. Higher values zoom in."
+    },
+    {
       "type": "video",
       "id": "video",
       "label": "Shopify Hosted Video",
@@ -469,6 +545,17 @@ body.template-index #shopify-section-{{ section.id }} {
       "label": "Button link"
     },
     {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+    {
       "type": "header",
       "content": "Colors"
     },
@@ -497,12 +584,6 @@ body.template-index #shopify-section-{{ section.id }} {
       "default": "#E5C33C"
     },
     {
-      "type": "color",
-      "id": "button_color",
-      "label": "Button background color",
-      "default": "#D5B226"
-    },
-    {
       "type": "header",
       "content": "Colors — mobile only"
     },
@@ -528,7 +609,7 @@ body.template-index #shopify-section-{{ section.id }} {
       "type": "color",
       "id": "accent_color_mobile",
       "label": "Accent word color (mobile)",
-      "default": "#D5B226"
+      "default": "#B09A6F"
     },
     {
       "type": "header",
@@ -646,22 +727,6 @@ body.template-index #shopify-section-{{ section.id }} {
     },
     {
       "type": "header",
-      "content": "Fine-tune — Button (desktop)"
-    },
-    {
-      "type": "range",
-      "id": "button_offset_x",
-      "label": "Horizontal",
-      "min": -400, "max": 400, "step": 10, "unit": "px", "default": 0
-    },
-    {
-      "type": "range",
-      "id": "button_offset_y",
-      "label": "Vertical",
-      "min": -300, "max": 300, "step": 10, "unit": "px", "default": 0
-    },
-    {
-      "type": "header",
       "content": "Position — Mobile"
     },
     {
@@ -733,22 +798,6 @@ body.template-index #shopify-section-{{ section.id }} {
     {
       "type": "range",
       "id": "line2_offset_y_mobile",
-      "label": "Vertical",
-      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Fine-tune — Button (mobile)"
-    },
-    {
-      "type": "range",
-      "id": "button_offset_x_mobile",
-      "label": "Horizontal",
-      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
-    },
-    {
-      "type": "range",
-      "id": "button_offset_y_mobile",
       "label": "Vertical",
       "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
     }

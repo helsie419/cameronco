@@ -31,7 +31,7 @@
 :root {
   --color-white: #ffffff;
   --color-dark: #19202c;
-  --color-brand-red: #D5B226;
+  --color-brand-red: #B09A6F;
   --color-brand-red-light: #b89a5f;
   --color-grey-light: #f7f5f3;
   --color-border: rgba(0, 0, 0, 0.08);
@@ -109,7 +109,7 @@ a {
    the container rather than a class on the link tag itself, since
    Shopify's richtext field sanitizer strips class attributes from links. */
 .page-intro-description a {
-  color: #D5B226;
+  color: #B09A6F;
   text-decoration: underline;
   text-decoration-color: rgba(213, 178, 38, 0.4);
   text-underline-offset: 3px;
@@ -166,7 +166,7 @@ a {
   font-weight: 700;
   text-align: center;
   margin-bottom: 24px;
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .section-subtitle {
@@ -273,7 +273,7 @@ a {
 .staggered-content h3 {
   font-family: var(--font-heading);
   font-size: 28px;
-  color: #D5B226;
+  color: #B09A6F;
   margin-bottom: 15px;
   font-weight: 400;
 }
@@ -451,7 +451,7 @@ a {
 }
 
 .faq-list summary:hover {
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .faq-list summary::-webkit-details-marker {
@@ -461,7 +461,7 @@ a {
 .faq-list summary::after {
   content: '+';
   font-size: 20px;
-  color: #D5B226;
+  color: #B09A6F;
   flex-shrink: 0;
   line-height: 1;
   transition: transform 0.2s;
@@ -644,7 +644,7 @@ a {
   inset: 0;
   background: url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }}) center/cover no-repeat;
   opacity: 0.14;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .footer-inner {
@@ -829,7 +829,7 @@ a {
   background: none;
   border: none;
   font-size: 24px;
-  color: #D5B226;
+  color: #B09A6F;
   cursor: pointer;
   line-height: 1;
 }
@@ -1004,7 +1004,7 @@ a {
 
 .cookie-actions button.accept {
   background: var(--color-white);
-  color: #D5B226;
+  color: #B09A6F;
   font-weight: 400;
 }
 
@@ -1029,7 +1029,7 @@ a {
   font-family: var(--font-heading);
   font-size: 20px;
   margin-bottom: 8px;
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .cookie-settings-panel p {
@@ -1101,6 +1101,30 @@ a {
   align-items: start;
 }
 
+.booking-header-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(420px, 1.2fr);
+  gap: 32px;
+  align-items: start;
+  padding-top: 24px;
+}
+
+.booking-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-header-text .brand-hero {
+  padding-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .booking-header-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .booking-live-page {
   background: #ffffff;
 }
@@ -1146,18 +1170,30 @@ a {
   font-size: 14px;
 }
 
+.booking-calendar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
 .booking-scheduler {
   display: grid;
-  grid-template-columns: minmax(280px, 1.05fr) minmax(280px, 0.95fr);
-  gap: 44px;
+  grid-template-columns: minmax(320px, 1.2fr) minmax(150px, 0.8fr);
+  gap: 28px;
   align-items: start;
+}
+
+@media (max-width: 640px) {
+  .booking-scheduler {
+    grid-template-columns: 1fr;
+  }
 }
 
 .booking-calendar-panel h3,
 .result-panel h3 {
   margin: 0 0 30px;
   color: #0f2b49;
-  font-family: var(--font-body);
+  font-family: var(--heading-3-font);
   font-size: 22px;
   font-weight: 800;
   letter-spacing: 0;
@@ -1183,7 +1219,7 @@ a {
   height: 44px;
   border: 0;
   border-radius: 50%;
-  color: #D5B226;
+  color: #B09A6F;
   background: transparent;
   font-size: 34px;
   line-height: 1;
@@ -1192,7 +1228,7 @@ a {
 
 .calendar-nav:hover {
   background: #f5f8fc;
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .calendar-weekdays,
@@ -1236,7 +1272,7 @@ a {
 }
 
 .calendar-day.available {
-  color: #D5B226;
+  color: #B09A6F;
   background: #fffaf0;
 }
 
@@ -1247,7 +1283,7 @@ a {
 
 .calendar-day.selected {
   color: #ffffff;
-  background: #D5B226;
+  background: #B09A6F;
 }
 
 .calendar-day:disabled {
@@ -1257,32 +1293,31 @@ a {
 }
 
 .booking-timezone {
-  display: grid;
-  grid-template-columns: auto 18px 1fr;
-  gap: 9px;
-  align-items: center;
-  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 24px;
   color: #0f2b49;
   font-family: var(--font-body);
   font-size: 14px;
 }
 
 .booking-timezone strong {
-  grid-column: 1 / -1;
   font-size: 13px;
   font-weight: 800;
 }
 
-.booking-timezone span[aria-hidden="true"] {
-  color: #0f2b49;
-  font-size: 12px;
+.booking-timezone-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
 }
 
 .timezone-toggle {
   border: 0;
   background: none;
   padding: 0;
-  color: #D5B226;
+  color: #B09A6F;
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 700;
@@ -1299,8 +1334,23 @@ a {
   margin-inline: auto;
 }
 
+.booking-details-form .button-row {
+  flex-wrap: nowrap;
+}
+
+.booking-details-form .button-row .btn-black-center {
+  margin: 30px 0 0;
+  flex: 1;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
 .booking-card {
   max-width: 760px;
+}
+
+.booking-live-page .booking-card.booking-picker {
+  max-width: 940px;
 }
 
 .form-row-2,
@@ -1323,13 +1373,8 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .booking-picker-controls,
-  .booking-scheduler {
+  .booking-picker-controls {
     grid-template-columns: 1fr;
-  }
-
-  .booking-scheduler {
-    gap: 28px;
   }
 
   .booking-calendar-panel h3,
@@ -1430,11 +1475,11 @@ a {
 
 .brand-button:hover {
   background: var(--color-white);
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .brand-button.secondary {
-  color: #D5B226;
+  color: #B09A6F;
   background: var(--color-white);
 }
 
@@ -1452,8 +1497,18 @@ a {
 
 .booking-picker .slot-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 11px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.booking-picker .result-panel .slot-grid {
+  margin-top: 107px;
+}
+
+@media (max-width: 640px) {
+  .booking-picker .result-panel .slot-grid {
+    margin-top: 0;
+  }
 }
 
 .diamond-card,
@@ -1485,7 +1540,7 @@ a {
 
 .diamond-card h3 {
   margin: 0;
-  color: #D5B226;
+  color: #B09A6F;
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 700;
@@ -1501,34 +1556,93 @@ a {
 }
 
 .booking-picker .slot-button {
-  min-height: 52px;
-  border: 1px solid #D5B226;
+  min-height: 38px;
+  padding: 6px;
+  border: 1px solid #B09A6F;
   border-radius: 4px;
-  color: #D5B226;
+  color: #B09A6F;
   background: #ffffff;
   text-align: center;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
 }
 
 .slot-button:hover,
 .slot-button.selected {
   border-color: var(--color-brand-red);
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .booking-picker .slot-button:hover,
 .booking-picker .slot-button.selected {
-  border-color: #D5B226;
+  border-color: #B09A6F;
   color: #ffffff;
-  background: #D5B226;
+  background: #B09A6F;
 }
 
 .status-line {
   margin-top: 14px;
   color: #4b5563;
   font-size: 13px;
+}
+
+.status-line.status-line--error {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.status-line.status-line--loading {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.82);
+  pointer-events: none;
+}
+
+.booking-status-spinner {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #B09A6F;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: booking-status-spin 0.7s linear infinite;
+}
+
+.booking-status-spinner::before,
+.booking-status-spinner::after {
+  position: absolute;
+  color: #B09A6F;
+  content: "✦";
+  font-size: 16px;
+  line-height: 1;
+  animation: booking-status-sparkle 1.2s ease-in-out infinite;
+}
+
+.booking-status-spinner::before {
+  top: -15px;
+  right: -14px;
+}
+
+.booking-status-spinner::after {
+  bottom: -13px;
+  left: -15px;
+  font-size: 11px;
+  animation-delay: 0.35s;
+}
+
+@keyframes booking-status-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes booking-status-sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 
 .toast {
@@ -1661,7 +1775,7 @@ a {
 }
 
 .split-text a {
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .split-image img,
@@ -1726,7 +1840,7 @@ a {
   font-family: var(--font-heading);
   font-size: 24px;
   font-weight: 700;
-  color: #D5B226;
+  color: #B09A6F;
   margin-bottom: 16px;
 }
 
@@ -1754,7 +1868,7 @@ a {
 }
 
 .office-details a {
-  color: #D5B226;
+  color: #B09A6F;
   transition: opacity 0.2s;
 }
 
@@ -1873,6 +1987,80 @@ summary:focus-visible {
   }
 }
 
+/* ============================================================
+   GLOBAL BUTTON CONFIGURATION
+   Theme editor settings: Button styles
+   ============================================================ */
+
+.btn-book,
+.btn-red,
+.page-button-red,
+.brand-button.btn-red,
+.btn-hero,
+.site-hero-cta,
+.home-button,
+.page-intro-cta,
+.dl-button,
+.jcare-button,
+.tt-button,
+.dg-button {
+  background: var(--cc-button-primary-bg) !important;
+  color: var(--cc-button-primary-text) !important;
+  border: var(--cc-button-primary-border-width) solid var(--cc-button-primary-border) !important;
+  border-radius: var(--cc-button-primary-radius) !important;
+}
+
+.btn-book:hover,
+.btn-red:hover,
+.page-button-red:hover,
+.brand-button.btn-red:hover,
+.btn-hero:hover,
+.site-hero-cta:hover,
+.home-button:hover,
+.page-intro-cta:hover,
+.dl-button:hover,
+.jcare-button:hover,
+.tt-button:hover,
+.dg-button:hover {
+  background: var(--cc-button-primary-hover-bg) !important;
+  color: var(--cc-button-primary-hover-text) !important;
+  border-color: var(--cc-button-primary-hover-border) !important;
+}
+
+.page-button-dark,
+.btn-black-center.secondary,
+.brand-button.secondary {
+  background: var(--cc-button-secondary-bg) !important;
+  color: var(--cc-button-secondary-text) !important;
+  border: var(--cc-button-secondary-border-width) solid var(--cc-button-secondary-border) !important;
+  border-radius: var(--cc-button-secondary-radius) !important;
+}
+
+.page-button-dark:hover,
+.btn-black-center.secondary:hover,
+.brand-button.secondary:hover {
+  background: var(--cc-button-secondary-hover-bg) !important;
+  color: var(--cc-button-secondary-hover-text) !important;
+  border-color: var(--cc-button-secondary-hover-border) !important;
+}
+
+.btn-outline-red,
+.btn-book.btn-outline-red,
+.btn-office.btn-outline-red {
+  background: var(--cc-button-outline-bg) !important;
+  color: var(--cc-button-outline-text) !important;
+  border: var(--cc-button-outline-border-width) solid var(--cc-button-outline-border) !important;
+  border-radius: var(--cc-button-outline-radius) !important;
+}
+
+.btn-outline-red:hover,
+.btn-book.btn-outline-red:hover,
+.btn-office.btn-outline-red:hover {
+  background: var(--cc-button-outline-hover-bg) !important;
+  color: var(--cc-button-outline-hover-text) !important;
+  border-color: var(--cc-button-outline-hover-border) !important;
+}
+
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
   .section-inner { padding: 0 16px; }
@@ -1886,7 +2074,7 @@ summary:focus-visible {
    uploaded page structure and the approved footer component.
    ============================================================ */
 :root{
-  --cc-red:#D5B226;
+  --cc-red:#B09A6F;
   --cc-black:#19202c;
   --cc-muted:#767676;
   --cc-cream:#f7f5f3;
@@ -1903,7 +2091,7 @@ body{
 .cc-section{padding:48px 0;}
 .section-inner{max-width:980px;padding:0 22px;}
 .section-title,h1.section-title,h2.section-title{
-  color:#D5B226;
+  color:#B09A6F;
   font-family:var(--font-heading), Georgia, serif;
   font-weight:700;
   font-size:clamp(34px,4vw,56px);
@@ -2052,8 +2240,8 @@ body{
 .btn-red,
 .page-button-red,
 .brand-button.btn-red {
-  background: #D5B226 !important;
-  border-color: #D5B226 !important;
+  background: #B09A6F !important;
+  border-color: #B09A6F !important;
   color: #ffffff !important;
 }
 
@@ -2067,8 +2255,8 @@ body{
 }
 
 .btn-hero {
-  background: #D5B226;
-  border-color: #D5B226;
+  background: #B09A6F;
+  border-color: #B09A6F;
   color: #ffffff;
 }
 
@@ -2157,12 +2345,12 @@ body{
 .cc-moved-style-009 { margin-bottom: 24px; color: var(--color-text-muted); }
 .cc-moved-style-010 { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
 .cc-moved-style-011 { padding: 16px 32px; height: auto; font-size: 14px; border: 1px solid var(--color-brand-red); }
-.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: #D5B226; padding: 16px 32px; height: auto; font-size: 14px; }
+.cc-moved-style-012 { background: transparent; border: 1px solid var(--color-brand-red); color: #B09A6F; padding: 16px 32px; height: auto; font-size: 14px; }
 .cc-moved-style-013 { margin-top: -16px; }
 .cc-moved-style-014 { margin-bottom: 50px; }
 .cc-moved-style-015 { margin-top: 20px; }
 .cc-moved-style-016 { margin-top: 12px; }
-.cc-moved-style-017 { color: #D5B226; text-decoration: underline; }
+.cc-moved-style-017 { color: #B09A6F; text-decoration: underline; }
 .cc-moved-style-018 { background-color: var(--color-grey-light); margin: 0 -24px; padding: 50px 24px; }
 .cc-moved-style-019 { margin-top: 16px; }
 .cc-moved-style-020 { max-width: 960px; margin: 0 auto; }
@@ -2198,7 +2386,7 @@ body{
 .cc-moved-style-050 { font-size: 15px; line-height: 1.75; color: var(--color-text); margin-bottom: 28px; }
 .cc-moved-style-051 { margin: 0 auto; }
 .cc-moved-style-052 { margin-bottom: 64px; margin-top: 40px; }
-.cc-moved-style-053 { color: #D5B226; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+.cc-moved-style-053 { color: #B09A6F; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
 .cc-moved-style-054 { font-family: var(--font-heading); font-size: 36px; margin: 10px 0 20px; font-weight: 400; }
 .cc-moved-style-055 { background: var(--color-white); padding: 30px; border-radius: var(--radius-md); box-shadow: var(--shadow-glass); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
 .cc-moved-style-056 { font-family: var(--font-body); font-size: 14px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 10px; text-align: center; }
@@ -2223,7 +2411,7 @@ body{
 .cc-moved-style-075 { font-weight: bold; font-size: 13px; }
 .cc-moved-style-076 { font-size: 10px; color: var(--color-text-muted); margin-top: 4px; }
 .cc-moved-style-077 { border: 1px solid var(--color-border); padding: 10px 4px; border-radius: 4px; border-color: var(--color-brand-red-light); background: rgba(140, 106, 47,0.03); }
-.cc-moved-style-078 { font-weight: bold; font-size: 13px; color: #D5B226; }
+.cc-moved-style-078 { font-weight: bold; font-size: 13px; color: #B09A6F; }
 .cc-moved-style-079 { font-size: 12px; color: var(--color-text-muted); text-align: center; }
 .cc-moved-style-080 { display: flex; justify-content: space-around; align-items: flex-end; width: 100%; height: 110px; padding-bottom: 15px; }
 .cc-moved-style-081 { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -2407,7 +2595,7 @@ iframe.office-map {
 
 .about-title-band h2 {
   font-size: clamp(42px, 5vw, 72px);
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 .about-mission-grid {
@@ -2428,7 +2616,7 @@ iframe.office-map {
 
 .about-text-card h2,
 .about-values-card h2 {
-  color: #D5B226;
+  color: #B09A6F;
   font-size: clamp(34px, 4vw, 52px);
   margin-bottom: 16px;
 }
@@ -2559,7 +2747,7 @@ iframe.office-map {
 
 .article-card-grid h3 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #D5B226;
+  color: #B09A6F;
   font-size: 30px;
   font-weight: 400;
   margin-bottom: 12px;
@@ -2874,7 +3062,7 @@ iframe.office-map {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 /* Anatomy of a diamond diagram (see snippets/diamond-anatomy-diagram.liquid) */
@@ -2943,7 +3131,7 @@ iframe.office-map {
 .about-text-card h2,
 .about-values-card h2 {
   font-family: "Cormorant Garamond", Georgia, serif;
-  color: #D5B226;
+  color: #B09A6F;
   font-size: 38px;
   line-height: 1.1;
   font-weight: 400;
@@ -3155,7 +3343,7 @@ iframe.office-map {
 .detail-specs h2 {
   font-family: var(--font-heading);
   font-size: 28px;
-  color: #D5B226;
+  color: #B09A6F;
   margin-bottom: 8px;
 }
 .detail-price {
@@ -3208,7 +3396,7 @@ iframe.office-map {
   font-family: var(--font-heading);
   font-size: clamp(28px, 3vw, 42px);
   font-weight: 400;
-  color: #D5B226;
+  color: #B09A6F;
   margin-bottom: 12px;
 }
 .builder-intro-sub {
@@ -3235,7 +3423,7 @@ iframe.office-map {
   font-family: var(--font-heading);
   font-size: 22px;
   font-weight: 300;
-  color: #D5B226;
+  color: #B09A6F;
   line-height: 1;
 }
 .intro-step-label {
@@ -3275,7 +3463,7 @@ iframe.office-map {
   box-sizing: border-box;
 }
 .builder-brand-header .brand-right {
-  color: #D5B226;
+  color: #B09A6F;
   font-weight: 600;
 }
 
@@ -3327,7 +3515,7 @@ iframe.office-map {
 }
 .stepper-step.active .step-num-box {
   background: rgba(140, 106, 47, 0.06);
-  color: #D5B226;
+  color: #B09A6F;
 }
 .step-text-box {
   display: flex;
@@ -3468,7 +3656,7 @@ iframe.office-map {
 }
 .filter-btn.active {
   border-color: var(--color-brand-red);
-  color: #D5B226;
+  color: #B09A6F;
   background: rgba(140, 106, 47, 0.03);
 }
 
@@ -3636,7 +3824,7 @@ iframe.office-map {
   margin: 0;
   font-family: var(--font-heading);
   font-size: 24px;
-  color: #D5B226;
+  color: #B09A6F;
   font-weight: 500;
 }
 .setting-description {
@@ -3692,7 +3880,7 @@ iframe.office-map {
   margin-right: 8px;
 }
 .banner-info strong {
-  color: #D5B226;
+  color: #B09A6F;
 }
 .btn-change-setting {
   font-size: 13px;
@@ -3770,7 +3958,7 @@ iframe.office-map {
   border-radius: 6px;
   font-family: var(--font-body);
   font-size: 13px;
-  color: #D5B226;
+  color: #B09A6F;
 }
 .completed-ring-badge svg {
   width: 18px;
@@ -3780,7 +3968,7 @@ iframe.office-map {
   margin: 0 0 8px;
   font-family: var(--font-heading);
   font-size: 32px;
-  color: #D5B226;
+  color: #B09A6F;
 }
 .review-subtitle {
   font-family: var(--font-body);
@@ -3843,7 +4031,7 @@ iframe.office-map {
   font-family: var(--font-body);
   font-size: 24px;
   font-weight: 700;
-  color: #D5B226;
+  color: #B09A6F;
 }
 .review-actions {
   display: flex;
@@ -3945,7 +4133,7 @@ iframe.office-map {
   border-color: var(--color-brand-red) !important;
   background: rgba(140, 106, 47, 0.03) !important;
   box-shadow: 0 0 0 1.5px var(--color-brand-red) !important;
-  color: #D5B226 !important;
+  color: #B09A6F !important;
 }
 
 /* Swatch container centering */
@@ -4113,7 +4301,7 @@ iframe.office-map {
    swaps the site's accent from red to a brass/gold, site-wide.
    ============================================================ */
 :root {
-  --cc-gold: #D5B226;
+  --cc-gold: #B09A6F;
   --cc-gold-deep: #b9971f;
   --cc-ivory: #f7f5f3;
   --cc-ink: #3a362f;
@@ -4140,7 +4328,7 @@ iframe.office-map {
   color: #ffffff !important;
 }
 .section-title, h1.section-title, h2.section-title {
-  color: #D5B226;
+  color: #B09A6F;
 }
 
 /* ---- type scale correction: smaller display headlines, larger legible body copy ---- */
@@ -4174,7 +4362,7 @@ body, p {
 .site-hero-photo {
   position: absolute;
   inset: 0;
-  background-image: url('{{ "cameron-co-engagement-ring-box-satin-background-hero.webp" | asset_url }}');
+  background-image: url('{{ "cameron-co-homepage-hero-desktop.png" | asset_url }}');
   background-size: cover;
   background-position: 72% 78%;
   background-repeat: no-repeat;
@@ -4225,7 +4413,7 @@ body, p {
   margin: 2px 0 0 0;
 }
 .site-hero-line2 .accent {
-  color: #D5B226;
+  color: #B09A6F;
 }
 .site-hero-cta {
   display: inline-flex;
@@ -4313,7 +4501,7 @@ body, p {
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 19px;
-  color: #D5B226;
+  color: #B09A6F;
   margin-bottom: 10px;
 }
 .home-testimonial-card p {
@@ -4392,6 +4580,43 @@ body, p {
 }
 
 /* Ring Builder / Diamonds pages: intro header + Nivoda app-block slot. */
+.page-ring-builder #diamond-proxy-root {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 40px !important;
+  overflow-x: hidden !important;
+}
+
+@media screen and (max-width: 749px) {
+  .page-ring-builder #diamond-proxy-root {
+    padding: 0 12px !important;
+  }
+
+  .page-ring-builder #diamond-proxy-root input {
+    min-width: 0 !important;
+  }
+
+  .page-ring-builder #diamond-proxy-root input[type='number'] {
+    font-size: 13px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .page-ring-builder #diamond-proxy-root [class*='step'] {
+    min-width: 0 !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .page-ring-builder #diamond-proxy-root [class*='step'] > *:first-child {
+    flex: 0 0 40px !important;
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 20px !important;
+  }
+}
+
 .page-intro-section {
   padding: 0 0 40px;
 }
@@ -4634,12 +4859,15 @@ summary:focus-visible,
    wins over the earlier "correction pass" layers above. One solid
    gold background + bold white text across every primary CTA
    (Book an appointment, Read more, Chat to us, etc). Secondary /
-   outline buttons (.btn-outline-red) are intentionally excluded —
-   they're meant to look different from the primary action beside
-   them.
+   outline buttons are intentionally excluded -- they're meant to
+   look different from the primary action beside them. The legacy
+   .btn-outline-red exclusion alone didn't cover .btn-black-center
+   buttons using the newer cc-button-secondary/cc-button-outline
+   variant classes, so those were incorrectly forced gold too;
+   excluding them explicitly here fixes that.
    ============================================================ */
 .btn-book:not(.btn-outline-red),
-.btn-black-center:not(.btn-outline-red),
+.btn-black-center:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline),
 .btn-office:not(.btn-outline-red),
 .home-button:not(.btn-outline-red),
 .site-hero-cta {
@@ -4649,7 +4877,7 @@ summary:focus-visible,
 }
 
 .btn-book:not(.btn-outline-red):hover,
-.btn-black-center:not(.btn-outline-red):hover,
+.btn-black-center:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline):hover,
 .btn-office:not(.btn-outline-red):hover,
 .home-button:not(.btn-outline-red):hover,
 .site-hero-cta:hover {
@@ -4704,37 +4932,37 @@ summary:focus-visible,
 /* ============================================================
    UNIVERSAL BUTTON COLOR — true final word, appended after
    everything else. Every primary CTA class in the theme had drifted
-   to a different gold over time (#D5B226, #cba922, var(--cc-gold),
+   to a different gold over time (#B09A6F, #cba922, var(--cc-gold),
    var(--color-brand-red)...) depending on which of a dozen older
    "correction pass" rules happened to win for that particular class.
-   One color, site-wide: #D5B226. Secondary/outline/dark-variant
+   One color, site-wide: #B09A6F. Secondary/outline/dark-variant
    buttons are intentionally excluded — they're meant to look
    different from the primary action beside them.
    ============================================================ */
 .btn-book:not(.btn-outline-red),
 .btn-red:not(.btn-outline-red),
 .page-button-red:not(.btn-outline-red),
-.btn-black-center:not(.btn-outline-red),
+.btn-black-center:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline),
 .btn-office:not(.btn-outline-red),
 .brand-button:not(.btn-outline-red):not(.secondary),
 .btn-hero:not(.btn-outline-red),
-.page-button-dark:not(.btn-outline-red),
+.page-button-dark:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline),
 .home-button:not(.btn-outline-red),
 .home-button-red:not(.btn-outline-red),
 .site-hero-cta {
-  background: #D5B226 !important;
-  border-color: #D5B226 !important;
+  background: #B09A6F !important;
+  border-color: #B09A6F !important;
   color: #ffffff !important;
 }
 
 .btn-book:not(.btn-outline-red):hover,
 .btn-red:not(.btn-outline-red):hover,
 .page-button-red:not(.btn-outline-red):hover,
-.btn-black-center:not(.btn-outline-red):hover,
+.btn-black-center:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline):hover,
 .btn-office:not(.btn-outline-red):hover,
 .brand-button:not(.btn-outline-red):not(.secondary):hover,
 .btn-hero:not(.btn-outline-red):hover,
-.page-button-dark:not(.btn-outline-red):hover,
+.page-button-dark:not(.btn-outline-red):not(.cc-button-secondary):not(.cc-button-outline):hover,
 .home-button:not(.btn-outline-red):hover,
 .home-button-red:not(.btn-outline-red):hover,
 .site-hero-cta:hover {
@@ -4743,31 +4971,23 @@ summary:focus-visible,
   color: #ffffff !important;
 }
 
-/* Booking page final polish: keep time slots readable and give the
-   calendar/times area a little more breathing room at the bottom. */
-.booking-live-page .app-grid {
+/* Booking page final polish: the manage panel (reschedule/cancel) now sits
+   above the calendar, so it stays close to the fold regardless of how tall
+   the calendar grid is. The details form now lives in the header-grid's
+   left column, so the bottom padding that used to sit on the trailing
+   .app-grid section now belongs on the page wrapper for breathing room
+   before the footer. */
+.booking-live-page {
   padding-bottom: 56px !important;
 }
 
-.booking-live-page .booking-card.booking-picker {
-  padding-bottom: 36px !important;
-}
-
 .booking-live-page .calendar-days {
-  margin-bottom: 18px !important;
-}
-
-.booking-live-page .booking-picker .result-panel {
-  padding-bottom: 20px !important;
-}
-
-.booking-live-page .slot-grid {
-  padding-bottom: 18px !important;
+  margin-bottom: 8px !important;
 }
 
 .booking-live-page .slot-button,
 .booking-live-page .booking-picker .slot-button {
-  border-color: #D5B226 !important;
+  border-color: #B09A6F !important;
   color: #171d29 !important;
   background: #ffffff !important;
 }
@@ -4780,7 +5000,7 @@ summary:focus-visible,
 .booking-live-page .booking-picker .slot-button.selected {
   border-color: #7d6422 !important;
   color: #171d29 !important;
-  background: #D5B226 !important;
+  background: #B09A6F !important;
   box-shadow: 0 0 0 3px rgba(125, 100, 34, .22) !important;
 }
 
@@ -5021,8 +5241,8 @@ h2.section-title,
 .home-button,
 .home-button-red,
 .site-hero-cta {
-  background: #D5B226 !important;
-  border-color: #D5B226 !important;
+  background: #B09A6F !important;
+  border-color: #B09A6F !important;
   color: #ffffff !important;
 }
 
@@ -5076,8 +5296,8 @@ h2.section-title,
   height: 1px !important;
   margin: 0 !important;
   padding: 0 !important;
-  background: #D5B226 !important;
-  background-color: #D5B226 !important;
+  background: #B09A6F !important;
+  background-color: #B09A6F !important;
   border: none !important;
   box-shadow: none !important;
   transform: scaleX(0) !important;
@@ -5090,8 +5310,8 @@ h2.section-title,
 #shopify-section-header .site-header .primary-nav > li > a.primary-nav-link:focus-visible::after,
 #shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="page"]::after,
 #shopify-section-header .site-header .primary-nav > li > a.primary-nav-link[aria-current="true"]::after {
-  background: #D5B226 !important;
-  background-color: #D5B226 !important;
+  background: #B09A6F !important;
+  background-color: #B09A6F !important;
   transform: scaleX(1) !important;
 }
 
@@ -5116,4 +5336,174 @@ h2.section-title,
     line-height: 1.35 !important;
     padding: 11px 0 !important;
   }
+}
+
+/* Final cascade: keep every configured CTA in sync with the theme editor. */
+.btn-book, .btn-red, .page-button-red, .brand-button, .btn-hero,
+.site-hero-cta, .home-button, .page-intro-cta, .btn-office, .btn-submit, .dl-button, .jcare-button, .tt-button, .dg-button {
+  background: var(--cc-button-primary-bg) !important;
+  color: var(--cc-button-primary-text) !important;
+  border: var(--cc-button-primary-border-width) solid var(--cc-button-primary-border) !important;
+  border-radius: var(--cc-button-primary-radius) !important;
+}
+.btn-book:hover, .btn-red:hover, .page-button-red:hover, .brand-button:hover,
+.btn-hero:hover, .site-hero-cta:hover, .home-button:hover, .page-intro-cta:hover, .btn-office:hover, .btn-submit:hover, .dl-button:hover,
+.jcare-button:hover, .tt-button:hover, .dg-button:hover {
+  background: var(--cc-button-primary-hover-bg) !important;
+  color: var(--cc-button-primary-hover-text) !important;
+  border-color: var(--cc-button-primary-hover-border) !important;
+}
+.btn-black-center, .page-button-dark,
+.btn-black-center.secondary, .brand-button.secondary {
+  background: var(--cc-button-secondary-bg) !important;
+  color: var(--cc-button-secondary-text) !important;
+  border: var(--cc-button-secondary-border-width) solid var(--cc-button-secondary-border) !important;
+  border-radius: var(--cc-button-secondary-radius) !important;
+}
+.btn-black-center:hover, .page-button-dark:hover,
+.btn-black-center.secondary:hover, .brand-button.secondary:hover {
+  background: var(--cc-button-secondary-hover-bg) !important;
+  color: var(--cc-button-secondary-hover-text) !important;
+  border-color: var(--cc-button-secondary-hover-border) !important;
+}
+.btn-outline-red, .btn-book.btn-outline-red, .btn-office.btn-outline-red {
+  background: var(--cc-button-outline-bg) !important;
+  color: var(--cc-button-outline-text) !important;
+  border: var(--cc-button-outline-border-width) solid var(--cc-button-outline-border) !important;
+  border-radius: var(--cc-button-outline-radius) !important;
+}
+.btn-outline-red:hover, .btn-book.btn-outline-red:hover, .btn-office.btn-outline-red:hover {
+  background: var(--cc-button-outline-hover-bg) !important;
+  color: var(--cc-button-outline-hover-text) !important;
+  border-color: var(--cc-button-outline-hover-border) !important;
+}
+
+/* Explicit semantic variant classes used by page CTAs. These selectors are
+   intentionally last so a CTA's chosen variant wins over legacy class names. */
+.cc-button-primary {
+  background: var(--cc-button-primary-bg) !important;
+  color: var(--cc-button-primary-text) !important;
+  border: var(--cc-button-primary-border-width) solid var(--cc-button-primary-border) !important;
+  border-radius: var(--cc-button-primary-radius) !important;
+}
+.cc-button-primary:hover {
+  background: var(--cc-button-primary-hover-bg) !important;
+  color: var(--cc-button-primary-hover-text) !important;
+  border-color: var(--cc-button-primary-hover-border) !important;
+}
+.cc-button-secondary {
+  background: var(--cc-button-secondary-bg) !important;
+  color: var(--cc-button-secondary-text) !important;
+  border: var(--cc-button-secondary-border-width) solid var(--cc-button-secondary-border) !important;
+  border-radius: var(--cc-button-secondary-radius) !important;
+}
+.cc-button-secondary:hover {
+  background: var(--cc-button-secondary-hover-bg) !important;
+  color: var(--cc-button-secondary-hover-text) !important;
+  border-color: var(--cc-button-secondary-hover-border) !important;
+}
+.cc-button-outline {
+  background: var(--cc-button-outline-bg) !important;
+  color: var(--cc-button-outline-text) !important;
+  border: var(--cc-button-outline-border-width) solid var(--cc-button-outline-border) !important;
+  border-radius: var(--cc-button-outline-radius) !important;
+}
+.cc-button-outline:hover {
+  background: var(--cc-button-outline-hover-bg) !important;
+  color: var(--cc-button-outline-hover-text) !important;
+  border-color: var(--cc-button-outline-hover-border) !important;
+}
+
+/* Final homepage corrections: use the image at its natural fitted scale and
+   ensure CTA contents respect the configured rounded corners. */
+.site-hero .site-hero-photo {
+  transform: scale(var(--hero-bg-scale, 1)) !important;
+  transform-origin: var(--hero-bg-x, 100%) var(--hero-bg-y, 50%);
+  background-size: contain !important;
+}
+
+@media (max-width: 900px) {
+  .site-hero .site-hero-photo {
+    transform: scale(var(--hero-bg-scale-mobile, 1)) !important;
+    transform-origin: var(--hero-bg-x-mobile, 62%) var(--hero-bg-y-mobile, 52%);
+    background-size: contain !important;
+  }
+}
+
+.template-index .site-hero-cta,
+.template-index .site-hero-cta::before,
+.template-index .site-hero-cta::after,
+.template-index .site-hero-cta > * {
+  border-radius: inherit;
+}
+
+.template-index .site-hero-cta {
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+/* Global button typography and background transparency controls. */
+.btn-book,
+.btn-red,
+.page-button-red,
+.brand-button,
+.btn-hero,
+.site-hero-cta,
+.home-button,
+.page-intro-cta,
+.btn-office,
+.btn-submit,
+.dl-button,
+.jcare-button,
+.tt-button,
+.dg-button,
+.cc-button-primary {
+  font-size: var(--cc-button-primary-font-size) !important;
+  background: color-mix(in srgb, var(--cc-button-primary-bg) var(--cc-button-primary-transparency), transparent) !important;
+}
+
+.page-button-dark,
+.brand-button.secondary,
+.cc-button-secondary {
+  font-size: var(--cc-button-secondary-font-size) !important;
+  background: color-mix(in srgb, var(--cc-button-secondary-bg) var(--cc-button-secondary-transparency), transparent) !important;
+}
+
+.btn-outline-red,
+.btn-book.btn-outline-red,
+.btn-office.btn-outline-red,
+.cc-button-outline {
+  font-size: var(--cc-button-outline-font-size) !important;
+  background: color-mix(in srgb, var(--cc-button-outline-bg) var(--cc-button-outline-transparency), transparent) !important;
+}
+
+.btn-book:hover,
+.btn-red:hover,
+.page-button-red:hover,
+.brand-button:hover,
+.btn-hero:hover,
+.site-hero-cta:hover,
+.home-button:hover,
+.page-intro-cta:hover,
+.btn-office:hover,
+.btn-submit:hover,
+.dl-button:hover,
+.jcare-button:hover,
+.tt-button:hover,
+.dg-button:hover,
+.cc-button-primary:hover {
+  background: color-mix(in srgb, var(--cc-button-primary-hover-bg) var(--cc-button-primary-hover-transparency), transparent) !important;
+}
+
+.page-button-dark:hover,
+.brand-button.secondary:hover,
+.cc-button-secondary:hover {
+  background: color-mix(in srgb, var(--cc-button-secondary-hover-bg) var(--cc-button-secondary-hover-transparency), transparent) !important;
+}
+
+.btn-outline-red:hover,
+.btn-book.btn-outline-red:hover,
+.btn-office.btn-outline-red:hover,
+.cc-button-outline:hover {
+  background: color-mix(in srgb, var(--cc-button-outline-hover-bg) var(--cc-button-outline-hover-transparency), transparent) !important;
 }

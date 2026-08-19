@@ -16,17 +16,19 @@
           "type": "content_block",
           "settings": {
             "heading": "Your Options",
-            "body": "<p>Once your insurer establishes a replacement value, you can choose from stock we already hold, a special order piece, or something individually designed and handcrafted in our own workshop — whichever best replaces what you've lost. If you'd like to purchase additional items or upgrade beyond your claimed item, we can also offer a substantial discount in accordance with your insurance contract.</p>",
+            "body": "<p>Once your insurer establishes a replacement value, you can choose from stock we already hold, a special order piece, or something individually designed and handcrafted in our own workshop,  whichever best replaces what you've lost. If you'd like to purchase additional items or upgrade beyond your claimed item, we can also offer a substantial discount in accordance with your insurance contract.</p>",
             "callout": false,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-diamond-ring-set-satin.webp",
             "image_1_alt": "Pear diamond yellow gold ring selected as a replacement piece",
             "image_1_fallback": "pear-diamond-yellow-gold-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Browse Our Diamonds",
-            "cta_link": "/pages/diamonds"
+            "cta_link": "/pages/diamonds",
+            "button_style": "secondary"
           }
         },
         "block-2": {
@@ -36,31 +38,35 @@
             "body": "<p>You don't have to use your approved claim value all at once. If you'd like more time, or want to stagger your selections, we can liaise with your insurer and issue an in-store credit voucher for the assessed value or remaining balance.</p>",
             "callout": true,
             "list_heading": "A few things worth knowing about your voucher:",
-            "list_items": "Valid for the supply of jewellery or watches only — it can't be exchanged for cash, as required under our contract with your insurer\nValid for three years, and can be extended by arrangement\nCan be used by another household member with your permission",
+            "list_items": "Valid for the supply of jewellery or watches only — it can't be exchanged for cash, as required under our contract with your insurer\nValid for three years..\nCan be used by another household member with your permission",
             "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-aquamarine-halo-ring.webp",
             "image_1_alt": "Aquamarine halo ring selected as a replacement jewellery option",
-            "image_1_fallback": "cameron-co-aquamarine-halo-ring.png",
+            "image_1_fallback": "cameron-co-aquamarine-halo-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "",
-            "cta_link": ""
+            "cta_link": "",
+            "button_style": "secondary"
           }
         },
         "block-3": {
           "type": "content_block",
           "settings": {
             "heading": "Documentation",
-            "body": "<p>Replacement jewellery supplied under a claim doesn't usually come with a receipt, since you haven't paid for it directly — instead, we provide a Replacement List detailing all items and their values. Any additional purchases are always receipted. For items with a retail value over $1,000, we also provide an independent valuation from a registered NCJV valuer for re-insurance purposes.</p>",
+            "body": "<p>Replacement jewellery supplied under a claim doesn't usually come with a receipt, since you haven't paid for it directly — instead, we provide a Replacement List detailing all items and their values. Any additional purchases are always receipted. For items with a retail value over $1,000, we also provide an independent valuation from a registered valuer for re-insurance purposes.</p>",
             "callout": false,
             "list_heading": "",
             "list_items": "",
             "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-pink-gemstone-ring.webp",
             "image_1_alt": "Pink gemstone ring on satin representing a personalised replacement piece",
-            "image_1_fallback": "cameron-co-pink-gemstone-ring.png",
+            "image_1_fallback": "cameron-co-pink-gemstone-ring.webp",
             "image_2_alt": "",
             "image_2_fallback": "",
             "cta_text": "Book an appointment",
-            "cta_link": "/pages/booking"
+            "cta_link": "/pages/booking",
+            "button_style": "secondary"
           }
         }
       },
@@ -81,8 +87,6 @@
         "subheading_color": "",
         "body_text_color": "",
         "callout_bg_color": "#f7f5f3",
-        "button_bg_color": "#D5B226",
-        "button_text_color": "#ffffff",
         "heading_font": "cormorant",
         "body_font": "glacial"
       }

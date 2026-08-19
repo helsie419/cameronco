@@ -16,30 +16,27 @@
         "heading": "Build Your Ring",
         "description": "<p>Start with a diamond or a setting and build a piece that's entirely yours — powered by our live diamond and gemstone inventory. </p><p>Already have a stone in mind?</p>",
         "button_label": "Browse our diamonds",
-        "button_link": "shopify://pages/natural",
-        "button_background": "#171d29",
-        "button_text_color": "#ffffff",
-        "button_hover_background": "#c79a3b",
-        "button_hover_text_color": "#ffffff",
+        "button_link": "shopify://pages/diamonds-landing-page",
+        "button_style": "secondary",
         "heading_color": "",
         "heading_font": "cormorant",
         "description_color": "",
         "description_font": "glacial"
       }
     },
-    "1784243820bc468ed8": {
-      "type": "app-embed-slot",
+    "17865320136bd9adec": {
+      "type": "apps",
       "blocks": {
-        "nivoda_connect_ring_builder_HhhQqw": {
+        "nivoda_connect_ring_builder_83DWtG": {
           "type": "shopify://apps/nivoda-connect/blocks/ring_builder/1818f65a-9917-4ef2-bca9-2424a925fc76",
           "settings": {
-            "primary_color": "#d5b226",
+            "primary_color": "#B09A6F",
             "ring_size_guide": "",
-            "ring_size_regions": "UNITED_STATES,UNITED_KINGDOM,AUSTRALIA,ITALY,SPAIN,HONG_KONG,EUROPE,SOUTH_AFRICA,CANADA,JAPAN,KOREA",
+            "ring_size_regions": "AUSTRALIA",
             "diamond_type_natural": true,
             "diamond_type_lab": true,
-            "diamond_type_gem_v2": true,
-            "default_stone_type": "Natural",
+            "diamond_type_gem_v2": false,
+            "default_stone_type": "Lab Grown",
             "color_min": "J",
             "color_max": "D",
             "clarity_min": "VS2",
@@ -47,14 +44,14 @@
             "cut_min": "VG",
             "cut_max": "ID",
             "gem_certificate_lab": "GIA,IGI",
-            "collection": "",
+            "collection": "build-your-own-ring",
             "price_filter_min": 100,
             "price_filter_max": 5000,
             "shapes": "ROUND,OVAL,EMERALD,PEAR,PRINCESS,CUSHION,RADIANT,MARQUISE,HEART,SQUARE_EMERALD,ASSCHER",
-            "carats_min": 0,
-            "carats_max": 10,
+            "carats_min": 0.5,
+            "carats_max": 3,
             "price_min": 1,
-            "price_max": 5000000,
+            "price_max": 10000,
             "table_min": 0,
             "table_max": 100,
             "ratio_min_v1": 0,
@@ -74,13 +71,16 @@
         }
       },
       "block_order": [
-        "nivoda_connect_ring_builder_HhhQqw"
+        "nivoda_connect_ring_builder_83DWtG"
+      ],
+      "custom_css": [
+        "#diamond-proxy-root {width: 100%; box-sizing: border-box; overflow-x: hidden; padding: 0 12px;}"
       ],
       "settings": {}
     }
   },
   "order": [
     "intro",
-    "1784243820bc468ed8"
+    "17865320136bd9adec"
   ]
 }

@@ -10,8 +10,8 @@
           Email <a href="mailto:{{ section.settings.email }}" style="color:{{ section.settings.link_color }};">{{ section.settings.email }}</a>.
         </p>
         <div class="office-buttons cc-moved-style-015">
-          <a class="btn-office" href="mailto:{{ section.settings.email }}" style="background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ section.settings.contact_button_text }}</a>
-          <a class="btn-office" href="{{ section.settings.book_button_link }}" style="background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ section.settings.book_button_text }}</a>
+          <a class="btn-office cc-button-{{ section.settings.contact_button_style | default: 'primary' }}" href="mailto:{{ section.settings.email }}">{{ section.settings.contact_button_text }}</a>
+          <a class="btn-office cc-button-{{ section.settings.book_button_style | default: 'primary' }}" href="{{ section.settings.book_button_link }}">{{ section.settings.book_button_text }}</a>
         </div>
       </div>
       <div class="split-image">
@@ -38,7 +38,7 @@
             <h2 class="cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.service_title_color != blank %}color:{{ section.settings.service_title_color }};{% endif %}">{{ block.settings.title }}</h2>
             <p class="cc-preserve-line-breaks" style="color:{{ section.settings.service_description_color }};margin-top:4px;font-size:14px;">{{ block.settings.description }}</p>
           </div>
-          <a class="btn-book" href="{{ block.settings.booking_link }}" style="padding:10px 24px;height:auto;min-width:auto;flex-shrink:0;background:#D5B226 !important;border-color:#D5B226 !important;color:#ffffff !important;">{{ block.settings.button_text | default: 'Book Now' }}</a>
+          <a class="btn-book cc-button-{{ block.settings.button_style | default: 'primary' }}" href="{{ block.settings.booking_link }}" style="padding:10px 24px;height:auto;min-width:auto;flex-shrink:0;">{{ block.settings.button_text | default: 'Book Now' }}</a>
         </div>
       {% endfor %}
     </div>
@@ -59,6 +59,12 @@
     { "type": "text", "id": "contact_button_text", "label": "\"Contact us\" button text", "default": "Contact Us" },
     { "type": "text", "id": "book_button_text", "label": "\"Book services\" button text", "default": "Book Services" },
     { "type": "text", "id": "book_button_link", "label": "\"Book services\" button link", "default": "/pages/booking?office=melbourne" },
+    { "type": "select", "id": "contact_button_style", "label": "Contact button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "primary" },
+    { "type": "select", "id": "book_button_style", "label": "Book services button style", "options": [
+      { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+    ], "default": "primary" },
     { "type": "header", "content": "Map" },
     { "type": "text", "id": "map_url", "label": "Map embed URL", "info": "Google Maps embed src, e.g. https://maps.google.com/maps?q=...&output=embed", "default": "https://maps.google.com/maps?q=73-75+Canterbury+Road+Canterbury+VIC+3126&output=embed" },
     { "type": "text", "id": "map_title", "label": "Map title (accessibility)", "default": "Melbourne Office Map" },
@@ -70,14 +76,12 @@
     { "type": "color", "id": "office_section_background_color", "label": "Office section background", "default": "#ffffff" },
     { "type": "color", "id": "office_name_color", "label": "Office name color", "default": "#19202c", "info": "Leave blank to use the global Heading 1 color (Theme settings → Headings)." },
     { "type": "color", "id": "body_text_color", "label": "Body text color", "default": "#2c2f33" },
-    { "type": "color", "id": "link_color", "label": "Phone/email link color", "default": "#D5B226" },
-    { "type": "color", "id": "contact_button_color", "label": "\"Contact us\" / \"Book services\" button color", "default": "#D5B226" },
+    { "type": "color", "id": "link_color", "label": "Phone/email link color", "default": "#B09A6F" },
     { "type": "color", "id": "services_section_background_color", "label": "Services section background", "default": "#f7f5f3" },
     { "type": "color", "id": "services_heading_color", "label": "Services heading color", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "services_intro_color", "label": "Services intro text color", "default": "#6b7280" },
     { "type": "color", "id": "service_title_color", "label": "Service item title color", "default": "#19202c", "info": "Leave blank to use the global Heading 3 color (Theme settings → Headings)." },
     { "type": "color", "id": "service_description_color", "label": "Service item description color", "default": "#6b7280" },
-    { "type": "color", "id": "book_button_color", "label": "\"Book now\" button color", "default": "#D5B226" },
     { "type": "header", "content": "Fonts" },
     {
       "type": "select",
@@ -112,7 +116,10 @@
         { "type": "text", "id": "title", "label": "Title" },
         { "type": "textarea", "id": "description", "label": "Description", "info": "Include duration in the text if relevant, e.g. \"(1 hr)\"" },
         { "type": "text", "id": "booking_link", "label": "Booking link" },
-        { "type": "text", "id": "button_text", "label": "Button text", "default": "Book Now" }
+        { "type": "text", "id": "button_text", "label": "Button text", "default": "Book Now" },
+        { "type": "select", "id": "button_style", "label": "Button style", "options": [
+          { "value": "primary", "label": "Primary" }, { "value": "secondary", "label": "Secondary" }, { "value": "outline", "label": "Outline" }
+        ], "default": "primary" }
       ]
     }
   ],

@@ -17,10 +17,7 @@
         "description": "<p>Browse our live gemstones inventory, filtered by vairety, cut, colour, clarity and carat. </p><p>Prefer to start from a setting instead?</p>",
         "button_label": "Create your own ring",
         "button_link": "shopify://pages/ring-builder",
-        "button_background": "#4D493F",
-        "button_text_color": "#ffffff",
-        "button_hover_background": "#d5b226",
-        "button_hover_text_color": "#ffffff",
+        "button_style": "outline",
         "heading_color": "",
         "heading_font": "cormorant",
         "description_color": "",
@@ -33,7 +30,7 @@
         "nivoda_connect_feed_gemstones_aCmatD": {
           "type": "shopify://apps/nivoda-connect/blocks/feed_gemstones/1818f65a-9917-4ef2-bca9-2424a925fc76",
           "settings": {
-            "primary_color": "#D5B226",
+            "primary_color": "#B09A6F",
             "shapes": "EMERALD,OVAL,OTHER,CUSHION,OCTAGONAL,ROUND,PEAR,HEART,SQUARE,TRILLIANT,MARQUISE",
             "colors": "GREEN,RED,BI_COLOR,BLUE,MULTI_COLOR,PINK,WHITE,YELLOW,ORANGE,PURPLE,TEAL",
             "types": "SAPPHIRE,RUBY,EMERALD,ALEXANDRITE,TOURMALINE,AQUAMARINE,MOONSTONE,GARNET,OPAL,AMETHYST,TOPAZ,TANZANITE,ZIRCON,CITRINE,QUARTZ,SPINEL,MORGANITE,PERIDOT,APATITE,BERYL,KUNZITE,OTHER,SPHENE,HELIODOR,AMETRINE",
@@ -44,7 +41,8 @@
             "clarity_min": "VI1",
             "clarity_max": "EC",
             "cut": "FACETED,CABOCHON",
-            "gem_certificate_lab": "GIA,IGI,GSI,GRS,GGL,AGL,CDC,RGL,AIGS,GUBELIN"
+            "gem_certificate_lab": "GIA,IGI,GSI,GRS,GGL,AGL,CDC,RGL,AIGS,GUBELIN",
+            "translations_enabled": false
           }
         }
       },

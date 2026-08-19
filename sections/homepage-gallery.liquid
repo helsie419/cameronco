@@ -17,6 +17,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
   }
 
@@ -44,7 +45,7 @@
       {% if block.type == 'gallery_item' %}
         <figure class="gallery-item" {{ block.shopify_attributes }}>
           {% if block.settings.image %}
-            <img alt="{{ block.settings.image_alt | escape }}" height="500" loading="lazy" src="{{ block.settings.image | image_url: width: 600 }}" width="500">
+            <img alt="{{ block.settings.image_alt | escape }}" height="500" loading="lazy" src="{{ block.settings.image | image_url: width: 1200 }}" width="500">
           {% elsif block.settings.image_fallback != blank %}
             <img alt="{{ block.settings.image_alt | escape }}" height="500" loading="lazy" src="{{ block.settings.image_fallback | asset_url }}" width="500">
           {% endif %}
@@ -63,7 +64,7 @@
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "background_color", "label": "Section background", "default": "#ffffff" },
-    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#d5b226" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#B09A6F" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)." },
     { "type": "color", "id": "subheading_color", "label": "Subheading color", "info": "Leave blank to use the global Paragraph color (Theme settings → Paragraph)." },
     { "type": "header", "content": "Fonts" },

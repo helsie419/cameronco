@@ -13,12 +13,19 @@
       "type": "booking-page",
       "settings": {
         "heading": "Book an Appointment",
-        "subheading": "Choose a Sydney or Melbourne time, synced live with our Google&nbsp;Calendar.",
-        "api_endpoint": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
-        "heading_font": "garamond",
-        "body_font": "montserrat",
+        "subheading": "Select a date time, all times are shown in Sydney/Melbourne time.",
+        "intro_image": "shopify://shop_images/cameron-co-mobile-engagement-ring-box-hero.webp",
         "intro_image_alt": "Engagement ring box opened on satin before a Cameron and Co appointment",
-        "intro_image_fallback": "cameron-co-mobile-engagement-ring-box-hero.webp"
+        "intro_image_fallback": "cameron-co-mobile-engagement-ring-box-hero.webp",
+        "api_endpoint": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
+        "confirm_button_style": "secondary",
+        "refresh_button_style": "outline",
+        "reschedule_button_style": "outline",
+        "cancel_button_style": "secondary",
+        "heading_color": "#171d29",
+        "subheading_color": "#6b7280",
+        "heading_font": "garamond",
+        "body_font": "montserrat"
       }
     }
   },

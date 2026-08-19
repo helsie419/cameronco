@@ -530,11 +530,6 @@
 
     box-sizing: border-box;
 
-    background: {{ section.settings.button_bg_color }};
-    border: 1px solid {{ section.settings.button_bg_color }};
-
-    color: {{ section.settings.button_text_color }};
-
     border-radius: var(--cc-button-radius, 999px);
 
     text-decoration: none;
@@ -1291,7 +1286,7 @@
               <div class="dg-cta-wrap">
 
                 <a
-                  class="dg-button cc-font-body-{{ section.settings.body_font }}"
+                  class="dg-button cc-button-{{ block.settings.button_style | default: 'primary' }} cc-font-body-{{ section.settings.body_font }}"
                   href="{{ block.settings.cta_link }}"
                 >
                   {{ block.settings.cta_text }}
@@ -1346,19 +1341,6 @@
       "label": "Callout background",
       "default": "#f7f5f3"
     },
-    {
-      "type": "color",
-      "id": "button_bg_color",
-      "label": "Button background",
-      "default": "#D5B226"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button text",
-      "default": "#ffffff"
-    },
-
     {
       "type": "header",
       "content": "Fonts"
@@ -1536,6 +1518,17 @@
           "type": "url",
           "id": "cta_link",
           "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "primary"
         }
       ]
     }

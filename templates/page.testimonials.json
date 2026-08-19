@@ -15,6 +15,7 @@
         "testimonial-1": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-diamond-eternity-bridal-set.webp",
             "image_alt": "Aquamarine solitaire ring on satin photographed for a client story",
             "name": "Elizabeth",
             "quote": "Very happy with the service and excellent craftsmanship, highly recommended. A big shout out to Mark who is lovely to deal with, very kind and considerate.",
@@ -24,6 +25,7 @@
         "testimonial-2": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-teal-tourmaline-baguette-ring.webp",
             "image_alt": "Diamond halo stud earrings on satin photographed for a client story",
             "name": "Will",
             "quote": "We had great service from TJ (Tejjas). He walked us through the process to get wedding rings, quoted really good prices and we ended up with rings we're really happy with. Would definitely recommend booking an appointment with Cameron & Co."
@@ -32,6 +34,7 @@
         "testimonial-3": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-aquamarine-emerald-cut-eternity-ring.webp",
             "image_alt": "Replacement diamond ring design sketch and finished ring",
             "name": "Kellie",
             "quote": "Such a lovely experience. Having lost my treasured watch, Cameron & Co helped with a replacement swiftly and easily. Customer service was exceptional. Thank you."
@@ -40,6 +43,7 @@
         "testimonial-4": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-vintage-opal-gold-ring.webp",
             "image_alt": "Emerald cluster gold rings photographed for a jewellery client story",
             "name": "Graham",
             "quote": "Extremely good jewellery business, gives great advice. Trusted them with my mother's engagement ring that needed repairing and resizing and they did an excellent job."
@@ -48,6 +52,7 @@
         "testimonial-5": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-gold-heart-bracelet.webp",
             "image_alt": "Jewellery repair components arranged on a workbench",
             "name": "Cate",
             "quote": "April and the team did a fantastic job replacing my wedding ring. From sourcing an outstanding stone, developing the design, to crafting the final piece, I always felt like I was in the best hands possible. Importantly, communication was always clear and responsive. Not only did Cameron & Co totally meet my brief for a 'showstopper' ring, they delivered well beyond my expectations. They also turned what could have been a very difficult and upsetting experience into something special.",
@@ -57,6 +62,7 @@
         "testimonial-6": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-ruby-halo-ring.webp",
             "image_alt": "Laser welding repair on a gold chain link",
             "name": "Jillian",
             "quote": "Thank you April for the incredible service you provided when I finally decided to have my ring made. From that initial phone call discussing what I would like, to receiving the design, then to it all actually being completed was rather rapid. April was extremely knowledgeable, helpful and friendly. She took the time to listen to what I wanted. I could not fault any of my dealings with April & Julia at Cameron & Co and would highly recommend them to anyone looking for jewellery or for that “WOW” factor in an extremely special piece.",
@@ -66,6 +72,7 @@
         "testimonial-7": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-amber-statement-ring.webp",
             "image_alt": "Jewellery remodelling workbench with tools and precious metals",
             "name": "Kristy",
             "quote": "Cannot recommend this business more! It was always going to be hard to replace a very sentimental necklace, but these guys nailed it. Huge shout out to Paige for being so patient with me, your customer service is second to none darling! Thank you thank you thank you 🩷",
@@ -75,6 +82,7 @@
         "testimonial-8": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-ruby-trilogy-halo-ring-side.webp",
             "image_alt": "Ruby trilogy halo ring photographed for a client story",
             "name": "Luka",
             "quote": "Couldn't recommend Cameron & Co more! Mark was amazing to deal with and we are very happy with our wedding bands and diamond gold necklace. Thank you Mark. Great craftsmanship and customer service. We will be back!",
@@ -84,6 +92,7 @@
         "testimonial-9": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/cameron-co-crossover-diamond-pave-rings.webp",
             "image_alt": "Crossover diamond pavé rings photographed for a client story",
             "name": "Eddy",
             "quote": "Initially unsure what to do with my mother's jewellery that had been handed down, April at Cameron & Co not only gave me the idea to have it melted down, she also helped design two pieces that I absolutely love. The service is professional, and the communication is excellent."

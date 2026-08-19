@@ -48,7 +48,37 @@
         "value-4"
       ],
       "settings": {
-        "storefront_image_alt": "Cameron and Co showroom exterior in black and white"
+        "expertise_heading": "Expertise. Excellence. Experience.",
+        "storefront_image": "shopify://shop_images/cameron-co-brand-book-showroom.webp",
+        "storefront_image_alt": "Cameron and Co showroom exterior in black and white",
+        "craft_image_1": "shopify://shop_images/cameron-co-pink-gemstone-ring.webp",
+        "craft_image_1_alt": "Pink tourmaline round halo ring in rose gold",
+        "craft_image_2": "shopify://shop_images/cameron-co-aquamarine-halo-ring.webp",
+        "craft_image_2_alt": "Aquamarine vintage-style halo ring in white gold",
+        "craft_image_3": "shopify://shop_images/cameron-co-princess-diamond-bridal-set-rose-gold.webp",
+        "craft_image_3_alt": "Princess-cut diamond bridal ring set in rose gold",
+        "craft_image_4_alt": "Black sapphire bezel ring in yellow gold",
+        "heading": "About Us",
+        "intro_paragraph_1": "Cameron & Co is a trusted family-owned business with over 25 years of expertise in jewellery and watches.",
+        "intro_paragraph_2": "We pride ourselves in our Quality craftsmanship, our team works with our clients to design items to your requirements in sterling silver, yellow gold, rose gold, white gold, platinum and set with diamonds, precious gems and semi-precious gems. We deal with reputable diamond and precious gem suppliers and trusted certifiers, such as GIA.",
+        "intro_paragraph_3": "Since our inception, we have and continue to work with major insurance companies to support their clients with their jewellery and watch claims. Our showrooms, and commitment to personalised service distinguish us as reliable insurance specialists and craftsmen. Cameron & Co are renowned for our deep industry knowledge, we are trusted partners with major insurance companies, providing current appraisals, replacement pieces, and exceptional service.",
+        "intro_paragraph_4": "At Cameron & Co, our ethos is rooted in a family legacy of craftsmanship, reliability, and genuine care. We pride ourselves on being a beacon of trust and expertise, fostering enduring relationships with clients and insurance partners alike.",
+        "intro_paragraph_5": "We believe in the artistry of jewellery making, combining traditional craftsmanship with modern design to create timeless pieces.",
+        "mission_heading": "Mission",
+        "mission_text": "Cameron & Co expertly guide and supports clients through the intricate journey of jewellery and watch insurance claims, offering unparalleled craftsmanship, personalised service, and a trusted partnership built on over 25 years of family-owned excellence.",
+        "vision_heading": "Vision",
+        "vision_text": "Cameron & Co aspire to be the foremost authority in jewellery insurance claims, recognised for our unwavering commitment to integrity, precision, and seamless restoration of cherished pieces, setting the standard for industry expertise and customer satisfaction.",
+        "values_heading": "Core Values",
+        "values_intro_label": "Expertise",
+        "values_intro_text": "We leverage over 25 years of experience to provide unmatched knowledge in the appraisal, replacement, and repair of jewellery.",
+        "background_color": "#ffffff",
+        "expertise_heading_color": "",
+        "heading_color": "",
+        "intro_text_color": "",
+        "card_heading_color": "",
+        "card_text_color": "#19202c",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
       }
     }
   },

@@ -57,7 +57,7 @@
   {% if page_image %}
     <meta property="og:image" content="{{ page_image | image_url: width: 1200 }}">
   {% else %}
-    <meta property="og:image" content="{{ 'cameron-co-engagement-ring-box-satin-background-hero.webp' | asset_url }}">
+    <meta property="og:image" content="{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}">
   {% endif %}
 
   <meta name="twitter:card" content="summary_large_image">
@@ -195,6 +195,42 @@
 
       --paragraph-color: {{ settings.paragraph_color }};
       --paragraph-font: {{ paragraph_font_stack }};
+
+      --cc-button-primary-bg: {{ settings.button_primary_background | default: '#B09A6F' }};
+      --cc-button-primary-text: {{ settings.button_primary_text | default: '#FFFFFF' }};
+      --cc-button-primary-hover-bg: {{ settings.button_primary_hover_background | default: '#B9971F' }};
+      --cc-button-primary-hover-text: {{ settings.button_primary_hover_text | default: '#FFFFFF' }};
+      --cc-button-primary-border: {{ settings.button_primary_border | default: '#B09A6F' }};
+      --cc-button-primary-hover-border: {{ settings.button_primary_hover_border | default: '#B9971F' }};
+      --cc-button-primary-border-width: {{ settings.button_primary_border_width | default: 1 }}px;
+      --cc-button-primary-radius: {{ settings.button_primary_radius | default: 100 }}px;
+      --cc-button-primary-font-size: {{ settings.button_primary_font_size | default: 14 }}px;
+      --cc-button-primary-transparency: {{ 100 | minus: settings.button_primary_transparency | default: 100 }}%;
+      --cc-button-primary-hover-transparency: {{ 100 | minus: settings.button_primary_hover_transparency | default: 100 }}%;
+
+      --cc-button-secondary-bg: {{ settings.button_secondary_background | default: '#171D29' }};
+      --cc-button-secondary-text: {{ settings.button_secondary_text | default: '#FFFFFF' }};
+      --cc-button-secondary-hover-bg: {{ settings.button_secondary_hover_background | default: '#0F141D' }};
+      --cc-button-secondary-hover-text: {{ settings.button_secondary_hover_text | default: '#FFFFFF' }};
+      --cc-button-secondary-border: {{ settings.button_secondary_border | default: '#171D29' }};
+      --cc-button-secondary-hover-border: {{ settings.button_secondary_hover_border | default: '#0F141D' }};
+      --cc-button-secondary-border-width: {{ settings.button_secondary_border_width | default: 1 }}px;
+      --cc-button-secondary-radius: {{ settings.button_secondary_radius | default: 100 }}px;
+      --cc-button-secondary-font-size: {{ settings.button_secondary_font_size | default: 14 }}px;
+      --cc-button-secondary-transparency: {{ 100 | minus: settings.button_secondary_transparency | default: 100 }}%;
+      --cc-button-secondary-hover-transparency: {{ 100 | minus: settings.button_secondary_hover_transparency | default: 100 }}%;
+
+      --cc-button-outline-bg: {{ settings.button_outline_background | default: '#FFFFFF' }};
+      --cc-button-outline-text: {{ settings.button_outline_text | default: '#171D29' }};
+      --cc-button-outline-hover-bg: {{ settings.button_outline_hover_background | default: '#171D29' }};
+      --cc-button-outline-hover-text: {{ settings.button_outline_hover_text | default: '#FFFFFF' }};
+      --cc-button-outline-border: {{ settings.button_outline_border | default: '#171D29' }};
+      --cc-button-outline-hover-border: {{ settings.button_outline_hover_border | default: '#171D29' }};
+      --cc-button-outline-border-width: {{ settings.button_outline_border_width | default: 1 }}px;
+      --cc-button-outline-radius: {{ settings.button_outline_radius | default: 100 }}px;
+      --cc-button-outline-font-size: {{ settings.button_outline_font_size | default: 14 }}px;
+      --cc-button-outline-transparency: {{ 100 | minus: settings.button_outline_transparency | default: 100 }}%;
+      --cc-button-outline-hover-transparency: {{ 100 | minus: settings.button_outline_hover_transparency | default: 100 }}%;
     }
 
 
@@ -392,7 +428,7 @@
     template-level main wrapper, so the main element is added here.
   {%- endcomment -%}
 
-  {% assign cc_json_templates = 'index,page.ring-builder,page.diamonds,page.faq,page.melbourne-office,page.sydney-office,page.melbourne-services,page.sydney-services,page.contact,page.about,page.testimonials,page.jewellery-care,page.timeless-vs-trendy-jewellery,page.understanding-diamonds,page.booking,page.jewelleryrepairs,page.jewelleryreplacement,page.appraisals,page.jewelleryremodelling' | split: ',' %}
+  {% assign cc_json_templates = 'index,cart,page.ring-builder,page.diamonds,page.faq,page.melbourne-office,page.sydney-office,page.melbourne-services,page.sydney-services,page.contact,page.about,page.testimonials,page.jewellery-care,page.timeless-vs-trendy-jewellery,page.understanding-diamonds,page.booking,page.jewelleryrepairs,page.jewelleryreplacement,page.appraisals,page.jewelleryremodelling' | split: ',' %}
 
   {% assign cc_template_key = template.name %}
 

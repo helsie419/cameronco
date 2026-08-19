@@ -218,7 +218,7 @@
 
     text-decoration: none;
 
-    border-bottom: 1px solid #D5B226;
+    border-bottom: 1px solid #B09A6F;
   }
 
   #diamonds-landing-{{ section.id }} .dl-card-link:hover {
@@ -295,11 +295,6 @@
     min-width: 190px;
 
     padding: 14px 28px;
-
-    background: {{ section.settings.button_bg_color }};
-    border: 1px solid {{ section.settings.button_bg_color }};
-
-    color: {{ section.settings.button_text_color }};
 
     border-radius: var(--cc-button-radius, 999px);
 
@@ -576,7 +571,7 @@
           <div class="dl-cta-wrap">
 
             <a
-              class="dl-button"
+              class="dl-button cc-button-{{ section.settings.button_style | default: 'primary' }}"
               href="{{ section.settings.cta_link }}"
             >
               {{ section.settings.cta_text }}
@@ -650,24 +645,22 @@
       "id": "cta_link",
       "label": "Button link"
     },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
 
     {
       "type": "header",
       "content": "Colours"
     },
-    {
-      "type": "color",
-      "id": "button_bg_color",
-      "label": "Button background",
-      "default": "#D5B226"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button text",
-      "default": "#ffffff"
-    },
-
     {
       "type": "header",
       "content": "Fonts"
