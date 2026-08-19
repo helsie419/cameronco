@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Board — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a class="active" href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="stock.html">Stock</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <a href="static-data.html">Settings</a>
+      <a href="index.html#reports">Reports</a>
+      <a href="user-manuals.html">Manuals</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title">Job Board <a class="help-link" href="user-manuals.html#job-board" title="Open the Job Board manual" aria-label="Open the Job Board manual">?</a></h1>
+  <p class="page-sub">Approved quotes flow in here as jobs — nothing about the claim or item gets re-typed. Drag cards across the board to move work through production.</p>
+
+  <div style="display:flex; justify-content:flex-end; margin-bottom:18px">
+    <button class="btn gold" type="button" id="newJobBtn">＋ Create job from an approved quote</button>
+  </div>
+
+  <div class="board" id="board"></div>
+</main>
+
+<!-- ══════════════════════ NEW JOB MODAL ══════════════════════ -->
+<div class="modal-overlay" id="newJobModal" hidden>
+  <div class="modal">
+    <h3>Create job from an approved quote <a class="help-link" href="user-manuals.html#job-board" title="Help: creating a job" aria-label="Help: creating a job">?</a></h3>
+    <div id="eligibleList" style="max-height:340px; overflow:auto; margin-bottom:16px"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="newJobCancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ JOB DETAIL MODAL ══════════════════════ -->
+<div class="modal-overlay" id="jobModal" hidden>
+  <div class="modal modal-wide">
+    <div style="display:flex; justify-content:space-between; align-items:baseline">
+      <h3 id="jobModalTitle">Job</h3>
+      <span class="badge gold" id="jobModalClaim"></span>
+    </div>
+
+    <div class="grid c4" style="margin:16px 0">
+      <label class="field"><span>Stage</span>
+        <select id="jobStage">
+          <option value="awaiting_deposit">Awaiting deposit</option>
+          <option value="cad_approval">CAD approval</option>
+          <option value="in_production">In production</option>
+          <option value="quality_check">Quality check</option>
+          <option value="ready_for_collection">Ready for collection</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select></label>
+      <label class="field"><span>Owner</span>
+        <select id="jobOwner"><option value="">—</option></select></label>
+      <label class="field"><span>Start date</span><input type="date" id="jobStartDate"></label>
+      <label class="field"><span>Due date</span><input type="date" id="jobDueDate"></label>
+      <label class="field span-all"><span>Items taken</span><input type="text" id="jobItemsTaken" placeholder="e.g. Ring + original box taken in for remake"></label>
+    </div>
+
+    <div class="job-margin-bar">
+      <div class="tot"><span>Quoted nett</span><b id="marginQuoted">$0</b></div>
+      <div class="tot"><span>Actual cost so far</span><b id="marginActual">$0</b></div>
+      <div class="tot"><span>Margin</span><b id="marginResult">$0</b></div>
+    </div>
+
+    <h4 style="font-family:var(--serif); font-weight:500; font-size:18px; margin:20px 0 10px">Components</h4>
+    <table class="data">
+      <thead><tr>
+        <th>Description</th><th>Category</th><th>Carat</th><th>Colour</th><th>Origin</th>
+        <th>Supplier</th><th>Stock no</th><th>Invoice no</th>
+        <th class="num">Weight (gm)</th><th class="num">Rate</th><th class="num">Actual cost</th><th></th>
+      </tr></thead>
+      <tbody id="componentRows"></tbody>
+    </table>
+    <button class="btn ghost small" type="button" id="addComponentBtn" style="margin-top:10px">＋ Add component line</button>
+
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="jobModalClose">Close</button>
+      <button class="btn gold" type="button" id="jobModalSave">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+.board {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 4px 2px 14px;
+  min-height: calc(100vh - 250px);
+  scroll-snap-type: x proximity;
+}
+.board-col {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  min-height: 460px;
+  width: 292px;
+  min-width: 292px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+}
+.board-col > header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+  z-index: 1;
+}
+.board-col .count { color: var(--muted); font-weight: 400; }
+.board-dropzone {
+  flex: 1;
+  padding: 4px 0 10px;
+  transition: background 0.16s ease, box-shadow 0.16s ease;
+}
+.board-dropzone.is-drag-over {
+  background: var(--gold-tint);
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+.board-empty {
+  margin: 10px;
+  padding: 18px 12px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 4px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 12px;
+}
+.job-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px 12px;
+  cursor: grab;
+  font-size: 13px;
+  box-shadow: 0 1px 2px rgba(45,45,45,0.04);
+  transition: box-shadow 0.16s ease, opacity 0.16s ease, transform 0.16s ease;
+}
+.job-card:hover { box-shadow: 0 6px 16px rgba(45,45,45,0.1); transform: translateY(-1px); }
+.job-card:active { cursor: grabbing; }
+.job-card.is-dragging { opacity: 0.55; transform: rotate(1deg); }
+.job-card .jc-number { font-weight: 700; color: var(--charcoal); }
+.job-card .jc-customer { color: var(--muted); margin-top: 2px; }
+.job-card .jc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.job-card .jc-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.job-card .jc-pill.overdue {
+  color: var(--danger);
+  border-color: #e2b9b4;
+  background: #f8eeec;
+}
+.job-card .jc-margin { font-size: 11px; margin-top: 4px; }
+.job-card .jc-margin.neg { color: var(--danger); }
+.job-card .jc-margin.pos { color: var(--ok); }
+
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(45,45,45,0.45);
+  display: flex; align-items: center; justify-content: center; z-index: 200;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  background: var(--paper); border-radius: 6px; padding: 24px 28px;
+  width: 560px; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  max-height: 88vh; overflow: auto;
+}
+.modal.modal-wide { width: 920px; }
+.modal h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0 0 4px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+.job-margin-bar {
+  display: flex; gap: 30px; background: var(--charcoal); color: #fff;
+  border-radius: 4px; padding: 12px 18px; margin-top: 6px;
+}
+.job-margin-bar .tot span { display:block; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#cbb8a0; }
+.job-margin-bar .tot b { font-size: 17px; }
+
+.eligible-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; margin-bottom: 8px;
+}
+.eligible-row:hover { background: var(--gold-tint); }
+
+@media (max-width: 1100px) {
+  .board { min-height: 420px; }
+}
+@media (max-width: 640px) {
+  .board-col { width: 86vw; min-width: 86vw; }
+  .modal.modal-wide { width: 92vw; }
+}
+</style>
+
+<script>
+const API = '/api/jobs';
+const CORE_API = '/api';
+const $ = s => document.querySelector(s);
+const fmt = n => '$' + (Number(n)||0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const num = v => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+
+const STAGES = [
+  ['awaiting_deposit', 'Awaiting deposit'],
+  ['cad_approval', 'CAD approval'],
+  ['in_production', 'In production'],
+  ['quality_check', 'Quality check'],
+  ['ready_for_collection', 'Ready for collection'],
+  ['completed', 'Completed'],
+  ['cancelled', 'Cancelled'],
+];
+
+let JOBS = [];
+let currentJobId = null;
+let STAFF = [];
+let draggedJobId = null;
+let suppressCardClick = false;
+
+init();
+async function init() {
+  await loadStaff();
+  await loadBoard();
+  $('#newJobBtn').addEventListener('click', openNewJobModal);
+  $('#newJobCancel').addEventListener('click', () => $('#newJobModal').hidden = true);
+  $('#jobModalClose').addEventListener('click', () => $('#jobModal').hidden = true);
+  $('#jobModalSave').addEventListener('click', saveJob);
+  $('#addComponentBtn').addEventListener('click', addComponentRow);
+  ['jobQuotedNett'].forEach(() => {});
+}
+
+async function loadStaff() {
+  try {
+    STAFF = await fetch(`${CORE_API}/staff`).then(r => r.ok ? r.json() : Promise.reject());
+    if (!STAFF?.length) throw new Error('empty');
+  } catch {
+    // offline / API unreachable — mirrors seed.sql's staff table
+    STAFF = [{ id: 1, full_name: 'Tracey' }, { id: 2, full_name: 'April' },
+             { id: 3, full_name: 'Workshop' }, { id: 4, full_name: 'Admin' }];
+  }
+  const sel = $('#jobOwner');
+  for (const s of STAFF) {
+    const o = document.createElement('option');
+    o.value = s.id; o.textContent = s.full_name;
+    sel.appendChild(o);
+  }
+}
+
+async function loadBoard() {
+  const board = $('#board');
+  try {
+    JOBS = await fetch(API).then(r => r.json());
+    if (JOBS.error) throw new Error(JOBS.error);
+  } catch {
+    board.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--muted); padding:50px">
+      No connection to the API yet — provision the database, then jobs created from approved quotes will appear here.</div>`;
+    return;
+  }
+  board.innerHTML = STAGES.map(([stage, label]) => {
+    const jobs = JOBS.filter(j => j.stage === stage);
+    return `
+      <div class="board-col">
+        <header>${label} <span class="count">${jobs.length}</span></header>
+        <div class="board-dropzone" data-stage="${stage}">
+          ${jobs.length ? jobs.map(jobCardHtml).join('') : '<div class="board-empty">Drop jobs here</div>'}
+        </div>
+      </div>`;
+  }).join('');
+  wireBoardDragAndDrop();
+}
+
+function jobCardHtml(j) {
+  const margin = num(j.quoted_nett) - num(j.actual_cost);
+  const dueLabel = j.due_date ? new Date(j.due_date).toLocaleDateString('en-AU') : 'No due date';
+  const overdue = j.due_date && new Date(j.due_date) < startOfToday() && !['completed', 'cancelled'].includes(j.stage);
+  return `
+    <article class="job-card" draggable="true" data-job-id="${j.id}" data-stage="${j.stage}" title="Drag to change stage. Click to open details.">
+      <div class="jc-number">${esc(j.job_number)}</div>
+      <div class="jc-customer">${esc(j.customer)} · ${esc(j.insurer || 'Private')}</div>
+      <div class="jc-meta">
+        <span class="jc-pill ${overdue ? 'overdue' : ''}">${overdue ? 'Overdue ' : 'Due '}${esc(dueLabel)}</span>
+        <span class="jc-pill">${esc(j.owner_name || 'Unassigned')}</span>
+        <span class="jc-pill">${esc(branchLabel(j.branch))}</span>
+      </div>
+      <div class="jc-margin ${margin < 0 ? 'neg' : 'pos'}">Margin ${fmt(margin)}</div>
+    </article>`;
+}
+
+function wireBoardDragAndDrop() {
+  document.querySelectorAll('.job-card').forEach(card => {
+    card.addEventListener('click', () => {
+      if (suppressCardClick) return;
+      openJob(card.dataset.jobId);
+    });
+    card.addEventListener('dragstart', event => {
+      draggedJobId = card.dataset.jobId;
+      suppressCardClick = true;
+      card.classList.add('is-dragging');
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', draggedJobId);
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('is-dragging');
+      document.querySelectorAll('.board-dropzone').forEach(zone => zone.classList.remove('is-drag-over'));
+      setTimeout(() => { suppressCardClick = false; draggedJobId = null; }, 150);
+    });
+  });
+
+  document.querySelectorAll('.board-dropzone').forEach(zone => {
+    zone.addEventListener('dragover', event => {
+      event.preventDefault();
+      zone.classList.add('is-drag-over');
+      event.dataTransfer.dropEffect = 'move';
+    });
+    zone.addEventListener('dragleave', event => {
+      if (!zone.contains(event.relatedTarget)) zone.classList.remove('is-drag-over');
+    });
+    zone.addEventListener('drop', async event => {
+      event.preventDefault();
+      zone.classList.remove('is-drag-over');
+      const jobId = event.dataTransfer.getData('text/plain') || draggedJobId;
+      await moveJobToStage(jobId, zone.dataset.stage);
+    });
+  });
+}
+
+async function moveJobToStage(jobId, stage) {
+  const job = JOBS.find(j => String(j.id) === String(jobId));
+  if (!job || !stage || job.stage === stage) return;
+  const previousStage = job.stage;
+  job.stage = stage;
+  loadBoardFromMemory();
+  try {
+    const res = await fetch(`${API}/${jobId}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ stage }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${job.job_number} moved to ${stageLabel(stage)}`);
+    await loadBoard();
+  } catch (err) {
+    job.stage = previousStage;
+    loadBoardFromMemory();
+    toast('Could not move job: ' + err.message, true);
+  }
+}
+
+function loadBoardFromMemory() {
+  const board = $('#board');
+  board.innerHTML = STAGES.map(([stage, label]) => {
+    const jobs = JOBS.filter(j => j.stage === stage);
+    return `
+      <div class="board-col">
+        <header>${label} <span class="count">${jobs.length}</span></header>
+        <div class="board-dropzone" data-stage="${stage}">
+          ${jobs.length ? jobs.map(jobCardHtml).join('') : '<div class="board-empty">Drop jobs here</div>'}
+        </div>
+      </div>`;
+  }).join('');
+  wireBoardDragAndDrop();
+}
+
+function stageLabel(stage) {
+  return STAGES.find(([value]) => value === stage)?.[1] || stage.replace(/_/g, ' ');
+}
+
+function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+// ------------------------------------------------------------- new job modal
+async function openNewJobModal() {
+  const list = $('#eligibleList');
+  list.innerHTML = 'Loading eligible claims…';
+  $('#newJobModal').hidden = false;
+  try {
+    const rows = await fetch(`${API}/eligible-claims`).then(r => r.json());
+    if (!rows.length) {
+      list.innerHTML = '<p style="color:var(--muted)">No approved quotes without a job yet. Approve a quote on the Quotes pipeline first.</p>';
+      return;
+    }
+    list.innerHTML = rows.map(c => `
+      <div class="eligible-row">
+        <div>
+          <strong>${c.claim_number}</strong> — ${c.customer}
+          <div style="color:var(--muted); font-size:12px">${c.insurer || 'Private'} · Nett ${fmt(c.total_nett)}</div>
+        </div>
+        <button class="btn gold small" onclick="createJob(${c.claim_id}, ${c.quote_id || 'null'})">Create job</button>
+      </div>`).join('');
+  } catch {
+    list.innerHTML = '<p style="color:var(--muted)">Could not reach the API.</p>';
+  }
+}
+
+window.createJob = async (claimId, quoteId) => {
+  try {
+    const res = await fetch(API, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ claim_id: claimId, quote_id: quoteId }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${res.job_number} created with ${res.components_created} component line(s)`);
+    $('#newJobModal').hidden = true;
+    loadBoard();
+  } catch (err) { toast('Could not create job: ' + err.message, true); }
+};
+
+// ---------------------------------------------------------------- job modal
+window.openJob = async (id) => {
+  currentJobId = id;
+  try {
+    const job = await fetch(`${API}/${id}`).then(r => r.json());
+    if (job.error) throw new Error(job.error);
+    $('#jobModalTitle').textContent = job.job_number;
+    $('#jobModalClaim').textContent = `${job.claim_number} · ${job.customer}`;
+    $('#jobStage').value = job.stage;
+    $('#jobOwner').value = job.owner_id || '';
+    $('#jobStartDate').value = job.start_date ? job.start_date.slice(0, 10) : '';
+    $('#jobDueDate').value = job.due_date ? job.due_date.slice(0, 10) : '';
+    $('#jobItemsTaken').value = job.items_taken || '';
+
+    renderMargin(job.quoted_nett, job.components);
+    renderComponents(job.components);
+    $('#jobModal').hidden = false;
+  } catch (err) { toast('Could not load job: ' + err.message, true); }
+};
+
+function renderMargin(quotedNett, components) {
+  const actual = components.reduce((s, c) => s + num(c.actual_cost), 0);
+  const quoted = num(quotedNett);
+  $('#marginQuoted').textContent = fmt(quoted);
+  $('#marginActual').textContent = fmt(actual);
+  $('#marginResult').textContent = fmt(quoted - actual);
+}
+
+function renderComponents(components) {
+  $('#componentRows').innerHTML = components.map(c => componentRowHtml(c)).join('');
+}
+
+function componentRowHtml(c) {
+  const id = c.id ?? '';
+  return `
+    <tr data-comp-id="${id}">
+      <td><input type="text" data-c="description" value="${esc(c.description)}"></td>
+      <td><input type="text" data-c="category" value="${esc(c.category)}" style="width:80px"></td>
+      <td><input type="text" data-c="carat" value="${esc(c.carat)}" style="width:60px"></td>
+      <td><input type="text" data-c="colour" value="${esc(c.colour)}" style="width:80px"></td>
+      <td><input type="text" data-c="origin" value="${esc(c.origin)}" style="width:80px"></td>
+      <td><input type="text" data-c="supplier" value="${esc(c.supplier)}" style="width:100px"></td>
+      <td><input type="text" data-c="stock_no" value="${esc(c.stock_no)}" style="width:80px"></td>
+      <td><input type="text" data-c="invoice_no" value="${esc(c.invoice_no)}" style="width:80px"></td>
+      <td class="num"><input type="number" data-c="weight_gms" value="${c.weight_gms ?? ''}" step="0.001" style="width:80px"></td>
+      <td class="num"><input type="number" data-c="rate_per_gm" value="${c.rate_per_gm ?? ''}" step="0.01" style="width:80px"></td>
+      <td class="num"><input type="number" data-c="actual_cost" value="${c.actual_cost ?? 0}" step="0.01" style="width:90px" onchange="updateMarginLive()"></td>
+      <td><button class="btn danger small" onclick="removeComponentRow(this, ${id || 'null'})">×</button></td>
+    </tr>`;
+}
+
+function branchLabel(branch) {
+  return { melbourne: 'Melbourne', sydney: 'Sydney' }[branch] || 'No branch';
+}
+
+function esc(v) {
+  return v == null ? '' : String(v)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function addComponentRow() {
+  const tbody = $('#componentRows');
+  const div = document.createElement('template');
+  div.innerHTML = componentRowHtml({});
+  tbody.appendChild(div.content);
+}
+
+window.removeComponentRow = async (btn, id) => {
+  const row = btn.closest('tr');
+  if (id) {
+    try {
+      const res = await fetch(`${API}/components/${id}`, { method: 'DELETE' }).then(r => r.json());
+      if (res.error) throw new Error(res.error);
+    } catch (err) { return toast('Could not remove line: ' + err.message, true); }
+  }
+  row.remove();
+  updateMarginLive();
+};
+
+window.updateMarginLive = () => {
+  const actual = [...document.querySelectorAll('[data-c="actual_cost"]')]
+    .reduce((s, el) => s + num(el.value), 0);
+  const quoted = parseFloat($('#marginQuoted').textContent.replace(/[^0-9.\-]/g, ''));
+  $('#marginActual').textContent = fmt(actual);
+  $('#marginResult').textContent = fmt(quoted - actual);
+};
+
+async function saveJob() {
+  try {
+    // 1. save job-level fields
+    const res = await fetch(`${API}/${currentJobId}`, {
+      method: 'PUT', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        stage: $('#jobStage').value,
+        owner_id: $('#jobOwner').value || null,
+        start_date: $('#jobStartDate').value || null,
+        due_date: $('#jobDueDate').value || null,
+        items_taken: $('#jobItemsTaken').value || null,
+      }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+
+    // 2. save each component row — update existing, create new
+    const rows = [...document.querySelectorAll('#componentRows tr')];
+    for (const row of rows) {
+      const id = row.dataset.compId;
+      const body = {};
+      row.querySelectorAll('[data-c]').forEach(el => body[el.dataset.c] = el.value || null);
+      if (id) {
+        await fetch(`${API}/components/${id}`, {
+          method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+        });
+      } else {
+        await fetch(`${API}/${currentJobId}/components`, {
+          method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+        });
+      }
+    }
+
+    toast(`${res.job_number || 'Job'} saved`);
+    $('#jobModal').hidden = true;
+    loadBoard();
+  } catch (err) { toast('Save failed: ' + err.message, true); }
+}
+
+let toastTimer;
+function toast(msg, isErr) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = 'toast', 4200);
+}
+</script>
+</body>
+</html>

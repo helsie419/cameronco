@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Quote — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a class="active" href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="stock.html">Stock</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <a href="static-data.html">Settings</a>
+      <a href="index.html#automation">Automation</a>
+      <a href="index.html#reports">Reports</a>
+      <a href="user-manuals.html">Manuals</a>
+    </nav>
+    <div class="spot-ticker" id="spotTicker" title="Daily AUD spot, per gram">
+      <span>Gold <b id="spotGold">—</b></span>
+      <span>Silver <b id="spotSilver">—</b></span>
+      <span>Platinum <b id="spotPlat">—</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title" id="pageTitle">New Insurance Quote</h1>
+  <p class="page-sub">Customer → claim → items. Everything entered here flows through to the quote, the job sheet and the Xero invoice — nothing is re-keyed. <a class="help-link" href="user-manuals.html#create-order" title="Open the Creating an Order manual" aria-label="Open the Creating an Order manual">?</a></p>
+
+  <!-- ══════════════════════ 1 · CUSTOMER ══════════════════════ -->
+  <section class="panel" id="customerPanel">
+    <header>
+      <h2>Customer</h2>
+      <span class="hint">Search first — one customer, many claims. No duplicates.</span>
+    </header>
+    <div class="body">
+      <label class="field" id="pasteExtractBox">
+        <span>Paste from insurer portal</span>
+        <textarea id="pasteExtractInput" rows="4" placeholder="Paste the claimant and claim details copied from the insurer's portal — name, address, phone, email, claim number, insurer…"></textarea>
+        <div style="margin-top:8px; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <button class="btn ghost small" type="button" id="pasteExtractButton">Extract details</button>
+          <span class="muted-note" id="pasteExtractSummary"></span>
+        </div>
+      </label>
+      <div class="grid c4">
+        <label class="field span2 lookup-wrap">
+          <span>Find existing customer</span>
+          <input type="text" id="customerSearch" placeholder="Type a name, email or phone…" autocomplete="off">
+          <div class="lookup-results" id="customerResults" hidden></div>
+        </label>
+        <div class="field" style="align-self:end; padding-bottom:8px">
+          <span id="customerBadgeWrap"><span class="badge" id="customerBadge">No customer selected</span></span>
+        </div>
+        <div class="field" style="align-self:end; padding-bottom:8px; text-align:right">
+          <button class="btn ghost small" type="button" id="clearCustomer">Clear</button>
+        </div>
+      </div>
+      <div class="grid c4" style="margin-top:14px">
+        <label class="field"><span>First name</span><input type="text" id="custFirst"></label>
+        <label class="field"><span>Last name</span><input type="text" id="custLast"></label>
+        <label class="field"><span>Email</span><input type="email" id="custEmail"></label>
+        <label class="field"><span>Mobile</span><input type="tel" id="custMobile"></label>
+        <label class="field span2"><span>Address</span><input type="text" id="custAddress" autocomplete="street-address"></label>
+        <label class="field"><span>Suburb</span><input type="text" id="custSuburb" autocomplete="address-level2"></label>
+        <label class="field" style="display:grid;grid-template-columns:1fr 1fr;column-gap:10px;row-gap:0">
+          <span class="span-all" style="grid-column:1/-1;margin-bottom:5px">State / Postcode</span>
+          <select id="custState" autocomplete="address-level1">
+            <option>VIC</option><option>NSW</option><option>QLD</option><option>SA</option>
+            <option>WA</option><option>TAS</option><option>NT</option><option>ACT</option>
+          </select>
+          <input type="text" id="custPostcode" placeholder="3000" inputmode="numeric" maxlength="4" autocomplete="postal-code">
+        </label>
+      </div>
+      <p class="field-note" id="addressHint" hidden>Street, suburb and postcode should be entered together — postcode must be 4 digits.</p>
+      <div id="duplicateWarning" class="warning-banner" hidden style="margin-top:14px">
+        <p>This may already be a customer — <strong id="duplicateWarningName"></strong>, <span id="duplicateWarningAddress"></span></p>
+        <div style="display:flex; gap:10px; margin-top:8px">
+          <button class="btn gold small" type="button" id="duplicateWarningUse">Use this existing customer</button>
+          <button class="btn ghost small" type="button" id="duplicateWarningDismiss">No, this is a different person</button>
+        </div>
+      </div>
+      <div id="customerConfirmRow" hidden style="margin-top:14px; text-align:right">
+        <button class="btn gold" type="button" id="confirmCustomer">Continue with this customer →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ 2 · CLAIM DETAILS ══════════════════════ -->
+  <section class="panel gated" id="claimPanel" data-lock-message="Select or create a customer above to continue">
+    <header>
+      <h2>Claim details</h2>
+      <span class="hint">The Q Sheet header — insurer, references, validation</span>
+    </header>
+    <div class="body grid c4">
+      <label class="field">
+        <span>Insurer</span>
+        <select id="insurerId"><option value="">— Private / no insurer —</option></select>
+      </label>
+      <label class="field">
+        <span>Insurer contact</span>
+        <select id="insurerContactId"><option value="">—</option></select>
+      </label>
+      <label class="field">
+        <span>Claim number</span>
+        <input type="text" id="claimNumber" placeholder="Insurer's claim no." required>
+      </label>
+      <label class="field">
+        <span>Date received</span>
+        <input type="date" id="dateReceived">
+      </label>
+
+      <label class="field">
+        <span>Our reference</span>
+        <input type="text" id="ourRef" placeholder="Cameron &amp; Co ref">
+      </label>
+      <label class="field">
+        <span>Insurer reference</span>
+        <input type="text" id="yourRef" placeholder="If different from claim no.">
+      </label>
+      <label class="field">
+        <span>Assessment type</span>
+        <select id="assessmentType" data-lookup="assessment_type"></select>
+      </label>
+      <label class="field">
+        <span>Validation type</span>
+        <select id="validationType" data-lookup="validation_type"></select>
+      </label>
+
+      <label class="field">
+        <span>Branch</span>
+        <select id="branch">
+          <option value="melbourne">Melbourne — Canterbury</option>
+          <option value="sydney">Sydney — York Street</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Assessed by</span>
+        <select id="assignedTo">
+          <option value="">—</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Policy excess ($)</span>
+        <input type="number" id="excessAmount" min="0" step="0.01" placeholder="0.00">
+      </label>
+      <label class="field">
+        <span>Settlement note</span>
+        <input type="text" id="settlementNotes" placeholder="e.g. Refer case manager">
+      </label>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ 3 · ITEMS ══════════════════════ -->
+  <section class="panel gated" id="itemsPanel" data-lock-message="Select or create a customer above to continue">
+    <header>
+      <h2>Items on this claim</h2>
+      <span class="hint">Each item carries its own specification, stones and costing</span>
+    </header>
+    <div class="body">
+      <div id="itemsContainer"></div>
+      <button class="btn gold" type="button" id="addItem">＋ Add item</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ 4 · SETTLEMENT ══════════════════════ -->
+  <section class="panel gated" id="settlementPanel" data-lock-message="Select or create a customer above to continue">
+    <header>
+      <h2>Settlement breakdown</h2>
+      <span class="hint">Prices include GST · applicable discounts applied</span>
+    </header>
+    <div class="body grid c4">
+      <label class="field"><span>Postage, handling &amp; insurance ($)</span>
+        <input type="number" id="postageHandling" min="0" step="0.01" value="0"></label>
+      <label class="field"><span>Allocation for salvage / scrap ($)</span>
+        <input type="number" id="salvageAllocation" min="0" step="0.01" value="0"></label>
+      <label class="field"><span>Overall unlisted limit ($)</span>
+        <input type="number" id="overallLimit" min="0" step="0.01" placeholder="Policy overall limit"></label>
+      <div class="field" style="align-self:end">
+        <span class="badge warn" id="limitFlag" hidden>Overall limit applied</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ TOTALS + ACTIONS ══════════════════════ -->
+  <div class="totals-bar">
+    <div class="tot"><span>Items</span><b id="totItems">0</b></div>
+    <div class="tot"><span>Total retail inc GST</span><b id="totRetail">$0</b></div>
+    <div class="tot"><span>Insurance nett</span><b id="totNett">$0</b></div>
+    <div class="tot"><span>Liability — limits applied</span><b id="totLiability">$0</b></div>
+    <div class="spacer"></div>
+    <button class="btn ghost" style="color:#fff" type="button" id="saveDraft">Save draft</button>
+    <button class="btn gold" type="button" id="generateQuote">Generate quote</button>
+  </div>
+</main>
+
+<template id="itemTemplate">
+  <div class="item-card" data-item>
+    <div class="item-head" data-toggle>
+      <div class="item-no" data-item-no>1</div>
+      <div class="item-title"><strong data-item-summary>New item</strong></div>
+      <div class="item-figures">
+        <span>Retail <b data-fig-retail>$0</b></span>
+        <span>Nett <b data-fig-nett>$0</b></span>
+        <span>Liability <b data-fig-liability>$0</b></span>
+      </div>
+      <button class="btn danger small" type="button" data-remove>Remove</button>
+    </div>
+    <div class="item-body">
+
+      <!-- specification -->
+      <div class="grid c4">
+        <label class="field"><span>Category</span>
+          <select data-f="category" data-lookup="item_category"></select></label>
+        <label class="field"><span>Item type</span>
+          <select data-f="item_type" data-lookup="item_type"></select></label>
+        <label class="field" data-detail="ring"><span>Ring style</span>
+          <input type="text" data-f="ring_style" placeholder="Solitaire, halo..."></label>
+        <label class="field" data-detail="ring"><span>Finger size</span>
+          <input type="text" data-f="finger_size" placeholder="M 1/2"></label>
+        <label class="field span4"><span>Description (appears on quote)</span>
+          <textarea data-f="description" rows="2" placeholder="e.g. 18ct white gold diamond solitaire ring"></textarea></label>
+
+        <label class="field"><span>Metal type</span>
+          <select data-f="metal_type" data-lookup="metal_type"></select></label>
+        <label class="field"><span>Metal colour</span>
+          <select data-f="metal_colour" data-lookup="metal_colour"></select></label>
+        <label class="field"><span>Manufacture</span>
+          <select data-f="manufacture_origin" data-lookup="manufacture_origin"></select></label>
+        <label class="field"><span>Weight (gms)</span>
+          <input type="number" data-f="weight_gms" step="0.001" min="0"></label>
+        <div class="field span4 stock-hint" data-stock-hint hidden></div>
+
+        <label class="field span2" data-detail="chain"><span>Chain style</span>
+          <textarea data-f="chain_style" rows="2" placeholder="Curb, rope..."></textarea></label>
+        <label class="field" data-detail="chain"><span>Width (mm)</span>
+          <input type="number" data-f="width_mm" step="0.01" min="0"></label>
+        <label class="field" data-detail="chain"><span>Length (cm)</span>
+          <input type="number" data-f="length_cm" step="0.01" min="0"></label>
+
+        <label class="field span2" data-detail="repair"><span>Repair type</span>
+          <input type="text" data-f="repair_type"></label>
+        <label class="field span2"><span>Internal comment</span>
+          <textarea data-f="comment" rows="2"></textarea></label>
+        <label class="field span4"><span>Item images</span>
+          <input type="file" data-file="item_images" accept="image/jpeg,image/png" multiple>
+          <small>JPEG or PNG</small></label>
+        <div class="upload-list span4" data-file-preview="item_images"></div>
+      </div>
+
+      <!-- watch fields -->
+      <div class="subsection" data-watch-section hidden>
+        <h3>Watch details</h3>
+        <div class="grid c4">
+          <label class="field"><span>Make</span><input type="text" data-f="watch_make"></label>
+          <label class="field"><span>Gents / Ladies</span>
+            <select data-f="watch_gents_ladies">
+              <option value="">—</option><option value="gents">Gents</option><option value="ladies">Ladies</option>
+            </select></label>
+          <label class="field"><span>Current model</span><input type="text" data-f="watch_current_model"></label>
+          <label class="field"><span>Replacement model</span><input type="text" data-f="watch_replacement_model"></label>
+          <label class="field"><span>Watch metal</span><input type="text" data-f="watch_metal"></label>
+        </div>
+        <p data-watch-rate style="margin:10px 0 0;font-size:12px;color:var(--gold-dark)"></p>
+      </div>
+
+      <!-- stones -->
+      <div class="subsection">
+        <h3>Stones <small>type · shape · count · carat · quality · cert</small></h3>
+        <table class="data stones-table">
+          <thead><tr>
+            <th>Type</th><th>Shape</th><th class="num">#</th><th class="num">Ct each</th>
+            <th class="num">Total ct</th><th>Quality</th><th>Cert</th>
+            <th class="num">$/ct</th><th class="num">Cost</th><th>Stock</th><th></th>
+          </tr></thead>
+          <tbody data-stones></tbody>
+        </table>
+        <button class="btn ghost small" type="button" data-add-stone style="margin-top:8px">＋ Add stone line</button>
+      </div>
+
+      <!-- evidence of ownership -->
+      <div class="subsection">
+        <h3>Evidence of ownership</h3>
+        <div class="grid c4">
+          <label class="field"><span>Proof type</span>
+            <select data-f="proof_type" data-lookup="proof_type"></select></label>
+          <label class="field"><span>EOO status</span>
+            <select data-f="eoo_status">
+              <option value="">—</option>
+              <option value="satisfactory">Satisfactory</option>
+              <option value="limited_eoo">Limited EOO</option>
+              <option value="no_eoo">No EOO</option>
+            </select></label>
+          <label class="field span2"><span>EOO note (appears on report)</span>
+            <textarea data-f="eoo_notes" rows="2" placeholder="e.g. Customer provided EOO - valuation and photo"></textarea></label>
+          <label class="field span4"><span>Proof upload</span>
+            <input type="file" data-file="proof_files" accept="image/jpeg,image/png,application/pdf" multiple>
+            <small>JPEG, PNG or PDF</small></label>
+          <div class="upload-list span4" data-file-preview="proof_files"></div>
+        </div>
+      </div>
+
+      <!-- calculators -->
+      <div class="subsection">
+        <h3>Costing <small>rates from the current rate card — snapshotted on the quote</small></h3>
+        <div class="calc-wrap">
+          <div class="calc" data-costing="manufacture">
+            <h4>Ring / manufacture calculator</h4>
+            <table class="data">
+              <tbody>
+                <tr><td>Stones (from table above)</td><td class="num" data-calc="stonesCost">$0</td></tr>
+                <tr>
+                  <td>Gold
+                    <select data-calc="mfgMetal" style="width:auto;display:inline-block;margin-left:6px">
+                      <option value="MFG_GOLD_9CT">9ct</option>
+                      <option value="MFG_GOLD_18CT">18ct</option>
+                    </select>
+                    × <input type="number" data-calc="mfgGms" step="0.001" min="0" style="width:80px;display:inline-block"> gms
+                  </td>
+                  <td class="num" data-calc="goldCost">$0</td>
+                </tr>
+                <tr><td>Setting
+                      <select data-calc="settingTier" style="width:auto;display:inline-block;margin:0 6px">
+                        <option value="">— choose tier —</option>
+                      </select>
+                      × <input type="number" data-calc="settingQty" step="1" min="0" style="width:56px;display:inline-block"> stones
+                    </td>
+                    <td class="num" data-calc="settingCost">$0</td></tr>
+                <tr><td>Casting <label class="checkline" style="display:inline-flex;margin-left:6px"><input type="checkbox" data-calc="castingOn"> include</label></td>
+                    <td class="num" data-calc="castingCost">$0</td></tr>
+                <tr><td>Labour × <input type="number" data-calc="labourHrs" step="0.25" min="0" style="width:64px;display:inline-block"> hrs</td>
+                    <td class="num" data-calc="labourCost">$0</td></tr>
+                <tr><td>Box &amp; valuation <label class="checkline" style="display:inline-flex;margin-left:6px"><input type="checkbox" data-calc="boxOn" checked> include</label></td>
+                    <td class="num" data-calc="boxCost">$0</td></tr>
+              </tbody>
+            </table>
+            <div class="calc-total"><span>Manufactured cost</span><span data-calc="mfgTotal">$0</span></div>
+            <div class="calc-total" style="border:none;padding-top:2px"><span>Suggested retail (× markup)</span><span data-calc="mfgRetail">$0</span></div>
+          </div>
+
+          <div class="calc" data-costing="chain">
+            <h4>Chain / earring calculator</h4>
+            <table class="data">
+              <tbody>
+                <tr>
+                  <td>Rate
+                    <select data-calc="chainRate" style="width:auto;display:inline-block;margin-left:6px">
+                      <option value="">— select —</option>
+                    </select>
+                  </td>
+                  <td class="num" data-calc="chainRateShow">—</td>
+                </tr>
+                <tr>
+                  <td>Weight <input type="number" data-calc="chainGms" step="0.001" min="0" style="width:90px;display:inline-block"> gms</td>
+                  <td class="num" data-calc="chainCost">$0</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="calc-total"><span>Chain retail</span><span data-calc="chainRetail">$0</span></div>
+          </div>
+
+          <div class="calc" data-costing="category">
+            <h4><span data-calc="categoryCostTitle">Item category costing</span></h4>
+            <table class="data">
+              <tbody>
+                <tr>
+                  <td>Material / replacement allowance
+                    <input type="number" data-calc="categoryMaterial" step="0.01" min="0" style="width:100px;display:inline-block">
+                  </td>
+                  <td class="num" data-calc="categoryMaterialCost">$0</td>
+                </tr>
+                <tr>
+                  <td>Labour
+                    <input type="number" data-calc="categoryLabourHrs" step="0.25" min="0" style="width:64px;display:inline-block"> hrs
+                  </td>
+                  <td class="num" data-calc="categoryLabourCost">$0</td>
+                </tr>
+                <tr>
+                  <td>Other category cost
+                    <input type="number" data-calc="categoryOther" step="0.01" min="0" style="width:100px;display:inline-block">
+                  </td>
+                  <td class="num" data-calc="categoryOtherCost">$0</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="calc-total"><span>Category retail</span><span data-calc="categoryRetail">$0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pricing outcome -->
+      <div class="subsection">
+        <h3>Pricing &amp; fulfilment</h3>
+        <div class="grid c6">
+          <label class="field"><span>Retail price inc GST ($)</span>
+            <input type="number" data-f="retail_price" step="0.01" min="0"></label>
+          <label class="field"><span>Insurance nett ($)</span>
+            <input type="number" data-f="insurance_nett" step="0.01" min="0"></label>
+          <label class="field"><span>Item policy limit ($)</span>
+            <input type="number" data-f="policy_limit" step="0.01" min="0" placeholder="No limit"></label>
+          <label class="field"><span>Liability ($)</span>
+            <input type="number" data-f="liability" step="0.01" min="0" readonly></label>
+          <label class="field"><span>Fulfilment</span>
+            <select data-f="fulfilment">
+              <option value="">—</option>
+              <option value="supply">Supply</option>
+              <option value="supply_alternative">Supply alternative</option>
+              <option value="refer_cm">Refer case manager</option>
+            </select></label>
+          <label class="field"><span>Item status</span>
+            <select data-f="status">
+              <option value="draft">Draft</option>
+              <option value="quoted">Quoted</option>
+              <option value="unable_to_quote">Unable to quote</option>
+            </select></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<template id="stoneRowTemplate">
+  <tr data-stone>
+    <td><select data-s="stone_type" data-lookup="stone_type"></select></td>
+    <td><select data-s="shape" data-lookup="stone_shape"></select></td>
+    <td class="num"><input type="number" data-s="stone_count" value="1" min="0" step="1" style="width:56px"></td>
+    <td class="num"><input type="number" data-s="carat_each" min="0" step="0.001" style="width:76px"></td>
+    <td class="num"><input type="number" data-s="total_carat" min="0" step="0.001" style="width:76px"></td>
+    <td><select data-s="quality" data-lookup="stone_quality"></select></td>
+    <td><input type="text" data-s="certificate" style="width:90px" placeholder="GIA…"></td>
+    <td class="num"><input type="number" data-s="cost_per_carat" min="0" step="0.01" style="width:90px"></td>
+    <td class="num"><input type="number" data-s="cost" min="0" step="0.01" style="width:96px"></td>
+    <td data-stock-hint style="font-size:11px;white-space:nowrap"></td>
+    <td><button class="btn danger small" type="button" data-remove-stone>×</button></td>
+  </tr>
+</template>
+
+<div class="toast" id="toast"></div>
+<script src="assets/phone.js"></script>
+<script src="assets/paste-extract.js"></script>
+<script src="assets/quote-entry.js"></script>
+</body>
+</html>

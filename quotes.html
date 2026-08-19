@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quotes — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a class="active" href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="stock.html">Stock</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <a href="static-data.html">Settings</a>
+      <a href="index.html#automation">Automation</a>
+      <a href="index.html#reports">Reports</a>
+      <a href="user-manuals.html">Manuals</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title">Quotes <a class="help-link" href="user-manuals.html#quotes" title="Open the Quotes manual" aria-label="Open the Quotes manual">?</a></h1>
+  <p class="page-sub">Every claim in the pipeline — insurance validations and private work.</p>
+
+  <section class="panel">
+    <header>
+      <h2>Pipeline</h2>
+      <a class="btn gold" href="quote-entry.html">＋ New quote</a>
+    </header>
+    <div class="body">
+      <div class="grid c4" style="margin-bottom:16px">
+        <label class="field"><span>Search</span>
+          <input type="text" id="q" placeholder="Claim no, customer, insurer…"></label>
+        <label class="field"><span>Status</span>
+          <select id="statusFilter">
+            <option value="">All statuses</option>
+            <option value="new_enquiry">New enquiry</option>
+            <option value="assessing">Assessing</option>
+            <option value="pending_approval">Pending approval</option>
+            <option value="quote_sent">Quote sent</option>
+            <option value="revised">Revised</option>
+            <option value="approved">Approved</option>
+            <option value="in_production">In production</option>
+            <option value="quality_check">Quality check</option>
+            <option value="ready_for_collection">Ready for collection</option>
+            <option value="completed">Completed</option>
+            <option value="invoiced">Invoiced</option>
+          </select></label>
+        <label class="field"><span>Branch</span>
+          <select id="branchFilter">
+            <option value="">Both branches</option>
+            <option value="melbourne">Melbourne</option>
+            <option value="sydney">Sydney</option>
+          </select></label>
+        <label class="field"><span>Approving as</span>
+          <select id="approverSelect">
+            <option value="">Select approver…</option>
+          </select></label>
+      </div>
+
+      <table class="data">
+        <thead><tr>
+          <th>Claim</th><th>Customer</th><th>Insurer</th><th>Status</th>
+          <th>Branch</th><th class="num">Quoted retail</th><th class="num">Quoted nett</th>
+          <th class="num">Days open</th><th></th>
+        </tr></thead>
+        <tbody id="rows">
+          <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:34px">
+            Loading pipeline…
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const fmt = n => '$' + (Number(n)||0).toLocaleString('en-AU');
+const xeroInvoiceUrl = (xeroInvoiceId) => `https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=${encodeURIComponent(xeroInvoiceId)}`;
+let DATA = [];
+
+const STATUS_BADGE = {
+  new_enquiry:'', assessing:'', pending_approval:'warn', quote_sent:'gold', revised:'warn',
+  approved:'ok', in_production:'gold', quality_check:'gold',
+  ready_for_collection:'ok', completed:'ok', invoiced:'ok', paid:'ok',
+  declined:'danger', closed:'',
+};
+const STATUS_LABELS = {
+  new_enquiry: 'New enquiry',
+  assessing: 'Assessing',
+  pending_approval: 'Pending approval',
+  quote_sent: 'Quote sent',
+  revised: 'Revised',
+  approved: 'Approved',
+  awaiting_deposit: 'Awaiting deposit',
+  cad_approval: 'CAD approval',
+  in_production: 'In production',
+  quality_check: 'Quality check',
+  ready_for_collection: 'Ready for collection',
+  completed: 'Completed',
+  invoiced: 'Invoiced',
+  paid: 'Paid',
+  declined: 'Declined',
+  closed: 'Closed',
+};
+
+async function load(){
+  try {
+    const res = await fetch('/api/claims');
+    if (!res.ok) throw new Error();
+    DATA = await res.json();
+  } catch {
+    DATA = [];
+    $('#rows').innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:34px">
+      No connection to the API yet — provision the database, then this pipeline fills automatically.<br>
+      <a class="btn gold" href="quote-entry.html" style="margin-top:14px">Start the first quote</a></td></tr>`;
+    return;
+  }
+  render();
+  loadApprovers();
+}
+
+async function loadApprovers(){
+  const sel = $('#approverSelect');
+  if (sel.dataset.loaded) return;
+  try {
+    const staff = await fetch('/api/staff').then(r => r.json());
+    const approvers = (staff || []).filter(s => s.role === 'admin' || s.can_approve_quotes);
+    sel.innerHTML = '<option value="">Select approver…</option>' +
+      approvers.map(s => `<option value="${s.id}">${s.full_name}</option>`).join('');
+    sel.dataset.loaded = '1';
+    const saved = localStorage.getItem('quotesApproverId');
+    if (saved && approvers.some(s => String(s.id) === saved)) sel.value = saved;
+  } catch {
+    // stays on the placeholder option if staff can't be loaded
+  }
+}
+$('#approverSelect')?.addEventListener('change', () => {
+  localStorage.setItem('quotesApproverId', $('#approverSelect').value);
+});
+
+function render(){
+  const q = $('#q').value.toLowerCase();
+  const st = $('#statusFilter').value;
+  const br = $('#branchFilter').value;
+  const rows = DATA.filter(r =>
+    (!st || r.status === st) &&
+    (!br || r.branch === br) &&
+    (!q || [r.claim_number, r.customer, r.insurer].join(' ').toLowerCase().includes(q))
+  );
+  if (!rows.length) {
+    $('#rows').innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:34px">
+      Nothing matches these filters.</td></tr>`;
+    return;
+  }
+  $('#rows').innerHTML = rows.map(r => `
+    <tr>
+      <td><strong>${r.claim_number}</strong></td>
+      <td>${r.customer || ''}</td>
+      <td>${r.insurer || '<span style="color:var(--muted)">Private</span>'}</td>
+      <td><span class="badge ${STATUS_BADGE[r.status] || ''}">${STATUS_LABELS[r.status] || r.status.replace(/_/g,' ')}</span></td>
+      <td>${r.branch === 'sydney' ? 'Sydney' : 'Melbourne'}</td>
+      <td class="num">${fmt(r.quoted_retail)}</td>
+      <td class="num">${fmt(r.quoted_nett)}</td>
+      <td class="num">${r.days_open}</td>
+      <td style="white-space:nowrap">
+        <a class="btn ghost small" href="quote-entry.html?claim=${r.claim_id}">Open</a>
+        ${r.quote_id ? `<button class="btn ghost small" type="button" onclick="downloadPdf(${r.quote_id})">PDF</button>` : ''}
+        ${r.quote_status === 'draft'
+          ? `<button class="btn gold small" type="button" onclick="approveQuote(${r.quote_id})">Approve</button>`
+          : ''}
+        ${['ready_to_send','sent'].includes(r.quote_status)
+          ? `<button class="btn gold small" type="button" onclick="sendToCustomer(${r.quote_id})">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2.5" y="4.5" width="19" height="15" rx="2"></rect>
+                <path d="M3 6.5l9 6.5 9-6.5"></path>
+              </svg>
+              Email quote</button>`
+          : ''}
+        ${r.invoice_number
+          ? (r.xero_invoice_id && !r.xero_invoice_id.startsWith('STUB-')
+              ? `<a class="badge ok" href="${xeroInvoiceUrl(r.xero_invoice_id)}" target="_blank" rel="noopener" title="Open in Xero">Xero: ${r.invoice_number}</a>`
+              : `<span class="badge ok" title="Already sent to Xero">Xero: ${r.invoice_number}</span>`)
+          : r.status === 'approved'
+            ? `<button class="btn gold small" type="button" onclick="sendToXero(${r.claim_id})">Send to Xero</button>`
+            : ''}
+      </td>
+    </tr>`).join('');
+}
+
+['q','statusFilter','branchFilter'].forEach(id => $('#'+id).addEventListener('input', render));
+load();
+
+async function downloadPdf(quoteId){
+  window.open(`/api/quotes/${quoteId}/pdf`, '_blank');
+}
+
+async function approveQuote(quoteId){
+  const staffId = $('#approverSelect').value;
+  if (!staffId) return toast('Select who is approving, in "Approving as" first', true);
+  try {
+    const res = await fetch(`/api/quotes/${quoteId}/review`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ staff_id: staffId }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast('Quote approved for sending');
+    load();
+  } catch (err) {
+    toast('Approve: ' + err.message, true);
+  }
+}
+
+async function sendToCustomer(quoteId){
+  try {
+    const res = await fetch(`/api/quotes/${quoteId}/send`, { method: 'POST' }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(res.mode === 'stub'
+      ? `Quote emailed to ${res.to} (stub mode — no real email sent yet; set EMAIL_SEND_MODE=live to go live)`
+      : `Quote emailed to ${res.to}`);
+    load();
+  } catch (err) {
+    toast('Email: ' + err.message, true);
+  }
+}
+
+async function sendToXero(claimId){
+  try {
+    const claim = await fetch(`/api/claims/${claimId}`).then(r => r.json());
+    if (claim.error) throw new Error(claim.error);
+    const quote = claim.quotes?.find(q => q.status === 'approved') || claim.quotes?.[0];
+    if (!quote) throw new Error('No quote found on this claim yet');
+
+    const res = await fetch('/api/xero/invoices', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ claim_id: claimId, quote_id: quote.id }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+
+    toast(`Draft invoice ${res.invoice_number} created in Xero (${STATUS_LABELS[res.status] || res.status.replace(/_/g,' ')})`);
+    load();
+  } catch (err) {
+    toast('Xero: ' + err.message, true);
+  }
+}
+
+let toastTimer;
+function toast(msg, isErr){
+  let t = document.getElementById('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast'; t.className = 'toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = 'toast', 4200);
+}
+</script>
+</body>
+</html>

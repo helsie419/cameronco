@@ -1,0 +1,28 @@
+{
+  "name": "cameronco-crm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cameron & Co insurance quoting system and CRM",
+  "type": "module",
+  "scripts": {
+    "dev": "node local-dev-server.mjs",
+    "db:setup": "node db/setup-turso.mjs",
+    "db:migrate": "node db/migrate-turso.mjs",
+    "db:import-postgres": "node db/import-postgres-to-turso.mjs --replace",
+    "test:turso": "node scripts/test-turso-regression.mjs",
+    "test:xero-security": "node scripts/test-xero-security.mjs",
+    "test:xero-oauth": "node scripts/test-xero-oauth-start.mjs",
+    "verify:turso-staging": "node scripts/verify-turso-staging.mjs"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "dotenv": "^16.4.5",
+    "imapflow": "^1.4.7",
+    "mailparser": "^3.9.14",
+    "nodemailer": "^9.0.3",
+    "pdfkit": "^0.19.1"
+  },
+  "devDependencies": {
+    "pg": "^8.13.1"
+  }
+}

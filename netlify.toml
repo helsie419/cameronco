@@ -1,0 +1,18 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["pg", "imapflow", "mailparser", "pdfkit", "nodemailer"]
+  # api.mjs's PDF renderer (lib/pdf.mjs) reads this logo file straight off
+  # disk at request time — esbuild won't pick it up automatically since it's
+  # not `import`ed, so it has to be listed here to ship in the function zip.
+  included_files = ["assets/cameron-co-logo-cropped.png"]
+
+# Clean /api/* path is handled by the function's own `config.path`.
+# If you prefer redirects instead, uncomment:
+# [[redirects]]
+#   from = "/api/*"
+#   to = "/.netlify/functions/api/:splat"
+#   status = 200
