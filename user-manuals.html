@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Manuals - Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+<style>
+  .manual-page { max-width: 1120px; }
+  .manual-hero {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+  }
+  .manual-kicker {
+    margin: 0 0 6px;
+    color: var(--gold-dark);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .manual-title {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.08;
+    margin: 0 0 10px;
+  }
+  .manual-intro {
+    max-width: 780px;
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0;
+  }
+  .manual-layout {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+  .manual-nav {
+    position: sticky;
+    top: 112px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+    background: var(--panel);
+  }
+  .manual-nav h2 {
+    margin: 0 0 10px;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+  }
+  .manual-nav a {
+    display: block;
+    color: var(--charcoal);
+    text-decoration: none;
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .manual-nav a:hover { color: var(--gold-dark); }
+  .manual-section {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+    margin-bottom: 18px;
+    padding: 22px;
+    scroll-margin-top: 110px;
+  }
+  .manual-section h2 {
+    font-family: var(--serif);
+    font-size: 27px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  .manual-section h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 18px 0 8px;
+  }
+  .manual-section p { margin: 0 0 12px; }
+  .manual-section ul,
+  .manual-section ol {
+    margin: 0 0 14px 22px;
+    padding: 0;
+  }
+  .manual-section li { margin: 5px 0; }
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-tint);
+    padding: 12px 14px;
+    margin: 14px 0;
+  }
+  .callout strong { color: var(--gold-dark); }
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 14px 0 4px;
+  }
+  .quick-card {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    background: var(--panel);
+    padding: 12px;
+  }
+  .quick-card strong { display: block; margin-bottom: 4px; }
+  .manual-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  @media print {
+    .site-header, .manual-nav, .manual-actions { display: none; }
+    .page { padding: 0; max-width: none; }
+    .manual-layout { display: block; }
+    .manual-section { break-inside: avoid; border-color: #ddd; }
+  }
+  @media (max-width: 900px) {
+    .manual-layout { grid-template-columns: 1fr; }
+    .manual-nav { position: static; }
+  }
+  @media (max-width: 620px) {
+    .manual-title { font-size: 34px; }
+    .quick-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron &amp; Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="stock.html">Stock</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <a href="static-data.html">Settings</a>
+      <a class="active" href="user-manuals.html">Manuals</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page manual-page">
+  <section class="manual-hero">
+    <h1 class="manual-title">Cameron &amp; Co CRM Manuals</h1>
+    <p class="manual-intro">Use these guides for day-to-day CRM tasks. Each section matches a live screen in the system, and the small help buttons in the CRM link directly back to the relevant manual.</p>
+    <div class="manual-actions">
+      <a class="btn gold" href="quote-entry.html">Start a new quote</a>
+      <a class="btn ghost" href="quotes.html">Open Quotes</a>
+      <button class="btn ghost" type="button" onclick="window.print()">Print manuals</button>
+    </div>
+  </section>
+
+  <div class="manual-layout">
+    <aside class="manual-nav" aria-label="Manual contents">
+      <h2>Contents</h2>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#customers">Customers</a>
+      <a href="#customer-record">Customer Records</a>
+      <a href="#contact">Customer Contact</a>
+      <a href="#email-history">Email History</a>
+      <a href="#quotes">Quotes Pipeline</a>
+      <a href="#create-order">Creating an Order</a>
+      <a href="#job-board">Job Board</a>
+      <a href="#stock">Stock</a>
+      <a href="#rates">Rate Cards</a>
+      <a href="#automations">Automations</a>
+      <a href="#reports">Reports</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+    </aside>
+
+    <div>
+      <section class="manual-section" id="dashboard">
+        <h2>Dashboard Manual</h2>
+        <p>The dashboard is the daily overview for open quote value, workshop load, unpaid balances, pipeline volume, and urgent work.</p>
+        <h3>How to use it</h3>
+        <ol>
+          <li>Open <strong>Dashboard</strong> from the top navigation.</li>
+          <li>Review the metric cards for open quote value, workshop load, and unpaid balances.</li>
+          <li>Use the <strong>Pipeline</strong> rail to see where work is sitting.</li>
+          <li>Use the <strong>Today</strong> panel for jobs or quotes needing attention.</li>
+        </ol>
+        <div class="callout"><strong>Tip:</strong> If the dashboard looks empty, check that the database/API is connected and that claims or jobs have been created.</div>
+      </section>
+
+      <section class="manual-section" id="customers">
+        <h2>Customers Manual</h2>
+        <p>The Customers screen is where staff find, review, and open customer records. Customers are no longer added from a popup here — <strong>Add customer</strong> now takes you to the same full-screen page used to start a quote, since in practice a new customer almost always exists because a new quote is starting.</p>
+        <h3>Find a customer</h3>
+        <ol>
+          <li>Open <strong>Customers</strong>.</li>
+          <li>Search by name, phone, email, or style notes.</li>
+          <li>Use the Type and Consent filters when narrowing a long list.</li>
+          <li>Click a customer row to open the customer record. The phone number shown in the table is also a click-to-call link.</li>
+        </ol>
+        <h3>Add a customer</h3>
+        <ol>
+          <li>Click <strong>Add customer</strong> — this opens the full-screen quote entry page (see <a href="#create-order">Creating an Order</a> for the paste-and-extract and duplicate-detection steps that happen there).</li>
+          <li>Search for the customer first — if a close name/address match already exists, a warning offers to link to that existing customer instead of creating a duplicate.</li>
+          <li>Enter or confirm the customer's details, then continue into the claim.</li>
+        </ol>
+        <h3>Bulk upload customers</h3>
+        <ol>
+          <li>Click <strong>Bulk upload</strong>.</li>
+          <li>Paste CSV rows using the columns shown in the placeholder.</li>
+          <li>Click <strong>Import customers</strong>.</li>
+        </ol>
+        <div class="callout"><strong>Important:</strong> Search before adding a customer. One customer can have many claims, quotes, and jobs.</div>
+      </section>
+
+      <section class="manual-section" id="customer-record">
+        <h2>Customer Record Manual</h2>
+        <p>A customer record opens full-screen (not a popup) so the main navigation stays reachable while you're on it — it shows contact details, consent, work orders, and correspondence.</p>
+        <h3>Update a record</h3>
+        <ol>
+          <li>Open the customer from the Customers table.</li>
+          <li><strong>Save customer</strong> and <strong>Send correspondence</strong> sit together at the top of the page.</li>
+          <li>Full name, customer type, phone, and email sit on one row; address and preferred contact, ring size and partner/occasion, and lead source follow below.</li>
+          <li>Edit any field, then click <strong>Save customer</strong>.</li>
+        </ol>
+        <div class="callout"><strong>What are Ring size / Partner-occasion for?</strong> These are general relationship/marketing fields carried over from the original spreadsheets — not tied to any particular claim. They're useful for retail/private customers (e.g. a future engagement ring purchase) but won't apply to most insurance work, which is why they're optional and sit lower on the page.</div>
+        <h3>Review history</h3>
+        <ul>
+          <li><strong>Work Orders:</strong> every claim/quote for this customer — claim number, whether it's insurance work (and which insurer) or private work, its current status, the date, and the quoted total.</li>
+          <li><strong>Correspondence:</strong> shows SiteGround email matches and logged CRM notes.</li>
+          <li><strong>Send correspondence:</strong> opens Customer Contact with that customer selected.</li>
+        </ul>
+      </section>
+
+      <section class="manual-section" id="contact">
+        <h2>Customer Contact Manual</h2>
+        <p>Customer Contact is used to send or log messages and keep a timeline of customer communication.</p>
+        <h3>Send or log a message</h3>
+        <ol>
+          <li>Open <strong>Customer Contact</strong>.</li>
+          <li>Choose <strong>Send email</strong> or <strong>Log phone call / other communication</strong>.</li>
+          <li>Select one customer, or choose a customer list.</li>
+          <li>Choose the linked work item if relevant.</li>
+          <li>Select a template, then review the subject and message body.</li>
+          <li>Tick <strong>Create follow-up task</strong> if a follow-up should be created.</li>
+          <li>Click the submit button to save the communication.</li>
+        </ol>
+        <div class="callout"><strong>Consent:</strong> The CRM suppresses some sends when the customer does not have the correct email, SMS, or marketing consent.</div>
+      </section>
+
+      <section class="manual-section" id="email-history">
+        <h2>Email History Manual</h2>
+        <p>Email history reads recent matching messages from the configured SiteGround mailbox and displays them on the customer record.</p>
+        <h3>Refresh customer email</h3>
+        <ol>
+          <li>Open a customer record.</li>
+          <li>Check that the customer has an email address.</li>
+          <li>In Correspondence, click <strong>Refresh email</strong>.</li>
+          <li>Review inbound and outbound messages from the mailbox.</li>
+        </ol>
+        <div class="callout"><strong>Setup required:</strong> Netlify must have IMAP environment variables configured before this feature can read SiteGround email.</div>
+      </section>
+
+      <section class="manual-section" id="quotes">
+        <h2>Quotes Pipeline Manual</h2>
+        <p>The Quotes screen lists every claim or quote in the pipeline.</p>
+        <h3>Use the pipeline</h3>
+        <ol>
+          <li>Open <strong>Quotes</strong> (now the second item in the main navigation, right after Dashboard).</li>
+          <li>Use search to find a claim number, customer, or insurer.</li>
+          <li>Filter by status or branch if needed.</li>
+          <li>Click <strong>Open</strong> to return to a quote.</li>
+          <li>If a claim is approved and hasn't been invoiced yet, use <strong>Send to Xero</strong> to create a draft invoice.</li>
+          <li>Once it's been sent, the button is replaced by the Xero invoice number — click it to open that invoice directly in Xero (opens in a new tab; you'll need to be logged into the right Xero organisation).</li>
+        </ol>
+        <div class="callout"><strong>Note:</strong> Sending is one-way per claim — once an invoice number is showing, there's no button to send again, so it can't accidentally be double-invoiced.</div>
+        <div class="callout"><strong>Note:</strong> Job creation happens on the Job Board after the quote/claim is approved.</div>
+      </section>
+
+      <section class="manual-section" id="create-order">
+        <h2>Creating an Order Manual</h2>
+        <p>In this CRM, an order starts as a quote or claim. Once approved, it becomes a workshop job.</p>
+        <h3>Before you start</h3>
+        <ul>
+          <li>Customer details</li>
+          <li>Insurer and claim number, if insurance work</li>
+          <li>Item description, metal, stones, dimensions, and costing details</li>
+          <li>Policy limits, excess, salvage, and settlement notes</li>
+        </ul>
+        <h3>Create the quote/order</h3>
+        <p>Customer and claim are created together on one full-screen page — there's no separate "add customer" step for insurance work.</p>
+        <ol>
+          <li>Open <strong>Quotes</strong> and click <strong>New quote</strong> (or <strong>Add customer</strong> from the Customers screen — both land on the same page).</li>
+          <li><strong>Paste from insurer portal:</strong> if you have the claim details copied from the insurer's portal, paste the text into the box at the top of the Customer panel and click <strong>Extract details</strong>. It fills in the customer's name, address, phone, email, and — where present — the claim number, insurer, and reference. This is rule-based text matching, not AI, so always check the fields it fills in before continuing.</li>
+          <li>Otherwise, search for the customer by name, email, or phone, or type the details in manually.</li>
+          <li><strong>Possible duplicate:</strong> if the name and address closely match an existing customer, a warning banner appears with that customer's name and address. Click <strong>Use this existing customer</strong> to link to them instead of creating a new record, or dismiss it if it's genuinely a different person.</li>
+          <li>Enter claim details. For insurance work, enter the insurer's claim number. For private/retail work with no insurer selected, the claim number field greys out and fills itself in automatically from the internal reference below — there's nothing to type there.</li>
+          <li><strong>Internal reference:</strong> a Cameron &amp; Co reference number (e.g. <code>CC-2026-0001</code>) is generated automatically for new claims if you leave "Our reference" blank. Its prefix, digit-padding, yearly reset, and starting number are configurable in <strong>Settings &gt; Internal Reference Numbers</strong>.</li>
+          <li>Add each item, including specifications, stones, and costing.</li>
+          <li>Enter settlement details.</li>
+          <li>Click <strong>Save draft</strong> if not ready, or <strong>Generate quote</strong> when ready.</li>
+        </ol>
+        <h3>Internal sign-off, then send</h3>
+        <p>A generated quote sits as <strong>Pending approval</strong> and cannot be emailed until an admin signs off on it — this catches pricing mistakes before the customer ever sees them.</p>
+        <ol>
+          <li>On the <strong>Quotes</strong> pipeline, pick yourself under <strong>Approving as</strong> (admin role required — anyone else is rejected).</li>
+          <li>Use <strong>PDF</strong> to check how the quote will look, then click <strong>Approve</strong>.</li>
+          <li>Once approved, click <strong>Email quote</strong> to send it to the customer's email on file.</li>
+        </ol>
+        <h3>Approval</h3>
+        <p>Before an order can become a workshop job or a Xero invoice, the quote must separately be marked <strong>approved</strong> — meaning the customer or insurer has accepted it. This is a different step from the internal sign-off above.</p>
+        <div class="callout"><strong>Current note:</strong> The backend supports this customer-acceptance status, but the visible screens do not yet show a dedicated button for it. Until that's added, it needs to be set via the API (<code>PUT /api/quotes/:id/status</code>).</div>
+        <p><a href="user-manual-create-order.html">Open the detailed Creating an Order manual</a>.</p>
+      </section>
+
+      <section class="manual-section" id="job-board">
+        <h2>Job Board Manual</h2>
+        <p>The Job Board is the workshop view. Approved claims become jobs here, then move through production stages.</p>
+        <h3>Create a job</h3>
+        <ol>
+          <li>Open <strong>Job Board</strong>.</li>
+          <li>Click <strong>Create job from an approved claim</strong>.</li>
+          <li>Find the approved claim.</li>
+          <li>Click <strong>Create job</strong>.</li>
+        </ol>
+        <h3>Update a job</h3>
+        <ol>
+          <li>Click a job card.</li>
+          <li>Set the stage, owner, start date, due date, and items taken.</li>
+          <li>Review or update component lines.</li>
+          <li>Add supplier, stock number, invoice number, weight, rate, and actual cost.</li>
+          <li>Click <strong>Save changes</strong>.</li>
+        </ol>
+        <div class="quick-grid">
+          <div class="quick-card"><strong>Stages</strong> Awaiting deposit, CAD approval, In production, Quality check, Ready for collection, Completed.</div>
+          <div class="quick-card"><strong>Margin</strong> The job card compares quoted nett with actual component costs entered so far.</div>
+        </div>
+      </section>
+
+      <section class="manual-section" id="stock">
+        <h2>Stock Manual</h2>
+        <p>The Stock screen is the ledger for loose stones, metal, ring mounts/configurations, and finished pre-made pieces. While quoting, it shows whether a matching item is already on hand or needs ordering.</p>
+        <h3>Add a stock item</h3>
+        <ol>
+          <li>Open <strong>Stock</strong>.</li>
+          <li>Click <strong>Add stock item</strong>.</li>
+          <li>Pick a category — the form only shows the fields relevant to it.</li>
+          <li>Enter quantity, unit, and a reorder threshold — the item is flagged "Order needed" once quantity drops to or below that threshold.</li>
+          <li>Click <strong>Save</strong>.</li>
+        </ol>
+        <h3>Bulk upload stock</h3>
+        <ol>
+          <li>Click <strong>Bulk upload</strong>.</li>
+          <li>Paste CSV rows using the columns shown in the placeholder (category and description are required; the rest depend on category).</li>
+          <li>Click <strong>Import stock</strong>.</li>
+        </ol>
+        <h3>Checking stock while quoting</h3>
+        <p>On <strong>Quote entry</strong>, filling in a stone's type/shape/carat/quality, or an item's metal type/colour/category, shows a small badge next to those fields — green if a match is in stock, amber if it needs ordering. This is informational only: it never changes stock quantities or item pricing.</p>
+        <div class="callout"><strong>Note:</strong> Finished/pre-made pieces aren't auto-matched while quoting — browse them directly on the Stock screen instead.</div>
+      </section>
+
+      <section class="manual-section" id="rates">
+        <h2>Rate Cards Manual</h2>
+        <p>Rate Cards control quoting rates for manufacturing, material, setting, labour, chain, watch brands, and related pricing.</p>
+        <h3>Update a manufacturing or material rate</h3>
+        <p>Every field is click-to-edit directly in the table — there's no separate Edit popup.</p>
+        <ol>
+          <li>Open <strong>Rate Cards</strong>.</li>
+          <li>Find the relevant rate group.</li>
+          <li>Click into Category, Label, Metal, Origin, Rate, or Unit and change it. Changing Category moves the rate into that group's table as soon as you save.</li>
+          <li>The change saves automatically when you click away from the field — no separate save step.</li>
+          <li>Click <strong>history</strong> next to a rate to see every past version and when it was current.</li>
+          <li>Click <strong>Retire</strong> to stop offering a rate from today — a confirmation dialog checks first. Retiring never changes a quote that already used that rate.</li>
+        </ol>
+        <h3>Add a new rate</h3>
+        <ol>
+          <li>Click <strong>＋ Add new rate</strong> at the bottom of the rates list, or <strong>＋ Add rate</strong> on a specific group's heading to start pre-filled to that category.</li>
+          <li>Fill in the details and click <strong>Save new version</strong>.</li>
+        </ol>
+        <h3>Bulk update rates from a spreadsheet</h3>
+        <ol>
+          <li>Click <strong>Download CSV</strong> to export every current rate.</li>
+          <li>Edit values in the spreadsheet, keeping the <code>code</code> column unchanged so each row updates the right rate.</li>
+          <li>Click <strong>Upload CSV</strong>, choose the file, and review the preview of what will change.</li>
+          <li>Click <strong>Confirm import</strong>.</li>
+        </ol>
+        <h3>Add or update a watch brand rate</h3>
+        <ol>
+          <li>Use <strong>Watch brand rates</strong>.</li>
+          <li>Filter by insurer or search by brand if needed.</li>
+          <li>Click <strong>Add watch brand rate</strong> or edit an existing row.</li>
+          <li>Choose discount percentage or POA.</li>
+          <li>Click <strong>Save new version</strong>.</li>
+        </ol>
+        <div class="callout"><strong>Important:</strong> Editing a rate creates a new version from today. Past generated quotes keep the rate that was frozen at the time.</div>
+      </section>
+
+      <section class="manual-section" id="automations">
+        <h2>Automations Manual</h2>
+        <p>Automations prepare templated customer emails for key job phases, such as quote follow-up, deposit request, CAD approval, ready for collection, and care reminders.</p>
+        <h3>Create an automation</h3>
+        <ol>
+          <li>Open <strong>Automation</strong>.</li>
+          <li>Enter the template name.</li>
+          <li>Select the phase that triggers the send.</li>
+          <li>Select the timing.</li>
+          <li>Enter the subject and email body.</li>
+          <li>Click <strong>Save automation</strong>.</li>
+        </ol>
+        <h3>Run automations</h3>
+        <ol>
+          <li>Review <strong>Scheduled sends</strong>.</li>
+          <li>Click <strong>Run due sends</strong>.</li>
+          <li>Review the <strong>Run log</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="manual-section" id="reports">
+        <h2>Reports Manual</h2>
+        <p>Reports provide sales pipeline, workshop stage, data quality, and export audit views.</p>
+        <h3>Use reports</h3>
+        <ol>
+          <li>Open <strong>Reports</strong>.</li>
+          <li>Choose the role view: Owner, Sales, Workshop, or Finance.</li>
+          <li>Review the relevant report cards.</li>
+          <li>Click <strong>Export report</strong> if an export is needed and permitted.</li>
+        </ol>
+        <div class="callout"><strong>Audit:</strong> Export attempts are logged so the business can see who exported management information.</div>
+      </section>
+
+      <section class="manual-section" id="troubleshooting">
+        <h2>Troubleshooting Manual</h2>
+        <h3>I cannot save a quote</h3>
+        <ul>
+          <li>Check that a customer has been selected or created.</li>
+          <li>Check that the claim number has been entered.</li>
+          <li>Check that address fields are complete if an address was started.</li>
+          <li>Check that the database/API connection is working.</li>
+        </ul>
+        <h3>An approved claim does not appear on the Job Board</h3>
+        <ul>
+          <li>Check that the quote has been approved.</li>
+          <li>Check that the claim status is approved.</li>
+          <li>Check that a job has not already been created for that claim.</li>
+        </ul>
+        <h3>Email history does not load</h3>
+        <ul>
+          <li>Check that the customer has an email address.</li>
+          <li>Check Netlify IMAP environment variables.</li>
+          <li>Redeploy after changing Netlify environment variables.</li>
+          <li>Check that the SiteGround mailbox password is correct.</li>
+        </ul>
+        <h3>Pricing looks wrong</h3>
+        <ul>
+          <li>Check item weight, metal or chain rate, setting quantity, labour hours, and stone cost.</li>
+          <li>Check policy limits, salvage allocation, and current rate card values.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

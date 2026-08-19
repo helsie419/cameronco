@@ -1,32 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap");
 
+/* Brand tokens matched to assets/crm.css (per the live cameronco.com.au
+   site) so this demo and the real quoting screens share one identity. */
 :root {
-  --shell: #f7f5f3;
-  --sidebar: #ffffff;
   --card: #ffffff;
-  --card-soft: #faf8f6;
-  --paper: #fbfaf5;
-  --ink: #171d29;
-  --text: #2c2f33;
-  --muted: #6b7280;
-  --line: #e8e1db;
-  --line-strong: #d7d3cf;
-  --brand: #9b0000;
-  --brand-dark: #7f0000;
-  --brand-soft: #fff5f5;
+  --card-soft: #faf8f5;
+  --paper: #ffffff;
+  --ink: #2d2d2d;
+  --text: #2d2d2d;
+  --muted: #8a8a86;
+  --line: #e5e0d8;
+  --line-strong: #cfc7ba;
+  --brand: #8b7355;
+  --brand-dark: #6f5a42;
+  --brand-soft: #f4f0ea;
   --yellow: #f8e58f;
   --pink: #f4d6ef;
   --blue: #d7e5f7;
   --green-soft: #eef8f6;
   --red-soft: #fff1f1;
   --teal: #2f6f6b;
-  --gold: #a77c38;
-  --shadow: 0 18px 45px rgba(23, 29, 41, .10);
-  --shadow-soft: 0 8px 22px rgba(18, 24, 31, .07);
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --font-ui: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --gold: #8b7355;
+  --radius-lg: 6px;
+  --radius-md: 4px;
+  --radius-sm: 3px;
+  --font-ui: Lato, "Helvetica Neue", Arial, sans-serif;
   --font-heading: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 }
 
@@ -44,9 +42,7 @@ body {
   padding: 0;
   font-family: var(--font-ui);
   color: var(--ink);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, .86), rgba(247, 245, 239, .92)),
-    url("assets/cameron-co-background-texture.jpeg") center / 520px auto repeat;
+  background: var(--paper);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.45;
@@ -65,174 +61,105 @@ button {
   cursor: pointer;
 }
 
-.app-shell {
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  width: 100%;
-  min-height: 100vh;
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--brand);
+}
+
+/* Shared top nav — matches assets/crm.css exactly, so index.html's chrome
+   is pixel-consistent with quote-entry.html / quotes.html / job-board.html /
+   rates.html. */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  opacity: 1;
+  backdrop-filter: none;
+  box-shadow: 0 3px 18px rgba(45, 45, 45, 0.08);
+  isolation: isolate;
+}
+
+.site-header .bar {
+  max-width: 1280px;
   margin: 0 auto;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: var(--shell);
-  box-shadow: none;
-}
-
-.app-sidebar {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-height: 100%;
-  padding: 18px 16px;
-  border-right: 1px solid var(--line);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(251, 250, 245, .94)),
-    url("assets/cameron-co-background-texture.jpeg") center top / 440px auto repeat;
-}
-
-.app-sidebar::after {
-  content: "";
-  position: absolute;
-  right: 18px;
-  bottom: 96px;
-  width: 58px;
-  height: 58px;
-  background: url("assets/cameron-co-red-diamond-icon.png") center / contain no-repeat;
-  opacity: .08;
-  pointer-events: none;
-}
-
-.sidebar-brand {
-  min-height: 44px;
+  padding: 22px 28px;
   display: flex;
   align-items: center;
-  padding: 0 4px;
+  gap: 32px;
+  background: #fff;
 }
 
-.brand-mark {
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand img {
+  display: block;
+  height: 70px;
+  width: auto;
+}
+
+.main-nav {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover {
+  color: var(--brand);
+}
+
+.main-nav a.active {
+  border-bottom-color: var(--brand);
+  color: var(--brand-dark);
+}
+
+.help-link {
   display: inline-flex;
   align-items: center;
-  width: fit-content;
-}
-
-.brand-mark img {
-  width: 176px;
-  height: auto;
-  display: block;
-}
-
-.module-tabs {
-  display: grid;
-  gap: 8px;
-}
-
-.tab {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 44px;
-  padding: 11px 13px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--ink);
-  font-weight: 720;
-  text-align: left;
-  transition: background .16s ease, transform .16s ease;
-}
-
-.nav-icon {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  flex: 0 0 auto;
-}
-
-.nav-icon svg {
-  width: 20px;
-  height: 20px;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-}
-
-.tab:hover {
-  background: var(--card-soft);
-  transform: translateX(1px);
-}
-
-.tab.active {
-  background: var(--brand);
-  color: #ffffff;
-  box-shadow: 0 8px 18px rgba(155, 0, 0, .16);
-}
-
-.sidebar-profile {
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 38px 1fr;
-  gap: 10px;
-  align-items: center;
-  margin-top: auto;
-  padding: 10px;
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, .88), rgba(255, 245, 245, .92)),
-    url("assets/cameron-co-background-texture.jpeg") center / 360px auto repeat;
-}
-
-.sidebar-profile::after {
-  content: "";
-  position: absolute;
-  right: -6px;
-  top: -8px;
-  width: 42px;
-  height: 42px;
-  background: url("assets/cameron-co-red-diamond-icon.png") center / contain no-repeat;
-  opacity: .12;
-}
-
-.avatar {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line-strong);
   border-radius: 50%;
-  background:
-    linear-gradient(135deg, rgba(155, 0, 0, .95), rgba(127, 0, 0, .95)),
-    url("assets/cameron-co-red-diamond-icon.png") center / 22px auto no-repeat;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 850;
-}
-
-.sidebar-profile strong,
-.sidebar-profile span {
-  display: block;
-}
-
-.sidebar-profile strong {
+  background: var(--card);
+  color: var(--brand-dark);
   font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: middle;
 }
 
-.sidebar-profile span {
-  color: var(--muted);
-  font-size: 12px;
+.help-link:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  transform: translateY(-1px);
 }
+
+.phone-link { color: var(--brand-dark); text-decoration: none; white-space: nowrap; }
+.phone-link:hover { text-decoration: underline; }
 
 .app-main {
   min-width: 0;
-  background:
-    radial-gradient(circle at 80% 0, rgba(47, 111, 107, .10), transparent 26rem),
-    linear-gradient(180deg, rgba(248, 249, 244, .94), rgba(247, 245, 243, .98)),
-    url("assets/cameron-co-background-texture.jpeg") center / 620px auto repeat;
+  background: var(--paper);
 }
 
 .app-header {
@@ -243,10 +170,7 @@ button {
   min-height: 70px;
   padding: 14px 24px;
   border-bottom: 1px solid var(--line);
-  background:
-    linear-gradient(90deg, rgba(248, 249, 244, .96), rgba(255, 255, 255, .88)),
-    url("assets/cameron-co-background-texture.jpeg") center / 480px auto repeat;
-  backdrop-filter: blur(10px);
+  background: var(--paper);
 }
 
 .global-search {
@@ -257,9 +181,8 @@ button {
   height: 40px;
   padding: 0 12px;
   border: 1px solid var(--line-strong);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   background: var(--card);
-  box-shadow: 0 2px 8px rgba(18, 24, 31, .04);
 }
 
 .global-search span {
@@ -278,8 +201,7 @@ button {
 .save-pill,
 .meta,
 .fineprint,
-.surface-heading span,
-.metric small {
+.surface-heading span {
   color: var(--muted);
   font-size: 12px;
 }
@@ -390,7 +312,7 @@ h4 {
 h2 {
   margin-bottom: 0;
   font-family: var(--font-heading);
-  color: var(--brand);
+  color: var(--ink);
   font-size: clamp(34px, 3.8vw, 48px);
   line-height: 1;
   font-weight: 650;
@@ -433,30 +355,16 @@ h4 {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
-}
-
-.metric,
-.surface,
-.work-card,
-.customer-card,
-.report-row,
-.timeline-item,
-.automation-item,
-.job-card,
-.kanban-column {
-  border: 1px solid rgba(16, 18, 20, .06);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .88)),
-    var(--card);
-  box-shadow: 0 1px 0 rgba(16, 18, 20, .03), 0 12px 24px rgba(16, 18, 20, .05);
+  margin-bottom: 14px;
 }
 
 .metric {
-  --metric-accent: var(--brand);
-  min-height: 118px;
-  padding: 18px;
-  border-top: 4px solid var(--metric-accent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  border-top: 3px solid var(--metric-accent, var(--brand));
+  min-height: 110px;
+  padding: 16px;
 }
 
 .metric:nth-child(2) {
@@ -464,7 +372,7 @@ h4 {
 }
 
 .metric:nth-child(3) {
-  --metric-accent: #c4a13f;
+  --metric-accent: #c1653a;
 }
 
 .metric:nth-child(4) {
@@ -475,17 +383,31 @@ h4 {
   --metric-accent: #c578b6;
 }
 
-.metric span {
+.metric span,
+.metric small {
   color: var(--muted);
   font-size: 12px;
 }
 
 .metric strong {
   display: block;
-  margin: 12px 0 4px;
-  font-size: 30px;
+  margin: 10px 0 4px;
+  font-size: 28px;
   line-height: 1;
   letter-spacing: 0;
+}
+
+.surface,
+.work-card,
+.customer-card,
+.report-row,
+.timeline-item,
+.automation-item,
+.job-card,
+.kanban-column {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
 }
 
 .dashboard-layout,
@@ -494,73 +416,6 @@ h4 {
   grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
   gap: 14px;
   align-items: start;
-}
-
-.atelier-card {
-  display: grid;
-  grid-column: 1 / -1;
-  grid-template-columns: minmax(220px, .8fr) minmax(0, 1fr);
-  gap: 18px;
-  align-items: stretch;
-  overflow: hidden;
-  padding: 0;
-  border-color: rgba(155, 0, 0, .14);
-}
-
-.atelier-media {
-  min-height: 210px;
-  background: var(--paper);
-}
-
-.atelier-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 210px;
-  object-fit: cover;
-  object-position: 74% center;
-}
-
-.atelier-copy {
-  display: grid;
-  align-content: center;
-  gap: 12px;
-  padding: 22px 22px 22px 4px;
-}
-
-.brand-kicker {
-  width: fit-content;
-  padding: 5px 9px;
-  border: 1px solid rgba(155, 0, 0, .18);
-  border-radius: 999px;
-  background: var(--brand-soft);
-  color: var(--brand);
-  font-size: 11px;
-  font-weight: 760;
-  letter-spacing: 0;
-}
-
-.atelier-copy h3 {
-  max-width: 420px;
-  color: var(--brand);
-  font-family: var(--font-heading);
-  font-size: 30px;
-  font-weight: 650;
-}
-
-.atelier-stats {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.atelier-stats span {
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
-  color: var(--text);
-  font-size: 12px;
 }
 
 .automation-layout {
@@ -578,11 +433,45 @@ h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  align-items: start;
 }
 
 .form-grid h3,
 .form-grid .wide {
   grid-column: 1 / -1;
+}
+
+.form-grid.quad {
+  grid-template-columns: repeat(4, 1fr);
+  margin-bottom: 12px;
+}
+
+.form-grid.triple {
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 12px;
+}
+
+.form-grid.triple label,
+.form-grid.quad label {
+  gap: 4px;
+}
+
+.modal-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  flex: none;
+}
+
+.modal-header-actions .consent-row {
+  justify-content: flex-end;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 label {
@@ -593,19 +482,48 @@ label {
   font-weight: 620;
 }
 
+.field-with-action {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.field-with-action input {
+  flex: 1;
+}
+
+.call-button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--brand);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--brand-dark);
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.call-button:hover {
+  background: var(--brand-soft);
+}
+
 input,
 select,
 textarea {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 10px 12px;
-  background: #fbfcf8;
+  background: var(--paper);
   color: var(--ink);
   font-weight: 420;
   outline: 0;
-  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+  transition: border-color .16s ease, background .16s ease;
 }
 
 textarea {
@@ -627,7 +545,7 @@ textarea {
   width: 100%;
   min-height: 0;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 9px 10px;
   background: #fff;
   color: var(--ink);
@@ -663,7 +581,7 @@ textarea {
   gap: 6px;
   min-height: 30px;
   padding: 5px 8px;
-  border: 1px solid rgba(155, 0, 0, .18);
+  border: 1px solid rgba(169, 121, 62, .22);
   border-radius: 999px;
   background: var(--brand-soft);
   color: var(--brand);
@@ -675,22 +593,43 @@ textarea {
 .icon-button {
   display: inline-grid;
   place-items: center;
-  border: 1px solid var(--line);
-  background: #fff;
-  color: var(--brand);
+  border: none;
+  background: transparent;
+  color: var(--brand-dark);
+  cursor: pointer;
 }
 
 .recipient-chip button {
   width: 20px;
   height: 20px;
   border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
 }
 
 .icon-button {
   width: 36px;
   height: 36px;
-  border-radius: 9px;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  border-radius: var(--radius-sm);
+}
+.icon-button:hover { background: var(--brand-soft); }
+.icon-button svg { width: 17px; height: 17px; }
+
+.icon-button.small {
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+.icon-button.small:hover { background: var(--brand-soft); }
+
+.jobs-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .image-upload-row {
@@ -717,8 +656,8 @@ textarea {
   aspect-ratio: 1;
   object-fit: cover;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #f6f7f0;
+  border-radius: var(--radius-sm);
+  background: var(--card-soft);
 }
 
 .image-gallery figcaption {
@@ -755,8 +694,8 @@ textarea {
   height: 34px;
   min-height: 34px;
   border: 1px solid var(--line);
-  border-radius: 9px;
-  background: #fbfcf8;
+  border-radius: var(--radius-sm);
+  background: var(--card-soft);
   color: var(--ink);
   font-family: var(--font-ui);
   font-size: 14px;
@@ -768,9 +707,9 @@ textarea {
   min-height: 180px;
   overflow: auto;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 12px;
-  background: #fbfcf8;
+  background: var(--paper);
   color: var(--ink);
   font-weight: 420;
   outline: 0;
@@ -783,9 +722,10 @@ textarea {
 }
 
 .rich-editor:focus {
-  border-color: rgba(155, 0, 0, .55);
+  outline: 2px solid var(--brand);
+  outline-offset: 0;
+  border-color: var(--brand);
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(155, 0, 0, .08);
 }
 
 .rich-editor p,
@@ -815,54 +755,67 @@ textarea::placeholder {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(155, 0, 0, .55);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(155, 0, 0, .08);
+  outline: 2px solid var(--brand);
+  outline-offset: 0;
+  border-color: var(--brand);
 }
 
 .button {
-  min-height: 48px;
-  border: 0;
-  border-radius: 8px;
-  padding: 12px 22px;
-  background: #eef0ea;
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 430;
-  letter-spacing: 0;
-  transition: transform .16s ease, background .16s ease, border-color .16s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 9px 20px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background .16s ease, border-color .16s ease;
 }
 
 .button:hover {
-  transform: translateY(-1px);
+  background: #000000;
+  border-color: #000000;
 }
 
 .button.primary {
   background: var(--brand);
+  border-color: var(--brand);
   color: #ffffff;
-  box-shadow: none;
+}
+
+.button.primary:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
 }
 
 .button.secondary {
-  border: 1px solid var(--line-strong);
-  background: #ffffff;
-  color: var(--ink);
+  border: 1px solid var(--brand);
+  background: transparent;
+  color: var(--brand-dark);
+}
+
+.button.secondary:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand);
 }
 
 .button.compact {
   min-height: 34px;
-  padding: 7px 12px;
-  font-size: 13px;
+  padding: 5px 12px;
+  font-size: 11px;
 }
 
 .button.link {
   min-height: 34px;
-  padding: 7px 10px;
+  padding: 5px 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fbfcf8;
+  background: transparent;
   color: var(--ink);
-  box-shadow: none;
 }
 
 .panel {
@@ -1013,6 +966,14 @@ textarea:focus {
   gap: 10px;
 }
 
+.mini-section-title {
+  margin: 18px 0 8px;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
 .customer-card,
 .work-card,
 .timeline-item,
@@ -1031,6 +992,17 @@ textarea:focus {
   align-items: flex-start;
 }
 
+a.timeline-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .16s ease, background .16s ease;
+}
+a.timeline-item:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
 .automation-actions {
   display: inline-flex;
   align-items: center;
@@ -1042,7 +1014,7 @@ textarea:focus {
 .customer-card,
 .work-card,
 .job-card {
-  transition: transform .16s ease, box-shadow .16s ease;
+  transition: background .16s ease, border-color .16s ease;
 }
 
 .customer-card {
@@ -1052,8 +1024,8 @@ textarea:focus {
 .customer-card:hover,
 .work-card:hover,
 .job-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(16, 18, 20, .09);
+  background: var(--brand-soft);
+  border-color: var(--line-strong);
 }
 
 .detail-grid {
@@ -1067,7 +1039,7 @@ textarea:focus {
   min-height: 58px;
   padding: 10px;
   border-radius: var(--radius-sm);
-  background: #f6f7f0;
+  background: var(--card-soft);
 }
 
 .detail span {
@@ -1115,14 +1087,14 @@ textarea:focus {
   border-bottom: 0;
 }
 
-.bar {
+.meter-bar {
   height: 9px;
   overflow: hidden;
   border-radius: 999px;
-  background: #eef0ea;
+  background: var(--line);
 }
 
-.bar span {
+.meter-bar span {
   display: block;
   height: 100%;
   border-radius: inherit;
@@ -1146,7 +1118,7 @@ textarea:focus {
 }
 
 .pipeline-stage.stage-in-production {
-  --stage-color: #a77c38;
+  --stage-color: #c1653a;
 }
 
 .pipeline-stage.stage-quality-check {
@@ -1171,8 +1143,8 @@ textarea:focus {
 .approval {
   min-height: 34px;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: #fbfcf8;
+  border-radius: var(--radius-sm);
+  background: var(--card-soft);
   color: var(--muted);
   font-size: 12px;
   font-weight: 760;
@@ -1195,7 +1167,7 @@ textarea:focus {
   margin: 12px 0;
   padding: 14px;
   border-radius: var(--radius-md);
-  background: #f6f7f0;
+  background: var(--card-soft);
   color: var(--text);
 }
 
@@ -1235,7 +1207,7 @@ textarea:focus {
 
 .kanban-column.drag-over {
   background: var(--brand-soft);
-  box-shadow: inset 0 0 0 2px rgba(155, 0, 0, .18);
+  box-shadow: inset 0 0 0 2px rgba(169, 121, 62, .22);
 }
 
 .kanban-heading {
@@ -1263,7 +1235,6 @@ textarea:focus {
   gap: 10px;
   cursor: grab;
   border-width: 1.5px;
-  box-shadow: 0 8px 18px rgba(16, 18, 20, .06);
 }
 
 .job-card.stage-new-enquiry {
@@ -1337,8 +1308,8 @@ textarea:focus {
 .job-card-meta span {
   display: block;
   padding: 7px 8px;
-  border-radius: 10px;
-  background: #f6f7f0;
+  border-radius: var(--radius-sm);
+  background: var(--card-soft);
   color: var(--muted);
   font-size: 12px;
 }
@@ -1351,7 +1322,7 @@ textarea:focus {
   min-height: 28px;
   padding: 5px 9px;
   border-radius: 999px;
-  background: #f6f7f0;
+  background: var(--card-soft);
   color: var(--muted);
   font-size: 12px;
   font-weight: 820;
@@ -1469,12 +1440,30 @@ textarea:focus {
   height: 100%;
   overflow: auto;
   padding: 26px;
-  background: #fbfcf8;
-  box-shadow: -24px 0 60px rgba(16, 18, 20, .22);
+  background: var(--paper);
+  border-left: 1px solid var(--line);
 }
 
 .compact-modal {
   width: min(720px, 100%);
+}
+
+.modal-backdrop.fullscreen {
+  /* Sits below the site header instead of covering it, so the main nav
+     stays reachable while a customer record is open — this is a page,
+     not a floating window. --header-h is set from JS to the header's
+     actual rendered height. */
+  inset: var(--header-h, 96px) 0 0 0;
+  place-items: stretch stretch;
+  background: var(--paper);
+  backdrop-filter: none;
+}
+
+.detail-modal.fullscreen {
+  width: 100%;
+  max-width: none;
+  border-left: none;
+  padding: 32px clamp(20px, 6vw, 64px);
 }
 
 .modal-close {
@@ -1482,15 +1471,19 @@ textarea:focus {
   top: 0;
   float: right;
   z-index: 2;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  width: 34px;
+  height: 34px;
+  margin-left: 16px;
+  border: 1px solid var(--brand);
+  border-radius: var(--radius-sm);
   background: var(--card);
-  color: var(--ink);
-  font-size: 24px;
+  color: var(--brand-dark);
+  font-size: 20px;
   line-height: 1;
-  box-shadow: var(--shadow-soft);
+}
+
+.modal-close:hover {
+  background: var(--brand-soft);
 }
 
 .modal-title-row {
@@ -1498,7 +1491,7 @@ textarea:focus {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-right: 46px;
+  margin-right: 60px;
 }
 
 .modal-title-row h2 {
@@ -1507,11 +1500,6 @@ textarea:focus {
   font-weight: 650;
 }
 
-.modal-action-stack {
-  display: grid;
-  gap: 8px;
-  justify-items: end;
-}
 
 .modal-section {
   margin-top: 18px;
@@ -1541,31 +1529,14 @@ textarea:focus {
     padding: 12px;
   }
 
-  .app-shell {
-    grid-template-columns: 1fr;
-    min-height: calc(100vh - 24px);
-  }
-
-  .app-sidebar {
-    min-height: auto;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .module-tabs {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .sidebar-profile {
-    display: none;
+  .site-header .bar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 16px;
   }
 
   .app-header {
     grid-template-columns: 1fr;
-  }
-
-  .metrics-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .dashboard-layout,
@@ -1575,12 +1546,8 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .atelier-card {
-    grid-template-columns: 1fr;
-  }
-
-  .atelier-copy {
-    padding: 20px;
+  .metrics-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .kanban-board {
@@ -1593,14 +1560,10 @@ textarea:focus {
     padding: 0;
   }
 
-  .app-shell {
-    min-height: 100vh;
-    border-radius: 0;
-  }
-
-  .module-tabs,
   .metrics-grid,
   .form-grid,
+  .form-grid.quad,
+  .form-grid.triple,
   .detail-grid,
   .approval-grid,
   .edit-row,
@@ -1608,7 +1571,6 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 
-  .app-sidebar,
   main,
   .app-header {
     padding-left: 14px;
@@ -1627,16 +1589,8 @@ textarea:focus {
     width: 100%;
   }
 
-  .brand-mark img {
-    width: 150px;
-  }
-
   h2 {
     font-size: 30px;
-  }
-
-  .metric {
-    min-height: 104px;
   }
 
   .detail-modal {
