@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Manual: Creating an Order - Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+<style>
+  .manual-page {
+    max-width: 1080px;
+  }
+
+  .manual-hero {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 22px;
+    margin-bottom: 24px;
+  }
+
+  .manual-kicker {
+    margin: 0 0 6px;
+    color: var(--gold-dark);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .manual-title {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.08;
+    margin: 0 0 10px;
+  }
+
+  .manual-intro {
+    max-width: 740px;
+    color: var(--muted);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .manual-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .manual-nav {
+    position: sticky;
+    top: 112px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+    background: var(--panel);
+  }
+
+  .manual-nav h2 {
+    margin: 0 0 10px;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  .manual-nav a {
+    display: block;
+    color: var(--charcoal);
+    text-decoration: none;
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+  }
+
+  .manual-nav a:hover {
+    color: var(--gold-dark);
+  }
+
+  .manual-section {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
+    margin-bottom: 18px;
+    padding: 22px;
+  }
+
+  .manual-section h2 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+
+  .manual-section h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 18px 0 8px;
+  }
+
+  .manual-section p {
+    margin: 0 0 12px;
+  }
+
+  .manual-section ul,
+  .manual-section ol {
+    margin: 0 0 14px 22px;
+    padding: 0;
+  }
+
+  .manual-section li {
+    margin: 5px 0;
+  }
+
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-tint);
+    padding: 12px 14px;
+    margin: 14px 0;
+  }
+
+  .callout strong {
+    color: var(--gold-dark);
+  }
+
+  .stage-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .stage-pill-manual {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    padding: 9px 11px;
+    background: var(--panel);
+  }
+
+  .manual-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+
+  @media print {
+    .site-header,
+    .manual-nav,
+    .manual-actions {
+      display: none;
+    }
+
+    .page {
+      padding: 0;
+      max-width: none;
+    }
+
+    .manual-layout {
+      display: block;
+    }
+
+    .manual-section {
+      break-inside: avoid;
+      border-color: #ddd;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .manual-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .manual-nav {
+      position: static;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .manual-title {
+      font-size: 34px;
+    }
+
+    .stage-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron &amp; Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="stock.html">Stock</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <a href="static-data.html">Settings</a>
+      <a class="active" href="user-manuals.html">Manuals</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page manual-page">
+  <section class="manual-hero">
+    <p class="manual-kicker">Staff User Manual</p>
+    <h1 class="manual-title">Creating an Order</h1>
+    <p class="manual-intro">Use this guide when entering a new customer order, insurance claim, quote, or workshop job in the Cameron &amp; Co CRM. In the system, an order starts as a quote or claim. Once approved, it becomes a job on the Job Board.</p>
+    <div class="manual-actions">
+      <a class="btn gold" href="quote-entry.html">Start a new quote</a>
+      <a class="btn ghost" href="quotes.html">Open Quotes</a>
+      <a class="btn ghost" href="user-manuals.html">All manuals</a>
+      <button class="btn ghost" type="button" onclick="window.print()">Print manual</button>
+    </div>
+  </section>
+
+  <div class="manual-layout">
+    <aside class="manual-nav" aria-label="Manual contents">
+      <h2>Contents</h2>
+      <a href="#before">Before you start</a>
+      <a href="#customer">1. Select the customer</a>
+      <a href="#claim">2. Enter order details</a>
+      <a href="#items">3. Add items</a>
+      <a href="#stones">4. Add stones</a>
+      <a href="#costing">5. Add costing</a>
+      <a href="#settlement">6. Settlement details</a>
+      <a href="#generate">7. Save or generate</a>
+      <a href="#find">8. Find a quote later</a>
+      <a href="#approve">9. Approval</a>
+      <a href="#job">10. Create the job</a>
+      <a href="#stages">Order stages</a>
+      <a href="#problems">Common problems</a>
+    </aside>
+
+    <div>
+      <section class="manual-section" id="before">
+        <h2>Before You Start</h2>
+        <p>Collect the key information before creating the order.</p>
+        <ul>
+          <li>Customer name and contact details</li>
+          <li>Insurer name, if this is insurance work</li>
+          <li>Claim number or internal reference</li>
+          <li>Item details, including metal, stones, dimensions, and description</li>
+          <li>Pricing or costing details for each item</li>
+          <li>Any policy limits, excess, salvage, or settlement notes</li>
+        </ul>
+      </section>
+
+      <section class="manual-section" id="customer">
+        <h2>1. Select or Create the Customer</h2>
+        <ol>
+          <li>Open <strong>Quotes</strong> and click <strong>New quote</strong> — or click <strong>Add customer</strong> from the Customers screen, which opens the same page.</li>
+          <li><strong>Paste from insurer portal (optional):</strong> if you have the claim copied from the insurer's portal, paste it into the box at the top and click <strong>Extract details</strong>. It fills in name, address, phone, email, and — where the pasted text includes them — claim number, insurer, and reference. It matches on labelled lines (e.g. "Claim Number:", "Insured:"), so it won't catch every portal layout perfectly — a summary shows what it matched, and everything is still editable.</li>
+          <li>Otherwise, in the <strong>Customer</strong> section, search by name, email, or phone.</li>
+          <li>If the customer appears, select the existing customer.</li>
+          <li>If the customer does not appear, enter the customer details and click <strong>Continue with this customer</strong>.</li>
+          <li><strong>Possible duplicate warning:</strong> if the name and address you've entered closely match an existing customer, a banner appears showing that customer's name and address. Click <strong>Use this existing customer</strong> to link to them, or dismiss the warning if it's a different person with a similar name.</li>
+        </ol>
+        <div class="callout"><strong>Important:</strong> Always search first (or check the duplicate warning). One customer can have many claims or orders, so avoid creating duplicate customer records.</div>
+      </section>
+
+      <section class="manual-section" id="claim">
+        <h2>2. Enter Claim or Order Details</h2>
+        <p>Complete the <strong>Claim details</strong> section. These details become the order header.</p>
+        <ul>
+          <li><strong>Insurer:</strong> select the insurer, or leave as private/no insurer.</li>
+          <li><strong>Insurer contact:</strong> choose a contact if applicable.</li>
+          <li><strong>Claim number:</strong> the insurer's claim number. For private/retail work with no insurer selected, this field greys out and fills itself automatically from Our reference below — there's nothing to type here in that case.</li>
+          <li><strong>Date received:</strong> enter the date the work was received.</li>
+          <li><strong>Our reference:</strong> Cameron &amp; Co's internal reference. Leave blank on a new claim and it's generated automatically (e.g. <code>CC-2026-0001</code>) — the prefix, digits, yearly reset, and starting number are configurable in <strong>Settings &gt; Internal Reference Numbers</strong>.</li>
+          <li><strong>Insurer reference:</strong> enter a separate insurer reference if needed.</li>
+          <li><strong>Assessment type:</strong> select the request type.</li>
+          <li><strong>Validation type:</strong> select the validation type.</li>
+          <li><strong>Branch:</strong> choose Melbourne or Sydney.</li>
+          <li><strong>Assessed by:</strong> select the staff member responsible.</li>
+          <li><strong>Policy excess:</strong> enter any policy excess.</li>
+          <li><strong>Settlement note:</strong> add special instructions, such as "Refer case manager".</li>
+        </ul>
+        <div class="callout"><strong>Required:</strong> The customer must be selected/created before the record can be saved. Claim number is required for insurer work; private work fills it in for you.</div>
+      </section>
+
+      <section class="manual-section" id="items">
+        <h2>3. Add Items</h2>
+        <ol>
+          <li>Complete the first item card.</li>
+          <li>Select the item <strong>Category</strong> and <strong>Item type</strong>.</li>
+          <li>Add the description that should appear on the quote.</li>
+          <li>Enter item specifications, such as metal, colour, manufacture origin, weight, ring style, chain style, length, width, finger size, repair type, and internal comments.</li>
+          <li>For watches, complete the watch details section.</li>
+          <li>To add another item, click <strong>Add item</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="manual-section" id="stones">
+        <h2>4. Add Stones</h2>
+        <p>For each item, use the <strong>Stones</strong> table to record relevant stone details.</p>
+        <ul>
+          <li>Stone type</li>
+          <li>Shape</li>
+          <li>Quantity</li>
+          <li>Carat each</li>
+          <li>Total carat</li>
+          <li>Quality</li>
+          <li>Certificate details</li>
+          <li>Cost per carat</li>
+          <li>Total stone cost</li>
+        </ul>
+        <p>Only add stone rows that are relevant to the item.</p>
+      </section>
+
+      <section class="manual-section" id="costing">
+        <h2>5. Add Costing</h2>
+        <p>Use the costing area on each item to calculate the item price.</p>
+        <ul>
+          <li>Metal or chain rate</li>
+          <li>Weight in grams</li>
+          <li>Setting tier and quantity</li>
+          <li>Casting</li>
+          <li>Labour hours</li>
+          <li>Box and valuation</li>
+          <li>Stone costs</li>
+        </ul>
+        <p>The CRM calculates retail amount, insurance nett, and liability. Check the totals before generating the quote.</p>
+      </section>
+
+      <section class="manual-section" id="settlement">
+        <h2>6. Enter Settlement Details</h2>
+        <p>In the <strong>Settlement breakdown</strong> section, enter any extra settlement figures.</p>
+        <ul>
+          <li>Postage, handling, and insurance</li>
+          <li>Salvage or scrap allocation</li>
+          <li>Overall unlisted policy limit, if applicable</li>
+        </ul>
+        <p>The totals bar shows the number of items, total retail including GST, insurance nett, and liability with limits applied.</p>
+      </section>
+
+      <section class="manual-section" id="generate">
+        <h2>7. Save or Generate the Quote</h2>
+        <ul>
+          <li>Click <strong>Save draft</strong> if the order is not ready to quote.</li>
+          <li>Click <strong>Generate quote</strong> when the quote is ready.</li>
+        </ul>
+        <p>Generating a quote saves a quote version and snapshots the current rates and metal spot prices. If pricing changes later, the generated quote keeps the rates used at the time.</p>
+        <p>The claim moves to <strong>Pending approval</strong> — it cannot be emailed yet. On the <strong>Quotes</strong> pipeline, an admin picks themselves under <strong>Approving as</strong> and clicks <strong>Approve</strong> (use <strong>PDF</strong> first to check it). Only then does <strong>Email quote</strong> become available to send it to the customer.</p>
+      </section>
+
+      <section class="manual-section" id="find">
+        <h2>8. Find the Quote Later</h2>
+        <ol>
+          <li>Go to <strong>Quotes</strong>.</li>
+          <li>Use the search field to find the claim number, customer, or insurer.</li>
+          <li>Use the status filter if needed.</li>
+          <li>Click <strong>Open</strong> to return to the quote.</li>
+        </ol>
+      </section>
+
+      <section class="manual-section" id="approve">
+        <h2>9. Approve the Quote</h2>
+        <p>Before an order can become a workshop job, the quote must be approved.</p>
+        <div class="callout"><strong>Current note:</strong> The backend supports approved quotes and approved claims, but the current visible screens do not yet show a dedicated "Approve quote" button. Until that button is added, approval may need to be completed by an admin or through the existing backend process.</div>
+        <p>Once the claim status is <strong>Approved</strong>, it can be turned into a job.</p>
+      </section>
+
+      <section class="manual-section" id="job">
+        <h2>10. Create the Workshop Job</h2>
+        <ol>
+          <li>Open <strong>Job Board</strong>.</li>
+          <li>Click <strong>Create job from an approved claim</strong>.</li>
+          <li>Find the approved claim in the list.</li>
+          <li>Click <strong>Create job</strong>.</li>
+        </ol>
+        <p>The CRM creates a job and copies the claim and item information across. Staff do not need to re-type the order details.</p>
+
+        <h3>Complete Job Details</h3>
+        <ol>
+          <li>Click the job card.</li>
+          <li>Set or update the stage, owner, start date, due date, and items taken.</li>
+          <li>Review the component lines.</li>
+          <li>Add supplier, stock number, invoice number, weight, rate, and actual cost as needed.</li>
+          <li>Click <strong>Save changes</strong>.</li>
+        </ol>
+        <p>The job card shows the current margin based on quoted nett minus actual component costs.</p>
+      </section>
+
+      <section class="manual-section" id="stages">
+        <h2>Order Stages</h2>
+        <p>Keep the stage up to date so the dashboard and job board reflect the current workload.</p>
+        <div class="stage-list">
+          <div class="stage-pill-manual">Awaiting deposit</div>
+          <div class="stage-pill-manual">CAD approval</div>
+          <div class="stage-pill-manual">In production</div>
+          <div class="stage-pill-manual">Quality check</div>
+          <div class="stage-pill-manual">Ready for collection</div>
+          <div class="stage-pill-manual">Completed</div>
+          <div class="stage-pill-manual">Cancelled</div>
+        </div>
+      </section>
+
+      <section class="manual-section" id="problems">
+        <h2>Common Problems</h2>
+        <h3>I cannot save the quote</h3>
+        <ul>
+          <li>Check that a customer has been selected or created.</li>
+          <li>Check that the claim number has been entered.</li>
+          <li>Check that address fields are complete if an address was started.</li>
+          <li>Check that the database/API connection is working.</li>
+        </ul>
+
+        <h3>The approved claim does not appear on the Job Board</h3>
+        <ul>
+          <li>Check that the claim has an approved quote.</li>
+          <li>Check that the claim status is approved.</li>
+          <li>Check that a job has not already been created for that claim.</li>
+        </ul>
+
+        <h3>The pricing looks wrong</h3>
+        <ul>
+          <li>Check item weight, metal or chain rate, setting quantity, labour hours, and stone cost.</li>
+          <li>Check policy limits, salvage allocation, and current rate card values.</li>
+        </ul>
+
+        <h3>Good Practice</h3>
+        <ul>
+          <li>Search for the customer before creating a new record.</li>
+          <li>Use clear item descriptions because they appear on the quote.</li>
+          <li>Save drafts while gathering missing information.</li>
+          <li>Generate a new quote version when pricing changes.</li>
+          <li>Keep job stages current.</li>
+          <li>Record actual component costs as invoices arrive.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

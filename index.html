@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cameron & Co CRM MVP</title>
+  <link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="bar">
+      <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+      <nav class="main-nav">
+        <a href="index.html" data-tab-link="dashboard">Dashboard</a>
+        <a href="quotes.html">Quotes</a>
+        <a href="job-board.html">Job Board</a>
+        <a href="index.html#customers" data-tab-link="customers">Customers</a>
+        <a href="stock.html">Stock</a>
+        <a href="index.html#contact" data-tab-link="communications">Customer Contact</a>
+        <a href="static-data.html">Settings</a>
+        <a href="index.html#automation" data-tab-link="automation">Automation</a>
+        <a href="index.html#reports" data-tab-link="reports">Reports</a>
+        <a href="user-manuals.html">Manuals</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="app-main">
+      <header class="app-header">
+        <label class="global-search">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" placeholder="Search customers, jobs, quotes">
+        </label>
+        <div class="header-actions">
+          <span class="save-pill" id="saveState">Connecting...</span>
+          <button class="button secondary" id="resetDemo" type="button">Reset demo</button>
+        </div>
+      </header>
+
+      <main>
+      <section class="panel active" id="dashboardPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Live Workspace <a class="help-link" href="user-manuals.html#dashboard" title="Open the Dashboard manual" aria-label="Open the Dashboard manual">?</a></h2>
+          </div>
+        </div>
+        <section class="metrics-grid" aria-label="Owner dashboard">
+          <article class="metric">
+            <span>Open quote value</span>
+            <strong id="metricQuoteValue">$0</strong>
+            <small id="metricQuoteCount">0 active quotes</small>
+          </article>
+          <article class="metric">
+            <span>Workshop load</span>
+            <strong id="metricWorkshop">0</strong>
+            <small id="metricOverdue">0 overdue jobs</small>
+          </article>
+          <article class="metric">
+            <span>Unpaid balances</span>
+            <strong id="metricBalances">$0</strong>
+            <small>Deposits and final payments</small>
+          </article>
+          <article class="metric">
+            <span>Follow-ups due</span>
+            <strong id="metricTasks">&mdash;</strong>
+            <small>Not tracked yet</small>
+          </article>
+          <article class="metric">
+            <span>Automations</span>
+            <strong id="metricAutomation">&mdash;</strong>
+            <small>Not tracked yet</small>
+          </article>
+        </section>
+        <div class="dashboard-layout">
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Pipeline</h3>
+              <span id="pipelineSummary">0 records</span>
+            </div>
+            <div class="timeline-rail" id="pipelineRail"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Today</h3>
+              <span id="todaySummary">0 actions</span>
+            </div>
+            <div class="task-list" id="todayTasks"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="customersPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Customers <a class="help-link" href="user-manuals.html#customers" title="Open the Customers manual" aria-label="Open the Customers manual">?</a></h2>
+          </div>
+          <div class="customer-actions">
+            <button class="button secondary" id="bulkUploadCustomerButton" type="button">Bulk upload</button>
+            <button class="button primary" id="addCustomerButton" type="button">Add customer</button>
+          </div>
+        </div>
+        <section class="surface customer-table-shell">
+          <div class="table-toolbar">
+            <label class="search-box">
+              Search
+              <input id="customerSearch" placeholder="Name, phone, email, style">
+            </label>
+            <label>
+              Type
+              <select id="customerTypeFilter">
+                <option value="All">All types</option>
+                <option>Private client</option>
+                <option>Insurance client</option>
+                <option>Retail partner</option>
+                <option>Trade</option>
+              </select>
+            </label>
+            <label>
+              Consent
+              <select id="customerConsentFilter">
+                <option value="All">All consent</option>
+                <option value="Marketing">Marketing consent</option>
+                <option value="Email">Email consent</option>
+                <option value="SMS">SMS consent</option>
+                <option value="Missing">Missing consent</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table class="customer-table">
+              <thead>
+                <tr>
+                  <th><button data-customer-sort="name" type="button">Customer</button></th>
+                  <th><button data-customer-sort="type" type="button">Type</button></th>
+                  <th><button data-customer-sort="phone" type="button">Phone</button></th>
+                  <th><button data-customer-sort="email" type="button">Email</button></th>
+                  <th><button data-customer-sort="lastJobDue" type="button">Last job due</button></th>
+                  <th><button data-customer-sort="jobCount" type="button">Jobs</button></th>
+                  <th><button data-customer-sort="consent" type="button">Consent</button></th>
+                  <th>Contact</th>
+                </tr>
+              </thead>
+              <tbody id="customerTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel" id="communicationsPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Customer Contact <a class="help-link" href="user-manuals.html#contact" title="Open the Customer Contact manual" aria-label="Open the Customer Contact manual">?</a></h2>
+          </div>
+        </div>
+        <div class="two-column">
+          <form class="surface form-grid" id="commForm">
+            <h3>Send or log message</h3>
+            <label>Action<select id="commContactMode"><option value="send">Send email</option><option value="log">Log phone call / other communication</option></select></label>
+            <label>Send to<select id="commRecipientMode"><option value="single">One customer</option><option value="list">Selected list</option></select></label>
+            <label id="commCustomerWrap">Customer search<input id="commCustomerSearch" placeholder="Search name, phone or email"><input id="commCustomer" type="hidden"><span class="selected-customer" id="commCustomerSelected"></span><div class="search-results" id="commCustomerResults"></div></label>
+            <label class="wide comm-list-wrap" id="commCustomerListWrap" hidden>Customer list search<input id="commCustomerListSearch" placeholder="Search and add customers"><div class="search-results" id="commCustomerListResults"></div><div class="recipient-chips" id="commCustomerChips"></div></label>
+            <label id="commChannelWrap">Channel<select id="commChannel"><option>Email</option><option value="SMS">SMS - CompleteSMS</option><option>Phone</option><option>In person</option></select></label>
+            <label>Linked work<select id="commWork"></select></label>
+            <label id="commTemplateWrap">Template<select id="commTemplate"><option value="quoteFollowup">Quote follow-up</option><option value="depositRequest">Deposit request</option><option value="cadApproval">CAD approval</option><option value="readyCollection">Ready for collection</option><option value="careReminder">Care and cleaning</option></select></label>
+            <label id="commStatusWrap">Status<select id="commStatus"><option>Delivered</option><option>Logged</option><option>Pending</option><option>Failed</option></select></label>
+            <label class="wide">Subject<input id="commSubject" placeholder="Subject or call outcome"></label>
+            <label class="wide">Message<textarea id="commBody" rows="6"></textarea></label>
+            <div class="consent-row wide">
+              <label><input id="commRestricted" type="checkbox"> Restricted</label>
+              <label><input id="commCreateTask" type="checkbox" checked> Create follow-up task</label>
+            </div>
+            <button class="button primary wide" id="commSubmitButton" type="submit">Send email</button>
+          </form>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Timeline</h3>
+              <span id="commSummary">0 items</span>
+            </div>
+            <div class="message-preview" id="templatePreview"></div>
+            <div class="timeline-list" id="commTimeline"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="automationPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Email Templates and Automations <a class="help-link" href="user-manuals.html#automations" title="Open the Automations manual" aria-label="Open the Automations manual">?</a></h2>
+          </div>
+          <button class="button primary" id="runAutomations" type="button">Run due sends</button>
+        </div>
+        <div class="automation-layout">
+          <form class="surface form-grid" id="automationTemplateForm">
+            <h3>Create automated email</h3>
+            <label>Template name<input id="automationTemplateName" placeholder="Completion thank-you"></label>
+            <label>Send when phase is<select id="automationPhase"><option>Quote sent</option><option>Awaiting deposit</option><option>CAD approval</option><option>In production</option><option>Quality check</option><option>Ready for collection</option><option>Completed</option></select></label>
+            <label>Send timing<select id="automationDelay"><option value="0">Immediately</option><option value="1">1 day later</option><option value="7">7 days later</option><option value="30">30 days later</option></select></label>
+            <label>Subject<input id="automationSubject" placeholder="Your item is complete"></label>
+            <div class="wide rich-field">
+              <span class="field-label">Email body</span>
+              <div class="editor-toolbar" data-editor-for="automationBody" aria-label="Email template formatting">
+                <button type="button" data-editor-command="bold" title="Bold">B</button>
+                <button type="button" data-editor-command="italic" title="Italic">I</button>
+                <button type="button" data-editor-command="underline" title="Underline">U</button>
+                <button type="button" data-editor-command="insertUnorderedList" title="Bullet list">•</button>
+                <button type="button" data-editor-action="link" title="Insert link">🔗</button>
+                <button type="button" data-editor-action="logo" title="Insert logo signature">🖼️</button>
+              </div>
+              <div class="rich-editor" id="automationBody" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Hi {{customer_first_name}}, your {{work_title}} is now complete..."></div>
+            </div>
+            <button class="button primary wide" id="automationSaveButton" type="submit">Save automation</button>
+          </form>
+        </div>
+        <div class="dashboard-layout">
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Current Automations</h3>
+              <span id="automationRuleSummary">0 active</span>
+            </div>
+            <div class="automation-list" id="automationRuleList"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Scheduled sends</h3>
+              <span id="scheduleSummary">0 due</span>
+            </div>
+            <div class="automation-list" id="automationSchedule"></div>
+          </section>
+          <section class="surface">
+            <div class="surface-heading">
+              <h3>Run log</h3>
+              <span id="automationLogSummary">0 logged</span>
+            </div>
+            <div class="automation-list" id="automationLog"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="panel" id="reportsPanel">
+        <div class="section-heading">
+          <div>
+            <h2>Reports <a class="help-link" href="user-manuals.html#reports" title="Open the Reports manual" aria-label="Open the Reports manual">?</a></h2>
+          </div>
+          <div class="report-actions">
+            <label>Role<select id="reportRole"><option>Owner</option><option>Sales</option><option>Workshop</option><option>Finance</option></select></label>
+            <button class="button secondary" id="exportReport" type="button">Export report</button>
+          </div>
+        </div>
+        <div class="report-grid">
+          <section class="surface">
+            <h3>Sales pipeline</h3>
+            <div id="salesReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Workshop stages</h3>
+            <div id="stageReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Data quality</h3>
+            <div id="qualityReport"></div>
+          </section>
+          <section class="surface">
+            <h3>Export audit</h3>
+            <div id="auditLog"></div>
+          </section>
+        </div>
+      </section>
+      </main>
+  </div>
+
+  <div class="modal-backdrop fullscreen" id="detailModal" hidden>
+    <section class="detail-modal fullscreen" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <button class="modal-close" id="detailModalClose" type="button" aria-label="Close detail panel">×</button>
+      <div id="detailContent"></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="bulkCustomerModal" hidden>
+    <section class="detail-modal compact-modal" role="dialog" aria-modal="true" aria-labelledby="bulkCustomerModalTitle">
+      <button class="modal-close" id="bulkCustomerModalClose" type="button" aria-label="Close bulk upload">×</button>
+      <p class="eyebrow">Bulk upload</p>
+      <h2 id="bulkCustomerModalTitle">Import customers</h2>
+      <form class="modal-section" id="bulkCustomerForm">
+        <label class="wide">Paste CSV rows
+          <textarea id="bulkCustomerCsv" rows="8" placeholder="name,type,phone,email,preferred,source,ringSize,partner,notes&#10;Jane Smith,Private client,0400 000 000,jane@example.com,Email,Referral,N,Anniversary,Likes platinum"></textarea>
+        </label>
+        <p class="fineprint">Columns: name, type, phone, email, preferred, source, ringSize, partner, notes. The first header row is optional.</p>
+        <button class="button primary" type="submit">Import customers</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="assets/phone.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
