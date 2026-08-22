@@ -48,7 +48,16 @@
         <span>Paste from insurer portal</span>
         <textarea id="pasteExtractInput" rows="4" placeholder="Paste the claimant and claim details copied from the insurer's portal — name, address, phone, email, claim number, insurer… Or paste (Ctrl/Cmd+V) or upload a screenshot of the portal below."></textarea>
         <div style="margin-top:8px; display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-          <button class="btn ghost small" type="button" id="pasteExtractButton">Extract details</button>
+          <button class="btn ghost small" type="button" id="pasteExtractButton">
+            <span class="diamond-spinner" id="pasteExtractSpinner" hidden aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2 L18 9 L12 22 L6 9 Z"/>
+                <circle class="spark spark1" cx="3" cy="5" r="1.1"/>
+                <circle class="spark spark2" cx="21" cy="7" r="1.4"/>
+                <circle class="spark spark3" cx="19" cy="19" r="1"/>
+              </svg>
+            </span>
+            <span id="pasteExtractButtonLabel">Extract details</span>
+          </button>
           <button class="btn ghost small" type="button" id="ocrUploadButton">Upload screenshot…</button>
           <input type="file" id="ocrUploadInput" accept="image/*" hidden>
           <span class="muted-note" id="pasteExtractSummary"></span>
@@ -119,6 +128,10 @@
       <label class="field">
         <span>Date received</span>
         <input type="date" id="dateReceived">
+      </label>
+      <label class="field">
+        <span>Respond by</span>
+        <input type="date" id="respondBy">
       </label>
 
       <label class="field">

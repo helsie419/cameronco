@@ -265,7 +265,7 @@ export default async (req) => {
 
     // ------------------------------------------------------- dashboard summary
     if (method === 'GET' && path === '/dashboard/summary') {
-      const [metrics, claimStages, jobStages, dueJobs, sentQuotes] = await Promise.all([
+      const [metrics, claimStages, jobStages, dueJobs, sentQuotes, dueResponses] = await Promise.all([
         pool.query(`
           SELECT
             (SELECT COUNT(*) FROM claims c
@@ -276,13 +276,16 @@ export default async (req) => {
                AND c.status IN ('new_enquiry','assessing','quote_sent','revised')) AS open_quote_value,
             (SELECT COUNT(*) FROM jobs WHERE stage NOT IN ('completed','cancelled')) AS workshop_load,
             (SELECT COUNT(*) FROM jobs WHERE due_date < CURRENT_DATE AND stage NOT IN ('completed','cancelled')) AS overdue_jobs,
-            (SELECT COALESCE(SUM(total),0) FROM invoices WHERE status NOT IN ('paid','voided')) AS unpaid_balances
+            (SELECT COALESCE(SUM(total),0) FROM invoices WHERE status NOT IN ('paid','voided')) AS unpaid_balances,
+            (SELECT COUNT(*) FROM claims WHERE respond_by IS NOT NULL AND respond_by < CURRENT_DATE
+               AND status NOT IN ('paid','closed','declined')) AS overdue_responses
         `),
         pool.query(`
           SELECT
             SUM(CASE WHEN status IN ('new_enquiry','assessing') THEN 1 ELSE 0 END) AS new_enquiry,
             SUM(CASE WHEN status IN ('quote_sent','revised') THEN 1 ELSE 0 END) AS quote_sent,
-            SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved_no_job
+            SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved_no_job,
+            SUM(CASE WHEN respond_by IS NOT NULL AND status NOT IN ('paid','closed','declined') THEN 1 ELSE 0 END) AS awaiting_response
           FROM claims
         `),
         pool.query(`
@@ -317,6 +320,17 @@ export default async (req) => {
           WHERE q.status = 'sent'
           ORDER BY q.sent_at LIMIT 8
         `),
+        pool.query(`
+          SELECT c.claim_number AS title,
+                 'Respond by ' || c.respond_by AS meta,
+                 cu.first_name || ' ' || cu.last_name AS customer,
+                 c.id AS claim_id
+          FROM claims c
+          JOIN customers cu ON cu.id = c.customer_id
+          WHERE c.respond_by IS NOT NULL AND c.respond_by <= CURRENT_DATE
+            AND c.status NOT IN ('paid','closed','declined')
+          ORDER BY c.respond_by LIMIT 8
+        `),
       ]);
 
       const m = metrics.rows[0];
@@ -338,10 +352,12 @@ export default async (req) => {
         activeQuoteCount: Number(m.active_quote_count),
         workshopLoad: Number(m.workshop_load),
         overdueJobs: Number(m.overdue_jobs),
+        awaitingResponse: Number(cs.awaiting_response),
+        overdueResponses: Number(m.overdue_responses),
         unpaidBalances: Number(m.unpaid_balances),
         pipeline,
         totalRecords: pipeline.reduce((sum, p) => sum + p.count, 0),
-        todayItems: dueJobs.rows.concat(sentQuotes.rows).slice(0, 8),
+        todayItems: dueJobs.rows.concat(sentQuotes.rows, dueResponses.rows).slice(0, 8),
       });
     }
 
@@ -500,12 +516,12 @@ export default async (req) => {
         const claim = await tx.query(
           `INSERT INTO claims (claim_number, our_ref, your_ref, customer_id, insurer_id,
              insurer_contact_id, branch, assessment_type, validation_type, date_received,
-             assigned_to, excess_amount, settlement_notes)
-           VALUES ($1,$2,$3,$4,$5,$6,COALESCE($7,'melbourne'),$8,$9,COALESCE($10,CURRENT_DATE),$11,$12,$13)
+             assigned_to, excess_amount, settlement_notes, respond_by)
+           VALUES ($1,$2,$3,$4,$5,$6,COALESCE($7,'melbourne'),$8,$9,COALESCE($10,CURRENT_DATE),$11,$12,$13,$14)
            RETURNING *`,
           [b.claim_number, b.our_ref, b.your_ref, b.customer_id, b.insurer_id,
            b.insurer_contact_id, b.branch, b.assessment_type, b.validation_type,
-           b.date_received, b.assigned_to, b.excess_amount, b.settlement_notes]
+           b.date_received, b.assigned_to, b.excess_amount, b.settlement_notes, b.respond_by]
         );
         const claimId = claim.rows[0].id;
         await saveItems(tx, claimId, b.items || []);
@@ -535,11 +551,12 @@ export default async (req) => {
              assigned_to        = COALESCE($12, assigned_to),
              excess_amount      = COALESCE($13, excess_amount),
              settlement_notes   = COALESCE($14, settlement_notes),
-             status             = COALESCE($15, status)
+             status             = COALESCE($15, status),
+             respond_by         = COALESCE($16, respond_by)
            WHERE id=$1 RETURNING id`,
           [id, b.claim_number, b.our_ref, b.your_ref, b.customer_id, b.insurer_id,
            b.insurer_contact_id, b.branch, b.assessment_type, b.validation_type,
-           b.date_received, b.assigned_to, b.excess_amount, b.settlement_notes, b.status]
+           b.date_received, b.assigned_to, b.excess_amount, b.settlement_notes, b.status, b.respond_by]
         );
         if (!upd.rows.length) return json(404, { error: 'Claim not found' });
         if (b.items) {

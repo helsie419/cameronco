@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS claims (
     CHECK(branch IN ('melbourne','sydney')), assessment_type TEXT, validation_type TEXT,
   date_received TEXT NOT NULL DEFAULT (date('now')), assigned_to INTEGER REFERENCES staff(id),
   status TEXT NOT NULL DEFAULT 'new_enquiry' CHECK(status IN ('new_enquiry','assessing','pending_approval','quote_sent','revised','approved','awaiting_deposit','cad_approval','in_production','quality_check','ready_for_collection','completed','invoiced','paid','declined','closed')),
-  excess_amount NUMERIC, settlement_notes TEXT,
+  excess_amount NUMERIC, settlement_notes TEXT, respond_by TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_claims_number_unique ON claims(claim_number, COALESCE(insurer_id, -1));
@@ -209,6 +209,7 @@ CREATE TRIGGER IF NOT EXISTS trg_xero_connections_touch AFTER UPDATE ON xero_con
 
 CREATE VIEW IF NOT EXISTS v_pipeline AS
 SELECT c.id AS claim_id, c.claim_number, c.status, c.branch, c.date_received,
+       c.respond_by,
        cu.first_name || ' ' || cu.last_name AS customer, i.name AS insurer,
        COALESCE(q.total_retail,0) AS quoted_retail, COALESCE(q.total_nett,0) AS quoted_nett,
        CAST(julianday('now') - julianday(c.date_received) AS INTEGER) AS days_open,

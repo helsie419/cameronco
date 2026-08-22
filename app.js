@@ -66,6 +66,8 @@
     metricWorkshop: byId("metricWorkshop"),
     metricOverdue: byId("metricOverdue"),
     metricBalances: byId("metricBalances"),
+    metricResponses: byId("metricResponses"),
+    metricResponsesOverdue: byId("metricResponsesOverdue"),
     metricTasks: byId("metricTasks"),
     metricAutomation: byId("metricAutomation"),
     pipelineSummary: byId("pipelineSummary"),
@@ -515,6 +517,8 @@
     els.metricWorkshop.textContent = summary.workshopLoad;
     els.metricOverdue.textContent = summary.overdueJobs + " overdue jobs";
     els.metricBalances.textContent = money(summary.unpaidBalances);
+    els.metricResponses.textContent = summary.awaitingResponse;
+    els.metricResponsesOverdue.textContent = summary.overdueResponses + " overdue";
 
     var max = Math.max.apply(null, summary.pipeline.map(function (p) { return p.count; }).concat([1]));
     els.pipelineSummary.textContent = summary.totalRecords + " records";
@@ -525,7 +529,9 @@
 
     els.todaySummary.textContent = summary.todayItems.length + " actions";
     els.todayTasks.innerHTML = summary.todayItems.length ? summary.todayItems.map(function (item) {
-      var meta = /^Job due /.test(item.meta) ? "Job due " + formatDate(item.meta.replace("Job due ", "")) : item.meta;
+      var meta = /^Job due /.test(item.meta) ? "Job due " + formatDate(item.meta.replace("Job due ", ""))
+        : /^Respond by /.test(item.meta) ? "Respond by " + formatDate(item.meta.replace("Respond by ", ""))
+        : item.meta;
       var tag = item.claim_id ? "a" : "article";
       var href = item.claim_id ? ' href="quote-entry.html?claim=' + item.claim_id + '"' : "";
       return '<' + tag + ' class="timeline-item"' + href + '><header><div><h4>' + escapeHtml(item.title) + '</h4><p class="meta">' + escapeHtml(meta) + '</p></div></header><p class="fineprint">' + escapeHtml(item.customer || "No customer") + '</p></' + tag + '>';

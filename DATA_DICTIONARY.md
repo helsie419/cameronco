@@ -105,6 +105,7 @@ Sheet. A customer can have many; each claim can have many items.
 | `status` | text | pipeline stage — see below |
 | `excess_amount` | numeric(12,2) | policy excess |
 | `settlement_notes` | text | e.g. "Refer case manager" |
+| `respond_by` | date | insurer/assessor's response-due date |
 | `created_at` / `updated_at` | timestamptz | |
 
 **`status` values, in pipeline order:** `new_enquiry` → `assessing` →

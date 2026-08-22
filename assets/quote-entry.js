@@ -582,6 +582,11 @@ function wireDuplicateCheck(){
 }
 
 /* --------------------------- paste extraction ------------------------------ */
+function setExtractBusy(isBusy){
+  $('#pasteExtractButton').disabled = isBusy;
+  $('#pasteExtractSpinner').hidden = !isBusy;
+}
+
 function runPasteExtraction(){
   const text = $('#pasteExtractInput').value;
   if (!text.trim()) { toast('Paste some text first', true); return; }
@@ -596,10 +601,21 @@ function runPasteExtraction(){
   checkDuplicateCustomer();
 }
 
+// Parsing itself is instant (no API call), but the spinner is the whole
+// point here — give it a beat on screen instead of flashing invisibly.
+function runPasteExtractionWithSpinner(){
+  if (!$('#pasteExtractInput').value.trim()) { toast('Paste some text first', true); return; }
+  setExtractBusy(true);
+  setTimeout(() => {
+    try { runPasteExtraction(); } finally { setExtractBusy(false); }
+  }, 150);
+}
+
 async function runOcrOnImage(imageFile){
   if (!imageFile) return;
   const summary = $('#pasteExtractSummary');
   const input = $('#pasteExtractInput');
+  setExtractBusy(true);
   summary.textContent = 'Reading screenshot… 0%';
   try {
     const text = await ocrExtractImageToText(imageFile, (fraction) => {
@@ -614,11 +630,13 @@ async function runOcrOnImage(imageFile){
   } catch (err) {
     summary.textContent = err.message || 'Could not read that screenshot';
     toast(err.message || 'OCR failed', true);
+  } finally {
+    setExtractBusy(false);
   }
 }
 
 function wirePasteExtract(){
-  $('#pasteExtractButton').addEventListener('click', runPasteExtraction);
+  $('#pasteExtractButton').addEventListener('click', runPasteExtractionWithSpinner);
 
   $('#pasteExtractInput').addEventListener('paste', (e) => {
     const imageFile = ocrExtractFindImageItem(e.clipboardData);
@@ -653,6 +671,11 @@ function applyExtractedFields(fields){
   if (fields.postcode) $('#custPostcode').value = fields.postcode;
   if (fields.claim_number) $('#claimNumber').value = fields.claim_number;
   if (fields.your_ref) $('#yourRef').value = fields.your_ref;
+  if (fields.respond_by) $('#respondBy').value = fields.respond_by;
+  if (fields.description) {
+    const firstItemDescription = $('[data-item] [data-f="description"]');
+    if (firstItemDescription) firstItemDescription.value = fields.description;
+  }
   if (fields.insurer_id) {
     $('#insurerId').value = fields.insurer_id;
     $('#insurerId').dispatchEvent(new Event('change'));
@@ -1231,6 +1254,7 @@ async function save(mode){
       assessment_type: $('#assessmentType').value || null,
       validation_type: $('#validationType').value || null,
       date_received: $('#dateReceived').value || null,
+      respond_by: $('#respondBy').value || null,
       assigned_to: $('#assignedTo').value || null,
       excess_amount: $('#excessAmount').value || null,
       settlement_notes: $('#settlementNotes').value || null,
@@ -1285,6 +1309,7 @@ async function loadClaim(id){
     $('#assessmentType').value = c.assessment_type || '';
     $('#validationType').value = c.validation_type || '';
     $('#dateReceived').value = c.date_received?.slice(0,10) || '';
+    $('#respondBy').value = c.respond_by?.slice(0,10) || '';
     $('#assignedTo').value = c.assigned_to || '';
     $('#excessAmount').value = c.excess_amount || '';
     $('#settlementNotes').value = c.settlement_notes || '';

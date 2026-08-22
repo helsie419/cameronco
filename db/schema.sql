@@ -134,6 +134,7 @@ CREATE TABLE claims (
                                          'completed','invoiced','paid','declined','closed')),
     excess_amount      NUMERIC(12,2),
     settlement_notes   TEXT,                        -- "Refer Case Manager" etc.
+    respond_by         DATE,                        -- insurer's response-due date
     created_at         TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at         TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -508,6 +509,7 @@ CREATE TRIGGER trg_xero_connections_touch BEFORE UPDATE ON xero_connections
 -- Open pipeline by insurer
 CREATE VIEW v_pipeline AS
 SELECT c.id AS claim_id, c.claim_number, c.status, c.branch, c.date_received,
+       c.respond_by,
        cu.first_name || ' ' || cu.last_name AS customer,
        i.name AS insurer,
        COALESCE(q.total_retail, 0)  AS quoted_retail,

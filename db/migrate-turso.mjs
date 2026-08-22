@@ -18,6 +18,7 @@ const tursoMigrations = [
   ['002_static_values_from_workbooks.sql', convertStaticMigration],
   ['015_reference_number_settings.turso.sql', value => value],
   ['016_xero_invoice_id_on_pipeline.turso.sql', value => value],
+  ['017_claim_respond_by.turso.sql', value => value],
 ];
 
 let pending = 0;

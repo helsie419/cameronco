@@ -276,6 +276,28 @@ input:disabled, select:disabled, textarea:disabled { background: var(--panel); c
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .btn svg { flex: none; width: 13px; height: 13px; }
 
+/* sparkling-diamond spinner — shown on the paste-extract button while it's
+   reading a paste or running OCR on a screenshot */
+.diamond-spinner { display: inline-flex; }
+.diamond-spinner svg { animation: diamond-spin 1.1s linear infinite; }
+.diamond-spinner path { fill: var(--gold); }
+.diamond-spinner .spark { fill: var(--gold); transform-origin: center; animation: diamond-spark 1.1s ease-in-out infinite; }
+.diamond-spinner .spark1 { animation-delay: 0s; }
+.diamond-spinner .spark2 { animation-delay: 0.25s; }
+.diamond-spinner .spark3 { animation-delay: 0.5s; }
+@keyframes diamond-spin {
+  0%   { transform: rotate(0deg) scale(0.9); }
+  50%  { transform: rotate(180deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(0.9); }
+}
+@keyframes diamond-spark {
+  0%, 100% { opacity: 0.2; transform: scale(0.6); }
+  50%      { opacity: 1;   transform: scale(1.3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diamond-spinner svg, .diamond-spinner .spark { animation: none; }
+}
+
 .help-link {
   display: inline-flex;
   align-items: center;
