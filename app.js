@@ -352,6 +352,9 @@
     document.querySelectorAll(".main-nav a[data-tab-link]").forEach(function (link) {
       link.classList.toggle("active", link.dataset.tabLink === tabName);
     });
+    document.querySelectorAll(".nav-dropdown").forEach(function (dropdown) {
+      dropdown.classList.toggle("active", !!dropdown.querySelector("a.active"));
+    });
   }
 
   // The other pages (job-board.html, quotes.html, rates.html) link back here
