@@ -290,7 +290,7 @@
       var channel = isSendEmail ? "Email" : els.commChannel.value;
       var status = isSendEmail ? "Pending" : els.commStatus.value;
       var recipients = commRecipients();
-      if (!recipients.length) return;
+      if (!recipients.length) { save("Select a customer first"); return; }
       recipients.forEach(function (customer) {
         var blocked = isSuppressed(customer, channel, els.commTemplate.value);
         var communication = {
@@ -392,7 +392,13 @@
   }
 
   function renderSelects() {
-    var selectedCommCustomer = els.commCustomer.value || (state.customers[0] && state.customers[0].id);
+    // The initial render runs against seed/demo data, then loadCustomersFromApi()
+    // swaps in the real list a moment later — re-validate the current selection
+    // against *that* list rather than trusting a hidden-field id that may no
+    // longer exist, or selectCommCustomer() below silently no-ops and leaves
+    // stale name/phone/email on screen for a customer who's no longer selected.
+    var current = els.commCustomer.value && findCustomer(els.commCustomer.value);
+    var selectedCommCustomer = current ? current.id : (state.customers[0] && state.customers[0].id);
     if (selectedCommCustomer) selectCommCustomer(selectedCommCustomer, true);
     renderCommCustomerChips();
     renderWorkSelects();
@@ -1213,7 +1219,12 @@
   }
 
   function mergeForSelection(text, customerId, workId) {
-    var customer = findCustomer(customerId) || state.customers[0] || { name: "there" };
+    // Never fall back to state.customers[0] here — that silently merges in
+    // a real, unrelated customer's name whenever customerId doesn't resolve
+    // (e.g. a stale/no-longer-selected id), while the screen still shows
+    // whoever staff actually searched for. A neutral placeholder is safer
+    // than guessing a specific person.
+    var customer = findCustomer(customerId) || { id: "", name: "there" };
     var work = findWork(workId) || state.work.find(function (item) { return item.customerId === customer.id; }) || {};
     var values = {
       customer_first_name: customer.name.split(" ")[0] || "there",
