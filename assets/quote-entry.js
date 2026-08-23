@@ -654,7 +654,12 @@ function wirePasteExtract(){
 }
 
 function applyExtractedFields(fields){
-  if (fields.first_name || fields.last_name) {
+  // Any one of these is enough to treat this as "a customer was found" —
+  // requiring a name specifically meant a paste that only OCR'd cleanly
+  // enough to catch an email/phone/address left the claim panel locked
+  // with no way forward and no visible reason why.
+  const hasCustomerSignal = fields.first_name || fields.last_name || fields.email || fields.mobile || fields.address;
+  if (hasCustomerSignal) {
     selectedCustomerId = null;
     customerMode = 'new-pending';
     $('#customerConfirmRow').hidden = false;
@@ -672,6 +677,7 @@ function applyExtractedFields(fields){
   if (fields.claim_number) $('#claimNumber').value = fields.claim_number;
   if (fields.your_ref) $('#yourRef').value = fields.your_ref;
   if (fields.respond_by) $('#respondBy').value = fields.respond_by;
+  if (fields.excess_amount != null) $('#excessAmount').value = fields.excess_amount;
   if (fields.description) {
     const firstItemDescription = $('[data-item] [data-f="description"]');
     if (firstItemDescription) firstItemDescription.value = fields.description;

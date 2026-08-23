@@ -24,6 +24,7 @@ const PASTE_EXTRACT_LABELS = {
   insurer: ['insurer', 'insurance company', 'underwriter', 'brand'],
   respond_by: ['respond by', 'respond by date', 'response due', 'response due date', 'response deadline'],
   description: ['description', 'item description', 'claim description'],
+  excess: ['excess', 'policy excess', 'excess amount', 'nominated excess'],
 };
 
 const PASTE_EXTRACT_STATES = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT'];
@@ -134,6 +135,14 @@ function pasteExtractSplitAddress(line) {
 
 const PASTE_EXTRACT_MONTHS = ['january', 'february', 'march', 'april', 'may', 'june',
   'july', 'august', 'september', 'october', 'november', 'december'];
+
+/** Pulls the first dollar figure out of a raw matched value ("$100 .", "100.00") as a plain number. */
+function pasteExtractParseCurrency(raw) {
+  const m = String(raw || '').match(/\d[\d,]*(?:\.\d+)?/);
+  if (!m) return null;
+  const n = parseFloat(m[0].replace(/,/g, ''));
+  return Number.isFinite(n) ? n : null;
+}
 
 function pasteExtractParseDateToIso(raw) {
   const s = String(raw || '').trim();
@@ -408,6 +417,12 @@ function parsePastedInsurerText(text, insurerOptions) {
 
   const descriptionRaw = pasteExtractFindField(map, 'description');
   if (descriptionRaw) { fields.description = descriptionRaw; matched.push('description'); }
+
+  const excessRaw = pasteExtractFindField(map, 'excess');
+  if (excessRaw) {
+    const excessValue = pasteExtractParseCurrency(excessRaw);
+    if (excessValue != null) { fields.excess_amount = excessValue; matched.push('excess'); }
+  }
 
   const insurerRaw = pasteExtractFindField(map, 'insurer');
   const insurerId = pasteExtractMatchInsurer(insurerRaw || text, insurerOptions);
