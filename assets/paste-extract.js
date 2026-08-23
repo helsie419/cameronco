@@ -11,7 +11,12 @@
    ========================================================================== */
 
 const PASTE_EXTRACT_LABELS = {
-  name: ['name', 'claimant', 'claimant name', 'insured', 'insured name', 'customer', 'customer name', 'policy holder', 'policyholder', 'primary contact name', 'primary contact'],
+  // Bare "customer" (no "name") is deliberately excluded — it shows up as a
+  // qualifier in unrelated header phrases too (e.g. "Customer Property Risk
+  // Address"), and in the grid-pairs strategy a false-positive match here
+  // doesn't just miss a field, it actively grabs the wrong token as the
+  // customer's name.
+  name: ['name', 'claimant', 'claimant name', 'insured', 'insured name', 'customer name', 'policy holder', 'policyholder', 'primary contact name', 'primary contact'],
   email: ['email', 'email address', 'e mail'],
   phone: ['phone', 'mobile', 'mobile number', 'phone number', 'contact number', 'contact phone', 'telephone', 'primary contact number'],
   address: ['address', 'risk address', 'property address', 'postal address', 'residential address', 'site address', 'property risk address'],
