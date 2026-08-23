@@ -321,7 +321,7 @@ function pasteExtractSplitGridValueLine(slots, valueLine) {
       let take = 0;
       while (cursor + take < tokens.length) {
         const t = tokens[cursor + take];
-        if (/^(yes|no)$/i.test(t)) break;
+        if (/^(y|yes|n|no)$/i.test(t)) break; // OCR often truncates "No" to a bare "N"
         if (next && next.field && pasteExtractFieldTakeCount(next.field, tokens, cursor + take) > 0) break;
         take++;
         if (take >= 6) break; // street lines don't run longer than this
