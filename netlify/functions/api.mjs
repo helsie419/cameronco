@@ -30,11 +30,12 @@
 //   GET  /quotes/:id/pdf              render the quote as a customer-facing PDF
 //   POST /quotes/:id/send             email the PDF to the customer (stub/live) — needs review first
 //   PUT  /quotes/:id/status           customer/insurer decision: sent / approved / declined
+//   POST /manual-questions            log a Manuals chat-assistant question (alerts on no match)
 // ============================================================================
 
 import { pool } from './lib/db.mjs';
 import { buildQuotePdf } from './lib/pdf.mjs';
-import { sendQuoteEmail } from './lib/mailer-adapter.mjs';
+import { sendQuoteEmail, sendManualQuestionAlert } from './lib/mailer-adapter.mjs';
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
@@ -714,6 +715,32 @@ export default async (req) => {
       return json(200, { sent: true, mode: result.mode, to: q.customer_email, quote: upd.rows[0] });
     }
 
+    // ----------------------------------------------------- manual chat log
+    if (method === 'POST' && path === '/manual-questions') {
+      const b = await req.json();
+      const question = String(b.question || '').trim().slice(0, 500);
+      if (!question) return json(400, { error: 'question is required' });
+      const matched = !!b.matched;
+      const matchedHeading = b.matchedHeading ? String(b.matchedHeading).slice(0, 200) : null;
+      const page = b.page ? String(b.page).slice(0, 200) : null;
+
+      const { rows } = await pool.query(
+        `INSERT INTO manual_chat_log (question, matched, matched_heading, page)
+         VALUES ($1, $2, $3, $4) RETURNING id, asked_at`,
+        [question, matched, matchedHeading, page]
+      );
+
+      if (!matched) {
+        try {
+          await sendManualQuestionAlert({ question, page, askedAt: rows[0].asked_at });
+        } catch (err) {
+          // logging the question must succeed even if the alert email fails
+          console.error('manual-question alert failed:', err);
+        }
+      }
+      return json(201, { id: rows[0].id });
+    }
+
     return json(404, { error: `No route: ${method} ${path}` });
   } catch (err) {
     console.error(err);
@@ -836,5 +863,6 @@ export const config = {
     '/api/claims',
     '/api/claims/*',
     '/api/quotes/*',
+    '/api/manual-questions',
   ],
 };

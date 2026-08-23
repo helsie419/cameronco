@@ -470,6 +470,21 @@ CREATE TABLE activity_log (
 CREATE INDEX idx_activity_entity ON activity_log (entity, entity_id, logged_at DESC);
 
 -- ----------------------------------------------------------------------------
+-- MANUAL CHAT LOG — every question asked of the Manuals page's chat
+-- assistant, so gaps in the manuals can be found and filled. `matched=false`
+-- rows trigger a developer email alert (see lib/mailer-adapter.mjs).
+-- ----------------------------------------------------------------------------
+CREATE TABLE manual_chat_log (
+    id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    question        TEXT NOT NULL,
+    matched         BOOLEAN NOT NULL DEFAULT FALSE,
+    matched_heading TEXT,                     -- the manual sub-heading it matched, if any
+    page            TEXT,                     -- which page the assistant was asked from
+    asked_at        TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_manual_chat_unmatched ON manual_chat_log (matched, asked_at DESC);
+
+-- ----------------------------------------------------------------------------
 -- updated_at maintenance
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION touch_updated_at() RETURNS trigger AS $$

@@ -19,6 +19,7 @@ const tursoMigrations = [
   ['015_reference_number_settings.turso.sql', value => value],
   ['016_xero_invoice_id_on_pipeline.turso.sql', value => value],
   ['017_claim_respond_by.turso.sql', value => value],
+  ['018_manual_chat_log.turso.sql', value => value],
 ];
 
 let pending = 0;

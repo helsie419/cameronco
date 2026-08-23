@@ -62,6 +62,39 @@ function buildMessage({ customerName, claimNumber, version }) {
   return { subject, text };
 }
 
+// Fires when the Manuals page's chat assistant can't find an answer, so the
+// developer can see what's missing and add it. Needs MANUAL_ALERT_EMAIL set
+// (see .env.example) — silently does nothing without it, in either mode,
+// since logging the question to manual_chat_log is the part that must never
+// fail; this is a best-effort bonus on top of that.
+export async function sendManualQuestionAlert({ question, page, askedAt }) {
+  const to = process.env.MANUAL_ALERT_EMAIL;
+  if (!to) return { mode: MODE, skipped: 'MANUAL_ALERT_EMAIL not set' };
+
+  const subject = 'Manual assistant — unanswered question';
+  const text = `A visitor asked the Manuals chat assistant a question it couldn't answer:\n\n` +
+    `"${question}"\n\n` +
+    `Page: ${page || 'user-manuals.html'}\n` +
+    `Asked: ${askedAt}\n\n` +
+    `Consider adding this to the manuals so it's answered next time.`;
+
+  if (MODE !== 'live') {
+    const id = stubId();
+    log('would send manual-question alert', { to, subject, question, id });
+    return { mode: 'stub', messageId: id, to };
+  }
+
+  const transport = getLiveTransport();
+  const info = await transport.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to,
+    subject,
+    text,
+  });
+  log('sent manual-question alert', { to, subject, messageId: info.messageId });
+  return { mode: 'live', messageId: info.messageId, to };
+}
+
 export async function sendQuoteEmail({ to, customerName, claimNumber, version, pdfBuffer, pdfFilename }) {
   const { subject, text } = buildMessage({ customerName, claimNumber, version });
 

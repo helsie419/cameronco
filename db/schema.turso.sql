@@ -185,6 +185,12 @@ CREATE TABLE IF NOT EXISTS activity_log (
 );
 CREATE INDEX IF NOT EXISTS idx_activity_entity ON activity_log(entity, entity_id, logged_at DESC);
 
+CREATE TABLE IF NOT EXISTS manual_chat_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT NOT NULL, matched INTEGER NOT NULL DEFAULT 0,
+  matched_heading TEXT, page TEXT, asked_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX IF NOT EXISTS idx_manual_chat_unmatched ON manual_chat_log(matched, asked_at DESC);
+
 CREATE TABLE IF NOT EXISTS xero_connections (
   id INTEGER PRIMARY KEY AUTOINCREMENT, tenant_id TEXT NOT NULL UNIQUE, tenant_name TEXT,
   access_token TEXT NOT NULL, refresh_token TEXT NOT NULL, expires_at TEXT NOT NULL, scopes TEXT,

@@ -399,6 +399,24 @@ recording who did what to which record.
 
 ---
 
+## manual_chat_log
+
+Every question asked of the Manuals page's chat assistant (client-side
+keyword search, not AI — see `user-manuals.html`). `matched=false` rows are
+gaps in the manuals; the API emails `MANUAL_ALERT_EMAIL` when one is logged
+(see `lib/mailer-adapter.mjs`).
+
+| Column | Type | Description |
+|---|---|---|
+| `id` | identity PK | |
+| `question` | text | what was typed into the chat box |
+| `matched` | boolean | whether the search found a manual section |
+| `matched_heading` | text | the sub-heading it matched, if any |
+| `page` | text | which page the assistant was asked from |
+| `asked_at` | timestamptz | |
+
+---
+
 ## lookup_values
 
 Every dropdown value the office might need to add or rename without a
