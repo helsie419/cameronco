@@ -31,20 +31,16 @@ function ocrExtractLoadTesseract() {
   return ocrExtractLoadingPromise;
 }
 
-/* Insurer portal screenshots are usually a browser window captured at native
-   screen resolution — the *overall* image can be large while individual
-   field text is still only 12-14px tall, well under the ~30px glyph height
-   Tesseract's LSTM engine wants for best accuracy. Upscaling only when the
-   whole image is small (the old check) misses that case entirely, so this
-   always scales up by a healthy factor, capped to keep processing time
-   reasonable on already-large screenshots. Contrast is boosted only mildly —
-   aggressive contrast clips the anti-aliased edges of small text, which the
-   LSTM engine actually reads better than a harshly thresholded image. Falls
-   back to the original image if canvas processing isn't available. */
+/* Insurer portal screenshots are usually a browser window shrunk to fit —
+   dense grids of small text. Tesseract is tuned for scanned-document-sized
+   text and reads that kind of source poorly at native resolution. Upscaling
+   and boosting contrast before recognition (a standard OCR pre-processing
+   step) measurably improves accuracy on this kind of source. Falls back to
+   the original image if canvas processing isn't available. */
 async function ocrExtractPreprocessImage(image) {
   const bitmap = await createImageBitmap(image);
   try {
-    const scale = Math.min(2.5, 6000 / bitmap.width);
+    const scale = Math.min(3, Math.max(1, 1600 / bitmap.width));
     const canvas = document.createElement('canvas');
     canvas.width = Math.round(bitmap.width * scale);
     canvas.height = Math.round(bitmap.height * scale);
@@ -55,7 +51,7 @@ async function ocrExtractPreprocessImage(image) {
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const d = imageData.data;
-    const contrast = 1.15;
+    const contrast = 1.4;
     for (let i = 0; i < d.length; i += 4) {
       const gray = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
       const adjusted = Math.min(255, Math.max(0, (gray - 128) * contrast + 128));
