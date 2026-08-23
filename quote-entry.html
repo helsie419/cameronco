@@ -115,7 +115,7 @@
         <input type="text" id="ourRef" placeholder="Cameron &amp; Co ref">
       </label>
       <label class="field">
-        <span>Insurer reference</span>
+        <span>Insurance reference</span>
         <input type="text" id="yourRef" placeholder="If different from claim no.">
       </label>
       <label class="field">
@@ -459,5 +459,31 @@
 <script src="assets/paste-extract.js"></script>
 <script src="assets/ocr-extract.js"></script>
 <script src="assets/quote-entry.js"></script>
+
+<div class="manual-chat" id="manualChat">
+  <button class="manual-chat-toggle" id="manualChatToggle" type="button" aria-expanded="false" aria-controls="manualChatPanel" aria-label="Ask a question about these manuals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h16v11H8l-4 4V5z"/>
+      <circle cx="9" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="12.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+    </svg>
+  </button>
+  <div class="manual-chat-panel" id="manualChatPanel" hidden>
+    <header>
+      <div>
+        <h3>Manual assistant</h3>
+        <span class="hint">Searches these manuals — not AI, just quick keyword matching</span>
+      </div>
+      <button class="manual-chat-close" id="manualChatClose" type="button" aria-label="Close">×</button>
+    </header>
+    <div class="manual-chat-messages" id="manualChatMessages" aria-live="polite"></div>
+    <form class="manual-chat-form" id="manualChatForm">
+      <input type="text" id="manualChatInput" placeholder="e.g. How do I deactivate a staff member?" autocomplete="off">
+      <button class="btn gold small" type="submit">Ask</button>
+    </form>
+  </div>
+</div>
+<script src="assets/manual-chat.js"></script>
 </body>
 </html>

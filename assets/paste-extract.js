@@ -34,9 +34,30 @@ const PASTE_EXTRACT_LABELS = {
 };
 
 const PASTE_EXTRACT_STATES = ['NSW', 'VIC', 'QLD', 'SA', 'WA', 'TAS', 'NT', 'ACT'];
+// "STATE postcode", with an optional comma between them (some portals write
+// "…KALKALLO VIC, 3064" as one line rather than "VIC" and "3064" separately).
+const PASTE_EXTRACT_STATE_POSTCODE_RE = new RegExp(`\\b(?:${PASTE_EXTRACT_STATES.join('|')})\\s*,?\\s*\\d{4}\\b`, 'i');
+
+// Recognised only by the whole-line label strategies below (a line must
+// equal exactly one of these) — never by the grid-pairs word tokenizer
+// further down, where bare "customer" as a loose word inside a header
+// phrase ("Customer Property Risk Address") would misfire and grab the
+// wrong token. Some portals (e.g. QBE PropertyLink) use bare "Customer" on
+// its own line as the claimant-name label, so it still needs to work there.
+const PASTE_EXTRACT_LINE_ONLY_LABELS = {
+  name: ['customer'],
+};
 
 function pasteExtractNormalizeLabel(s) {
   return String(s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/* A handful of portals prefix every field value with a bullet marker in
+   their UI; OCR sometimes reads it faithfully, sometimes misreads it as an
+   equals sign. Strip it so it doesn't end up glued onto real data (e.g.
+   "• 31 Trophis Street", "= VIC"). */
+function pasteExtractStripValueNoise(s) {
+  return String(s || '').replace(/^[•●▪·=]\s*/, '').trim();
 }
 
 function pasteExtractParseLabeledLines(text) {
@@ -51,11 +72,49 @@ function pasteExtractParseLabeledLines(text) {
   return map;
 }
 
+/* Same-line "Label value" with no separator at all ("Insurance Ref #
+   700000101535") — matches a known multi-word label against the start of
+   the line and takes the rest as the value. Only multi-word synonyms
+   qualify (a bare one-word label like "State" or "Name" is too likely to
+   just be the first word of an unrelated sentence). Unlike the next-line
+   strategy below, there's no ambiguity about which value belongs to which
+   label here, so this is the highest-confidence source and wins ties when
+   the same field also got a (possibly OCR-corrupted) value from a repeated
+   label elsewhere on the page. */
+function pasteExtractParseLabelPrefixLine(text) {
+  const map = {};
+  const candidates = pasteExtractSynonymWordList();
+  String(text || '').split(/\r?\n/).forEach(rawLine => {
+    const line = rawLine.trim();
+    if (!line) return;
+    const words = [];
+    const wordRe = /\S+/g;
+    let wm;
+    while ((wm = wordRe.exec(line))) words.push({ text: wm[0], end: wm.index + wm[0].length });
+    if (words.length < 2) return;
+    const normWords = words.map(w => pasteExtractNormalizeLabel(w.text));
+    for (const cand of candidates) {
+      const n = cand.words.length;
+      if (n < 2 || n > words.length - 1) continue;
+      let ok = true;
+      for (let k = 0; k < n; k++) { if (normWords[k] !== cand.words[k]) { ok = false; break; } }
+      if (!ok) continue;
+      const value = pasteExtractStripValueNoise(line.slice(words[n - 1].end).replace(/^[\s:#-]+/, ''));
+      if (!value) continue;
+      const key = pasteExtractNormalizeLabel(cand.synonym);
+      if (!map[key]) map[key] = value;
+      break;
+    }
+  });
+  return map;
+}
+
 let pasteExtractSynonymSetCache = null;
 function pasteExtractAllSynonymsNormalized() {
   if (pasteExtractSynonymSetCache) return pasteExtractSynonymSetCache;
   const set = new Set();
   Object.values(PASTE_EXTRACT_LABELS).forEach(arr => arr.forEach(s => set.add(pasteExtractNormalizeLabel(s))));
+  Object.values(PASTE_EXTRACT_LINE_ONLY_LABELS).forEach(arr => arr.forEach(s => set.add(pasteExtractNormalizeLabel(s))));
   pasteExtractSynonymSetCache = set;
   return set;
 }
@@ -66,6 +125,32 @@ function pasteExtractAllSynonymsNormalized() {
 const PASTE_EXTRACT_ADDRESS_KEYS = new Set(
   PASTE_EXTRACT_LABELS.address.map(pasteExtractNormalizeLabel)
 );
+
+let pasteExtractSynonymToFieldCache = null;
+function pasteExtractFieldForLabel(norm) {
+  if (!pasteExtractSynonymToFieldCache) {
+    const map = {};
+    [PASTE_EXTRACT_LABELS, PASTE_EXTRACT_LINE_ONLY_LABELS].forEach(labels => {
+      Object.entries(labels).forEach(([field, arr]) => arr.forEach(s => { map[pasteExtractNormalizeLabel(s)] = field; }));
+    });
+    pasteExtractSynonymToFieldCache = map;
+  }
+  return pasteExtractSynonymToFieldCache[norm];
+}
+
+/* Some portals leave a field genuinely blank in the source, and the "value"
+   directly under its label in the OCR text is actually the start of the
+   next (unlabelled) piece of content — e.g. an empty "Contents Ref #" right
+   above a job-type badge like "Scope & Repair (Quick Repair)". Reference
+   numbers are short codes, never prose, so reject anything with that shape
+   rather than filing a sentence into a reference field. */
+function pasteExtractLooksLikeReferenceCode(s) {
+  const str = String(s || '').trim();
+  if (!str) return false;
+  if (/[()]/.test(str)) return false;
+  const wholeWords = str.split(/\s+/).filter(w => /^[A-Za-z]+$/.test(w));
+  return wholeWords.length < 2;
+}
 
 function pasteExtractParseLabelNextLine(text) {
   const lines = String(text || '').split(/\r?\n/).map(l => l.trim());
@@ -81,23 +166,42 @@ function pasteExtractParseLabelNextLine(text) {
     if (PASTE_EXTRACT_ADDRESS_KEYS.has(norm)) {
       const collected = [];
       for (let j = i + 1; j < lines.length && collected.length < 6; j++) {
-        const val = lines[j];
+        const val = pasteExtractStripValueNoise(lines[j]);
         if (!val) { if (collected.length) break; continue; }
         if (synonyms.has(pasteExtractNormalizeLabel(val))) break;
         collected.push(val);
+        // Australian addresses end "STATE 1234" (comma before the postcode
+        // on some portals) — once that shape shows up, either on this line
+        // by itself or split across this line and the next, there's nothing
+        // left to gather, so stop before grabbing the next panel's text.
+        if (PASTE_EXTRACT_STATE_POSTCODE_RE.test(val)) break;
+        if (PASTE_EXTRACT_STATES.includes(val.toUpperCase()) && /^\d{4}$/.test(lines[j + 1] || '')) {
+          collected.push(lines[j + 1]);
+          break;
+        }
       }
       if (collected.length) {
-        map[norm] = collected.length > 1
+        const joined = collected.length > 1
           ? `${collected[0]}, ${collected.slice(1).join(' ')}`
           : collected[0];
+        // Some portals repeat the "Address" label as a bare section/checkbox
+        // header with no real value underneath (e.g. AAMI's "Unable to
+        // Proceed" reason list), or show the same address twice with the
+        // second copy more complete than the first (e.g. QBE's summary line
+        // at the bottom of the panel) — prefer whichever candidate actually
+        // looks like a full address over one that doesn't.
+        const looksLikeAddress = PASTE_EXTRACT_STATE_POSTCODE_RE.test(joined);
+        if (looksLikeAddress || !map[norm]) map[norm] = joined;
       }
       continue;
     }
 
+    const field = pasteExtractFieldForLabel(norm);
     for (let j = i + 1; j < lines.length; j++) {
-      const val = lines[j];
+      const val = pasteExtractStripValueNoise(lines[j]);
       if (!val) continue;
       if (synonyms.has(pasteExtractNormalizeLabel(val))) break;
+      if ((field === 'claim_number' || field === 'policy_ref') && !pasteExtractLooksLikeReferenceCode(val)) break;
       map[norm] = val;
       break;
     }
@@ -106,7 +210,8 @@ function pasteExtractParseLabelNextLine(text) {
 }
 
 function pasteExtractFindField(map, field) {
-  for (const synonym of PASTE_EXTRACT_LABELS[field] || []) {
+  const synonyms = [...(PASTE_EXTRACT_LABELS[field] || []), ...(PASTE_EXTRACT_LINE_ONLY_LABELS[field] || [])];
+  for (const synonym of synonyms) {
     const key = pasteExtractNormalizeLabel(synonym);
     if (map[key]) return map[key];
   }
@@ -127,13 +232,31 @@ function pasteExtractSplitName(raw) {
 }
 
 function pasteExtractSplitAddress(line) {
-  const m = String(line || '').match(
-    /^(.*?),?\s*([A-Za-z .'-]+?)\s+(NSW|VIC|QLD|SA|WA|TAS|NT|ACT)\s+(\d{4})\s*$/i
+  const s = String(line || '').trim();
+
+  // Some portals glue an ALL-CAPS suburb straight onto a mixed-case street
+  // name with no comma between them ("31 Trophis Street KALKALLO VIC,
+  // 3064") — the case change is the only delimiter available, so use it:
+  // the street must end in a lowercase letter, the suburb is one or more
+  // ALL-CAPS words directly before the state.
+  let m = s.match(
+    /^(.*?[a-z])\s+([A-Z]{2,}(?:\s+[A-Z]{2,})*)\s+(NSW|VIC|QLD|SA|WA|TAS|NT|ACT)(?:\s+|,\s*)(\d{4})\s*$/
+  );
+  if (m) {
+    return { address: m[1].trim(), suburb: m[2].trim(), state: m[3].toUpperCase(), postcode: m[4] };
+  }
+
+  // Otherwise: "street, [suburb] STATE postcode" — suburb only recognised
+  // when a comma anchors it (as it always does when present); without one,
+  // there's no reliable way to tell street from suburb apart, so the whole
+  // prefix is kept together as the address rather than guessing wrong.
+  m = s.match(
+    /^(.*?)(?:,\s*([A-Za-z .'-]+?))?\s+(NSW|VIC|QLD|SA|WA|TAS|NT|ACT)(?:\s+|,\s*)(\d{4})\s*$/i
   );
   if (!m) return null;
   return {
     address: m[1].trim().replace(/,+$/, ''),
-    suburb: m[2].trim(),
+    suburb: (m[2] || '').trim(),
     state: m[3].toUpperCase(),
     postcode: m[4],
   };
@@ -148,6 +271,23 @@ function pasteExtractParseCurrency(raw) {
   if (!m) return null;
   const n = parseFloat(m[0].replace(/,/g, ''));
   return Number.isFinite(n) ? n : null;
+}
+
+/* Pulls just the postcode digits out of a labelled value instead of trusting
+   it verbatim — some portals' bullet marker gets OCR'd as a stray leading
+   digit ("9 3064"), and a bare \d{4} scan skips right over a lone digit like
+   that since it isn't part of a 4-in-a-row run. */
+function pasteExtractExtractPostcode(raw) {
+  const m = String(raw || '').match(/\d{4}/);
+  return m ? m[0] : String(raw || '').trim();
+}
+
+/* Same OCR-bullet-as-digit issue as above, but suburb names are letters, not
+   digits, so a leading 1-2 digit token followed by a real word is always
+   noise here — unlike street addresses, where a leading digit is the
+   legitimate street number and must be kept. */
+function pasteExtractStripLeadingDigitNoise(raw) {
+  return String(raw || '').replace(/^\d{1,2}\s+(?=[A-Za-z])/, '').trim();
 }
 
 function pasteExtractParseDateToIso(raw) {
@@ -392,7 +532,7 @@ function pasteExtractMatchInsurer(text, insurerOptions) {
  * Returns { fields, matched } — matched lists which field keys were found.
  */
 function parsePastedInsurerText(text, insurerOptions) {
-  const map = { ...pasteExtractParseGridPairs(text), ...pasteExtractParseLabelNextLine(text), ...pasteExtractParseLabeledLines(text) };
+  const map = { ...pasteExtractParseGridPairs(text), ...pasteExtractParseLabelNextLine(text), ...pasteExtractParseLabeledLines(text), ...pasteExtractParseLabelPrefixLine(text) };
   const fields = {};
   const matched = [];
 
@@ -432,7 +572,7 @@ function parsePastedInsurerText(text, insurerOptions) {
     matched.push('address');
   }
   const suburbRaw = pasteExtractFindField(map, 'suburb');
-  if (suburbRaw) { fields.suburb = pasteExtractSentenceCase(suburbRaw); matched.push('suburb'); }
+  if (suburbRaw) { fields.suburb = pasteExtractSentenceCase(pasteExtractStripLeadingDigitNoise(suburbRaw)); matched.push('suburb'); }
   const stateRaw = pasteExtractFindField(map, 'state');
   if (stateRaw) {
     const upper = stateRaw.trim().toUpperCase();
@@ -445,7 +585,7 @@ function parsePastedInsurerText(text, insurerOptions) {
   const postcodeFallback = !fields.postcode &&
     String(text || '').match(new RegExp(`\\b(?:${PASTE_EXTRACT_STATES.join('|')})\\s+(\\d{4})\\b`, 'i'));
   if (postcodeRaw || postcodeFallback) {
-    fields.postcode = (postcodeRaw || postcodeFallback[1]).trim();
+    fields.postcode = postcodeRaw ? pasteExtractExtractPostcode(postcodeRaw) : postcodeFallback[1].trim();
     if (postcodeRaw) matched.push('postcode');
   }
 
