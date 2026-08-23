@@ -20,6 +20,13 @@ function ocrExtractLoadTesseract() {
     script.onload = () => resolve(window.Tesseract);
     script.onerror = () => reject(new Error('Could not load the OCR engine — check your internet connection'));
     document.head.appendChild(script);
+  }).catch((err) => {
+    // Don't cache a failed load — a transient network blip shouldn't
+    // permanently break OCR until the page is reloaded. The failed
+    // <script> tag is harmless left in place; the next attempt just adds
+    // another one.
+    ocrExtractLoadingPromise = null;
+    throw err;
   });
   return ocrExtractLoadingPromise;
 }
