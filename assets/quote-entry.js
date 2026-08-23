@@ -90,7 +90,6 @@ const FALLBACK_STAFF = [
 /* ------------------------------- state ----------------------------------- */
 let LOOKUPS = FALLBACK_LOOKUPS;
 let RATES = indexRates(FALLBACK_RATES);
-let SPOT = [];
 let WATCH_RATES = [];
 let STAFF = FALLBACK_STAFF;
 let selectedCustomerId = null;
@@ -127,12 +126,11 @@ init();
 async function init(){
   await loadReferenceData();
   fillStaticSelects();
-  wireCustomerSearch();
   wireDuplicateCheck();
   wirePasteExtract();
   wireAddressTidy();
   wireSettlement();
-  setGateLocked(true);
+  updateClaimNumberField();
   $('#dateReceived').value = new Date().toISOString().slice(0,10);
   $('#addItem').addEventListener('click', () => addItem());
   $('#saveDraft').addEventListener('click', () => save('draft'));
@@ -153,17 +151,6 @@ async function loadPrefillCustomer(id){
   } catch (err) {
     toast('Could not load customer: ' + err.message, true);
   }
-}
-
-/* ------------------------------ customer gate ----------------------------- */
-// Claim details / items / settlement used to disable until a customer was
-// confirmed above — but save() already validates a customer exists (and
-// creates one from the form fields if needed) before persisting, so the
-// lock wasn't actually preventing anything, just blocking staff from
-// entering claim data that often arrives before the customer match is final.
-function setGateLocked(locked){
-  $$('.panel.gated').forEach(p => p.classList.remove('locked'));
-  updateClaimNumberField();
 }
 
 // Claim number only means anything for insurer work — private jobs don't
@@ -188,11 +175,9 @@ async function loadReferenceData(){
     ]);
     LOOKUPS = { ...FALLBACK_LOOKUPS, ...lk };
     RATES = indexRates(rt.rates?.length ? rt.rates : FALLBACK_RATES);
-    SPOT = rt.spot || [];
     WATCH_RATES = wr?.length ? wr : FALLBACK_WATCH_RATES;
     STAFF = st?.length ? st : FALLBACK_STAFF;
     fillInsurers(ins);
-    renderSpot();
   } catch {
     apiAvailable = false;
     WATCH_RATES = FALLBACK_WATCH_RATES;
@@ -203,14 +188,6 @@ async function loadReferenceData(){
     ].map((x,i)=>({ ...x, id:i+1, contacts:[] })));
     toast('Working offline — API not reachable. Data will not be saved.', true);
   }
-}
-
-function renderSpot(){
-  const find = m => SPOT.find(s => s.metal === m);
-  const g = find('gold'), s = find('silver'), p = find('platinum');
-  if (g) $('#spotGold').textContent = fmt(g.price_per_gm) + '/g';
-  if (s) $('#spotSilver').textContent = fmt(s.price_per_gm) + '/g';
-  if (p) $('#spotPlat').textContent = fmt(p.price_per_gm) + '/g';
 }
 
 function fillInsurers(list){
@@ -434,62 +411,6 @@ function fillStaticSelects(){
   }
 }
 
-/* --------------------------- customer search ----------------------------- */
-function wireCustomerSearch(){
-  const input = $('#customerSearch');
-  const results = $('#customerResults');
-  let t;
-  input.addEventListener('input', () => {
-    clearTimeout(t);
-    const q = input.value.trim();
-    if (q.length < 2) { results.hidden = true; return; }
-    t = setTimeout(async () => {
-      let rows = [];
-      if (apiAvailable) {
-        try { rows = await fetch(`${API}/customers?q=${encodeURIComponent(q)}`).then(r => r.json()); }
-        catch { rows = []; }
-      }
-      results.innerHTML = '';
-      for (const c of rows) {
-        const d = document.createElement('div');
-        const phone = c.mobile || c.phone;
-        d.innerHTML = `<strong>${c.first_name} ${c.last_name}</strong>
-          <small>${[c.email, phone ? phoneLinkHtml(phone) : '', c.suburb].filter(Boolean).join(' · ')}</small>`;
-        d.addEventListener('click', (e) => { if (!e.target.closest('.phone-link')) pickCustomer(c); });
-        results.appendChild(d);
-      }
-      const add = document.createElement('div');
-      add.className = 'new-entry';
-      add.textContent = `＋ New customer “${q}”`;
-      add.addEventListener('click', () => { newCustomerFromSearch(q); });
-      results.appendChild(add);
-      results.hidden = false;
-    }, 250);
-  });
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.lookup-wrap')) results.hidden = true;
-  });
-  $('#clearCustomer').addEventListener('click', () => {
-    selectedCustomerId = null;
-    customerMode = 'none';
-    ['custFirst','custLast','custEmail','custMobile','custAddress','custSuburb','custPostcode']
-      .forEach(id => $('#'+id).value = '');
-    $('#customerSearch').value = '';
-    $('#customerConfirmRow').hidden = true;
-    hideDuplicateWarning();
-    setCustomerBadge();
-    setGateLocked(true);
-  });
-  $('#confirmCustomer').addEventListener('click', () => {
-    if (!$('#custFirst').value.trim()) { toast('Enter at least a first name', true); return; }
-    if (!validateAddress()) { toast('Check the address — street, suburb and postcode go together', true); return; }
-    customerMode = 'new-confirmed';
-    $('#customerConfirmRow').hidden = true;
-    setCustomerBadge('New customer — will be created on save');
-    setGateLocked(false);
-  });
-}
-
 function pickCustomer(c){
   selectedCustomerId = c.id;
   customerMode = 'existing';
@@ -501,35 +422,10 @@ function pickCustomer(c){
   $('#custSuburb').value = c.suburb || '';
   $('#custState').value = c.state || 'VIC';
   $('#custPostcode').value = c.postcode || '';
-  $('#customerResults').hidden = true;
-  $('#customerSearch').value = `${c.first_name} ${c.last_name}`;
-  $('#customerConfirmRow').hidden = true;
-  hideDuplicateWarning();
-  setCustomerBadge('Existing customer');
-  setGateLocked(false);
+  hideDuplicateModal();
 }
 
-function newCustomerFromSearch(q){
-  selectedCustomerId = null;
-  customerMode = 'new-pending';
-  const parts = q.split(/\s+/);
-  $('#custFirst').value = parts[0] || '';
-  $('#custLast').value = parts.slice(1).join(' ');
-  $('#customerResults').hidden = true;
-  $('#customerConfirmRow').hidden = false;
-  setCustomerBadge('New customer — fill in details, then continue');
-  setGateLocked(true);
-  $('#custEmail').focus();
-  checkDuplicateCustomer();
-}
-
-function setCustomerBadge(text){
-  const b = $('#customerBadge');
-  if (text) { b.textContent = text; b.className = 'badge gold'; }
-  else { b.textContent = 'No customer selected'; b.className = 'badge'; }
-}
-
-/* --------------------------- duplicate warning ---------------------------- */
+/* --------------------------- duplicate check ------------------------------ */
 let duplicateMatch = null;
 
 function normalizeMatchText(s){
@@ -537,11 +433,11 @@ function normalizeMatchText(s){
 }
 
 async function checkDuplicateCustomer(){
-  if (customerMode === 'existing' || !apiAvailable) { hideDuplicateWarning(); return; }
+  if (customerMode === 'existing' || !apiAvailable) { hideDuplicateModal(); return; }
   const first = $('#custFirst').value.trim();
   const last = $('#custLast').value.trim();
   const q = [first, last].filter(Boolean).join(' ');
-  if (q.length < 3) { hideDuplicateWarning(); return; }
+  if (q.length < 3) { hideDuplicateModal(); return; }
   let rows = [];
   try { rows = await fetch(`${API}/customers?q=${encodeURIComponent(q)}`).then(r => r.json()); }
   catch { rows = []; }
@@ -552,33 +448,33 @@ async function checkDuplicateCustomer(){
     if (!wantAddr) return true;
     return normalizeMatchText(c.address_line1 || '') === wantAddr;
   });
-  if (match) showDuplicateWarning(match); else hideDuplicateWarning();
+  if (match) showDuplicateModal(match); else hideDuplicateModal();
 }
 
-function showDuplicateWarning(c){
+function showDuplicateModal(c){
   duplicateMatch = c;
-  $('#duplicateWarningName').textContent = `${c.first_name} ${c.last_name}`;
-  $('#duplicateWarningAddress').textContent =
+  $('#duplicateModalName').textContent = `${c.first_name} ${c.last_name}`;
+  $('#duplicateModalAddress').textContent =
     [c.address_line1, c.suburb, c.state, c.postcode].filter(Boolean).join(', ') || 'No address on file';
-  $('#duplicateWarning').hidden = false;
+  $('#duplicateModal').hidden = false;
 }
 
-function hideDuplicateWarning(){
+function hideDuplicateModal(){
   duplicateMatch = null;
-  $('#duplicateWarning').hidden = true;
+  $('#duplicateModal').hidden = true;
 }
 
 function wireDuplicateCheck(){
   ['custLast', 'custAddress'].forEach(id => {
     $('#' + id).addEventListener('blur', () => {
-      if (customerMode === 'new-pending' || customerMode === 'new-confirmed') checkDuplicateCustomer();
+      if (customerMode !== 'existing') checkDuplicateCustomer();
     });
   });
-  $('#duplicateWarningUse').addEventListener('click', () => {
+  $('#duplicateModalUse').addEventListener('click', () => {
     if (duplicateMatch) pickCustomer(duplicateMatch);
-    else hideDuplicateWarning();
+    else hideDuplicateModal();
   });
-  $('#duplicateWarningDismiss').addEventListener('click', hideDuplicateWarning);
+  $('#duplicateModalDismiss').addEventListener('click', hideDuplicateModal);
 }
 
 /* --------------------------- paste extraction ------------------------------ */
@@ -651,20 +547,21 @@ function wirePasteExtract(){
     e.target.value = '';
     if (file) runOcrOnImage(file);
   });
+
+  $('#clearScratchpad').addEventListener('click', () => {
+    $('#pasteExtractInput').value = '';
+    $('#pasteExtractSummary').textContent = '';
+  });
 }
 
 function applyExtractedFields(fields){
-  // Any one of these is enough to treat this as "a customer was found" —
-  // requiring a name specifically meant a paste that only OCR'd cleanly
-  // enough to catch an email/phone/address left the claim panel locked
-  // with no way forward and no visible reason why.
+  // A fresh paste isn't matched to any particular customer yet — the
+  // duplicate check below (run right after this) is what decides whether
+  // it's actually an existing customer.
   const hasCustomerSignal = fields.first_name || fields.last_name || fields.email || fields.mobile || fields.address;
   if (hasCustomerSignal) {
     selectedCustomerId = null;
-    customerMode = 'new-pending';
-    $('#customerConfirmRow').hidden = false;
-    setCustomerBadge('New customer — fill in details, then continue');
-    setGateLocked(true);
+    customerMode = 'none';
   }
   if (fields.first_name) $('#custFirst').value = fields.first_name;
   if (fields.last_name) $('#custLast').value = fields.last_name;
@@ -1228,7 +1125,7 @@ async function save(mode){
       }).then(r => r.json());
       customerId = c.id;
       selectedCustomerId = c.id;
-      setCustomerBadge('Existing customer');
+      customerMode = 'existing';
     }
 
     // 1b. new claims get an auto-generated internal reference unless staff

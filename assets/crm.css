@@ -68,7 +68,7 @@ html, body {
   height: 70px;
   width: auto;
 }
-.main-nav { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; }
+.main-nav { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; margin-left: auto; }
 .main-nav a {
   color: var(--charcoal);
   text-decoration: none;
@@ -196,24 +196,6 @@ html, body {
   border-radius: 4px;
   margin-bottom: 22px;
 }
-.panel.gated { position: relative; transition: opacity 0.2s ease; }
-.panel.gated.locked { opacity: 0.5; }
-.panel.gated.locked::after {
-  content: attr(data-lock-message);
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
-  background: rgba(250,248,245,0.55);
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 16px;
-  color: var(--gold-dark);
-  cursor: not-allowed;
-}
 .panel > header {
   display: flex;
   align-items: baseline;
@@ -288,6 +270,47 @@ input:disabled, select:disabled, textarea:disabled { background: var(--panel); c
 }
 .warning-banner p { margin: 0; color: var(--warn); }
 .warning-banner strong { color: var(--charcoal); }
+
+/* --------------------------------- modal --------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(45,45,45,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(45,45,45,0.25);
+}
+.modal-card > header {
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.modal-card > header h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+}
+.modal-card .body { padding: 18px 22px; }
+.modal-card .body p { margin: 0 0 6px; }
+.modal-card .body p.muted { color: var(--muted); font-size: 13px; }
+.modal-card > footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 /* --------------------------------- buttons ------------------------------ */
 .btn {

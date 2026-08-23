@@ -353,6 +353,20 @@ function pasteExtractParseGridPairs(text) {
   return map;
 }
 
+/* Insurer portals and OCR both frequently shout names/addresses in ALL CAPS
+   ("KIMBERLEY PETERS", "3 POTTERS RISE"). Only re-case text that's entirely
+   upper or entirely lower — mixed case (e.g. "McDonald", "O'Brien") is left
+   alone since it's likely already correctly formatted. */
+function pasteExtractSentenceCase(s) {
+  const str = String(s || '').trim();
+  if (!str) return str;
+  const letters = str.replace(/[^A-Za-z]/g, '');
+  const isAllUpper = letters && letters === letters.toUpperCase() && letters !== letters.toLowerCase();
+  const isAllLower = letters && letters === letters.toLowerCase() && letters !== letters.toUpperCase();
+  if (!isAllUpper && !isAllLower) return str;
+  return str.toLowerCase().replace(/(^|[\s\-'/.])([a-z])/g, (m, sep, ch) => sep + ch.toUpperCase());
+}
+
 function pasteExtractMatchInsurer(text, insurerOptions) {
   const normalizedText = pasteExtractNormalizeLabel(text);
   if (!normalizedText) return null;
@@ -378,7 +392,9 @@ function parsePastedInsurerText(text, insurerOptions) {
 
   const nameRaw = pasteExtractFindField(map, 'name');
   if (nameRaw) {
-    Object.assign(fields, pasteExtractSplitName(nameRaw));
+    const split = pasteExtractSplitName(nameRaw);
+    fields.first_name = pasteExtractSentenceCase(split.first_name);
+    fields.last_name = pasteExtractSentenceCase(split.last_name);
     matched.push('name');
   }
 
@@ -400,14 +416,17 @@ function parsePastedInsurerText(text, insurerOptions) {
   if (addressRaw) {
     const split = pasteExtractSplitAddress(addressRaw);
     if (split) {
-      Object.assign(fields, split);
+      fields.address = pasteExtractSentenceCase(split.address);
+      fields.suburb = pasteExtractSentenceCase(split.suburb);
+      fields.state = split.state;
+      fields.postcode = split.postcode;
     } else {
-      fields.address = addressRaw;
+      fields.address = pasteExtractSentenceCase(addressRaw);
     }
     matched.push('address');
   }
   const suburbRaw = pasteExtractFindField(map, 'suburb');
-  if (suburbRaw) { fields.suburb = suburbRaw; matched.push('suburb'); }
+  if (suburbRaw) { fields.suburb = pasteExtractSentenceCase(suburbRaw); matched.push('suburb'); }
   const stateRaw = pasteExtractFindField(map, 'state');
   if (stateRaw) {
     const upper = stateRaw.trim().toUpperCase();

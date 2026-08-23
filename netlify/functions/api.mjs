@@ -373,7 +373,9 @@ export default async (req) => {
                 created_at, updated_at
          FROM customers
          WHERE ($1 = '' OR LOWER(first_name) LIKE '%'||LOWER($1)||'%' OR LOWER(last_name) LIKE '%'||LOWER($1)||'%'
-            OR LOWER(email) LIKE '%'||LOWER($1)||'%' OR LOWER(phone) LIKE '%'||LOWER($1)||'%')
+            OR LOWER(first_name || ' ' || last_name) LIKE '%'||LOWER($1)||'%'
+            OR LOWER(email) LIKE '%'||LOWER($1)||'%' OR LOWER(phone) LIKE '%'||LOWER($1)||'%'
+            OR LOWER(mobile) LIKE '%'||LOWER($1)||'%')
          ORDER BY last_name, first_name LIMIT 500`, [q]
       );
       return json(200, rows);

@@ -29,11 +29,6 @@
         </div>
       </div>
     </nav>
-    <div class="spot-ticker" id="spotTicker" title="Daily AUD spot, per gram">
-      <span>Gold <b id="spotGold">—</b></span>
-      <span>Silver <b id="spotSilver">—</b></span>
-      <span>Platinum <b id="spotPlat">—</b></span>
-    </div>
   </div>
 </header>
 
@@ -45,7 +40,6 @@
   <section class="panel" id="customerPanel">
     <header>
       <h2>Customer</h2>
-      <span class="hint">Search first — one customer, many claims. No duplicates.</span>
     </header>
     <div class="body">
       <label class="field" id="pasteExtractBox">
@@ -64,22 +58,10 @@
           </button>
           <button class="btn ghost small" type="button" id="ocrUploadButton">Upload screenshot…</button>
           <input type="file" id="ocrUploadInput" accept="image/*" hidden>
+          <button class="btn ghost small" type="button" id="clearScratchpad">Clear</button>
           <span class="muted-note" id="pasteExtractSummary"></span>
         </div>
       </label>
-      <div class="grid c4">
-        <label class="field span2 lookup-wrap">
-          <span>Find existing customer</span>
-          <input type="text" id="customerSearch" placeholder="Type a name, email or phone…" autocomplete="off">
-          <div class="lookup-results" id="customerResults" hidden></div>
-        </label>
-        <div class="field" style="align-self:end; padding-bottom:8px">
-          <span id="customerBadgeWrap"><span class="badge" id="customerBadge">No customer selected</span></span>
-        </div>
-        <div class="field" style="align-self:end; padding-bottom:8px; text-align:right">
-          <button class="btn ghost small" type="button" id="clearCustomer">Clear</button>
-        </div>
-      </div>
       <div class="grid c4" style="margin-top:14px">
         <label class="field"><span>First name</span><input type="text" id="custFirst"></label>
         <label class="field"><span>Last name</span><input type="text" id="custLast"></label>
@@ -97,21 +79,11 @@
         </label>
       </div>
       <p class="field-note" id="addressHint" hidden>Street, suburb and postcode should be entered together — postcode must be 4 digits.</p>
-      <div id="duplicateWarning" class="warning-banner" hidden style="margin-top:14px">
-        <p>This may already be a customer — <strong id="duplicateWarningName"></strong>, <span id="duplicateWarningAddress"></span></p>
-        <div style="display:flex; gap:10px; margin-top:8px">
-          <button class="btn gold small" type="button" id="duplicateWarningUse">Use this existing customer</button>
-          <button class="btn ghost small" type="button" id="duplicateWarningDismiss">No, this is a different person</button>
-        </div>
-      </div>
-      <div id="customerConfirmRow" hidden style="margin-top:14px; text-align:right">
-        <button class="btn gold" type="button" id="confirmCustomer">Continue with this customer →</button>
-      </div>
     </div>
   </section>
 
   <!-- ══════════════════════ 2 · CLAIM DETAILS ══════════════════════ -->
-  <section class="panel gated" id="claimPanel" data-lock-message="Select or create a customer above to continue">
+  <section class="panel" id="claimPanel">
     <header>
       <h2>Claim details</h2>
       <span class="hint">The Q Sheet header — insurer, references, validation</span>
@@ -180,7 +152,7 @@
   </section>
 
   <!-- ══════════════════════ 3 · ITEMS ══════════════════════ -->
-  <section class="panel gated" id="itemsPanel" data-lock-message="Select or create a customer above to continue">
+  <section class="panel" id="itemsPanel">
     <header>
       <h2>Items on this claim</h2>
       <span class="hint">Each item carries its own specification, stones and costing</span>
@@ -192,7 +164,7 @@
   </section>
 
   <!-- ══════════════════════ 4 · SETTLEMENT ══════════════════════ -->
-  <section class="panel gated" id="settlementPanel" data-lock-message="Select or create a customer above to continue">
+  <section class="panel" id="settlementPanel">
     <header>
       <h2>Settlement breakdown</h2>
       <span class="hint">Prices include GST · applicable discounts applied</span>
@@ -463,6 +435,20 @@
     <td><button class="btn danger small" type="button" data-remove-stone>×</button></td>
   </tr>
 </template>
+
+<div class="modal-backdrop" id="duplicateModal" hidden>
+  <div class="modal-card">
+    <header><h3>This customer already exists</h3></header>
+    <div class="body">
+      <p><strong id="duplicateModalName"></strong></p>
+      <p class="muted" id="duplicateModalAddress"></p>
+    </div>
+    <footer>
+      <button class="btn ghost small" type="button" id="duplicateModalDismiss">No, this is a different person</button>
+      <button class="btn gold small" type="button" id="duplicateModalUse">Use this existing customer</button>
+    </footer>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 <script src="assets/phone.js"></script>
