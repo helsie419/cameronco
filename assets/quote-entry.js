@@ -575,10 +575,7 @@ function applyExtractedFields(fields){
   if (fields.your_ref) $('#yourRef').value = fields.your_ref;
   if (fields.respond_by) $('#respondBy').value = fields.respond_by;
   if (fields.excess_amount != null) $('#excessAmount').value = fields.excess_amount;
-  if (fields.description) {
-    const firstItemDescription = $('[data-item] [data-f="description"]');
-    if (firstItemDescription) firstItemDescription.value = fields.description;
-  }
+  if (fields.comment) $('#claimComment').value = fields.comment;
   if (fields.insurer_id) {
     $('#insurerId').value = fields.insurer_id;
     $('#insurerId').dispatchEvent(new Event('change'));
@@ -1164,6 +1161,7 @@ async function save(mode){
       items: $$('[data-item]').map(collectItem),
     };
     const method = claimId ? 'PUT' : 'POST';
+    const isNewClaim = !claimId;
     const urlPath = claimId ? `${API}/claims/${claimId}` : `${API}/claims`;
     const res = await fetch(urlPath, {
       method, headers: { 'content-type': 'application/json' },
@@ -1172,6 +1170,19 @@ async function save(mode){
     if (res.error) throw new Error(res.error);
     claimId = res.id;
     history.replaceState(null, '', `?claim=${claimId}`);
+
+    // Logged once, at claim creation, as a claim_notes entry rather than a
+    // column on claims — re-posting on every later save of the same claim
+    // would duplicate it, so this only fires the first time.
+    const comment = $('#claimComment').value.trim();
+    if (isNewClaim && comment) {
+      try {
+        await fetch(`${API}/claims/${claimId}/notes`, {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ staff_id: $('#assignedTo').value || null, note_type: 'insurer', note: comment }),
+        });
+      } catch { /* claim itself saved fine — a failed note log shouldn't block the save */ }
+    }
 
     if (mode === 'draft') return toast('Draft saved');
 
@@ -1216,6 +1227,10 @@ async function loadClaim(id){
     $('#assignedTo').value = c.assigned_to || '';
     $('#excessAmount').value = c.excess_amount || '';
     $('#settlementNotes').value = c.settlement_notes || '';
+    // Most recent insurer-type note, if any — display only; save() only
+    // ever posts a new note at claim creation, so editing this box on an
+    // already-saved claim won't duplicate or overwrite it.
+    $('#claimComment').value = c.notes?.find(n => n.note_type === 'insurer')?.note || '';
     if (c.customer) pickCustomer(c.customer);
     $('#itemsContainer').innerHTML = '';
     (c.items?.length ? c.items : [null]).forEach(it => addItem(it || undefined));

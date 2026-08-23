@@ -24,6 +24,7 @@ const PASTE_EXTRACT_LABELS = {
   insurer: ['insurer', 'insurance company', 'underwriter', 'brand'],
   respond_by: ['respond by', 'respond by date', 'response due', 'response due date', 'response deadline'],
   description: ['description', 'item description', 'claim description'],
+  special_instructions: ['special instructions', 'special instruction'],
   excess: ['excess', 'policy excess', 'excess amount', 'nominated excess'],
 };
 
@@ -456,7 +457,13 @@ function parsePastedInsurerText(text, insurerOptions) {
   }
 
   const descriptionRaw = pasteExtractFindField(map, 'description');
-  if (descriptionRaw) { fields.description = descriptionRaw; matched.push('description'); }
+  const specialInstructionsRaw = pasteExtractFindField(map, 'special_instructions');
+  const commentParts = [descriptionRaw, specialInstructionsRaw].filter(Boolean);
+  if (commentParts.length) {
+    fields.comment = commentParts.join('\n\n');
+    if (descriptionRaw) matched.push('description');
+    if (specialInstructionsRaw) matched.push('special_instructions');
+  }
 
   const excessRaw = pasteExtractFindField(map, 'excess');
   if (excessRaw) {
