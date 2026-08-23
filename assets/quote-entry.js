@@ -156,14 +156,14 @@ async function loadPrefillCustomer(id){
 }
 
 /* ------------------------------ customer gate ----------------------------- */
+// Claim details / items / settlement used to disable until a customer was
+// confirmed above — but save() already validates a customer exists (and
+// creates one from the form fields if needed) before persisting, so the
+// lock wasn't actually preventing anything, just blocking staff from
+// entering claim data that often arrives before the customer match is final.
 function setGateLocked(locked){
-  $$('.panel.gated').forEach(p => {
-    p.classList.toggle('locked', locked);
-    $$('input,select,textarea,button', p).forEach(el => { el.disabled = locked; });
-  });
-  $('#saveDraft').disabled = locked;
-  $('#generateQuote').disabled = locked;
-  if (!locked) updateClaimNumberField();
+  $$('.panel.gated').forEach(p => p.classList.remove('locked'));
+  updateClaimNumberField();
 }
 
 // Claim number only means anything for insurer work — private jobs don't

@@ -311,6 +311,27 @@ function pasteExtractSplitGridValueLine(slots, valueLine) {
       continue;
     }
 
+    if (slot.field === 'address') {
+      // Free-text and has no fixed shape, unlike the columns around it — grab
+      // tokens until one looks like a Yes/No answer column (common next to
+      // "Address" in card grids, e.g. "Asbestos Present?") or the next slot's
+      // value visibly starts, instead of the single-token default below.
+      const next = slots[i + 1];
+      let take = 0;
+      while (cursor + take < tokens.length) {
+        const t = tokens[cursor + take];
+        if (/^(yes|no)$/i.test(t)) break;
+        if (next && next.field && pasteExtractFieldTakeCount(next.field, tokens, cursor + take) > 0) break;
+        take++;
+        if (take >= 6) break; // street lines don't run longer than this
+      }
+      if (take === 0) take = 1;
+      map[slot.key] = tokens.slice(cursor, cursor + take).join(' ');
+      cursor += take;
+      i++;
+      continue;
+    }
+
     const take = pasteExtractFieldTakeCount(slot.field, tokens, cursor) || 1;
     map[slot.key] = tokens.slice(cursor, cursor + take).join(' ');
     cursor += take;
