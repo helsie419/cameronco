@@ -79,11 +79,18 @@ try {
     method: 'POST', body: { total_retail: 1000, total_nett: 800, total_liability: 1000, created_by: admin.id },
   });
   await request(api, `/api/quotes/${quote.id}/review`, { method: 'POST', body: { staff_id: admin.id } });
-  await request(api, `/api/quotes/${quote.id}/status`, { method: 'PUT', body: { status: 'approved' } });
+  const email = await request(api, `/api/quotes/${quote.id}/send`, { method: 'POST' });
+  expect(email.sent && email.mode === 'stub', 'Quote email route failed in stub mode.');
+  const approval = await request(api, `/api/quotes/${quote.id}/status`, { method: 'PUT', body: { status: 'approved' } });
+  expect(approval.job_id && approval.job_number === 'JOB-TURSO-REGRESSION-001', `Customer approval did not create a Job Board job: ${JSON.stringify(approval)}`);
 
-  const job = await request(jobs, '/api/jobs', { method: 'POST', body: { claim_id: claim.id, quote_id: quote.id, owner_id: admin.id } });
-  expect(job.components_created === 1, 'Job components were not created from claim items.');
+  const job = await request(jobs, `/api/jobs/${approval.job_id}`);
+  expect(job.components.length === 1, 'Job components were not created from claim items.');
   await request(jobs, `/api/jobs/${job.id}`, { method: 'PUT', body: { stage: 'in_production' } });
+
+  const pdfResponse = await api(new Request(`https://crm.test/api/quotes/${quote.id}/pdf`));
+  expect(pdfResponse.ok && pdfResponse.headers.get('content-type') === 'application/pdf', 'Quote PDF route failed.');
+  expect((await pdfResponse.arrayBuffer()).byteLength > 1000, 'Quote PDF was empty.');
 
   const stockItem = await request(stock, '/api/stock', {
     method: 'POST',

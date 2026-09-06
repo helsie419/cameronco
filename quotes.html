@@ -32,7 +32,7 @@
   </div>
 </header>
 
-<main class="page">
+<main class="page quotes-page">
   <h1 class="page-title">Quotes <a class="help-link" href="user-manuals.html#quotes" title="Open the Quotes manual" aria-label="Open the Quotes manual">?</a></h1>
 
   <section class="panel">
@@ -90,6 +90,12 @@
 <script>
 const $ = s => document.querySelector(s);
 const fmt = n => '$' + (Number(n)||0).toLocaleString('en-AU');
+const esc = v => v == null ? '' : String(v)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#39;');
 const xeroInvoiceUrl = (xeroInvoiceId) => `https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=${encodeURIComponent(xeroInvoiceId)}`;
 let DATA = [];
 
@@ -169,9 +175,9 @@ function render(){
   }
   $('#rows').innerHTML = rows.map(r => `
     <tr>
-      <td><strong>${r.claim_number}</strong></td>
-      <td>${r.customer || ''}</td>
-      <td>${r.insurer || '<span style="color:var(--muted)">Private</span>'}</td>
+      <td><strong>${esc(r.claim_number)}</strong></td>
+      <td>${esc(r.customer) || ''}</td>
+      <td>${r.insurer ? esc(r.insurer) : '<span style="color:var(--muted)">Private</span>'}</td>
       <td><span class="badge ${STATUS_BADGE[r.status] || ''}">${STATUS_LABELS[r.status] || r.status.replace(/_/g,' ')}</span></td>
       <td>${r.branch === 'sydney' ? 'Sydney' : 'Melbourne'}</td>
       <td class="num">${fmt(r.quoted_retail)}</td>
@@ -184,6 +190,9 @@ function render(){
           ? `<button class="btn gold small" type="button" onclick="approveQuote(${r.quote_id})">Approve</button>`
           : ''}
         ${['ready_to_send','sent'].includes(r.quote_status)
+          ? `<button class="btn gold small" type="button" onclick="markCustomerApproved(${r.quote_id})">Mark approved</button>`
+          : ''}
+        ${['approved','ready_to_send','sent'].includes(r.quote_status)
           ? `<button class="btn gold small" type="button" onclick="sendToCustomer(${r.quote_id})">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="2.5" y="4.5" width="19" height="15" rx="2"></rect>
@@ -218,7 +227,7 @@ async function approveQuote(quoteId){
       body: JSON.stringify({ staff_id: staffId }),
     }).then(r => r.json());
     if (res.error) throw new Error(res.error);
-    toast('Quote approved for sending');
+    toast('Approved');
     load();
   } catch (err) {
     toast('Approve: ' + err.message, true);
@@ -235,6 +244,20 @@ async function sendToCustomer(quoteId){
     load();
   } catch (err) {
     toast('Email: ' + err.message, true);
+  }
+}
+
+async function markCustomerApproved(quoteId){
+  try {
+    const res = await fetch(`/api/quotes/${quoteId}/status`, {
+      method: 'PUT', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ status: 'approved' }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast('Approved');
+    load();
+  } catch (err) {
+    toast('Customer approval: ' + err.message, true);
   }
 }
 
