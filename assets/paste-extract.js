@@ -19,17 +19,18 @@ const PASTE_EXTRACT_LABELS = {
   name: ['name', 'claimant', 'claimant name', 'insured', 'insured name', 'customer name', 'policy holder', 'policyholder', 'primary contact name', 'primary contact'],
   email: ['email', 'email address', 'e mail'],
   phone: ['phone', 'mobile', 'mobile number', 'phone number', 'contact number', 'contact phone', 'telephone', 'primary contact number'],
-  address: ['address', 'risk address', 'property address', 'postal address', 'residential address', 'site address', 'property risk address'],
+  address: ['address', 'street address', 'address line 1', 'address line one', 'risk address', 'property address', 'postal address', 'residential address', 'site address', 'property risk address'],
   suburb: ['suburb', 'city', 'town'],
   state: ['state'],
   postcode: ['postcode', 'post code', 'zip'],
   claim_number: ['claim number', 'claim no', 'claim no.', 'claim ref', 'claim reference', 'claim id', 'insurance ref', 'insurance ref #'],
   policy_ref: ['policy number', 'policy no', 'policy ref', 'policy reference', 'contents ref', 'contents ref #',
                'assessment no', 'assessment no.', 'assessment number', 'assessment ref', 'assessment reference'],
-  insurer: ['insurer', 'insurance company', 'underwriter', 'brand'],
+  insurer: ['insurer', 'insurance', 'insurance company', 'insurance provider', 'underwriter', 'brand'],
   respond_by: ['respond by', 'respond by date', 'response due', 'response due date', 'response deadline'],
   description: ['description', 'item description', 'claim description'],
   special_instructions: ['special instructions', 'special instruction'],
+  contents_status: ['contents status'],
   excess: ['excess', 'policy excess', 'excess amount', 'nominated excess'],
 };
 
@@ -101,6 +102,12 @@ function pasteExtractParseLabelPrefixLine(text) {
       if (!ok) continue;
       const value = pasteExtractStripValueNoise(line.slice(words[n - 1].end).replace(/^[\s:#-]+/, ''));
       if (!value) continue;
+      // Same card-grid OCR merge as pasteExtractParseLabelNextLine: when
+      // several labels land on one line ("Respond By Brand Email Address"),
+      // this label-prefix match is technically correct about where its own
+      // label ends, but everything after it is actually more labels, not a
+      // value.
+      if (pasteExtractTokenizeHeaderLine(value)) continue;
       const key = pasteExtractNormalizeLabel(cand.synonym);
       if (!map[key]) map[key] = value;
       break;
@@ -201,6 +208,24 @@ function pasteExtractParseLabelNextLine(text) {
       const val = pasteExtractStripValueNoise(lines[j]);
       if (!val) continue;
       if (synonyms.has(pasteExtractNormalizeLabel(val))) break;
+      // On a card-grid layout, OCR sometimes merges several adjacent card
+      // labels onto one text line (e.g. "Status Insured Name Primary
+      // Contact Name") rather than keeping our single label on its own
+      // line. That merged line normalises to a string no single synonym
+      // matches, so the check above misses it — but it's still built
+      // entirely out of *other* recognised labels, which
+      // pasteExtractTokenizeHeaderLine already knows how to detect (2+
+      // recognised label words on one line). Without this, that whole
+      // merged label line gets grabbed as this field's "value".
+      if (pasteExtractTokenizeHeaderLine(val)) break;
+      // A card grid has many labels we don't track (e.g. "Unread Notes?",
+      // "Asbestos Present?") sitting right next to ones we do. If a field we
+      // DO track has no value under it in the OCR text (a blank field is
+      // often just dropped rather than rendered as "-"), the next line found
+      // is really the following card's label, not this field's value. Yes/no
+      // question labels are the reliable, safe-to-detect case — real field
+      // values essentially never end in "?".
+      if (val.endsWith('?')) break;
       if ((field === 'claim_number' || field === 'policy_ref') && !pasteExtractLooksLikeReferenceCode(val)) break;
       map[norm] = val;
       break;
@@ -260,6 +285,33 @@ function pasteExtractSplitAddress(line) {
     state: m[3].toUpperCase(),
     postcode: m[4],
   };
+}
+
+/* OCR from the insurer card layout can separate the address into four lines
+   and omit the relationship between them entirely:
+     3 POTTERS RISE / LILYDALE / VIC / 3140
+   Recover that shape directly from the raw OCR text as a fallback, even when
+   the grid parser has already consumed the surrounding card headings. */
+function pasteExtractFindStackedAddress(text) {
+  const lines = String(text || '').split(/\r?\n/).map(l => pasteExtractStripValueNoise(l).trim()).filter(Boolean);
+  for (let i = 1; i < lines.length - 1; i++) {
+    const state = lines[i].toUpperCase();
+    if (!PASTE_EXTRACT_STATES.includes(state)) continue;
+    const postcode = lines[i + 1].match(/\b(\d{4})\b/);
+    if (!postcode) continue;
+    const before = lines.slice(Math.max(0, i - 3), i).filter(line => {
+      const norm = pasteExtractNormalizeLabel(line);
+      return norm && !pasteExtractAllSynonymsNormalized().has(norm);
+    });
+    if (!before.length) continue;
+    return {
+      address: before.length > 1 ? before.slice(0, -1).join(', ') : before[0],
+      suburb: before.length > 1 ? before[before.length - 1] : '',
+      state,
+      postcode: postcode[1],
+    };
+  }
+  return null;
 }
 
 const PASTE_EXTRACT_MONTHS = ['january', 'february', 'march', 'april', 'may', 'june',
@@ -519,7 +571,16 @@ function pasteExtractMatchInsurer(text, insurerOptions) {
   let best = null;
   for (const opt of insurerOptions || []) {
     const name = pasteExtractNormalizeLabel(opt.name);
-    if (name && normalizedText.includes(name)) {
+    if (!name) continue;
+    // A dedicated "Brand"/"Insurer" field usually holds just the short brand
+    // (e.g. "AAMI"), while the insurer list has the full legal/trading name
+    // (e.g. "AAMI Home Claims") — text.includes(name) alone only matches the
+    // other direction (a short name found inside a long pasted blob), so a
+    // clean short extracted value would never match. Check both directions,
+    // guarding the short-text side so trivial fragments can't over-match.
+    const isMatch = normalizedText.includes(name) ||
+      (normalizedText.length >= 3 && name.includes(normalizedText));
+    if (isMatch) {
       if (!best || name.length > pasteExtractNormalizeLabel(best.name).length) best = opt;
     }
   }
@@ -538,7 +599,10 @@ function parsePastedInsurerText(text, insurerOptions) {
 
   const nameRaw = pasteExtractFindField(map, 'name');
   if (nameRaw) {
-    const split = pasteExtractSplitName(nameRaw);
+    // Same OCR-icon-as-stray-digit issue as suburb (a person/checkbox icon
+    // next to the "Customer" field reads as a bare leading digit) — strip it
+    // before splitting so it doesn't become part of the first name.
+    const split = pasteExtractSplitName(pasteExtractStripLeadingDigitNoise(nameRaw));
     fields.first_name = pasteExtractSentenceCase(split.first_name);
     fields.last_name = pasteExtractSentenceCase(split.last_name);
     matched.push('name');
@@ -559,16 +623,29 @@ function parsePastedInsurerText(text, insurerOptions) {
   }
 
   const addressRaw = pasteExtractFindField(map, 'address');
+  const stackedAddress = pasteExtractFindStackedAddress(text);
   if (addressRaw) {
     const split = pasteExtractSplitAddress(addressRaw);
-    if (split) {
-      fields.address = pasteExtractSentenceCase(split.address);
-      fields.suburb = pasteExtractSentenceCase(split.suburb);
-      fields.state = split.state;
-      fields.postcode = split.postcode;
+    // Prefer the labelled "Address" field's own parse when it's complete —
+    // the stacked-line scan runs over the whole pasted text with no
+    // anchoring to the address label, so a stray state+postcode elsewhere
+    // in the document (e.g. a branch footer) must not override a good,
+    // explicitly labelled address.
+    const complete = split || stackedAddress;
+    if (complete) {
+      fields.address = pasteExtractSentenceCase(complete.address);
+      fields.suburb = pasteExtractSentenceCase(complete.suburb);
+      fields.state = complete.state;
+      fields.postcode = complete.postcode;
     } else {
       fields.address = pasteExtractSentenceCase(addressRaw);
     }
+    matched.push('address');
+  } else if (stackedAddress) {
+    fields.address = pasteExtractSentenceCase(stackedAddress.address);
+    fields.suburb = pasteExtractSentenceCase(stackedAddress.suburb);
+    fields.state = stackedAddress.state;
+    fields.postcode = stackedAddress.postcode;
     matched.push('address');
   }
   const suburbRaw = pasteExtractFindField(map, 'suburb');
@@ -601,13 +678,19 @@ function parsePastedInsurerText(text, insurerOptions) {
     matched.push('respond_by');
   }
 
+  // Portals render empty fields as a bare "-" (or "n/a", "none", "nil") rather
+  // than omitting the field — without this filter that placeholder gets
+  // pasted straight into the claim comment as if it were real content.
+  const isPlaceholderValue = (v) => /^(-+|n\/?a|none|nil)$/i.test(String(v || '').trim());
   const descriptionRaw = pasteExtractFindField(map, 'description');
   const specialInstructionsRaw = pasteExtractFindField(map, 'special_instructions');
-  const commentParts = [descriptionRaw, specialInstructionsRaw].filter(Boolean);
+  const contentsStatusRaw = pasteExtractFindField(map, 'contents_status');
+  const commentParts = [descriptionRaw, specialInstructionsRaw, contentsStatusRaw].filter(v => v && !isPlaceholderValue(v));
   if (commentParts.length) {
     fields.comment = commentParts.join('\n\n');
-    if (descriptionRaw) matched.push('description');
-    if (specialInstructionsRaw) matched.push('special_instructions');
+    if (descriptionRaw && !isPlaceholderValue(descriptionRaw)) matched.push('description');
+    if (specialInstructionsRaw && !isPlaceholderValue(specialInstructionsRaw)) matched.push('special_instructions');
+    if (contentsStatusRaw && !isPlaceholderValue(contentsStatusRaw)) matched.push('contents_status');
   }
 
   const excessRaw = pasteExtractFindField(map, 'excess');

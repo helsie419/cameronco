@@ -132,6 +132,7 @@ html, body {
 
 /* --------------------------------- layout ------------------------------- */
 .page { max-width: 1280px; margin: 0 auto; padding: 28px; }
+.quotes-page { max-width: 1600px; }
 .page-title {
   font-family: var(--serif);
   font-weight: 500;
@@ -139,6 +140,33 @@ html, body {
   margin: 0 0 4px;
 }
 .page-sub { color: var(--muted); margin: 0 0 26px; }
+
+.section-jump {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin: 0 0 26px;
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: var(--header-h, 0px);
+  z-index: 40;
+  background: var(--paper);
+}
+.section-jump a {
+  color: var(--charcoal);
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 0;
+  border-bottom: 2px solid transparent;
+}
+.section-jump a:hover { color: var(--gold); }
+.section-jump a.active { border-bottom-color: var(--gold); color: var(--gold-dark); }
+.section-jump .help-link { margin-left: auto; }
 
 .settings-sticky {
   position: sticky;
@@ -204,6 +232,8 @@ html, body {
   padding: 14px 20px;
   border-bottom: 1px solid var(--line);
   background: var(--panel);
+  cursor: pointer;
+  user-select: none;
 }
 .panel > header h2 {
   font-family: var(--serif);
@@ -212,6 +242,10 @@ html, body {
   margin: 0;
 }
 .panel > header .hint { color: var(--muted); font-size: 12px; }
+.panel > header .section-chevron { margin-left: auto; color: var(--muted); transition: transform 0.15s ease; }
+.panel.collapsed > header { border-bottom: none; }
+.panel.collapsed > header .section-chevron { transform: rotate(-90deg); }
+.panel.collapsed > .body { display: none; }
 /* overflow-x contains wide tables to a scrollbar inside the panel body,
    instead of the whole page scrolling sideways on a narrow screen. */
 .panel .body { padding: 20px; overflow-x: auto; }
@@ -402,6 +436,16 @@ input:disabled, select:disabled, textarea:disabled { background: var(--panel); c
 .page-title .help-link {
   margin-left: auto;
 }
+.banner-locked {
+  background: #f8eeec;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: -8px 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
 
 /* ---------------------------------- tables ------------------------------ */
 table.data { width: 100%; border-collapse: collapse; }
@@ -459,13 +503,21 @@ td.num input { text-align: right; }
   border-top: 1px dashed var(--line-strong);
 }
 .subsection > h3 {
+  display: flex;
+  align-items: baseline;
   font-family: var(--serif);
   font-weight: 500;
   font-size: 17px;
   margin: 0 0 12px;
   color: var(--charcoal);
+  cursor: pointer;
+  user-select: none;
 }
 .subsection > h3 small { font-family: var(--sans); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-left: 10px; }
+.subsection > h3 .section-chevron { margin-left: auto; color: var(--muted); transition: transform 0.15s ease; }
+.subsection.collapsed > h3 { margin-bottom: 0; }
+.subsection.collapsed > h3 .section-chevron { transform: rotate(-90deg); }
+.subsection.collapsed > *:not(h3) { display: none; }
 
 /* calculators */
 .calc-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
