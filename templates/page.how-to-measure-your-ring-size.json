@@ -1,0 +1,124 @@
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Method 1: The String or Paper Strip Trick",
+            "body": "<p>This is the simplest way to measure at home. You'll need a piece of string, dental floss, or a thin strip of paper, plus a ruler and a pen.</p>",
+            "callout": false,
+            "list_heading": "Steps",
+            "list_items": "<strong>Wrap:</strong> Wrap the string or paper strip snugly around the base of the finger you want to size, where a ring would normally sit.\n<strong>Mark:</strong> Use a pen to mark the point where the string overlaps to form a complete circle.\n<strong>Measure:</strong> Lay the string flat and measure the length from the start to the mark, in millimetres — this is your finger's circumference.\n<strong>Convert:</strong> Compare that measurement against a ring size conversion chart, or bring it to us in-store and we'll convert it for you on the spot.",
+            "list_style": "numbered",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Method 2: Measure a Ring You Already Own",
+            "body": "<p>If you already own a ring that fits the intended finger comfortably, you can measure that instead — it's often more accurate than measuring the finger directly, since fingers can swell slightly throughout the day.</p>",
+            "callout": true,
+            "list_heading": "Steps",
+            "list_items": "<strong>Choose the right ring:</strong> Pick one that's worn on the same finger you're sizing for — sizes can vary slightly between hands and fingers.\n<strong>Measure the inside diameter:</strong> Place the ring on a ruler and measure straight across the inside edge, in millimetres.\n<strong>Or trace it:</strong> Draw around the inside of the ring on paper, then measure the diameter of the circle you've drawn.\n<strong>Double-check:</strong> Measure a couple of times to make sure your figure is consistent before converting to a ring size.",
+            "list_style": "numbered",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-4": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Ring Size Conversion Chart",
+            "body": "<p>Once you have your finger's circumference or your ring's inside diameter in millimetres, use the table below as a guide to your Australian, UK, US and EU size.</p>",
+            "callout": false,
+            "list_heading": "Approximate size conversions",
+            "list_items": "<strong>AU/UK H — US 4 — EU 46:</strong> 14.6mm diameter, 45.9mm circumference\n<strong>AU/UK J½ — US 5 — EU 49:</strong> 15.7mm diameter, 49.3mm circumference\n<strong>AU/UK L — US 6 — EU 51:</strong> 16.5mm diameter, 51.9mm circumference\n<strong>AU/UK N — US 6½ — EU 52:</strong> 16.9mm diameter, 53.1mm circumference\n<strong>AU/UK N½ — US 7 — EU 54:</strong> 17.3mm diameter, 54.4mm circumference\n<strong>AU/UK P½ — US 8 — EU 57:</strong> 18.2mm diameter, 57.2mm circumference\n<strong>AU/UK R½ — US 9 — EU 59:</strong> 19.0mm diameter, 59.5mm circumference\n<strong>AU/UK T½ — US 10 — EU 62:</strong> 19.8mm diameter, 62.1mm circumference",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-5": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Tips for an Accurate Measurement",
+            "body": "",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "<strong>Measure at the end of the day:</strong> Fingers are naturally slightly larger in the evening and in warm weather, which gives a more realistic everyday fit.\n<strong>Avoid measuring cold hands:</strong> Fingers shrink in the cold, which can lead to a ring that's too tight later.\n<strong>Consider the band width:</strong> Wider bands generally need to be slightly larger than a thin band to fit comfortably over the knuckle.\n<strong>Mind the knuckle:</strong> Your knuckle is usually larger than the base of your finger — the ring needs to pass over it, then sit comfortably below.\n<strong>Measure the correct hand:</strong> Your dominant hand is often slightly larger than the other, so always measure the exact finger the ring will be worn on.",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-6": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Still Not Sure? We'll Size It for You",
+            "body": "<p>At-home methods are a reliable starting point, but nothing beats a professional fitting. Bring the finger — or the ring — in-store and our team will confirm the exact size in a couple of minutes, free of charge.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "block-2",
+        "block-3",
+        "block-4",
+        "block-5",
+        "block-6"
+      ],
+      "settings": {
+        "hero_title": "How to Measure Your Ring Size",
+        "hero_tagline": "A simple, accurate guide to finding your perfect fit at home",
+        "hero_intro": "<p>Whether you're buying an engagement ring, planning a surprise, or just curious about resizing, knowing your ring size makes the whole process easier. Here's how to measure it accurately in a few minutes, using things you already have at home.</p>",
+        "hero_image_alt": "Diamond ring set on satin, introducing a guide to measuring ring size",
+        "hero_image_fallback": "cameron-co-diamond-ring-set-satin.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

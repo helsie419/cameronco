@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (type === 'accept') {
       saveConsent('accepted');
+      if (window.ccLoadHotjar) window.ccLoadHotjar();
       banner.hidden = true;
     } else if (type === 'decline') {
       saveConsent('declined');
@@ -142,7 +143,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var action = e.target.closest('[data-cookie-action]');
       if (!action || action.getAttribute('data-cookie-action') !== 'save') return;
       var analytics = panel.querySelector('[data-cookie-analytics]');
-      saveConsent(analytics && analytics.checked ? 'accepted-analytics' : 'accepted-necessary-only');
+      var analyticsAllowed = analytics && analytics.checked;
+      saveConsent(analyticsAllowed ? 'accepted-analytics' : 'accepted-necessary-only');
+      if (analyticsAllowed && window.ccLoadHotjar) window.ccLoadHotjar();
       panel.hidden = true;
     });
   }

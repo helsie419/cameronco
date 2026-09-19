@@ -196,11 +196,11 @@
       --paragraph-color: {{ settings.paragraph_color }};
       --paragraph-font: {{ paragraph_font_stack }};
 
-      --cc-button-primary-bg: {{ settings.button_primary_background | default: '#B09A6F' }};
+      --cc-button-primary-bg: {{ settings.button_primary_background | default: '#BD9C42' }};
       --cc-button-primary-text: {{ settings.button_primary_text | default: '#FFFFFF' }};
       --cc-button-primary-hover-bg: {{ settings.button_primary_hover_background | default: '#B9971F' }};
       --cc-button-primary-hover-text: {{ settings.button_primary_hover_text | default: '#FFFFFF' }};
-      --cc-button-primary-border: {{ settings.button_primary_border | default: '#B09A6F' }};
+      --cc-button-primary-border: {{ settings.button_primary_border | default: '#BD9C42' }};
       --cc-button-primary-hover-border: {{ settings.button_primary_hover_border | default: '#B9971F' }};
       --cc-button-primary-border-width: {{ settings.button_primary_border_width | default: 1 }}px;
       --cc-button-primary-radius: {{ settings.button_primary_radius | default: 100 }}px;
@@ -415,6 +415,29 @@
       }
     }
   </style>
+<!-- Hotjar loads only after the visitor accepts analytics cookies. -->
+<script>
+    var consentKey = 'cc_cookie_consent';
+    var loaded = false;
+    window.ccLoadHotjar = function () {
+      if (loaded) return;
+      loaded = true;
+      (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:5327663,hjsv:6};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    };
+    try {
+      var consent = window.localStorage.getItem(consentKey);
+      if (consent === 'accepted' || consent === 'accepted-analytics') window.ccLoadHotjar();
+    } catch (error) {
+      // Do not load analytics when consent storage is unavailable.
+    }
+</script>
 </head>
 
 <body class="cc-site {{ template.name | handleize }}-page">

@@ -15,22 +15,31 @@
 {% assign legal_handle = page.handle %}
 {% case legal_handle %}
   {% when 'termsandconditions' %}
-    {% assign legal_heading = 'Terms of Use' %}
     {% assign legal_snippet = 'legal-terms' %}
   {% when 'disclaimer' %}
-    {% assign legal_heading = 'Disclaimer' %}
     {% assign legal_snippet = 'legal-disclaimer' %}
   {% else %}
-    {% assign legal_heading = 'Privacy Policy' %}
     {% assign legal_snippet = 'legal-privacy' %}
 {% endcase %}
 
+{% assign legal_heading = page.title %}
+
 <section class="legal-page section-inner" aria-labelledby="legal-page-title-{{ section.id }}">
   <div class="legal-page__inner">
-    <p class="section-eyebrow">Cameron &amp; Co</p>
     <h1 id="legal-page-title-{{ section.id }}">{{ legal_heading }}</h1>
     <div class="legal-page__content rte">
-      {% render legal_snippet %}
+      {% case legal_handle %}
+        {% when 'termsandconditions' %}
+          {% render 'legal-terms' %}
+        {% when 'disclaimer' %}
+          {% render 'legal-disclaimer' %}
+        {% else %}
+          {% if page.content != blank %}
+            {{ page.content }}
+          {% else %}
+            {% render 'legal-privacy' %}
+          {% endif %}
+      {% endcase %}
     </div>
   </div>
 </section>

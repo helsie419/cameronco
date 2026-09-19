@@ -50,6 +50,10 @@
     grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
   }
 
+  .article-content-row--no-media {
+    grid-template-columns: 1fr;
+  }
+
   .article-content-row--image-left .article-content-media {
     grid-column: 1;
     grid-row: 1;
@@ -177,8 +181,13 @@
 
       {% when 'content_block' %}
 
+        {% assign has_media = false %}
+        {% if block.settings.image_1 or block.settings.image_1_fallback != blank %}
+          {% assign has_media = true %}
+        {% endif %}
+
         <section
-          class="live-article-section article-content-row article-content-row--{% if forloop.index == 1 or forloop.index == 2 %}image-left{% else %}image-right{% endif %}{% if block.settings.callout %} article-callout{% endif %}"
+          class="live-article-section article-content-row article-content-row--{% if forloop.index == 1 or forloop.index == 2 %}image-left{% else %}image-right{% endif %}{% unless has_media %} article-content-row--no-media{% endunless %}{% if block.settings.callout %} article-callout{% endif %}"
           {% if block.settings.callout %}
             style="background:{{ section.settings.callout_bg_color }};"
           {% endif %}
@@ -252,6 +261,7 @@
 
           </div>
 
+          {% if has_media %}
           <div class="article-content-media">
 
           {% if block.settings.image_1_fallback == 'diamond-colour-grades-chart.webp' %}
@@ -806,6 +816,7 @@
           {% endif %}
 
           </div>
+          {% endif %}
 
           {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
 

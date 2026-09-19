@@ -30,7 +30,7 @@
         "nivoda_connect_ring_builder_83DWtG": {
           "type": "shopify://apps/nivoda-connect/blocks/ring_builder/1818f65a-9917-4ef2-bca9-2424a925fc76",
           "settings": {
-            "primary_color": "#B09A6F",
+            "primary_color": "#BD9C42",
             "ring_size_guide": "",
             "ring_size_regions": "AUSTRALIA",
             "diamond_type_natural": true,
@@ -39,17 +39,17 @@
             "default_stone_type": "Lab Grown",
             "color_min": "J",
             "color_max": "D",
-            "clarity_min": "VS2",
+            "clarity_min": "I2",
             "clarity_max": "FL",
             "cut_min": "VG",
             "cut_max": "ID",
             "gem_certificate_lab": "GIA,IGI",
             "collection": "build-your-own-ring",
             "price_filter_min": 100,
-            "price_filter_max": 5000,
+            "price_filter_max": 10000,
             "shapes": "ROUND,OVAL,EMERALD,PEAR,PRINCESS,CUSHION,RADIANT,MARQUISE,HEART,SQUARE_EMERALD,ASSCHER",
             "carats_min": 0.5,
-            "carats_max": 3,
+            "carats_max": 5,
             "price_min": 1,
             "price_max": 10000,
             "table_min": 0,
@@ -66,6 +66,9 @@
             "default_sort_key": "price_asc",
             "enable_tj_configurator": false,
             "tj_tile_text": "DESIGN YOUR RING",
+            "lead_capture_cta_settings": "",
+            "lead_capture_cta_ring_feed": "",
+            "lead_capture_cta_ring_review": "",
             "translations_enabled": false
           }
         }

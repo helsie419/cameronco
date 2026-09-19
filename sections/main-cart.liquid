@@ -21,6 +21,10 @@
     margin-bottom: 24px;
   }
 
+  #cart-{{ section.id }} .cart-empty .btn-red {
+    padding: 16px 32px;
+  }
+
   #cart-{{ section.id }} .cart-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 340px;
@@ -49,6 +53,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-radius: 12px;
   }
 
   #cart-{{ section.id }} .cart-line-image img {
