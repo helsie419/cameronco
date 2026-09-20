@@ -15,7 +15,7 @@
 
 BEGIN;
 
-CREATE TABLE stock_items (
+CREATE TABLE IF NOT EXISTS stock_items (
     id                BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     category          TEXT NOT NULL CHECK (category IN ('stone','metal','mount','finished')),
     description       TEXT NOT NULL,
@@ -34,9 +34,10 @@ CREATE TABLE stock_items (
     updated_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_stock_items_category ON stock_items (category) WHERE active;
-CREATE INDEX idx_stock_items_attributes ON stock_items USING GIN (attributes);
+CREATE INDEX IF NOT EXISTS idx_stock_items_category ON stock_items (category) WHERE active;
+CREATE INDEX IF NOT EXISTS idx_stock_items_attributes ON stock_items USING GIN (attributes);
 
+DROP TRIGGER IF EXISTS trg_stock_items_touch ON stock_items;
 CREATE TRIGGER trg_stock_items_touch BEFORE UPDATE ON stock_items
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
 

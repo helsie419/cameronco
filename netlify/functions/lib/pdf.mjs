@@ -150,12 +150,15 @@ export async function buildQuotePdf(q, { itemTypeLabels = {}, categoryLabels = {
   // -- totals ------------------------------------------------------------
   const totalsX = 300;
   const totalsLabelW = 140;
-  const totalsValueW = PAGE_WIDTH - (totalsX - PAGE_MARGIN) - totalsLabelW;
+  const totalsValueX = PAGE_MARGIN + PAGE_WIDTH - 95;
+  const totalsValueW = 95;
 
   const totalLine = (label, value, bold) => {
+    const lineY = doc.y;
     doc.font(bold ? 'Helvetica-Bold' : 'Helvetica').fontSize(bold ? 11 : 9).fillColor('#1a1a1a');
-    doc.text(label, totalsX, doc.y, { width: totalsLabelW, continued: true });
-    doc.text(value, { width: totalsValueW, align: 'right' });
+    doc.text(label, totalsX, lineY, { width: totalsLabelW, align: 'left' });
+    doc.text(value, totalsValueX, lineY, { width: totalsValueW, align: 'right' });
+    doc.y = lineY + (bold ? 14 : 12);
   };
 
   if (Number(q.postage_handling)) totalLine('Postage & handling', money(q.postage_handling));

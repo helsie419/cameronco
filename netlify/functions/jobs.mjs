@@ -173,7 +173,7 @@ export default async (req) => {
            items_taken = COALESCE($6, items_taken)
          WHERE id = $1 RETURNING *`,
         [id, b.stage || null, b.start_date || null, b.due_date || null,
-         b.owner_id || null, b.items_taken || null]
+         b.owner_id || null, b.items_taken ?? null]
       );
       if (!rows.length) return json(404, { error: 'Job not found' });
       await pool.query(
@@ -217,8 +217,8 @@ export default async (req) => {
            rate_per_gm = COALESCE($11, rate_per_gm),
            actual_cost = COALESCE($12, actual_cost)
          WHERE id = $1 RETURNING *`,
-        [id, b.category || null, b.carat || null, b.colour || null, b.description || null,
-         b.origin || null, b.stock_no || null, b.supplier || null, b.invoice_no || null,
+        [id, b.category || null, b.carat ?? null, b.colour ?? null, b.description ?? null,
+         b.origin ?? null, b.stock_no ?? null, b.supplier ?? null, b.invoice_no ?? null,
          nz(b.weight_gms), nz(b.rate_per_gm), nz(b.actual_cost)]
       );
       if (!rows.length) return json(404, { error: 'Component not found' });

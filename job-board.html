@@ -36,10 +36,6 @@
   <h1 class="page-title">Job Board <a class="help-link" href="user-manuals.html#job-board" title="Open the Job Board manual" aria-label="Open the Job Board manual">?</a></h1>
   <p class="page-sub">Approved quotes flow in here as jobs — nothing about the claim or item gets re-typed. Drag cards across the board to move work through production.</p>
 
-  <div style="display:flex; justify-content:flex-end; margin-bottom:18px">
-    <button class="btn gold" type="button" id="newJobBtn">＋ Create job from an approved quote</button>
-  </div>
-
   <div class="board" id="board"></div>
 </main>
 
@@ -108,21 +104,20 @@
 
 <style>
 .board {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   gap: 16px;
-  overflow-x: auto;
+  overflow-x: visible;
   padding: 4px 2px 14px;
   min-height: calc(100vh - 250px);
-  scroll-snap-type: x proximity;
 }
 .board-col {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 6px;
   min-height: 460px;
-  width: 292px;
-  min-width: 292px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
@@ -177,6 +172,19 @@
 .job-card:hover { box-shadow: 0 6px 16px rgba(45,45,45,0.1); transform: translateY(-1px); }
 .job-card:active { cursor: grabbing; }
 .job-card.is-dragging { opacity: 0.55; transform: rotate(1deg); }
+.create-job-card {
+  margin: 10px;
+  padding: 14px 12px;
+  border: 1px dashed var(--gold);
+  border-radius: 4px;
+  background: var(--gold-tint);
+  color: var(--charcoal);
+  cursor: pointer;
+  font-size: 13px;
+}
+.create-job-card:hover, .create-job-card:focus-visible { box-shadow: 0 4px 12px rgba(45,45,45,0.12); outline: none; }
+.create-job-card strong, .create-job-card span { display: block; }
+.create-job-card span { color: var(--muted); font-size: 11px; margin-top: 4px; }
 .job-card .jc-number { font-weight: 700; color: var(--charcoal); }
 .job-card .jc-customer { color: var(--muted); margin-top: 2px; }
 .job-card .jc-meta {
@@ -232,10 +240,10 @@
 .eligible-row:hover { background: var(--gold-tint); }
 
 @media (max-width: 1100px) {
-  .board { min-height: 420px; }
+  .board { min-height: 420px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-  .board-col { width: 86vw; min-width: 86vw; }
+  .board { grid-template-columns: 1fr; }
   .modal.modal-wide { width: 92vw; }
 }
 </style>
@@ -258,6 +266,7 @@ const STAGES = [
 ];
 
 let JOBS = [];
+let ELIGIBLE = [];
 let currentJobId = null;
 let STAFF = [];
 let draggedJobId = null;
@@ -267,8 +276,6 @@ init();
 async function init() {
   await loadStaff();
   await loadBoard();
-  $('#newJobBtn').addEventListener('click', openNewJobModal);
-  $('#newJobCancel').addEventListener('click', () => $('#newJobModal').hidden = true);
   $('#jobModalClose').addEventListener('click', () => $('#jobModal').hidden = true);
   $('#jobModalSave').addEventListener('click', saveJob);
   $('#addComponentBtn').addEventListener('click', addComponentRow);
@@ -295,7 +302,12 @@ async function loadStaff() {
 async function loadBoard() {
   const board = $('#board');
   try {
-    JOBS = await fetch(API).then(r => r.json());
+    const [jobs, eligible] = await Promise.all([
+      fetch(API).then(r => r.json()),
+      fetch(`${API}/eligible-claims`).then(r => r.json()),
+    ]);
+    JOBS = jobs;
+    ELIGIBLE = Array.isArray(eligible) ? eligible : [];
     if (JOBS.error) throw new Error(JOBS.error);
   } catch {
     board.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--muted); padding:50px">
@@ -304,11 +316,12 @@ async function loadBoard() {
   }
   board.innerHTML = STAGES.map(([stage, label]) => {
     const jobs = JOBS.filter(j => j.stage === stage);
+    const createCards = stage === 'awaiting_deposit' ? ELIGIBLE.map(createJobCardHtml).join('') : '';
     return `
       <div class="board-col">
         <header>${label} <span class="count">${jobs.length}</span></header>
         <div class="board-dropzone" data-stage="${stage}">
-          ${jobs.length ? jobs.map(jobCardHtml).join('') : '<div class="board-empty">Drop jobs here</div>'}
+          ${jobs.length || createCards ? jobs.map(jobCardHtml).join('') + createCards : '<div class="board-empty">Drop jobs here</div>'}
         </div>
       </div>`;
   }).join('');
@@ -332,13 +345,30 @@ function jobCardHtml(j) {
     </article>`;
 }
 
+function createJobCardHtml(c) {
+  return `<article class="create-job-card" tabindex="0" role="button" data-create-claim="${c.claim_id}" data-create-quote="${c.quote_id || ''}" title="Create job for ${esc(c.claim_number)}">
+    <strong>＋ Create job</strong>
+    <span>${esc(c.claim_number)} · ${esc(c.customer)}</span>
+  </article>`;
+}
+
+function wireCreateJobCards() {
+  document.querySelectorAll('[data-create-claim]').forEach(card => {
+    const create = () => window.createJob(card.dataset.createClaim, card.dataset.createQuote || null);
+    card.addEventListener('click', create);
+    card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); create(); } });
+  });
+}
+
 function wireBoardDragAndDrop() {
+  wireCreateJobCards();
   document.querySelectorAll('.job-card').forEach(card => {
     card.addEventListener('click', () => {
       if (suppressCardClick) return;
       openJob(card.dataset.jobId);
     });
     card.addEventListener('dragstart', event => {
+      event.stopPropagation();
       draggedJobId = card.dataset.jobId;
       suppressCardClick = true;
       card.classList.add('is-dragging');
@@ -396,11 +426,12 @@ function loadBoardFromMemory() {
   const board = $('#board');
   board.innerHTML = STAGES.map(([stage, label]) => {
     const jobs = JOBS.filter(j => j.stage === stage);
+    const createCards = stage === 'awaiting_deposit' ? ELIGIBLE.map(createJobCardHtml).join('') : '';
     return `
       <div class="board-col">
         <header>${label} <span class="count">${jobs.length}</span></header>
         <div class="board-dropzone" data-stage="${stage}">
-          ${jobs.length ? jobs.map(jobCardHtml).join('') : '<div class="board-empty">Drop jobs here</div>'}
+          ${jobs.length || createCards ? jobs.map(jobCardHtml).join('') + createCards : '<div class="board-empty">Drop jobs here</div>'}
         </div>
       </div>`;
   }).join('');
@@ -417,30 +448,6 @@ function startOfToday() {
   return d;
 }
 
-// ------------------------------------------------------------- new job modal
-async function openNewJobModal() {
-  const list = $('#eligibleList');
-  list.innerHTML = 'Loading eligible claims…';
-  $('#newJobModal').hidden = false;
-  try {
-    const rows = await fetch(`${API}/eligible-claims`).then(r => r.json());
-    if (!rows.length) {
-      list.innerHTML = '<p style="color:var(--muted)">No approved quotes without a job yet. Approve a quote on the Quotes pipeline first.</p>';
-      return;
-    }
-    list.innerHTML = rows.map(c => `
-      <div class="eligible-row">
-        <div>
-          <strong>${c.claim_number}</strong> — ${c.customer}
-          <div style="color:var(--muted); font-size:12px">${c.insurer || 'Private'} · Nett ${fmt(c.total_nett)}</div>
-        </div>
-        <button class="btn gold small" onclick="createJob(${c.claim_id}, ${c.quote_id || 'null'})">Create job</button>
-      </div>`).join('');
-  } catch {
-    list.innerHTML = '<p style="color:var(--muted)">Could not reach the API.</p>';
-  }
-}
-
 window.createJob = async (claimId, quoteId) => {
   try {
     const res = await fetch(API, {
@@ -449,7 +456,6 @@ window.createJob = async (claimId, quoteId) => {
     }).then(r => r.json());
     if (res.error) throw new Error(res.error);
     toast(`${res.job_number} created with ${res.components_created} component line(s)`);
-    $('#newJobModal').hidden = true;
     loadBoard();
   } catch (err) { toast('Could not create job: ' + err.message, true); }
 };

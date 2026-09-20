@@ -68,7 +68,9 @@ function listen(nextPort) {
     throw error;
   });
 
-  server.listen(nextPort, () => {
+  // Keep the local CRM/API reachable only from this machine. Binding to all
+  // interfaces would expose customer and insurance data on the local network.
+  server.listen(nextPort, '127.0.0.1', () => {
     const dbUrl = process.env.TURSO_DATABASE_URL || process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || process.env.NETLIFY_DB_URL || '';
     const dbHost = dbUrl ? new URL(dbUrl).host : 'not configured';
     console.log(`Cameron & Co CRM local server: http://localhost:${nextPort}`);

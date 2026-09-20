@@ -39,10 +39,15 @@ function getLiveTransport() {
   if (!host || !user || !pass) {
     throw new Error('SMTP is not configured — set SMTP_HOST, SMTP_USER, SMTP_PASSWORD (see .env.example).');
   }
+  const port = Number(process.env.SMTP_PORT) || 465;
+  // Default to implicit TLS only on the 465 convention; port 587 (the
+  // common STARTTLS setup) must not silently inherit `secure: true`, which
+  // fails to connect unless SMTP_SECURE=false is set explicitly.
+  const secure = process.env.SMTP_SECURE == null ? port === 465 : process.env.SMTP_SECURE !== 'false';
   liveTransport = nodemailer.createTransport({
     host,
-    port: Number(process.env.SMTP_PORT) || 465,
-    secure: process.env.SMTP_SECURE !== 'false',
+    port,
+    secure,
     auth: { user, pass },
   });
   return liveTransport;

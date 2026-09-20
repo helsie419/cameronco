@@ -132,7 +132,7 @@ export default async (req) => {
            active            = COALESCE($13, active)
          WHERE id = $1
          RETURNING *`,
-        [m[1], b.description || null, b.sku, b.quantity ?? null, b.unit || null,
+        [m[1], b.description ?? null, b.sku, b.quantity ?? null, b.unit || null,
          b.reorder_threshold ?? null, b.supplier, b.cost ?? null, b.suggested_rrp ?? null,
          b.attributes ? JSON.stringify(b.attributes) : null, b.notes, b.branch || null,
          typeof b.active === 'boolean' ? b.active : null]

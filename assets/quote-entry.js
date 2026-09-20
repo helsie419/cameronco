@@ -130,6 +130,8 @@ async function init(){
   wirePasteExtract();
   wireAddressTidy();
   wireSettlement();
+  wireCollapsibleSections();
+  wireSectionJump();
   updateClaimNumberField();
   $('#dateReceived').value = new Date().toISOString().slice(0,10);
   $('#addItem').addEventListener('click', () => addItem());
@@ -465,7 +467,7 @@ function hideDuplicateModal(){
 }
 
 function wireDuplicateCheck(){
-  ['custLast', 'custAddress'].forEach(id => {
+  ['custFirst', 'custLast', 'custAddress'].forEach(id => {
     $('#' + id).addEventListener('blur', () => {
       if (customerMode !== 'existing') checkDuplicateCustomer();
     });
@@ -490,6 +492,8 @@ function runPasteExtraction(){
     .filter(o => o.value)
     .map(o => ({ id: o.value, name: o.textContent }));
   const { fields, matched } = parsePastedInsurerText(text, insurerOptions);
+  console.log('[paste-extract] input text:', JSON.stringify(text));
+  console.log('[paste-extract] parsed fields:', JSON.stringify(fields, null, 2));
   applyExtractedFields(fields);
   $('#pasteExtractSummary').textContent = matched.length
     ? `Matched: ${matched.join(', ')} — check the rest before saving`
@@ -507,51 +511,226 @@ function runPasteExtractionWithSpinner(){
   }, 150);
 }
 
-async function runOcrOnImage(imageFile){
-  if (!imageFile) return;
-  const summary = $('#pasteExtractSummary');
-  const input = $('#pasteExtractInput');
-  setExtractBusy(true);
-  summary.textContent = 'Reading screenshot… 0%';
-  try {
-    const text = await ocrExtractImageToText(imageFile, (fraction) => {
-      summary.textContent = `Reading screenshot… ${Math.round(fraction * 100)}%`;
-    });
-    if (!text.trim()) {
-      summary.textContent = 'Could not read any text from that screenshot — try a clearer crop or paste the text instead';
-      return;
-    }
-    input.value = input.value.trim() ? `${input.value.trim()}\n${text.trim()}` : text.trim();
-    runPasteExtraction();
-  } catch (err) {
-    summary.textContent = err.message || 'Could not read that screenshot';
-    toast(err.message || 'OCR failed', true);
-  } finally {
-    setExtractBusy(false);
-  }
-}
-
 function wirePasteExtract(){
   $('#pasteExtractButton').addEventListener('click', runPasteExtractionWithSpinner);
-
-  $('#pasteExtractInput').addEventListener('paste', (e) => {
-    const imageFile = ocrExtractFindImageItem(e.clipboardData);
-    if (!imageFile) return; // let normal text paste happen
-    e.preventDefault();
-    runOcrOnImage(imageFile);
-  });
-
-  $('#ocrUploadButton').addEventListener('click', () => $('#ocrUploadInput').click());
-  $('#ocrUploadInput').addEventListener('change', (e) => {
-    const file = e.target.files && e.target.files[0];
-    e.target.value = '';
-    if (file) runOcrOnImage(file);
-  });
 
   $('#clearScratchpad').addEventListener('click', () => {
     $('#pasteExtractInput').value = '';
     $('#pasteExtractSummary').textContent = '';
   });
+
+  $('#pasteExtractInput').addEventListener('paste', handleExtractImagePaste);
+}
+
+// Lets someone paste a screenshot (e.g. from the insurer's portal) straight
+// into the scratchpad instead of having to copy the text out by hand —
+// OCR's it client-side with Tesseract, then runs the normal text extraction.
+function handleExtractImagePaste(e){
+  const items = e.clipboardData && e.clipboardData.items;
+  if (!items) return;
+  let imageFile = null;
+  for (const item of items) {
+    if (item.type && item.type.startsWith('image/')) { imageFile = item.getAsFile(); break; }
+  }
+  if (!imageFile) return; // ordinary text paste — let the browser handle it
+  e.preventDefault();
+  runImageOcr(imageFile);
+}
+
+// Splits OCR'd words into left-to-right columns by finding vertical strips
+// of the image no word's bounding box crosses — i.e. gutters between panels
+// in a multi-column card layout. A single-column screenshot has no such
+// gutter and comes back as one column, unchanged.
+function ocrGroupWordsIntoColumns(words){
+  const maxX = Math.max(...words.map(w => w.bbox.x1));
+  const covered = new Uint8Array(Math.ceil(maxX) + 1);
+  words.forEach(w => {
+    for (let x = Math.max(0, Math.floor(w.bbox.x0)); x <= Math.min(maxX, Math.ceil(w.bbox.x1)); x++) covered[x] = 1;
+  });
+  const heights = words.map(w => w.bbox.y1 - w.bbox.y0).sort((a, b) => a - b);
+  const medianHeight = heights[Math.floor(heights.length / 2)] || 12;
+  const minGap = Math.max(18, medianHeight * 1.2);
+
+  const boundaries = [];
+  let gapStart = null;
+  for (let x = 0; x <= maxX; x++) {
+    if (!covered[x]) { if (gapStart === null) gapStart = x; }
+    else if (gapStart !== null) {
+      if (x - gapStart >= minGap) boundaries.push((gapStart + x) / 2);
+      gapStart = null;
+    }
+  }
+  if (!boundaries.length) return [words];
+
+  const columns = Array.from({ length: boundaries.length + 1 }, () => []);
+  words.forEach(w => {
+    const cx = (w.bbox.x0 + w.bbox.x1) / 2;
+    let idx = boundaries.findIndex(b => cx < b);
+    if (idx === -1) idx = boundaries.length;
+    columns[idx].push(w);
+  });
+  return columns.filter(c => c.length);
+}
+
+// Rebuilds a single column's own top-to-bottom, left-to-right reading order
+// from its words — grouping into lines by vertical closeness rather than
+// trusting Tesseract's page-wide line grouping, which is what merged
+// neighbouring columns onto one line in the first place.
+function ocrColumnToLines(words){
+  const sorted = [...words].sort((a, b) => a.bbox.y0 - b.bbox.y0);
+  const heights = sorted.map(w => w.bbox.y1 - w.bbox.y0).sort((a, b) => a - b);
+  const medianHeight = heights[Math.floor(heights.length / 2)] || 12;
+  const tolerance = medianHeight * 0.6;
+  const lines = [];
+  sorted.forEach(w => {
+    const cy = (w.bbox.y0 + w.bbox.y1) / 2;
+    const line = lines[lines.length - 1];
+    if (!line || Math.abs(cy - line.cy) > tolerance) lines.push({ cy, words: [w] });
+    else line.words.push(w);
+  });
+  return lines.map(l => l.words.sort((a, b) => a.bbox.x0 - b.bbox.x0).map(w => w.text).join(' '));
+}
+
+// Splits words into horizontal bands by finding rows of the image no word's
+// bounding box crosses — e.g. the gap between a page's top summary bar and
+// the grid section below it. Real portal screenshots often stack several
+// sections with *different* column layouts (a 4-column summary bar above a
+// 3-column customer panel, say), so column gutters have to be found within
+// each band separately — one gutter search across the whole image would
+// only find a gutter common to every section, which usually doesn't exist.
+function ocrGroupWordsIntoBands(words){
+  const maxY = Math.max(...words.map(w => w.bbox.y1));
+  const covered = new Uint8Array(Math.ceil(maxY) + 1);
+  words.forEach(w => {
+    for (let y = Math.max(0, Math.floor(w.bbox.y0)); y <= Math.min(maxY, Math.ceil(w.bbox.y1)); y++) covered[y] = 1;
+  });
+  const heights = words.map(w => w.bbox.y1 - w.bbox.y0).sort((a, b) => a - b);
+  const medianHeight = heights[Math.floor(heights.length / 2)] || 12;
+  const minGap = Math.max(10, medianHeight * 0.5);
+
+  const boundaries = [];
+  let gapStart = null;
+  for (let y = 0; y <= maxY; y++) {
+    if (!covered[y]) { if (gapStart === null) gapStart = y; }
+    else if (gapStart !== null) {
+      if (y - gapStart >= minGap) boundaries.push((gapStart + y) / 2);
+      gapStart = null;
+    }
+  }
+  if (!boundaries.length) return [words];
+
+  const bands = Array.from({ length: boundaries.length + 1 }, () => []);
+  words.forEach(w => {
+    const cy = (w.bbox.y0 + w.bbox.y1) / 2;
+    let idx = boundaries.findIndex(b => cy < b);
+    if (idx === -1) idx = boundaries.length;
+    bands[idx].push(w);
+  });
+  return bands.filter(b => b.length);
+}
+
+// Tesseract's automatic layout analysis reads left-to-right across the whole
+// page, so on a multi-column card layout (claim portals almost always are)
+// it interleaves unrelated columns onto one line — "Assessment No Insured
+// Name" / "14164479 Mrs. MARIA PISTONE" — which the label/value parser in
+// paste-extract.js then misreads (grabs "Insured Name" as the assessment
+// number's value, etc). Rebuilding the text band-by-band (section) and
+// column-by-column within each band, from each word's own bounding box
+// instead of trusting Tesseract's line grouping, keeps each column's labels
+// next to their own values.
+function ocrReconstructColumnText(data){
+  const words = data && data.words;
+  if (!words || !words.length) return (data && data.text) || '';
+  const bands = ocrGroupWordsIntoBands(words);
+  const reconstructed = bands.map(band => {
+    const columns = ocrGroupWordsIntoColumns(band);
+    if (columns.length <= 1) return ocrColumnToLines(band).join('\n');
+    return columns.map(col => ocrColumnToLines(col).join('\n')).join('\n\n');
+  }).join('\n\n');
+  return reconstructed.trim() || data.text || '';
+}
+
+function ocrLoadImage(file){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not load the pasted image')); };
+    img.src = url;
+  });
+}
+
+// Real portal screenshots run their field labels/values in small UI font —
+// often well under the character height Tesseract needs for reliable
+// recognition — and get compressed with anti-aliasing that blurs edges
+// further. Upscaling and stretching contrast to full black/white range
+// before OCR is a standard, cheap accuracy win for exactly this case; it's
+// skipped for images already large enough that upscaling wouldn't help.
+async function ocrPreprocessImage(file){
+  const img = await ocrLoadImage(file);
+  const scale = img.width < 1600 ? 2 : 1;
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width * scale;
+  canvas.height = img.height * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const d = imgData.data;
+  const pixelCount = canvas.width * canvas.height;
+  const gray = new Uint8ClampedArray(pixelCount);
+  let min = 255, max = 0;
+  for (let i = 0, p = 0; p < pixelCount; i += 4, p++) {
+    const g = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+    gray[p] = g;
+    if (g < min) min = g;
+    if (g > max) max = g;
+  }
+  const range = Math.max(1, max - min);
+  for (let i = 0, p = 0; p < pixelCount; i += 4, p++) {
+    const v = Math.round((gray[p] - min) * 255 / range);
+    d[i] = d[i + 1] = d[i + 2] = v;
+  }
+  ctx.putImageData(imgData, 0, 0);
+
+  return new Promise(resolve => canvas.toBlob(blob => resolve(blob || file), 'image/png'));
+}
+
+async function runImageOcr(imageFile){
+  const summary = $('#pasteExtractSummary');
+  setExtractBusy(true);
+  summary.textContent = 'Reading image…';
+  try {
+    if (typeof Tesseract === 'undefined') {
+      throw new Error('OCR library failed to load — check your connection and try again');
+    }
+    let ocrInput = imageFile;
+    try { ocrInput = await ocrPreprocessImage(imageFile); }
+    catch (prepErr) { console.warn('[paste-extract] image preprocessing failed, using original:', prepErr); }
+    const { data } = await Tesseract.recognize(ocrInput, 'eng', {
+      logger: (m) => {
+        if (m.status === 'recognizing text' && typeof m.progress === 'number') {
+          summary.textContent = `Reading image… ${Math.round(m.progress * 100)}%`;
+        }
+      }
+    });
+    const text = (ocrReconstructColumnText(data) || (data && data.text) || '').trim();
+    if (!text) {
+      summary.textContent = 'Could not read any text from that image — try a clearer screenshot or paste text instead';
+      return;
+    }
+    $('#pasteExtractInput').value = text;
+    runPasteExtraction();
+    summary.textContent = 'From pasted image — ' + summary.textContent;
+  } catch (err) {
+    console.error('[paste-extract] OCR failed:', err);
+    summary.textContent = 'Image OCR failed — ' + (err && err.message ? err.message : 'try pasting text instead');
+    toast('Could not read the pasted image', true);
+  } finally {
+    setExtractBusy(false);
+  }
 }
 
 function applyExtractedFields(fields){
@@ -641,7 +820,6 @@ function addItem(data){
     if (e.target.matches('select')) itemChanged(card, e.target);
   });
 
-  addStone(card);
   if (data) hydrateItem(card, data);
   renumber();
   itemChanged(card);
@@ -673,9 +851,12 @@ function addStone(card, data){
   const tpl = $('#stoneRowTemplate').content.cloneNode(true);
   const row = tpl.querySelector('[data-stone]');
   card.querySelector('[data-stones]').appendChild(tpl);
+  card.querySelector('[data-stones-wrap]').hidden = false;
   $$('select[data-lookup]', row).forEach(fillLookup);
   row.querySelector('[data-remove-stone]').addEventListener('click', () => {
-    row.remove(); itemChanged(card);
+    row.remove();
+    if (!card.querySelector('[data-stone]')) card.querySelector('[data-stones-wrap]').hidden = true;
+    itemChanged(card);
   });
   wireStoneStockCheck(row);
   if (data) for (const [k,v] of Object.entries(data)) {
@@ -833,13 +1014,17 @@ function itemHasText(card, terms){
 
 function updateItemVisibility(card){
   const key = selectedCategoryKey(card);
+  const itemTypeText = selectedItemTypeText(card);
+  // A plain "Bangle" is a solid manufactured item and prices like a ring.
+  // Golf bangle / bracelet / padlock bracelet are freeform and stay on the chain calculator.
+  const isSolidBangle = itemTypeText === 'bangle';
   const isRing = key === 'rings' || itemHasText(card, ['engagement ring', 'wedding ring', 'eternity ring', 'dress ring', 'signet ring']);
   const isRepair = key === 'repairs_replace_stone' || itemHasText(card, ['repair', 'replace stone']);
-  const isChain = ['necklace', 'pendants', 'bracelet', 'bangle'].includes(key) ||
-    itemHasText(card, ['necklace', 'pendant', 'bracelet', 'bangle', 'chain']);
+  const isChain = !isSolidBangle && (['necklace', 'pendants', 'bracelet', 'bangle'].includes(key) ||
+    itemHasText(card, ['necklace', 'pendant', 'bracelet', 'bangle', 'chain']));
   const isEarring = key === 'earrings' || itemHasText(card, ['e ring', 'earring']);
   const isWatch = key === 'watches' || itemHasText(card, ['watch']);
-  const showManufactureCosting = isRing || isRepair;
+  const showManufactureCosting = isRing || isRepair || isSolidBangle;
   const showChainCosting = isChain || isEarring;
   const showCategoryCosting = !showManufactureCosting && !showChainCosting;
 
@@ -852,6 +1037,14 @@ function updateItemVisibility(card){
   card.querySelector('[data-costing="category"]').hidden = !showCategoryCosting;
 
   const categoryLabel = card.querySelector('[data-f="category"]').selectedOptions[0]?.textContent || 'Item category';
+  const itemTypeLabel = card.querySelector('[data-f="item_type"]').selectedOptions[0]?.textContent || '';
+
+  const mfgTitle = card.querySelector('[data-calc="mfgCostTitle"]');
+  if (mfgTitle) mfgTitle.textContent = isSolidBangle ? 'Bangle / manufacture calculator' : 'Ring / manufacture calculator';
+
+  const chainTitle = card.querySelector('[data-calc="chainCostTitle"]');
+  if (chainTitle) chainTitle.textContent = isEarring ? 'Earring / charm calculator' : `${itemTypeLabel || categoryLabel} / chain calculator`;
+
   const title = card.querySelector('[data-calc="categoryCostTitle"]');
   if (title) title.textContent = `${categoryLabel} costing`;
 }
@@ -1027,6 +1220,64 @@ function setCalc(card, key, val){
 function wireSettlement(){
   ['postageHandling','salvageAllocation','overallLimit'].forEach(id =>
     $('#'+id).addEventListener('input', recalcTotals));
+}
+
+// Panel/subsection headers toggle a `collapsed` class (see crm.css). Delegated
+// on the document so item cards added later (cloned from #itemTemplate) work
+// without re-wiring each one.
+function wireCollapsibleSections(){
+  document.addEventListener('click', e => {
+    const panelHeader = e.target.closest('.panel > header');
+    if (panelHeader) { panelHeader.parentElement.classList.toggle('collapsed'); return; }
+    const subsectionHeading = e.target.closest('.subsection > h3');
+    if (subsectionHeading) subsectionHeading.parentElement.classList.toggle('collapsed');
+  });
+}
+
+// The jump nav has to (a) expand a collapsed target panel before scrolling to
+// it — jumping to a collapsed section would land on an empty box — and
+// (b) offset for the sticky site header, which native #anchor scrolling
+// doesn't account for.
+function wireSectionJump(){
+  const nav = $('#sectionJump');
+  if (!nav) return;
+  const links = $$('a[href^="#"]', nav);
+
+  // The jump nav is itself sticky directly under the site header (see
+  // --header-h in crm.css), so scroll offsets need the combined height of
+  // both, not just the header.
+  const setHeaderHeightVar = () => {
+    const headerHeight = document.querySelector('.site-header')?.offsetHeight || 0;
+    document.documentElement.style.setProperty('--header-h', `${headerHeight}px`);
+  };
+  setHeaderHeightVar();
+  window.addEventListener('resize', setHeaderHeightVar);
+
+  const stickyOffset = () => (document.querySelector('.site-header')?.offsetHeight || 0) + nav.offsetHeight;
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      target.classList.remove('collapsed');
+      const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset() - 12;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  const sections = links
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+  if (!sections.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries.filter(en => en.isIntersecting);
+    if (!visible.length) return;
+    const current = visible[0].target;
+    links.forEach(link => link.classList.toggle('active', document.querySelector(link.getAttribute('href')) === current));
+  }, { rootMargin: `-${stickyOffset() + 20}px 0px -70% 0px` });
+  sections.forEach(s => observer.observe(s));
 }
 
 function recalcTotals(){
@@ -1234,20 +1485,49 @@ async function loadClaim(id){
     if (c.customer) pickCustomer(c.customer);
     $('#itemsContainer').innerHTML = '';
     (c.items?.length ? c.items : [null]).forEach(it => addItem(it || undefined));
+    applyQuoteLock(c.quotes?.[0]?.status === 'approved');
   } catch (err) {
     toast('Could not load claim: ' + err.message, true);
   }
 }
 
+// Once the current quote is approved, its content is frozen server-side
+// (see PUT /claims/:id in api.mjs) — disable the form so staff see why
+// before they lose an edit to a 409, rather than after.
+function applyQuoteLock(locked){
+  $('#quoteLockedBanner').hidden = !locked;
+  document.querySelectorAll('main.page input, main.page select, main.page textarea, main.page button').forEach(el => {
+    el.disabled = locked;
+  });
+}
+
 function hydrateItem(card, it){
+  // item_type's <option>s are populated by fillItemTypeSelect based on the
+  // selected category, which hasn't happened yet at this point in the loop —
+  // setting select.value here would silently fail (no matching <option>
+  // exists yet) and the stored value would be lost. Set it explicitly below,
+  // after the category-filtered options exist.
   for (const [k,v] of Object.entries(it)) {
+    if (k === 'item_type') continue;
     const el = card.querySelector(`[data-f="${k}"]`);
     if (el && v != null) el.value = v;
   }
-  fillItemTypeSelect(card, { keepCurrent: true });
+  fillItemTypeSelect(card, { keepCurrent: false });
+  if (it.item_type != null) {
+    const select = card.querySelector('[data-f="item_type"]');
+    select.value = it.item_type;
+    if (select.value !== String(it.item_type)) {
+      const saved = (LOOKUPS.item_type || []).find(v => String(v.code) === String(it.item_type));
+      const option = document.createElement('option');
+      option.value = it.item_type;
+      option.textContent = saved?.label || it.item_type;
+      select.appendChild(option);
+      select.value = it.item_type;
+    }
+  }
   const stonesBody = card.querySelector('[data-stones]');
   stonesBody.innerHTML = '';
-  (it.stones?.length ? it.stones : [null]).forEach(s => addStone(card, s || undefined));
+  (it.stones || []).forEach(s => addStone(card, s || undefined));
   refreshItemStock(card);
 }
 

@@ -178,7 +178,7 @@ export default async (req) => {
            active = COALESCE($6, active)
          WHERE id = $1
          RETURNING id, name, claims_email, phone, assessment_format, active`,
-        [m[1], b.name || null, b.claims_email || null, b.phone || null, b.assessment_format || null, typeof b.active === 'boolean' ? b.active : null]
+        [m[1], b.name || null, b.claims_email ?? null, b.phone ?? null, b.assessment_format || null, typeof b.active === 'boolean' ? b.active : null]
       );
       if (!rows.length) return json(404, { error: 'Insurer not found' });
       return json(200, rows[0]);
@@ -209,7 +209,7 @@ export default async (req) => {
            active = COALESCE($6, active)
          WHERE id = $1
          RETURNING id, insurer_id, full_name, email, phone, active`,
-        [m[1], b.insurer_id || null, b.full_name || null, b.email || null, b.phone || null, typeof b.active === 'boolean' ? b.active : null]
+        [m[1], b.insurer_id || null, b.full_name || null, b.email ?? null, b.phone ?? null, typeof b.active === 'boolean' ? b.active : null]
       );
       if (!rows.length) return json(404, { error: 'Insurer contact not found' });
       return json(200, rows[0]);
@@ -516,6 +516,8 @@ export default async (req) => {
     if (method === 'POST' && path === '/claims') {
       const b = await req.json();
       return await withTx(async (tx) => {
+        const badRef = await firstInvalidClaimReference(tx, b);
+        if (badRef) return json(400, { error: badRef });
         const claim = await tx.query(
           `INSERT INTO claims (claim_number, our_ref, your_ref, customer_id, insurer_id,
              insurer_contact_id, branch, assessment_type, validation_type, date_received,
@@ -539,6 +541,11 @@ export default async (req) => {
       const id = m[1];
       const b = await req.json();
       return await withTx(async (tx) => {
+        if (await latestQuoteIsApproved(tx, id)) {
+          return json(409, { error: 'This quote has been approved and is locked. It can no longer be edited.' });
+        }
+        const badRef = await firstInvalidClaimReference(tx, b);
+        if (badRef) return json(400, { error: badRef });
         const upd = await tx.query(
           `UPDATE claims SET
              claim_number       = COALESCE($2,  claim_number),
@@ -589,6 +596,9 @@ export default async (req) => {
       const claimId = m[1];
       const b = await req.json();
       return await withTx(async (tx) => {
+        if (await latestQuoteIsApproved(tx, claimId)) {
+          return json(409, { error: 'This quote has been approved and is locked. It can no longer be edited.' });
+        }
         await tx.query(
           `UPDATE quotes SET status='superseded'
            WHERE claim_id=$1 AND status IN ('draft','ready_to_send','sent')`, [claimId]);
@@ -639,29 +649,51 @@ export default async (req) => {
         });
       }
 
-      const { rows } = await pool.query(
-        `UPDATE quotes SET status='ready_to_send', reviewed_by=$2, reviewed_at=CURRENT_TIMESTAMP
-         WHERE id=$1 AND status='draft' RETURNING id, status, reviewed_by, reviewed_at`,
-        [quoteId, staffId]
-      );
-      if (!rows.length) return json(400, { error: 'Only a draft quote can be approved for sending.' });
-      await pool.query(
-        `INSERT INTO activity_log (staff_id, entity, entity_id, action) VALUES ($1,'quote',$2,'reviewed')`,
-        [staffId, quoteId]
-      );
-      return json(200, rows[0]);
+      return await withTx(async (tx) => {
+        const { rows } = await tx.query(
+          `UPDATE quotes SET status='approved', reviewed_by=$2, reviewed_at=CURRENT_TIMESTAMP,
+                              decided_at=CURRENT_TIMESTAMP
+           WHERE id=$1 AND status='draft' RETURNING id, claim_id, status, reviewed_by, reviewed_at`,
+          [quoteId, staffId]
+        );
+        if (!rows.length) return json(400, { error: 'Only a draft quote can be approved.' });
+        await tx.query(`UPDATE claims SET status='approved' WHERE id=$1`, [rows[0].claim_id]);
+        const job = await ensureApprovedJobInTransaction(tx, rows[0].id, rows[0].claim_id);
+        await tx.query(
+          `INSERT INTO activity_log (staff_id, entity, entity_id, action) VALUES ($1,'quote',$2,'reviewed')`,
+          [staffId, quoteId]
+        );
+        return json(200, { ...rows[0], job_id: job.id, job_number: job.job_number });
+      });
     }
 
     if (method === 'PUT' && (m = path.match(/^\/quotes\/(\d+)\/status$/))) {
       const b = await req.json();
-      const { rows } = await pool.query(
-        `UPDATE quotes SET status=$2,
-           sent_at    = CASE WHEN $2='sent' THEN CURRENT_TIMESTAMP ELSE sent_at END,
-           decided_at = CASE WHEN $2 IN ('approved','declined') THEN CURRENT_TIMESTAMP ELSE decided_at END
-         WHERE id=$1 RETURNING id, claim_id, status`, [m[1], b.status]);
-      if (rows[0]?.status === 'approved')
-        await pool.query(`UPDATE claims SET status='approved' WHERE id=$1`, [rows[0].claim_id]);
-      return json(200, rows[0]);
+      if (!['approved', 'declined'].includes(b.status)) {
+        return json(400, { error: 'Customer decision must be approved or declined.' });
+      }
+      return await withTx(async (tx) => {
+        // The customer/insurer can only decide on a quote that has actually
+        // been sent to them — otherwise this endpoint could be used to
+        // rubber-stamp a draft that no staff member has reviewed and no
+        // customer has ever seen, skipping the internal sign-off in
+        // POST /quotes/:id/review entirely.
+        const { rows } = await tx.query(
+          `UPDATE quotes SET status=$2,
+             decided_at = CURRENT_TIMESTAMP
+           WHERE id=$1 AND status='sent' RETURNING id, claim_id, status`, [m[1], b.status]);
+        if (!rows.length) {
+          const exists = await tx.query(`SELECT status FROM quotes WHERE id=$1`, [m[1]]);
+          if (!exists.rows.length) return json(404, { error: 'Quote not found.' });
+          return json(400, { error: `Only a quote that has been sent to the customer can record a decision (current status: ${exists.rows[0].status}).` });
+        }
+        if (b.status !== 'approved') return json(200, rows[0]);
+
+        await tx.query(`UPDATE claims SET status='approved' WHERE id=$1`, [rows[0].claim_id]);
+
+        const job = await ensureApprovedJobInTransaction(tx, rows[0].id, rows[0].claim_id);
+        return json(200, { ...rows[0], job_id: job.id, job_number: job.job_number });
+      });
     }
 
     if (method === 'GET' && (m = path.match(/^\/quotes\/(\d+)\/pdf$/))) {
@@ -682,8 +714,8 @@ export default async (req) => {
       const detail = await loadQuoteDetail(quoteId);
       if (!detail) return json(404, { error: 'Quote not found' });
       const { q } = detail;
-      if (!['ready_to_send', 'sent'].includes(q.status)) {
-        return json(400, { error: 'This quote needs internal approval before it can be sent to the customer.' });
+      if (!['approved', 'ready_to_send', 'sent'].includes(q.status)) {
+        return json(400, { error: 'This quote must be approved before it can be sent to the customer.' });
       }
       if (!q.customer_email) return json(400, { error: 'This customer has no email address on file.' });
 
@@ -702,7 +734,7 @@ export default async (req) => {
       }
 
       const upd = await pool.query(
-        `UPDATE quotes SET status = CASE WHEN status='ready_to_send' THEN 'sent' ELSE status END,
+        `UPDATE quotes SET status = CASE WHEN status IN ('ready_to_send','approved') THEN 'sent' ELSE status END,
            sent_at = CURRENT_TIMESTAMP WHERE id=$1 RETURNING id, status, sent_at`, [quoteId]);
       await pool.query(
         `UPDATE claims SET status='quote_sent'
@@ -773,7 +805,47 @@ async function loadQuoteDetail(id) {
     if (r.domain === 'item_type') itemTypeLabels[r.code] = r.label;
     else categoryLabels[r.code] = r.label;
   }
-  return { q: rows[0], itemTypeLabels, categoryLabels };
+  const q = rows[0];
+  for (const key of ['rates_snapshot', 'spot_snapshot', 'items_snapshot']) {
+    if (typeof q[key] === 'string') {
+      try { q[key] = JSON.parse(q[key]); } catch { q[key] = []; }
+    }
+  }
+  return { q, itemTypeLabels, categoryLabels };
+}
+
+// A claim's content (items, header fields) must freeze once its current
+// quote is approved — otherwise the approved figures the customer/insurer
+// signed off on could silently drift out from under them.
+async function latestQuoteIsApproved(tx, claimId) {
+  const { rows } = await tx.query(
+    `SELECT status FROM quotes WHERE claim_id=$1 AND status <> 'superseded' ORDER BY version DESC LIMIT 1`,
+    [claimId]
+  );
+  return rows[0]?.status === 'approved';
+}
+
+async function ensureApprovedJobInTransaction(tx, quoteId, claimId, lookupQuoteId = null) {
+  const resolved = claimId || (await tx.query(`SELECT claim_id FROM quotes WHERE id=$1`, [lookupQuoteId || quoteId])).rows[0]?.claim_id;
+  const existing = await tx.query(`SELECT id, job_number FROM jobs WHERE claim_id=$1`, [resolved]);
+  if (existing.rows[0]) return existing.rows[0];
+  const claim = await tx.query(`SELECT claim_number, assigned_to FROM claims WHERE id=$1`, [resolved]);
+  const inserted = await tx.query(
+    `INSERT INTO jobs (claim_id, quote_id, job_number, start_date, owner_id, stage)
+     VALUES ($1,$2,$3,CURRENT_DATE,$4,'awaiting_deposit') RETURNING *`,
+    [resolved, quoteId, `JOB-${claim.rows[0].claim_number}`, claim.rows[0].assigned_to || null]
+  );
+  const job = inserted.rows[0];
+  const items = await tx.query(`SELECT * FROM claim_items WHERE claim_id=$1 ORDER BY item_no`, [resolved]);
+  for (const it of items.rows) {
+    await tx.query(
+      `INSERT INTO job_components (job_id, claim_item_id, category, carat, colour, description, origin, weight_gms, actual_cost)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,0)`,
+      [job.id, it.id, it.category, it.metal_type, it.metal_colour, it.description, it.manufacture_origin, it.weight_gms]
+    );
+  }
+  await tx.query(`INSERT INTO activity_log (entity, entity_id, action) VALUES ('job',$1,'created')`, [job.id]);
+  return job;
 }
 
 async function withTx(fn) {
@@ -789,6 +861,28 @@ async function withTx(fn) {
   } finally {
     client.release();
   }
+}
+
+// SQLite's own FK violation message never names the offending column, which
+// leaves staff staring at a bare "FOREIGN KEY constraint failed" toast with
+// no way to tell whether it's the customer, insurer, contact or assessor
+// that's stale (e.g. selected before a demo-data reset). Check each
+// claims.*_id reference up front so the error names the exact field instead.
+async function firstInvalidClaimReference(tx, b) {
+  const checks = [
+    ['customer_id', b.customer_id, 'customers', 'Customer'],
+    ['insurer_id', b.insurer_id, 'insurers', 'Insurer'],
+    ['insurer_contact_id', b.insurer_contact_id, 'insurer_contacts', 'Insurer contact'],
+    ['assigned_to', b.assigned_to, 'staff', 'Assessed by'],
+  ];
+  for (const [, value, table, label] of checks) {
+    if (value === undefined || value === null || value === '') continue;
+    const { rows } = await tx.query(`SELECT id FROM ${table} WHERE id = $1`, [value]);
+    if (!rows.length) {
+      return `${label} no longer exists (id ${value}) — it may have been removed since this page was loaded. Refresh and re-select it.`;
+    }
+  }
+  return null;
 }
 
 async function saveItems(tx, claimId, items) {

@@ -4,7 +4,7 @@
 
 BEGIN;
 
-CREATE TABLE manual_chat_log (
+CREATE TABLE IF NOT EXISTS manual_chat_log (
     id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     question        TEXT NOT NULL,
     matched         BOOLEAN NOT NULL DEFAULT FALSE,
@@ -12,6 +12,6 @@ CREATE TABLE manual_chat_log (
     page            TEXT,
     asked_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-CREATE INDEX idx_manual_chat_unmatched ON manual_chat_log (matched, asked_at DESC);
+CREATE INDEX IF NOT EXISTS idx_manual_chat_unmatched ON manual_chat_log (matched, asked_at DESC);
 
 COMMIT;

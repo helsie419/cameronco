@@ -57,6 +57,8 @@
   };
   var selectedCommList = [];
   var editingAutomationRuleId = "";
+  var rawTemplateSubject = null;
+  var rawTemplateBody = null;
 
   var els = {
     saveState: byId("saveState"),
@@ -228,8 +230,14 @@
     els.commWork.addEventListener("change", updateTemplateFields);
     els.commTemplate.addEventListener("change", updateTemplateFields);
     els.commChannel.addEventListener("change", updateTemplateFields);
-    els.commSubject.addEventListener("input", renderTemplatePreview);
-    els.commBody.addEventListener("input", renderTemplatePreview);
+    els.commSubject.addEventListener("input", function () {
+      clearRawTemplate();
+      renderTemplatePreview();
+    });
+    els.commBody.addEventListener("input", function () {
+      clearRawTemplate();
+      renderTemplatePreview();
+    });
     document.querySelectorAll(".editor-toolbar").forEach(function (toolbar) {
       toolbar.addEventListener("click", handleEditorToolbar);
     });
@@ -291,6 +299,9 @@
       var status = isSendEmail ? "Pending" : els.commStatus.value;
       var recipients = commRecipients();
       if (!recipients.length) { save("Select a customer first"); return; }
+      var isList = els.commRecipientMode.value === "list";
+      var subjectSource = isList && rawTemplateSubject != null ? rawTemplateSubject : els.commSubject.value.trim();
+      var bodySource = isList && rawTemplateBody != null ? rawTemplateBody : els.commBody.value.trim();
       recipients.forEach(function (customer) {
         var blocked = isSuppressed(customer, channel, els.commTemplate.value);
         var communication = {
@@ -298,8 +309,8 @@
           customerId: customer.id,
           workId: els.commRecipientMode.value === "single" ? els.commWork.value : "",
           channel: channel,
-          subject: mergeForSelection(els.commSubject.value.trim(), customer.id, els.commRecipientMode.value === "single" ? els.commWork.value : ""),
-          body: mergeForSelection(els.commBody.value.trim(), customer.id, els.commRecipientMode.value === "single" ? els.commWork.value : ""),
+          subject: mergeForSelection(subjectSource, customer.id, els.commRecipientMode.value === "single" ? els.commWork.value : ""),
+          body: mergeForSelection(bodySource, customer.id, els.commRecipientMode.value === "single" ? els.commWork.value : ""),
           status: blocked ? "Suppressed" : status,
           restricted: els.commRestricted.checked,
           createdAt: todayIso()
@@ -1042,9 +1053,16 @@
       return;
     }
     var template = templates[els.commTemplate.value];
+    rawTemplateSubject = template.subject;
+    rawTemplateBody = template.body;
     els.commSubject.value = merge(template.subject);
     els.commBody.value = merge(template.body);
     renderTemplatePreview();
+  }
+
+  function clearRawTemplate() {
+    rawTemplateSubject = null;
+    rawTemplateBody = null;
   }
 
   function renderTemplatePreview() {
@@ -1191,7 +1209,7 @@
   function dataQualityIssues() {
     return [
       { label: "Customers missing email", count: state.customers.filter(function (customer) { return !customer.email; }).length },
-      { label: "Customers missing consent", count: state.customers.filter(function (customer) { return !customer.consent.email && !customer.consent.sms; }).length },
+      { label: "Customers missing consent", count: state.customers.filter(function (customer) { return !customer.consent.email && !customer.consent.sms && !customer.consent.marketing; }).length },
       { label: "Work missing due date", count: state.work.filter(function (work) { return !work.dueDate; }).length },
       { label: "Open balances", count: state.work.filter(function (work) { return work.balance > 0; }).length },
       { label: "Overdue active jobs", count: state.work.filter(isOverdue).length }
@@ -1389,14 +1407,21 @@
     return clean.reduce(function (sum, value) { return sum + value; }, 0) / clean.length;
   }
 
+  function toLocalIso(date) {
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, "0");
+    var day = String(date.getDate()).padStart(2, "0");
+    return year + "-" + month + "-" + day;
+  }
+
   function todayIso() {
-    return new Date().toISOString().slice(0, 10);
+    return toLocalIso(new Date());
   }
 
   function addDaysIso(days, fromIso) {
     var date = fromIso ? new Date(fromIso + "T00:00:00") : new Date();
     date.setDate(date.getDate() + days);
-    return date.toISOString().slice(0, 10);
+    return toLocalIso(date);
   }
 
   function formatDate(iso) {
@@ -2142,7 +2167,7 @@
         delayDays: 30,
         channel: "Email",
         subject: "How is your {{work_title}} settling in?",
-        body: "Hi {{customer_first_name}},\\n\\nIt has been a month since {{work_title}} was completed. We hope you are loving it. If you would like us to check, clean, or adjust anything, please contact Cameron & Co.",
+        body: "Hi {{customer_first_name}},\n\nIt has been a month since {{work_title}} was completed. We hope you are loving it. If you would like us to check, clean, or adjust anything, please contact Cameron & Co.",
         createdAt: addDaysIso(-10)
       },
       {
@@ -2152,7 +2177,7 @@
         delayDays: 0,
         channel: "Email",
         subject: "{{work_title}} is ready for collection",
-        body: "Hi {{customer_first_name}},\\n\\nYour {{work_title}} is ready for collection from Cameron & Co. Please contact us to arrange a suitable time.",
+        body: "Hi {{customer_first_name}},\n\nYour {{work_title}} is ready for collection from Cameron & Co. Please contact us to arrange a suitable time.",
         createdAt: addDaysIso(-10)
       }
     ];
