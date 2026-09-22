@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <div class="nav-dropdown active">
+        <button type="button" class="nav-dropdown-toggle">Admin <span class="chevron" aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a class="active" href="stock.html">Stock</a>
+          <a href="index.html#reports">Reports</a>
+          <a href="static-data.html">Settings</a>
+          <a href="user-manuals.html">Manuals</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title">Stock <a class="help-link" href="user-manuals.html#stock" title="Open the Stock manual" aria-label="Open the Stock manual">?</a></h1>
+  <p class="page-sub">Loose stones, metal, ring mounts and finished pieces on hand — quoting checks this to show what's available versus what needs ordering.</p>
+
+  <section class="panel">
+    <header>
+      <h2>Inventory</h2>
+      <span class="hint" id="stockSummary"></span>
+      <div style="display:flex; gap:10px">
+        <button class="btn ghost" type="button" id="bulkUploadStock">Bulk upload</button>
+        <button class="btn gold" type="button" id="addStock">＋ Add stock item</button>
+      </div>
+    </header>
+    <div class="body">
+      <div class="grid c4" style="margin-bottom:16px">
+        <label class="field"><span>Search</span>
+          <input type="text" id="stockSearch" placeholder="Description, SKU, supplier…"></label>
+        <label class="field"><span>Category</span>
+          <select id="categoryFilter">
+            <option value="">All categories</option>
+            <option value="stone">Loose stones</option>
+            <option value="metal">Metal</option>
+            <option value="mount">Ring mounts / configurations</option>
+            <option value="finished">Finished / pre-made pieces</option>
+          </select></label>
+        <label class="field"><span>Branch</span>
+          <select id="branchFilter">
+            <option value="">Both branches</option>
+            <option value="melbourne">Melbourne</option>
+            <option value="sydney">Sydney</option>
+          </select></label>
+        <label class="checkline" style="align-self:end;padding-bottom:8px">
+          <input type="checkbox" id="needsOrderFilter"> Needs ordering only</label>
+      </div>
+
+      <table class="data">
+        <thead><tr>
+          <th>Description</th><th>Category</th><th>Specs</th>
+          <th class="num">Qty</th><th>Supplier</th><th class="num">Cost</th><th></th>
+        </tr></thead>
+        <tbody id="stockRows">
+          <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:34px">Loading stock…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════════ ADD / EDIT STOCK MODAL ══════════════════════ -->
+<div class="modal-overlay" id="stockModal" hidden>
+  <div class="modal">
+    <h3 id="stockModalTitle">Add stock item</h3>
+    <div class="grid c2">
+      <label class="field span2"><span>Category</span>
+        <select id="sCategory">
+          <option value="stone">Loose stone</option>
+          <option value="metal">Metal</option>
+          <option value="mount">Ring mount / configuration</option>
+          <option value="finished">Finished / pre-made piece</option>
+        </select></label>
+      <label class="field span2"><span>Description</span>
+        <input type="text" id="sDescription" placeholder="e.g. 0.5ct Oval H/SI1 diamond"></label>
+
+      <!-- stone-specific -->
+      <label class="field stock-field-stone"><span>Stone type</span><select id="sStoneType"></select></label>
+      <label class="field stock-field-stone"><span>Shape</span><select id="sStoneShape"></select></label>
+      <label class="field stock-field-stone"><span>Carat (each)</span><input type="number" id="sCarat" step="0.01" min="0"></label>
+      <label class="field stock-field-stone"><span>Quality</span><select id="sStoneQuality"></select></label>
+
+      <!-- metal / mount shared -->
+      <label class="field stock-field-metal stock-field-mount"><span>Metal type</span><select id="sMetalType"></select></label>
+      <label class="field stock-field-metal stock-field-mount"><span>Metal colour</span><select id="sMetalColour"></select></label>
+      <label class="field stock-field-metal"><span>Weight (gms, if applicable)</span><input type="number" id="sWeight" step="0.01" min="0"></label>
+
+      <!-- mount / finished shared -->
+      <label class="field stock-field-mount stock-field-finished"><span>Item category</span><select id="sItemCategory"></select></label>
+      <label class="field stock-field-mount"><span>Ring style</span><select id="sRingStyle"></select></label>
+      <label class="field stock-field-finished"><span>Item type</span><select id="sItemType"></select></label>
+
+      <label class="field"><span>SKU / stock no <small>(optional)</small></span><input type="text" id="sSku"></label>
+      <label class="field"><span>Branch</span>
+        <select id="sBranch">
+          <option value="melbourne">Melbourne</option>
+          <option value="sydney">Sydney</option>
+        </select></label>
+      <label class="field"><span>Quantity</span><input type="number" id="sQuantity" step="0.01" min="0" value="1"></label>
+      <label class="field"><span>Unit</span>
+        <select id="sUnit">
+          <option value="pc">Each (pc)</option>
+          <option value="gm">Grams (gm)</option>
+          <option value="ct">Carats (ct)</option>
+        </select></label>
+      <label class="field"><span>Reorder threshold</span><input type="number" id="sReorderThreshold" step="0.01" min="0" value="0"></label>
+      <label class="field"><span>Supplier</span><input type="text" id="sSupplier"></label>
+      <label class="field"><span>Cost ($)</span><input type="number" id="sCost" step="0.01" min="0"></label>
+      <label class="field"><span>Suggested RRP ($)</span><input type="number" id="sSuggestedRrp" step="0.01" min="0"></label>
+      <label class="field span2"><span>Notes</span><input type="text" id="sNotes"></label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="stockModalCancel">Cancel</button>
+      <button class="btn gold" type="button" id="stockModalSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ BULK UPLOAD STOCK MODAL ══════════════════════ -->
+<div class="modal-overlay" id="bulkStockModal" hidden>
+  <div class="modal" style="width:720px">
+    <h3>Bulk upload stock</h3>
+    <label class="field"><span>Paste CSV rows</span>
+      <textarea id="bulkStockCsv" rows="10" placeholder="category,description,sku,branch,quantity,unit,reorder_threshold,supplier,cost,suggested_rrp,notes,stone_type,shape,carat,quality,metal_type,metal_colour,item_category,ring_style,item_type&#10;stone,0.5ct Oval H/SI1 diamond,,melbourne,1,pc,0,ABC Gems,450,,,,Oval,0.5,H/SI1,,,,,"></textarea>
+    </label>
+    <p class="hint" style="display:block;margin-top:8px">
+      Columns: category (stone/metal/mount/finished), description, sku, branch, quantity, unit, reorder_threshold, supplier, cost, suggested_rrp, notes, then the category-specific columns — stone_type, shape, carat, quality (stone); metal_type, metal_colour, weight_gms (metal/mount); item_category, ring_style (mount); item_category, item_type (finished). A header row is optional. Category and description are required.
+    </p>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="bulkStockModalCancel">Cancel</button>
+      <button class="btn gold" type="button" id="bulkStockModalImport">Import stock</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(45,45,45,0.45);
+  display: flex; align-items: center; justify-content: center; z-index: 200;
+  overflow-y: auto; padding: 30px 0;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  background: var(--paper); border-radius: 6px; padding: 24px 28px;
+  width: 560px; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.modal h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0 0 18px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+</style>
+
+<script>
+const API = '/api/stock';
+const $ = s => document.querySelector(s);
+let LOOKUPS = {};
+let ROWS = [];
+let editingId = null;
+
+const CATEGORY_LABELS = { stone: 'Loose stone', metal: 'Metal', mount: 'Mount / config', finished: 'Finished piece' };
+const CATEGORY_FIELDS = {
+  stone: ['stone'],
+  metal: ['metal'],
+  mount: ['metal', 'mount'],
+  finished: ['finished'],
+};
+
+init();
+async function init(){
+  await loadLookups();
+  fillSelects();
+  await load();
+  wireModal();
+  $('#categoryFilter').addEventListener('change', render);
+  $('#branchFilter').addEventListener('change', render);
+  $('#needsOrderFilter').addEventListener('change', render);
+  $('#stockSearch').addEventListener('input', debounce(render, 200));
+  $('#sCategory').addEventListener('change', updateVisibleFields);
+}
+
+function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+async function loadLookups(){
+  try {
+    LOOKUPS = await fetch('/api/lookups').then(r => r.json());
+  } catch {
+    LOOKUPS = {};
+  }
+}
+
+function fillSelects(){
+  fillSelect('#sStoneType', LOOKUPS.stone_type);
+  fillSelect('#sStoneShape', LOOKUPS.stone_shape);
+  fillSelect('#sStoneQuality', LOOKUPS.stone_quality);
+  fillSelect('#sMetalType', LOOKUPS.metal_type);
+  fillSelect('#sMetalColour', LOOKUPS.metal_colour);
+  fillSelect('#sItemCategory', LOOKUPS.item_category);
+  fillSelect('#sRingStyle', LOOKUPS.ring_style);
+  fillSelect('#sItemType', LOOKUPS.item_type);
+}
+
+function fillSelect(sel, values){
+  const el = $(sel);
+  el.innerHTML = '<option value="">—</option>' +
+    (values || []).map(v => `<option value="${esc(v.code)}">${esc(v.label)}</option>`).join('');
+}
+
+async function load(){
+  try {
+    ROWS = await fetch(API).then(r => r.json());
+  } catch {
+    ROWS = [];
+    $('#stockRows').innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:34px">
+      No connection to the API yet.</td></tr>`;
+    return;
+  }
+  render();
+}
+
+function render(){
+  const q = $('#stockSearch').value.trim().toLowerCase();
+  const category = $('#categoryFilter').value;
+  const branch = $('#branchFilter').value;
+  const needsOrder = $('#needsOrderFilter').checked;
+  const rows = ROWS.filter(r =>
+    (!category || r.category === category) &&
+    (!branch || r.branch === branch) &&
+    (!needsOrder || Number(r.quantity) <= Number(r.reorder_threshold)) &&
+    (!q || [r.description, r.sku, r.supplier].filter(Boolean).join(' ').toLowerCase().includes(q))
+  );
+
+  const needsOrderCount = ROWS.filter(r => Number(r.quantity) <= Number(r.reorder_threshold)).length;
+  $('#stockSummary').textContent = `${ROWS.length} items · ${needsOrderCount} need ordering`;
+
+  if (!rows.length) {
+    $('#stockRows').innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:34px">
+      Nothing matches these filters.</td></tr>`;
+    return;
+  }
+
+  $('#stockRows').innerHTML = rows.map(r => {
+    const low = Number(r.quantity) <= Number(r.reorder_threshold);
+    return `
+    <tr>
+      <td><strong>${esc(r.description)}</strong>${r.sku ? `<span>${esc(r.sku)}</span>` : ''}</td>
+      <td>${CATEGORY_LABELS[r.category] || r.category}</td>
+      <td>${specsSummary(r)}</td>
+      <td class="num">${fmtQty(r)} ${low ? '<span class="badge warn">Order needed</span>' : ''}</td>
+      <td>${esc(r.supplier || '—')}</td>
+      <td class="num">${r.cost != null ? '$' + Number(r.cost).toLocaleString('en-AU') : '—'}</td>
+      <td style="white-space:nowrap">
+        <button class="btn ghost small" type="button" onclick='editStock(${jsonAttr(r)})'>Edit</button>
+        <button class="btn danger small" type="button" onclick="deactivateStock(${r.id}, ${jsonAttr(r.description)})">Remove</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function fmtQty(r){
+  const n = Number(r.quantity);
+  return r.unit === 'pc' ? `${n}` : `${n} ${r.unit}`;
+}
+
+function specsSummary(r){
+  const a = r.attributes || {};
+  const parts = [];
+  if (r.category === 'stone') {
+    parts.push(labelFor('stone_type', a.stone_type), labelFor('stone_shape', a.shape),
+      a.carat ? `${a.carat}ct` : null, labelFor('stone_quality', a.quality));
+  } else if (r.category === 'metal') {
+    parts.push(labelFor('metal_type', a.metal_type), labelFor('metal_colour', a.metal_colour));
+  } else if (r.category === 'mount') {
+    parts.push(labelFor('item_category', a.item_category), labelFor('ring_style', a.ring_style),
+      labelFor('metal_type', a.metal_type), labelFor('metal_colour', a.metal_colour));
+  } else if (r.category === 'finished') {
+    parts.push(labelFor('item_category', a.item_category), labelFor('item_type', a.item_type));
+  }
+  return esc(parts.filter(Boolean).join(' · ') || '—');
+}
+
+function labelFor(domain, code){
+  if (!code) return null;
+  const match = (LOOKUPS[domain] || []).find(v => v.code === code);
+  return match ? match.label : code;
+}
+
+// ------------------------------- modal ---------------------------------
+function wireModal(){
+  $('#addStock').addEventListener('click', () => openModal());
+  $('#stockModalCancel').addEventListener('click', () => $('#stockModal').hidden = true);
+  $('#stockModalSave').addEventListener('click', saveStock);
+  $('#bulkUploadStock').addEventListener('click', () => $('#bulkStockModal').hidden = false);
+  $('#bulkStockModalCancel').addEventListener('click', () => $('#bulkStockModal').hidden = true);
+  $('#bulkStockModalImport').addEventListener('click', importBulkStock);
+}
+
+const BULK_STOCK_COLUMNS = [
+  'category', 'description', 'sku', 'branch', 'quantity', 'unit', 'reorder_threshold',
+  'supplier', 'cost', 'suggested_rrp', 'notes',
+  'stone_type', 'shape', 'carat', 'quality', 'metal_type', 'metal_colour',
+  'item_category', 'ring_style', 'item_type',
+];
+const BULK_STOCK_ATTRIBUTE_COLUMNS = {
+  stone: ['stone_type', 'shape', 'carat', 'quality'],
+  metal: ['metal_type', 'metal_colour', 'weight_gms'],
+  mount: ['item_category', 'ring_style', 'metal_type', 'metal_colour'],
+  finished: ['item_category', 'item_type'],
+};
+
+function parseStockCsvRow(row){
+  const cells = [];
+  let cur = '', inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    const c = row[i];
+    if (inQuotes) {
+      if (c === '"' && row[i + 1] === '"') { cur += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else cur += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ',') { cells.push(cur); cur = ''; }
+    else cur += c;
+  }
+  cells.push(cur);
+  return cells.map(c => c.trim());
+}
+
+async function importBulkStock(){
+  const raw = $('#bulkStockCsv').value;
+  const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  if (!lines.length) return toast('Paste some CSV rows first', true);
+  if (/^category\s*,/i.test(lines[0])) lines.shift();
+
+  const records = lines.map(line => {
+    const cells = parseStockCsvRow(line);
+    const row = {};
+    BULK_STOCK_COLUMNS.forEach((col, i) => row[col] = cells[i] || '');
+    return row;
+  }).filter(row => row.category && row.description);
+
+  if (!records.length) return toast('No valid rows — category and description are required', true);
+
+  let imported = 0;
+  // Sequential, not concurrent — same reasoning as the customer bulk upload.
+  for (const row of records) {
+    const attrCols = BULK_STOCK_ATTRIBUTE_COLUMNS[row.category] || [];
+    const attributes = {};
+    for (const col of attrCols) {
+      if (row[col] === '') continue;
+      attributes[col] = ['carat', 'weight_gms'].includes(col) ? parseFloat(row[col]) : row[col];
+    }
+    const body = {
+      category: row.category,
+      description: row.description,
+      sku: row.sku || null,
+      branch: row.branch || 'melbourne',
+      quantity: row.quantity ? parseFloat(row.quantity) : 0,
+      unit: row.unit || 'pc',
+      reorder_threshold: row.reorder_threshold ? parseFloat(row.reorder_threshold) : 0,
+      supplier: row.supplier || null,
+      cost: row.cost ? parseFloat(row.cost) : null,
+      suggested_rrp: row.suggested_rrp ? parseFloat(row.suggested_rrp) : null,
+      attributes,
+      notes: row.notes || null,
+    };
+    try {
+      const res = await fetch(API, {
+        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+      }).then(r => r.json());
+      if (!res.error) imported++;
+    } catch { /* keep going — remaining rows still get a chance */ }
+  }
+  $('#bulkStockCsv').value = '';
+  $('#bulkStockModal').hidden = true;
+  toast(`${imported} of ${records.length} stock item(s) imported`);
+  load();
+}
+
+function updateVisibleFields(){
+  const category = $('#sCategory').value;
+  const active = new Set(CATEGORY_FIELDS[category] || []);
+  document.querySelectorAll('[class*="stock-field-"]').forEach(el => {
+    const matches = ['stone', 'metal', 'mount', 'finished'].some(cat =>
+      el.classList.contains(`stock-field-${cat}`) && active.has(cat)
+    );
+    el.style.display = matches ? '' : 'none';
+  });
+}
+
+function openModal(existing){
+  editingId = existing?.id || null;
+  $('#stockModalTitle').textContent = existing ? `Edit ${existing.description}` : 'Add stock item';
+  const a = existing?.attributes || {};
+  $('#sCategory').value = existing?.category || 'stone';
+  $('#sDescription').value = existing?.description || '';
+  $('#sStoneType').value = a.stone_type || '';
+  $('#sStoneShape').value = a.shape || '';
+  $('#sCarat').value = a.carat || '';
+  $('#sStoneQuality').value = a.quality || '';
+  $('#sMetalType').value = a.metal_type || '';
+  $('#sMetalColour').value = a.metal_colour || '';
+  $('#sWeight').value = a.weight_gms || '';
+  $('#sItemCategory').value = a.item_category || '';
+  $('#sRingStyle').value = a.ring_style || '';
+  $('#sItemType').value = a.item_type || '';
+  $('#sSku').value = existing?.sku || '';
+  $('#sBranch').value = existing?.branch || 'melbourne';
+  $('#sQuantity').value = existing ? existing.quantity : 1;
+  $('#sUnit').value = existing?.unit || 'pc';
+  $('#sReorderThreshold').value = existing ? existing.reorder_threshold : 0;
+  $('#sSupplier').value = existing?.supplier || '';
+  $('#sCost').value = existing?.cost ?? '';
+  $('#sSuggestedRrp').value = existing?.suggested_rrp ?? '';
+  $('#sNotes').value = existing?.notes || '';
+  updateVisibleFields();
+  $('#stockModal').hidden = false;
+}
+window.editStock = (r) => openModal(r);
+
+function buildAttributes(category){
+  if (category === 'stone') {
+    return {
+      stone_type: $('#sStoneType').value || null,
+      shape: $('#sStoneShape').value || null,
+      carat: $('#sCarat').value ? parseFloat($('#sCarat').value) : null,
+      quality: $('#sStoneQuality').value || null,
+    };
+  }
+  if (category === 'metal') {
+    return {
+      metal_type: $('#sMetalType').value || null,
+      metal_colour: $('#sMetalColour').value || null,
+      weight_gms: $('#sWeight').value ? parseFloat($('#sWeight').value) : null,
+    };
+  }
+  if (category === 'mount') {
+    return {
+      item_category: $('#sItemCategory').value || null,
+      ring_style: $('#sRingStyle').value || null,
+      metal_type: $('#sMetalType').value || null,
+      metal_colour: $('#sMetalColour').value || null,
+    };
+  }
+  if (category === 'finished') {
+    return {
+      item_category: $('#sItemCategory').value || null,
+      item_type: $('#sItemType').value || null,
+    };
+  }
+  return {};
+}
+
+async function saveStock(){
+  const category = $('#sCategory').value;
+  const description = $('#sDescription').value.trim();
+  if (!description) return toast('Description is required', true);
+
+  const body = {
+    category,
+    description,
+    sku: $('#sSku').value.trim() || null,
+    branch: $('#sBranch').value,
+    quantity: parseFloat($('#sQuantity').value) || 0,
+    unit: $('#sUnit').value,
+    reorder_threshold: parseFloat($('#sReorderThreshold').value) || 0,
+    supplier: $('#sSupplier').value.trim() || null,
+    cost: $('#sCost').value ? parseFloat($('#sCost').value) : null,
+    suggested_rrp: $('#sSuggestedRrp').value ? parseFloat($('#sSuggestedRrp').value) : null,
+    attributes: buildAttributes(category),
+    notes: $('#sNotes').value.trim() || null,
+  };
+
+  try {
+    const res = editingId
+      ? await fetch(`${API}/${editingId}`, { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }).then(r => r.json())
+      : await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    $('#stockModal').hidden = true;
+    toast(`${description} saved`);
+    load();
+  } catch (err) {
+    toast('Save failed: ' + err.message, true);
+  }
+}
+
+window.deactivateStock = async (id, description) => {
+  if (!confirm(`Remove "${description}" from stock? It will no longer show up in availability checks.`)) return;
+  try {
+    const res = await fetch(`${API}/${id}`, {
+      method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ active: false }),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${description} removed`);
+    load();
+  } catch (err) {
+    toast('Remove failed: ' + err.message, true);
+  }
+};
+
+// ------------------------------------ toast ----------------------------------
+let toastTimer;
+function toast(msg, isErr){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = 'toast', 4200);
+}
+
+function esc(value){
+  return value == null ? '' : String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function jsonAttr(value){
+  return esc(JSON.stringify(value));
+}
+</script>
+
+<div class="manual-chat" id="manualChat">
+  <button class="manual-chat-toggle" id="manualChatToggle" type="button" aria-expanded="false" aria-controls="manualChatPanel" aria-label="Ask a question about these manuals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h16v11H8l-4 4V5z"/>
+      <circle cx="9" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="12.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+    </svg>
+  </button>
+  <div class="manual-chat-panel" id="manualChatPanel" hidden>
+    <header>
+      <div>
+        <h3>Manual assistant</h3>
+        <span class="hint">Searches these manuals — not AI, just quick keyword matching</span>
+      </div>
+      <button class="manual-chat-close" id="manualChatClose" type="button" aria-label="Close">×</button>
+    </header>
+    <div class="manual-chat-messages" id="manualChatMessages" aria-live="polite"></div>
+    <form class="manual-chat-form" id="manualChatForm">
+      <input type="text" id="manualChatInput" placeholder="e.g. How do I deactivate a staff member?" autocomplete="off">
+      <button class="btn gold small" type="submit">Ask</button>
+    </form>
+  </div>
+</div>
+<script src="assets/manual-chat.js"></script>
+</body>
+</html>

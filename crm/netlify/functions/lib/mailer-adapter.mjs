@@ -1,0 +1,122 @@
+// ============================================================================
+// MAILER ADAPTER — one interface, two implementations. Same pattern as
+// lib/xero-adapter.mjs, for the same reason: there's no live mail-sending
+// account to test against yet, so the "send quote to customer" flow needs to
+// be fully exercisable without one.
+//
+//   sendQuoteEmail({ to, customerName, claimNumber, version, pdfBuffer, pdfFilename })
+//
+// EMAIL_SEND_MODE=stub (default) — no SMTP account needed. Logs the message
+//   that would have been sent (recipient, subject, attachment size) and
+//   returns a deterministic fake message id, prefixed `[mailer:stub]` so it's
+//   never mistaken for a real send.
+//
+// EMAIL_SEND_MODE=live — real SMTP send via nodemailer. Needs SMTP_HOST /
+//   SMTP_PORT / SMTP_USER / SMTP_PASSWORD (see .env.example). The same
+//   SiteGround mailbox already used for read-only IMAP in email.mjs will
+//   usually also do outgoing SMTP — check your host's mail settings.
+//
+// Switching modes is one environment variable — nothing else changes.
+// ============================================================================
+
+import nodemailer from 'nodemailer';
+
+const MODE = (process.env.EMAIL_SEND_MODE || 'stub').toLowerCase();
+
+function log(...args) {
+  console.log(`[mailer:${MODE}]`, ...args);
+}
+
+const stubId = () =>
+  `STUB-EMAIL-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+
+let liveTransport;
+function getLiveTransport() {
+  if (liveTransport) return liveTransport;
+  const host = process.env.SMTP_HOST;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASSWORD;
+  if (!host || !user || !pass) {
+    throw new Error('SMTP is not configured — set SMTP_HOST, SMTP_USER, SMTP_PASSWORD (see .env.example).');
+  }
+  const port = Number(process.env.SMTP_PORT) || 465;
+  // Default to implicit TLS only on the 465 convention; port 587 (the
+  // common STARTTLS setup) must not silently inherit `secure: true`, which
+  // fails to connect unless SMTP_SECURE=false is set explicitly.
+  const secure = process.env.SMTP_SECURE == null ? port === 465 : process.env.SMTP_SECURE !== 'false';
+  liveTransport = nodemailer.createTransport({
+    host,
+    port,
+    secure,
+    auth: { user, pass },
+  });
+  return liveTransport;
+}
+
+export function mailerMode() {
+  return MODE;
+}
+
+function buildMessage({ customerName, claimNumber, version }) {
+  const subject = `Your quote from Cameron & Co — Claim ${claimNumber}`;
+  const greeting = customerName ? `Hi ${customerName},` : 'Hello,';
+  const text = `${greeting}\n\n` +
+    `Please find attached your quote (version ${version}) for claim ${claimNumber}.\n\n` +
+    `If you have any questions or would like to proceed, just reply to this email or give us a call.\n\n` +
+    `Kind regards,\nCameron & Co`;
+  return { subject, text };
+}
+
+// Fires when the Manuals page's chat assistant can't find an answer, so the
+// developer can see what's missing and add it. Needs MANUAL_ALERT_EMAIL set
+// (see .env.example) — silently does nothing without it, in either mode,
+// since logging the question to manual_chat_log is the part that must never
+// fail; this is a best-effort bonus on top of that.
+export async function sendManualQuestionAlert({ question, page, askedAt }) {
+  const to = process.env.MANUAL_ALERT_EMAIL;
+  if (!to) return { mode: MODE, skipped: 'MANUAL_ALERT_EMAIL not set' };
+
+  const subject = 'Manual assistant — unanswered question';
+  const text = `A visitor asked the Manuals chat assistant a question it couldn't answer:\n\n` +
+    `"${question}"\n\n` +
+    `Page: ${page || 'user-manuals.html'}\n` +
+    `Asked: ${askedAt}\n\n` +
+    `Consider adding this to the manuals so it's answered next time.`;
+
+  if (MODE !== 'live') {
+    const id = stubId();
+    log('would send manual-question alert', { to, subject, question, id });
+    return { mode: 'stub', messageId: id, to };
+  }
+
+  const transport = getLiveTransport();
+  const info = await transport.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to,
+    subject,
+    text,
+  });
+  log('sent manual-question alert', { to, subject, messageId: info.messageId });
+  return { mode: 'live', messageId: info.messageId, to };
+}
+
+export async function sendQuoteEmail({ to, customerName, claimNumber, version, pdfBuffer, pdfFilename }) {
+  const { subject, text } = buildMessage({ customerName, claimNumber, version });
+
+  if (MODE !== 'live') {
+    const id = stubId();
+    log('would send', { to, subject, attachmentBytes: pdfBuffer.length, id });
+    return { mode: 'stub', messageId: id, to };
+  }
+
+  const transport = getLiveTransport();
+  const info = await transport.sendMail({
+    from: process.env.SMTP_FROM || process.env.SMTP_USER,
+    to,
+    subject,
+    text,
+    attachments: [{ filename: pdfFilename, content: pdfBuffer, contentType: 'application/pdf' }],
+  });
+  log('sent', { to, subject, messageId: info.messageId });
+  return { mode: 'live', messageId: info.messageId, to };
+}

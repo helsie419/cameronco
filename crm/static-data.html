@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <div class="nav-dropdown active">
+        <button type="button" class="nav-dropdown-toggle">Admin <span class="chevron" aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="stock.html">Stock</a>
+          <a href="index.html#reports">Reports</a>
+          <a class="active" href="static-data.html">Settings</a>
+          <a href="user-manuals.html">Manuals</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title">Settings</h1>
+  <p class="page-sub">Maintain the business settings used across quotes, jobs, reference lists, staff assignment, and insurance contacts.</p>
+
+  <div class="settings-sticky">
+    <nav class="settings-nav" aria-label="Settings sections" id="settingsNav">
+      <a href="rates.html">Rate Cards</a>
+      <a href="#reference-lists">Reference Lists</a>
+      <a href="#staff-settings">Staff</a>
+      <a href="#insurance-settings">Insurance</a>
+      <a href="#reference-numbers">Internal Reference Numbers</a>
+    </nav>
+  </div>
+
+  <section class="panel" id="reference-lists">
+    <header>
+      <h2>Reference Lists</h2>
+      <span class="hint">Dropdown values and reusable templates used throughout the CRM</span>
+    </header>
+    <div class="body">
+      <div class="grid c4">
+        <label class="field"><span>List</span>
+          <select id="domainSelect"></select></label>
+        <label class="field"><span>Search list</span>
+          <input type="text" id="lookupSearch" placeholder="Search labels"></label>
+        <label class="field"><span>Label</span>
+          <input type="text" id="lookupLabel" placeholder="e.g. Engagement ring"></label>
+        <label class="field"><span>Sort order</span>
+          <input type="number" id="lookupSort" step="1" min="0" value="0"></label>
+        <label class="field span2" id="lookupCategoryWrap" hidden><span>Linked category for this item type</span>
+          <select id="lookupCategory"></select></label>
+      </div>
+      <div style="text-align:right;margin:14px 0 18px">
+        <button class="btn gold" type="button" id="addLookup">Add / update value</button>
+      </div>
+      <label class="checkline" style="margin:0 0 12px">
+        <input type="checkbox" id="showInactiveLookups">
+        <span>Show inactive imported aliases</span>
+      </label>
+      <div class="admin-summary" id="lookupSummary"></div>
+      <table class="data">
+        <thead><tr><th>Label</th><th data-category-heading hidden>Linked category</th><th style="text-align:center">Sort</th><th>Status</th></tr></thead>
+        <tbody id="lookupRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="staff-settings">
+    <header>
+      <h2>Staff</h2>
+      <span class="hint">Used for assignment and ownership fields</span>
+    </header>
+    <div class="body">
+      <div class="grid c4">
+        <label class="field"><span>Name</span><input type="text" id="staffName"></label>
+        <label class="field"><span>Role</span>
+          <select id="staffRole">
+            <option value="assessor">Assessor</option>
+            <option value="workshop">Workshop</option>
+            <option value="admin">Admin</option>
+          </select></label>
+        <label class="field"><span>Branch</span>
+          <select id="staffBranch">
+            <option value="melbourne">Melbourne</option>
+            <option value="sydney">Sydney</option>
+          </select></label>
+        <label class="checkline" style="align-self:end;padding-bottom:8px"><input type="checkbox" id="staffCanApprove"> Can approve quotes</label>
+        <label class="field"><span>&nbsp;</span><button class="btn gold" type="button" id="addStaff">Add / update staff</button></label>
+      </div>
+      <label class="checkline" style="margin:14px 0 12px">
+        <input type="checkbox" id="showInactiveStaff">
+        <span>Show inactive/past staff</span>
+      </label>
+      <table class="data">
+        <thead><tr><th>Name</th><th>Role</th><th>Branch</th><th>Approve quotes</th><th>Status</th><th></th></tr></thead>
+        <tbody id="staffRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="insurance-settings">
+    <header>
+      <h2>Insurance</h2>
+      <span class="hint">Click any insurer, email or contact detail below to edit it directly</span>
+    </header>
+    <div class="body">
+      <div class="grid c3">
+        <label class="field"><span>New insurer name</span><input type="text" id="insurerName"></label>
+        <label class="field"><span>Claims email</span><input type="email" id="insurerEmail"></label>
+        <label class="field" style="align-self:end"><button class="btn gold" type="button" id="addInsurer" style="width:100%">＋ Add insurer</button></label>
+      </div>
+
+      <table class="data" style="margin-top:18px">
+        <thead><tr><th>Insurer</th><th>Claims email</th><th>Contacts</th></tr></thead>
+        <tbody id="insurerRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="reference-numbers">
+    <header>
+      <h2>Internal Reference Numbers</h2>
+      <span class="hint">Format for the internal Cameron &amp; Co reference auto-generated on new claims</span>
+    </header>
+    <div class="body">
+      <div class="grid c4">
+        <label class="field"><span>Prefix</span><input type="text" id="refPrefix" placeholder="CC" maxlength="8"></label>
+        <label class="field"><span>Digits (zero-padded)</span><input type="number" id="refDigits" min="1" max="8" step="1"></label>
+        <label class="field"><span>Reset numbering each year</span>
+          <select id="refResetYearly"><option value="true">Yes</option><option value="false">No</option></select>
+        </label>
+        <label class="field"><span>Starting number</span>
+          <input type="number" id="refStartingNumber" min="1" step="1" placeholder="1"></label>
+      </div>
+      <div class="grid c4" style="margin-top:14px">
+        <div class="field">
+          <span>Next reference will look like</span>
+          <div id="refPreview" style="padding:8px 0; font-family:var(--serif); font-size:18px"></div>
+        </div>
+      </div>
+      <p class="hint" style="display:block;margin-top:4px">
+        The starting number sets where numbering resumes from next — use it to set up the very first reference, or to jump the counter forward (e.g. after switching from a previous system). It only takes effect once, when saved.
+      </p>
+      <div style="text-align:right;margin:14px 0 0">
+        <button class="btn gold" type="button" id="saveRefFormat">Save reference number format</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/phone.js"></script>
+<script>
+const API = '/api';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const DOMAIN_LABELS = {
+  assessment_type: 'Assessment types',
+  certificate_type: 'Certificate types',
+  chain_style: 'Chain styles',
+  claims_email_address: 'Claims email addresses',
+  client_discussion_template: 'Client discussion templates',
+  cms_phone_book: 'CMS phone book',
+  customer_message_template: 'Customer message templates',
+  evidence_ownership_note: 'EOO note templates',
+  finger_size: 'Finger sizes',
+  fulfilment: 'Fulfilment options',
+  insurance_company: 'Insurance companies',
+  insurer_note_template: 'Insurer note templates',
+  item_category: 'Item categories',
+  item_type: 'Item types',
+  item_weight_gm: 'Item weights',
+  item_width_mm: 'Item widths',
+  manufacture_origin: 'Manufacture options',
+  manufacturing_type: 'Manufacturing types',
+  metal_colour: 'Metal colours',
+  metal_type: 'Metal types',
+  production_cost_default: 'Production cost defaults',
+  proof_type: 'Proof of ownership types',
+  quote_comment: 'Quote comments',
+  recommendation_text: 'Recommendation text',
+  repair_type: 'Repair types',
+  ring_style: 'Ring styles',
+  setting_type: 'Setting types',
+  stone_quality: 'Stone qualities',
+  stone_shape: 'Stone shapes',
+  stone_type: 'Stone types',
+  validation_type: 'Validation types',
+  watch_brand: 'Watch brands',
+  watch_description: 'Watch descriptions',
+  watch_metal: 'Watch metals',
+};
+let LOOKUPS = [];
+let STAFF = [];
+let INSURERS = [];
+const STAFF_ROLE_OPTIONS = [
+  ['admin', 'Admin'],
+  ['assessor', 'Assessor'],
+  ['case_manager', 'Case manager'],
+  ['sales', 'Sales'],
+  ['workshop', 'Workshop'],
+];
+const BRANCH_OPTIONS = [
+  ['melbourne', 'Melbourne'],
+  ['sydney', 'Sydney'],
+];
+
+init();
+async function init() {
+  wireSettingsNav();
+  $('#domainSelect').addEventListener('change', renderLookupRows);
+  $('#lookupSearch').addEventListener('input', renderLookupRows);
+  $('#showInactiveLookups').addEventListener('change', renderLookupRows);
+  $('#addLookup').addEventListener('click', saveLookup);
+  $('#addStaff').addEventListener('click', saveStaff);
+  $('#showInactiveStaff').addEventListener('change', loadStaff);
+  $('#addInsurer').addEventListener('click', saveInsurer);
+  $('#saveRefFormat').addEventListener('click', saveReferenceFormat);
+  ['refPrefix', 'refDigits', 'refResetYearly', 'refStartingNumber'].forEach(id => {
+    $('#' + id).addEventListener('input', renderRefPreview);
+  });
+  await Promise.all([loadLookups(), loadStaff(), loadInsurers(), loadReferenceFormat()]);
+}
+
+function wireSettingsNav() {
+  const links = $$('#settingsNav a[href^="#"]');
+  const setActive = hash => links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+
+  links.forEach(a => a.addEventListener('click', () => setActive(a.getAttribute('href'))));
+
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (visible) setActive('#' + visible.target.id);
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+  }
+
+  setActive(location.hash && links.some(a => a.getAttribute('href') === location.hash) ? location.hash : '#reference-lists');
+}
+
+async function loadReferenceFormat() {
+  try {
+    const cfg = await fetch(`${API}/settings/reference-format`).then(r => r.json());
+    $('#refPrefix').value = cfg.prefix || 'CC';
+    $('#refDigits').value = cfg.digits || 4;
+    $('#refResetYearly').value = String(!!cfg.reset_yearly);
+    $('#refStartingNumber').value = cfg.next_seq || 1;
+    renderRefPreview();
+  } catch {
+    $('#refPreview').textContent = 'Could not load — check the database connection.';
+  }
+}
+
+function renderRefPreview() {
+  const prefix = ($('#refPrefix').value || 'CC').trim().toUpperCase();
+  const digits = Number($('#refDigits').value) || 4;
+  const resetYearly = $('#refResetYearly').value === 'true';
+  const startingNumber = Number($('#refStartingNumber').value) || 1;
+  const seq = String(startingNumber).padStart(digits, '0');
+  $('#refPreview').textContent = resetYearly
+    ? `${prefix}-${new Date().getFullYear()}-${seq}`
+    : `${prefix}-${seq}`;
+}
+
+async function saveReferenceFormat() {
+  try {
+    const body = {
+      prefix: $('#refPrefix').value,
+      digits: Number($('#refDigits').value) || 4,
+      reset_yearly: $('#refResetYearly').value === 'true',
+      next_seq: Number($('#refStartingNumber').value) > 0 ? Number($('#refStartingNumber').value) : 1,
+    };
+    const res = await fetch(`${API}/settings/reference-format`, {
+      method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast('Reference number format saved');
+    loadReferenceFormat();
+  } catch (err) {
+    toast('Save failed: ' + err.message, true);
+  }
+}
+
+async function loadLookups() {
+  try {
+    LOOKUPS = await fetch(`${API}/lookup-values?include_inactive=1`).then(r => r.json());
+    renderDomainOptions();
+    renderLookupRows();
+  } catch {
+    $('#lookupRows').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Could not load static data.</td></tr>';
+  }
+}
+
+function renderDomainOptions() {
+  const current = $('#domainSelect').value || 'item_category';
+  const domains = [...new Set(LOOKUPS.map(row => row.domain))]
+    .sort((a, b) => labelForDomain(a).localeCompare(labelForDomain(b)));
+  $('#domainSelect').innerHTML = domains.map(domain => {
+    const rows = LOOKUPS.filter(row => row.domain === domain);
+    const active = rows.filter(row => row.active).length;
+    const label = `${labelForDomain(domain)} (${active}/${rows.length})`;
+    return `<option value="${esc(domain)}" ${domain === current ? 'selected' : ''}>${esc(label)}</option>`;
+  }).join('');
+  if (![...$('#domainSelect').options].some(option => option.value === current) && domains.length) {
+    $('#domainSelect').value = domains[0];
+  }
+}
+
+function renderLookupRows() {
+  const domain = $('#domainSelect').value;
+  const showInactive = $('#showInactiveLookups').checked;
+  const search = $('#lookupSearch').value.trim().toLowerCase();
+  const allRows = LOOKUPS.filter(row => row.domain === domain);
+  const rows = allRows
+    .filter(row => showInactive || row.active)
+    .filter(row => !search || String(row.label || '').toLowerCase().includes(search))
+    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0) || a.label.localeCompare(b.label));
+  const isItemType = domain === 'item_type';
+  $('#lookupCategoryWrap').hidden = !isItemType;
+  document.querySelectorAll('[data-category-heading]').forEach(el => { el.hidden = !isItemType; });
+  if (isItemType) fillCategorySelect($('#lookupCategory'));
+  renderLookupSummary(domain, allRows, rows);
+  $('#lookupRows').innerHTML = rows.map(row => `
+    <tr>
+      <td><input type="text" value="${esc(row.label)}" onchange="updateLookupField(${row.id}, 'label', this.value)"></td>
+      ${isItemType ? `<td>${categorySelectHtml(row.extra?.category || row.extra?.item_category || '', row.id)}</td>` : ''}
+      <td style="text-align:center"><input type="number" value="${row.sort_order ?? 0}" style="width:70px;text-align:center;margin:0 auto" onchange="updateLookupField(${row.id}, 'sort_order', this.value)"></td>
+      <td><button class="badge badge-toggle ${row.active ? 'ok' : 'danger'}" type="button" title="Double-click to ${row.active ? 'deactivate' : 'reactivate'}" ondblclick="setLookupActive(${row.id}, ${!row.active})">${row.active ? 'Active' : 'Inactive'}</button></td>
+    </tr>`).join('') || `<tr><td colspan="${isItemType ? 4 : 3}" style="text-align:center;color:var(--muted);padding:24px">No values in this list yet.</td></tr>`;
+}
+
+function renderLookupSummary(domain, allRows, visibleRows) {
+  const active = allRows.filter(row => row.active).length;
+  const inactive = allRows.length - active;
+  $('#lookupSummary').innerHTML = `
+    <span><strong>${esc(labelForDomain(domain))}</strong></span>
+    <span>${active} active</span>
+    <span>${inactive} inactive</span>
+    <span>${visibleRows.length} showing</span>`;
+}
+
+function labelForDomain(domain) {
+  return DOMAIN_LABELS[domain] || String(domain || '')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+async function saveLookup() {
+  const label = $('#lookupLabel').value.trim();
+  if (!label) return toast('Enter a label first', true);
+  const body = {
+    domain: $('#domainSelect').value,
+    label,
+    sort_order: Number($('#lookupSort').value) || 0,
+    active: true,
+    extra: $('#domainSelect').value === 'item_type' && $('#lookupCategory').value
+      ? { category: $('#lookupCategory').value }
+      : {},
+  };
+  await send(`${API}/lookup-values`, 'POST', body);
+  $('#lookupLabel').value = '';
+  $('#lookupSort').value = '0';
+  await loadLookups();
+  toast('Reference value saved');
+}
+
+window.updateLookupField = async (id, field, rawValue) => {
+  const body = field === 'category' ? { extra: { category: rawValue } }
+    : field === 'sort_order' ? { sort_order: Number(rawValue) || 0 }
+    : { [field]: rawValue };
+  await send(`${API}/lookup-values/${id}`, 'PUT', body);
+  await loadLookups();
+  toast('Reference value updated');
+};
+
+window.setLookupActive = async (id, active) => {
+  await send(`${API}/lookup-values/${id}`, 'PUT', { active });
+  // Deactivating shouldn't make the row vanish mid-task — switch on "show
+  // inactive" so it stays visible, greyed out, right where it was.
+  if (!active) $('#showInactiveLookups').checked = true;
+  await loadLookups();
+  toast(active ? 'Value reactivated' : 'Value deactivated');
+};
+
+async function loadStaff() {
+  try {
+    const includeInactive = $('#showInactiveStaff').checked ? '?include_inactive=1' : '';
+    STAFF = await fetch(`${API}/staff${includeInactive}`).then(r => r.json());
+    renderStaffRows();
+  } catch {
+    $('#staffRows').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Could not load staff.</td></tr>';
+  }
+}
+
+function fillCategorySelect(select) {
+  const categories = LOOKUPS
+    .filter(row => row.domain === 'item_category' && row.active)
+    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0) || a.label.localeCompare(b.label));
+  select.innerHTML = '<option value="">— Choose category —</option>' +
+    categories.map(row => `<option value="${esc(row.code)}">${esc(row.label)}</option>`).join('');
+}
+
+function categorySelectHtml(current, id) {
+  const categories = LOOKUPS
+    .filter(row => row.domain === 'item_category' && row.active)
+    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0) || a.label.localeCompare(b.label));
+  return `<select onchange="updateLookupField(${id}, 'category', this.value)">
+    <option value="">—</option>
+    ${categories.map(row => `<option value="${esc(row.code)}" ${row.code === current ? 'selected' : ''}>${esc(row.label)}</option>`).join('')}
+  </select>`;
+}
+
+function renderStaffRows() {
+  $('#staffRows').innerHTML = STAFF.map(row => `
+    <tr>
+      <td><input type="text" data-staff="full_name" value="${esc(row.full_name)}" onchange="updateStaffField(${row.id}, this)"></td>
+      <td>${staffSelectHtml('role', row.role, STAFF_ROLE_OPTIONS, row.id)}</td>
+      <td>${staffSelectHtml('branch', row.branch, BRANCH_OPTIONS, row.id)}</td>
+      <td style="text-align:center"><input type="checkbox" data-staff="can_approve_quotes" ${row.can_approve_quotes ? 'checked' : ''} onchange="updateStaffField(${row.id}, this)"></td>
+      <td><button class="badge badge-toggle ${row.active ? 'ok' : 'danger'}" type="button" title="Click to ${row.active ? 'deactivate' : 'reactivate'}" onclick="toggleStaffActive(${row.id}, ${!row.active})">${row.active ? 'Active' : 'Inactive'}</button></td>
+    </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">No staff yet.</td></tr>';
+}
+
+function staffSelectHtml(field, current, options, id) {
+  return `<select data-staff="${esc(field)}" onchange="updateStaffField(${id}, this)">
+    ${options.map(([value, label]) => `<option value="${esc(value)}" ${value === current ? 'selected' : ''}>${esc(label)}</option>`).join('')}
+  </select>`;
+}
+
+async function saveStaff() {
+  const fullName = $('#staffName').value.trim();
+  if (!fullName) return toast('Enter a staff name first', true);
+  await send(`${API}/staff`, 'POST', {
+    full_name: fullName,
+    role: $('#staffRole').value,
+    branch: $('#staffBranch').value,
+    can_approve_quotes: $('#staffCanApprove').checked,
+    active: true,
+  });
+  $('#staffName').value = '';
+  $('#staffCanApprove').checked = false;
+  await loadStaff();
+  toast('Staff member saved');
+}
+
+window.updateStaffField = async (id, el) => {
+  const field = el.dataset.staff;
+  const value = el.type === 'checkbox' ? el.checked : el.value;
+  await send(`${API}/staff/${id}`, 'PUT', { [field]: value });
+  const row = STAFF.find(s => s.id === id);
+  if (row) row[field] = value;
+  toast('Staff member updated');
+};
+
+window.toggleStaffActive = async (id, active) => {
+  await send(`${API}/staff/${id}`, 'PUT', { active });
+  // Deactivating shouldn't make the row vanish mid-task — switch on "show
+  // inactive" so it stays visible, greyed out, right where it was.
+  if (!active) $('#showInactiveStaff').checked = true;
+  await loadStaff();
+  toast(active ? 'Staff member reactivated' : 'Staff member deactivated');
+};
+
+async function loadInsurers() {
+  try {
+    INSURERS = await fetch(`${API}/insurers`).then(r => r.json());
+    renderInsurers();
+  } catch {
+    $('#insurerRows').innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:24px">Could not load insurers.</td></tr>';
+  }
+}
+
+function renderInsurers() {
+  $('#insurerRows').innerHTML = INSURERS.map(row => {
+    const contacts = row.contacts || [];
+    return `
+    <tr>
+      <td><input type="text" value="${esc(row.name)}" onchange="updateInsurerField(${row.id}, 'name', this.value)"></td>
+      <td><input type="email" value="${esc(row.claims_email || '')}" placeholder="—" onchange="updateInsurerField(${row.id}, 'claims_email', this.value)"></td>
+      <td>
+        <div class="insurer-contacts">
+          ${contacts.map((c, i) => `
+            <div class="contact-row" data-contact-view="${c.id}" ondblclick="editContactRow(${c.id})" title="Double-click to edit">
+              <span>${esc(c.name)}</span>
+              ${c.email ? `<span>${esc(c.email)}</span>` : ''}
+              ${c.phone ? phoneLinkHtml(c.phone) : ''}
+              ${i === contacts.length - 1
+                ? `<button class="btn ghost small" type="button" onclick="toggleAddContact(${row.id})" title="Add another contact">＋</button>`
+                : ''}
+            </div>
+            <div class="contact-row" data-contact-edit="${c.id}" hidden>
+              <input type="text" class="edit-contact-name" value="${esc(c.name)}" placeholder="Name" style="width:110px">
+              <input type="email" class="edit-contact-email" value="${esc(c.email || '')}" placeholder="Email" style="width:160px">
+              <input type="text" class="edit-contact-phone" value="${esc(c.phone || '')}" placeholder="Phone" style="width:110px">
+            </div>`).join('')}
+          <div data-add-contact="${row.id}" hidden class="contact-row">
+            <input type="text" class="new-contact-name" placeholder="Name" style="width:110px">
+            <input type="email" class="new-contact-email" placeholder="Email" style="width:160px">
+            <input type="text" class="new-contact-phone" placeholder="Phone" style="width:110px">
+          </div>
+          ${!contacts.length ? `<button class="btn ghost small" type="button" onclick="toggleAddContact(${row.id})">＋ Contact</button>` : ''}
+        </div>
+      </td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:24px">No insurers yet.</td></tr>';
+}
+
+window.updateInsurerField = async (id, field, rawValue) => {
+  const value = rawValue.trim();
+  if (field === 'name' && !value) return toast('Insurer name is required', true);
+  await send(`${API}/insurers/${id}`, 'PUT', { [field]: value || null });
+  await loadInsurers();
+  toast('Insurer updated');
+};
+
+window.editContactRow = (id) => {
+  const viewRow = document.querySelector(`[data-contact-view="${id}"]`);
+  const editRow = document.querySelector(`[data-contact-edit="${id}"]`);
+  if (!viewRow || !editRow) return;
+  viewRow.hidden = true;
+  editRow.hidden = false;
+  editRow.querySelector('.edit-contact-name').focus();
+};
+
+// Saving happens once focus leaves all three fields at once (tabbing
+// between them doesn't count) — that's what "double-click to edit, click
+// away to save" needs under the hood.
+document.addEventListener('focusout', (event) => {
+  const editRow = event.target.closest('[data-contact-edit]');
+  if (!editRow) return;
+  setTimeout(async () => {
+    if (editRow.contains(document.activeElement)) return;
+    const id = editRow.dataset.contactEdit;
+    const name = editRow.querySelector('.edit-contact-name').value.trim();
+    const email = editRow.querySelector('.edit-contact-email').value.trim();
+    const phone = editRow.querySelector('.edit-contact-phone').value.trim();
+    if (!name) { toast('Contact name is required', true); return; }
+    await send(`${API}/insurer-contacts/${id}`, 'PUT', { full_name: name, email: email || null, phone: phone || null });
+    await loadInsurers();
+    toast('Contact updated');
+  }, 0);
+});
+
+window.toggleAddContact = (insurerId) => {
+  const wrap = document.querySelector(`[data-add-contact="${insurerId}"]`);
+  if (!wrap) return;
+  wrap.hidden = !wrap.hidden;
+  if (!wrap.hidden) wrap.querySelector('.new-contact-name').focus();
+};
+
+// Delegated so it keeps working after every re-render of the contacts cells.
+// Doesn't save until name, email AND phone are all filled in.
+document.addEventListener('change', async (event) => {
+  if (!event.target.matches('.new-contact-name, .new-contact-email, .new-contact-phone')) return;
+  const wrap = event.target.closest('[data-add-contact]');
+  const name = wrap.querySelector('.new-contact-name').value.trim();
+  const email = wrap.querySelector('.new-contact-email').value.trim();
+  const phone = wrap.querySelector('.new-contact-phone').value.trim();
+  if (!name || !email || !phone) return;
+  await send(`${API}/insurer-contacts`, 'POST', {
+    insurer_id: wrap.dataset.addContact,
+    full_name: name,
+    email,
+    phone,
+    active: true,
+  });
+  await loadInsurers();
+  toast('Contact added');
+});
+
+async function saveInsurer() {
+  const name = $('#insurerName').value.trim();
+  if (!name) return toast('Enter an insurer name first', true);
+  await send(`${API}/insurers`, 'POST', {
+    name,
+    claims_email: $('#insurerEmail').value.trim() || null,
+    assessment_format: 'GENERIC',
+    active: true,
+  });
+  $('#insurerName').value = '';
+  $('#insurerEmail').value = '';
+  await loadInsurers();
+  toast('Insurer added');
+}
+
+async function send(url, method, body) {
+  const res = await fetch(url, {
+    method,
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  }).then(r => r.json());
+  if (res.error) throw new Error(res.error);
+  return res;
+}
+
+function slug(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+function esc(value) {
+  return value == null ? '' : String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+let toastTimer;
+function toast(msg, isErr) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = 'toast', 3800);
+}
+</script>
+
+<div class="manual-chat" id="manualChat">
+  <button class="manual-chat-toggle" id="manualChatToggle" type="button" aria-expanded="false" aria-controls="manualChatPanel" aria-label="Ask a question about these manuals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h16v11H8l-4 4V5z"/>
+      <circle cx="9" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="12.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+    </svg>
+  </button>
+  <div class="manual-chat-panel" id="manualChatPanel" hidden>
+    <header>
+      <div>
+        <h3>Manual assistant</h3>
+        <span class="hint">Searches these manuals — not AI, just quick keyword matching</span>
+      </div>
+      <button class="manual-chat-close" id="manualChatClose" type="button" aria-label="Close">×</button>
+    </header>
+    <div class="manual-chat-messages" id="manualChatMessages" aria-live="polite"></div>
+    <form class="manual-chat-form" id="manualChatForm">
+      <input type="text" id="manualChatInput" placeholder="e.g. How do I deactivate a staff member?" autocomplete="off">
+      <button class="btn gold small" type="submit">Ask</button>
+    </form>
+  </div>
+</div>
+<script src="assets/manual-chat.js"></script>
+</body>
+</html>

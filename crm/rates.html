@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rate Cards — Cameron &amp; Co CRM</title>
+<link rel="icon" type="image/png" href="assets/cameron-co-red-diamond-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/crm.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="index.html"><img src="assets/cameron-co-logo-cropped.png" alt="Cameron & Co"></a>
+    <nav class="main-nav">
+      <a href="index.html">Dashboard</a>
+      <a href="quotes.html">Quotes</a>
+      <a href="job-board.html">Job Board</a>
+      <a href="index.html#customers">Customers</a>
+      <a href="index.html#contact">Customer Contact</a>
+      <div class="nav-dropdown active">
+        <button type="button" class="nav-dropdown-toggle">Admin <span class="chevron" aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="stock.html">Stock</a>
+          <a href="index.html#reports">Reports</a>
+          <a class="active" href="static-data.html">Settings</a>
+          <a href="user-manuals.html">Manuals</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <h1 class="page-title">Rate Cards <a class="help-link" href="user-manuals.html#rates" title="Open the Rate Cards manual" aria-label="Open the Rate Cards manual">?</a></h1>
+  <p class="page-sub">Every rate used in quoting. Changing a rate here never alters past quotes — it creates a new version from today, and every quote already generated keeps whatever rate was frozen onto it at the time.</p>
+
+  <div class="settings-sticky">
+    <nav class="settings-nav" aria-label="Settings sections">
+      <a class="active" href="rates.html">Rate Cards</a>
+      <a href="static-data.html#reference-lists">Reference Lists</a>
+      <a href="static-data.html#staff-settings">Staff</a>
+      <a href="static-data.html#insurance-settings">Insurance</a>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════ MANUFACTURING & MATERIAL RATES ══════════════════════ -->
+  <section class="panel">
+    <header>
+      <h2>Manufacturing &amp; material rates <a class="help-link" href="user-manuals.html#rates" title="Help: updating quote rates" aria-label="Help: updating quote rates">?</a></h2>
+      <span class="hint">Gold, chain, setting, labour and other per-item costing rates</span>
+    </header>
+    <div class="body">
+      <div class="rate-toolbar">
+        <label class="field"><span>Search rates</span>
+          <input type="text" id="rateSearch" placeholder="Label, metal or origin"></label>
+        <label class="field"><span>Rate group</span>
+          <select id="rateCategoryFilter">
+            <option value="">All groups</option>
+          </select></label>
+        <div class="rate-summary" id="rateSummary"></div>
+      </div>
+      <div id="rateGroups"></div>
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+        <button class="btn gold" type="button" id="addRate">＋ Add new rate</button>
+        <button class="btn ghost" type="button" id="downloadRatesCsv">Download CSV</button>
+        <button class="btn ghost" type="button" id="uploadRatesCsvButton">Upload CSV</button>
+        <input type="file" id="uploadRatesCsvInput" accept=".csv,text/csv" hidden>
+      </div>
+      <div id="ratesCsvPreview" class="rate-group" hidden style="margin-top:14px">
+        <p class="hint" id="ratesCsvPreviewSummary"></p>
+        <table class="data" id="ratesCsvPreviewTable"></table>
+        <div style="margin-top:10px; display:flex; gap:10px">
+          <button class="btn gold" type="button" id="confirmRatesCsvImport">Confirm import</button>
+          <button class="btn ghost" type="button" id="cancelRatesCsvImport">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ WATCH BRAND RATES ══════════════════════ -->
+  <section class="panel">
+    <header>
+      <h2>Watch brand rates <a class="help-link" href="user-manuals.html#rates" title="Help: adding watch brand rates" aria-label="Help: adding watch brand rates">?</a></h2>
+      <span class="hint">Discount off RRP, by brand and insurer — "Shop Sales" is the retail default when no insurer applies</span>
+    </header>
+    <div class="body">
+      <div class="grid c3" style="margin-bottom:16px">
+        <label class="field"><span>Filter by insurer</span>
+          <select id="watchInsurerFilter">
+            <option value="">All insurers</option>
+            <option value="0">Shop Sales (retail default)</option>
+          </select></label>
+        <label class="field"><span>Search brand</span>
+          <input type="text" id="watchBrandSearch" placeholder="e.g. Rolex"></label>
+      </div>
+      <div class="rate-summary compact" id="watchSummary"></div>
+      <table class="data">
+        <thead><tr>
+          <th>Brand</th><th>Insurer</th><th class="num">Rate</th><th>Effective from</th><th></th>
+        </tr></thead>
+        <tbody id="watchRows"></tbody>
+      </table>
+      <button class="btn gold" type="button" id="addWatchRate" style="margin-top:14px">＋ Add watch brand rate</button>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════════ ADD / EDIT RATE MODAL ══════════════════════ -->
+<div class="modal-overlay" id="rateModal" hidden>
+  <div class="modal">
+    <h3 id="rateModalTitle">Add rate</h3>
+    <div class="grid c2">
+      <label class="field span2"><span>Label</span><input type="text" id="rLabel" placeholder="e.g. Manufacturing gold 9ct"></label>
+      <label class="field"><span>Category</span>
+        <select id="rCategory">
+          <option value="chain_per_gm">Chain (per gram)</option>
+          <option value="earring_charm_per_gm">Earring/charm (per gram)</option>
+          <option value="mfg_gold_per_gm">Manufacturing gold (per gram)</option>
+          <option value="setting_per_stone">Setting (per stone)</option>
+          <option value="casting">Casting</option>
+          <option value="labour_per_hr">Labour (per hour)</option>
+          <option value="box_valuation">Box &amp; valuation</option>
+          <option value="markup">Markup</option>
+        </select></label>
+      <label class="field"><span>Unit</span>
+        <select id="rUnit">
+          <option value="gm">per gram</option>
+          <option value="hr">per hour</option>
+          <option value="pc">per piece / flat</option>
+        </select></label>
+      <label class="field"><span>Metal type <small>(optional)</small></span>
+        <input type="text" id="rMetalType" placeholder="9ct / 14ct / 18ct…"></label>
+      <label class="field"><span>Origin <small>(optional)</small></span>
+        <select id="rOrigin">
+          <option value="">—</option>
+          <option value="local">Local</option>
+          <option value="imported">Imported</option>
+        </select></label>
+      <label class="field span2"><span>Rate ($)</span>
+        <input type="number" id="rRate" step="0.01" min="0"></label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="rateModalCancel">Cancel</button>
+      <button class="btn gold" type="button" id="rateModalSave">Save new version</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ ADD / EDIT WATCH RATE MODAL ══════════════════════ -->
+<div class="modal-overlay" id="watchModal" hidden>
+  <div class="modal">
+    <h3 id="watchModalTitle">Add watch brand rate</h3>
+    <div class="grid c2">
+      <label class="field span2"><span>Brand</span><input type="text" id="wBrand" placeholder="e.g. Rolex"></label>
+      <label class="field"><span>Insurer</span>
+        <select id="wInsurer">
+          <option value="">Shop Sales (retail default)</option>
+        </select></label>
+      <label class="field"><span>Rate type</span>
+        <select id="wRateType">
+          <option value="discount_pct">Discount % off RRP</option>
+          <option value="poa">POA (price on application)</option>
+        </select></label>
+      <label class="field span2" id="wRateValueWrap"><span>Discount (%)</span>
+        <input type="number" id="wRateValue" step="0.1" min="0" max="100" placeholder="e.g. 26 for 26%"></label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="watchModalCancel">Cancel</button>
+      <button class="btn gold" type="button" id="watchModalSave">Save new version</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ BRANDED CONFIRM MODAL ══════════════════════ -->
+<div class="modal-overlay" id="confirmModal" hidden>
+  <div class="modal" style="width:440px">
+    <h3 id="confirmModalTitle">Are you sure?</h3>
+    <p id="confirmModalMessage" style="color:var(--charcoal);line-height:1.6;margin:0"></p>
+    <div class="modal-actions">
+      <button class="btn ghost" type="button" id="confirmModalCancel">Cancel</button>
+      <button class="btn danger" type="button" id="confirmModalOk">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ BRANDED INFO MODAL ══════════════════════ -->
+<div class="modal-overlay" id="infoModal" hidden>
+  <div class="modal" style="width:480px">
+    <h3 id="infoModalTitle">Details</h3>
+    <div id="infoModalBody" style="color:var(--charcoal);line-height:1.7;max-height:50vh;overflow:auto"></div>
+    <div class="modal-actions">
+      <button class="btn gold" type="button" id="infoModalClose">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(45,45,45,0.45);
+  display: flex; align-items: center; justify-content: center; z-index: 200;
+}
+.modal-overlay[hidden] { display: none; }
+.modal {
+  background: var(--paper); border-radius: 6px; padding: 24px 28px;
+  width: 560px; max-width: 92vw; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+.modal h3 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0 0 18px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.rate-toolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(220px, 320px);
+  gap: 14px 18px;
+  align-items: end;
+  margin-bottom: 14px;
+}
+.rate-toolbar .rate-summary { grid-column: 1 / -1; margin-bottom: 0; }
+.rate-summary.compact { margin-top: -4px; }
+.rate-group { margin-bottom: 22px; }
+.rate-group > h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--serif); font-weight: 500; font-size: 18px;
+  margin: 0 0 10px; color: var(--gold-dark);
+}
+.rate-group > h3 span {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rate-table { table-layout: fixed; }
+.rate-effective-cell { display: flex; align-items: center; gap: 8px; }
+.rate-history-link { font-size: 11px; color: var(--gold); cursor: pointer; text-decoration: underline; }
+@media (max-width: 760px) {
+  .rate-toolbar { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+const API = '/api/rate-admin';
+const $ = s => document.querySelector(s);
+const fmt = n => Number(n).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/* ------------------------- branded confirm / info ------------------------- */
+function brandedConfirm(message, { title = 'Are you sure?', okLabel = 'Confirm' } = {}) {
+  return new Promise(resolve => {
+    $('#confirmModalTitle').textContent = title;
+    $('#confirmModalMessage').textContent = message;
+    $('#confirmModalOk').textContent = okLabel;
+    $('#confirmModal').hidden = false;
+    const okBtn = $('#confirmModalOk');
+    const cancelBtn = $('#confirmModalCancel');
+    const cleanup = result => {
+      $('#confirmModal').hidden = true;
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      resolve(result);
+    };
+    const onOk = () => cleanup(true);
+    const onCancel = () => cleanup(false);
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+  });
+}
+
+function brandedAlert(bodyHtml, title = 'Details') {
+  $('#infoModalTitle').textContent = title;
+  $('#infoModalBody').innerHTML = bodyHtml;
+  $('#infoModal').hidden = false;
+  const closeBtn = $('#infoModalClose');
+  const close = () => { $('#infoModal').hidden = true; closeBtn.removeEventListener('click', close); };
+  closeBtn.addEventListener('click', close);
+}
+
+const CATEGORY_LABELS = {
+  chain_per_gm: 'Chain (per gram)',
+  earring_charm_per_gm: 'Earring / charm / religious (per gram)',
+  mfg_gold_per_gm: 'Manufacturing gold (per gram)',
+  setting_per_stone: 'Setting (per stone)',
+  casting: 'Casting',
+  labour_per_hr: 'Labour (per hour)',
+  box_valuation: 'Box & valuation',
+  markup: 'Markup',
+};
+
+let INSURERS = [];
+let RATE_ROWS = [];
+let WATCH_ROWS = [];
+let editingWatchKey = null;
+
+init();
+async function init() {
+  await loadInsurers();
+  await loadRates();
+  await loadWatchRates();
+  wireModals();
+  wireCsvImportExport();
+  $('#rateCategoryFilter').addEventListener('change', renderRates);
+  $('#rateSearch').addEventListener('input', debounce(renderRates, 200));
+  $('#watchInsurerFilter').addEventListener('change', loadWatchRates);
+  $('#watchBrandSearch').addEventListener('input', debounce(loadWatchRates, 250));
+}
+
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+async function loadInsurers() {
+  try {
+    const list = await fetch('/api/insurers').then(r => r.json());
+    INSURERS = list;
+    const selects = [$('#watchInsurerFilter'), $('#wInsurer')];
+    for (const sel of selects) {
+      for (const i of list) {
+        const o = document.createElement('option');
+        o.value = i.id; o.textContent = i.name;
+        sel.appendChild(o);
+      }
+    }
+  } catch { toast('Could not load insurers — is the API connected?', true); }
+}
+
+async function loadRates() {
+  const container = $('#rateGroups');
+  try {
+    RATE_ROWS = await fetch(`${API}/rates`).then(r => r.json());
+    renderRateCategoryFilter();
+    renderRates();
+  } catch {
+    container.innerHTML = '<p style="color:var(--muted)">Could not reach the API — rates can\'t be loaded or saved until the database is connected.</p>';
+    $('#rateSummary').innerHTML = '';
+  }
+}
+
+function renderRateCategoryFilter() {
+  const current = $('#rateCategoryFilter').value;
+  const categories = [...new Set(RATE_ROWS.map(row => row.category))].sort((a, b) =>
+    (CATEGORY_LABELS[a] || a).localeCompare(CATEGORY_LABELS[b] || b)
+  );
+  $('#rateCategoryFilter').innerHTML = '<option value="">All groups</option>' +
+    categories.map(cat => `<option value="${cat}" ${cat === current ? 'selected' : ''}>${CATEGORY_LABELS[cat] || cat}</option>`).join('');
+}
+
+function renderRates() {
+  const container = $('#rateGroups');
+  const search = $('#rateSearch').value.trim().toLowerCase();
+  const category = $('#rateCategoryFilter').value;
+  const rates = RATE_ROWS
+    .filter(r => !category || r.category === category)
+    .filter(r => !search || `${r.label} ${r.metal_type || ''} ${r.origin || ''} ${r.category || ''}`.toLowerCase().includes(search))
+    .sort((a, b) =>
+      (CATEGORY_LABELS[a.category] || a.category).localeCompare(CATEGORY_LABELS[b.category] || b.category) ||
+      (a.metal_type || '').localeCompare(b.metal_type || '') ||
+      (a.origin || '').localeCompare(b.origin || '') ||
+      a.label.localeCompare(b.label)
+    );
+    const groups = {};
+    for (const r of rates) (groups[r.category] ||= []).push(r);
+    renderRateSummary(rates);
+    container.innerHTML = Object.entries(groups).map(([cat, rows]) => `
+      <div class="rate-group">
+        <h3>${CATEGORY_LABELS[cat] || cat} <span>${rows.length} current rates</span>
+          <button class="btn ghost small" type="button" onclick='openRateModal(${jsonAttr(cat)})' style="margin-left:12px">＋ Add rate</button>
+        </h3>
+        <table class="data rate-table rate-table-editable">
+          <colgroup>
+            <col style="width:15%"><col style="width:21%"><col style="width:12%"><col style="width:11%">
+            <col style="width:10%"><col style="width:10%"><col style="width:13%"><col style="width:70px">
+          </colgroup>
+          <thead><tr>
+            <th>Category</th><th>Rate</th><th>Metal</th><th>Origin</th>
+            <th class="num">Rate</th><th>Unit</th><th>Effective from</th><th></th>
+          </tr></thead>
+          <tbody>
+            ${rows.map(r => `
+              <tr>
+                <td>${categorySelectHtml(r)}</td>
+                <td><input type="text" value="${esc(r.label)}" onchange="saveRateField(${jsonAttr(r)}, 'label', this.value)"></td>
+                <td><input type="text" value="${esc(r.metal_type || '')}" placeholder="—" onchange="saveRateField(${jsonAttr(r)}, 'metal_type', this.value)"></td>
+                <td>${originSelectHtml(r)}</td>
+                <td class="num"><input type="number" step="0.01" min="0" value="${r.rate}" style="text-align:right" onchange="saveRateField(${jsonAttr(r)}, 'rate', this.value)"></td>
+                <td>${unitSelectHtml(r)}</td>
+                <td><div class="rate-effective-cell">${new Date(r.effective_from).toLocaleDateString('en-AU')}
+                  <span class="rate-history-link" onclick='showHistory(${jsonAttr(r.code)}, ${jsonAttr(r.label)})'>history</span></div></td>
+                <td>
+                  <button class="btn danger small" onclick='retireRate(${r.id}, ${jsonAttr(r.label)})'>Retire</button>
+                </td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`).join('') || '<p style="color:var(--muted)">No rates yet — provision the database and run seed.sql, or add one below.</p>';
+}
+
+function categorySelectHtml(r) {
+  return `<select onchange="saveRateField(${jsonAttr(r)}, 'category', this.value)">
+    ${Object.entries(CATEGORY_LABELS).map(([code, label]) =>
+      `<option value="${code}" ${code === r.category ? 'selected' : ''}>${label}</option>`).join('')}
+  </select>`;
+}
+
+function originSelectHtml(r) {
+  const options = [['', '—'], ['local', 'Local'], ['imported', 'Imported']];
+  return `<select onchange="saveRateField(${jsonAttr(r)}, 'origin', this.value)">
+    ${options.map(([value, label]) =>
+      `<option value="${value}" ${value === (r.origin || '') ? 'selected' : ''}>${label}</option>`).join('')}
+  </select>`;
+}
+
+function unitSelectHtml(r) {
+  const options = [['gm', 'per gram'], ['hr', 'per hour'], ['pc', 'per piece / flat']];
+  return `<select onchange="saveRateField(${jsonAttr(r)}, 'unit', this.value)">
+    ${options.map(([value, label]) =>
+      `<option value="${value}" ${value === r.unit ? 'selected' : ''}>${label}</option>`).join('')}
+  </select>`;
+}
+
+function renderRateSummary(rows) {
+  const groups = new Set(rows.map(row => row.category)).size;
+  const current = RATE_ROWS.length;
+  const visible = rows.length;
+  const highest = rows.reduce((max, row) => Number(row.rate) > Number(max?.rate || 0) ? row : max, null);
+  $('#rateSummary').innerHTML = `
+    <span><strong>${visible}</strong>&nbsp;showing</span>
+    <span>${current} current</span>
+    <span>${groups} groups</span>
+    ${highest ? `<span>Highest: ${highest.label} ${formatRate(highest)}</span>` : ''}`;
+}
+
+function formatRate(row) {
+  return row.category === 'markup' ? `${Number(row.rate).toFixed(2)}x` : `$${fmt(row.rate)}`;
+}
+
+function rateCodeFromLabel(category, label) {
+  const prefix = String(category || 'rate').toUpperCase();
+  const slug = String(label || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+  return `${prefix}_${slug || 'NEW'}`;
+}
+
+async function loadWatchRates() {
+  const tbody = $('#watchRows');
+  const insurerId = $('#watchInsurerFilter').value;
+  const search = $('#watchBrandSearch').value.trim().toLowerCase();
+  try {
+    const url = insurerId ? `${API}/watch-rates?insurer_id=${insurerId}` : `${API}/watch-rates`;
+    WATCH_ROWS = await fetch(url).then(r => r.json());
+    let rows = WATCH_ROWS;
+    if (search) rows = rows.filter(w => w.brand.toLowerCase().includes(search));
+    renderWatchSummary(rows);
+    tbody.innerHTML = rows.map(w => `
+      <tr>
+        <td>${esc(w.brand)}</td>
+        <td>${w.insurer_name ? esc(w.insurer_name) : '<span class="badge gold">Shop Sales</span>'}</td>
+        <td class="num">${w.rate_type === 'poa' ? '<span class="badge warn">POA</span>' : (Number(w.rate_value) * 100).toFixed(1) + '% off RRP'}</td>
+        <td>${new Date(w.effective_from).toLocaleDateString('en-AU')}</td>
+        <td style="white-space:nowrap">
+          <button class="btn ghost small" onclick='editWatchRate(${jsonAttr(w)})'>Edit</button>
+          <button class="btn danger small" onclick='retireWatchRate(${w.id}, ${jsonAttr(w.brand)})'>Retire</button>
+        </td>
+      </tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">No matching watch rates.</td></tr>';
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Could not reach the API.</td></tr>';
+    $('#watchSummary').innerHTML = '';
+  }
+}
+
+function renderWatchSummary(rows) {
+  const brands = new Set(rows.map(row => row.brand)).size;
+  const poa = rows.filter(row => row.rate_type === 'poa').length;
+  const discounts = rows.filter(row => row.rate_type !== 'poa').length;
+  $('#watchSummary').innerHTML = `
+    <span><strong>${rows.length}</strong> rates showing</span>
+    <span>${brands} brands</span>
+    <span>${discounts} discounts</span>
+    <span>${poa} POA</span>`;
+}
+
+// ------------------------------- rate modal ---------------------------------
+function wireModals() {
+  $('#addRate').addEventListener('click', () => openRateModal());
+  $('#rateModalCancel').addEventListener('click', () => $('#rateModal').hidden = true);
+  $('#rateModalSave').addEventListener('click', saveRate);
+
+  $('#addWatchRate').addEventListener('click', () => openWatchModal());
+  $('#watchModalCancel').addEventListener('click', () => $('#watchModal').hidden = true);
+  $('#watchModalSave').addEventListener('click', saveWatchRate);
+  $('#wRateType').addEventListener('change', () => {
+    $('#wRateValueWrap').style.display = $('#wRateType').value === 'poa' ? 'none' : '';
+  });
+}
+
+function openRateModal(presetCategory) {
+  $('#rateModalTitle').textContent = 'Add new rate';
+  $('#rLabel').value = '';
+  $('#rCategory').value = presetCategory || 'mfg_gold_per_gm';
+  $('#rUnit').value = 'gm';
+  $('#rMetalType').value = '';
+  $('#rOrigin').value = '';
+  $('#rRate').value = '';
+  $('#rateModal').hidden = false;
+}
+
+async function saveRate() {
+  const body = {
+    code: rateCodeFromLabel($('#rCategory').value, $('#rLabel').value),
+    label: $('#rLabel').value.trim(),
+    category: $('#rCategory').value,
+    unit: $('#rUnit').value,
+    metal_type: $('#rMetalType').value.trim() || null,
+    origin: $('#rOrigin').value || null,
+    rate: parseFloat($('#rRate').value),
+  };
+  if (!body.label || Number.isNaN(body.rate)) {
+    return toast('Label and a numeric rate are required', true);
+  }
+  try {
+    const res = await fetch(`${API}/rates`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    $('#rateModal').hidden = true;
+    toast(`${body.label} saved — new version effective from today`);
+    loadRates();
+  } catch (err) { toast('Save failed: ' + err.message, true); }
+}
+
+// Inline edit of an existing rate — always saved under its original `code`
+// so relabelling or recategorising a rate still versions cleanly under the
+// same identity, instead of silently forking into a brand-new rate.
+async function saveRateField(row, field, rawValue) {
+  const value = field === 'rate' ? parseFloat(rawValue) : rawValue;
+  if (field === 'rate' && Number.isNaN(value)) { toast('Enter a valid rate', true); return loadRates(); }
+  if (field === 'label' && !String(value).trim()) { toast('Label is required', true); return loadRates(); }
+  const body = {
+    code: row.code,
+    label: (field === 'label' ? value : row.label).trim(),
+    category: field === 'category' ? value : row.category,
+    unit: field === 'unit' ? value : row.unit,
+    metal_type: (field === 'metal_type' ? value : row.metal_type || '').trim() || null,
+    origin: (field === 'origin' ? value : row.origin) || null,
+    rate: field === 'rate' ? value : Number(row.rate),
+  };
+  try {
+    const res = await fetch(`${API}/rates`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${body.label} updated — new version effective from today`);
+    loadRates();
+  } catch (err) {
+    toast('Save failed: ' + err.message, true);
+    loadRates();
+  }
+}
+
+window.retireRate = async (id, label) => {
+  const ok = await brandedConfirm(
+    `Retire ${label}? It will stop being offered in the quote calculator from today. This does not affect any quote that already used it.`,
+    { title: 'Retire this rate?', okLabel: 'Retire' }
+  );
+  if (!ok) return;
+  try {
+    const res = await fetch(`${API}/rates/${id}`, { method: 'DELETE' }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${label} retired`);
+    loadRates();
+  } catch (err) { toast('Retire failed: ' + err.message, true); }
+};
+
+window.showHistory = async (code, label) => {
+  try {
+    const rows = await fetch(`${API}/rates/history?code=${encodeURIComponent(code)}`).then(r => r.json());
+    const lines = rows.map(r =>
+      `<div style="padding:7px 0;border-bottom:1px solid var(--line)"><strong>$${fmt(r.rate)}</strong>
+        <span style="color:var(--muted)">(${new Date(r.effective_from).toLocaleDateString('en-AU')} → ${r.effective_to ? new Date(r.effective_to).toLocaleDateString('en-AU') : 'current'})</span></div>`
+    ).join('');
+    brandedAlert(lines || '<p style="color:var(--muted)">No history found.</p>', `History — ${label}`);
+  } catch { toast('Could not load history', true); }
+};
+
+// ------------------------------- rate CSV import/export ----------------------
+let pendingCsvRows = [];
+const RATE_CSV_COLUMNS = ['code', 'label', 'category', 'metal_type', 'origin', 'rate', 'unit', 'effective_from'];
+
+function wireCsvImportExport() {
+  $('#downloadRatesCsv').addEventListener('click', downloadRatesCsv);
+  $('#uploadRatesCsvButton').addEventListener('click', () => $('#uploadRatesCsvInput').click());
+  $('#uploadRatesCsvInput').addEventListener('change', handleRatesCsvFile);
+  $('#confirmRatesCsvImport').addEventListener('click', confirmRatesCsvImport);
+  $('#cancelRatesCsvImport').addEventListener('click', () => {
+    pendingCsvRows = [];
+    $('#ratesCsvPreview').hidden = true;
+    $('#uploadRatesCsvInput').value = '';
+  });
+}
+
+function csvEscape(v) {
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function downloadRatesCsv() {
+  const lines = [RATE_CSV_COLUMNS.join(',')];
+  for (const r of RATE_ROWS) lines.push(RATE_CSV_COLUMNS.map(k => csvEscape(r[k])).join(','));
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `rate-cards-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function parseCsvRow(row) {
+  const cells = [];
+  let cur = '', inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    const c = row[i];
+    if (inQuotes) {
+      if (c === '"' && row[i + 1] === '"') { cur += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else cur += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ',') { cells.push(cur); cur = ''; }
+    else cur += c;
+  }
+  cells.push(cur);
+  return cells;
+}
+
+function parseRatesCsv(text) {
+  const rows = text.split(/\r?\n/).map(r => r.trim()).filter(Boolean);
+  if (!rows.length) return [];
+  const header = parseCsvRow(rows[0]).map(h => h.trim().toLowerCase());
+  return rows.slice(1).map(row => {
+    const cells = parseCsvRow(row);
+    const obj = {};
+    header.forEach((h, i) => obj[h] = (cells[i] || '').trim());
+    return obj;
+  });
+}
+
+function handleRatesCsvFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const rows = parseRatesCsv(String(reader.result))
+      .filter(r => r.code && r.category && r.rate !== '' && !Number.isNaN(parseFloat(r.rate)));
+    pendingCsvRows = rows;
+    if (!rows.length) {
+      toast('No valid rows found — the CSV needs code, category and rate columns', true);
+      $('#uploadRatesCsvInput').value = '';
+      return;
+    }
+    $('#ratesCsvPreviewSummary').textContent =
+      `${rows.length} rate${rows.length === 1 ? '' : 's'} will be saved as new versions from today:`;
+    $('#ratesCsvPreviewTable').innerHTML = `
+      <thead><tr><th>Code</th><th>Label</th><th>Category</th><th class="num">Rate</th></tr></thead>
+      <tbody>${rows.slice(0, 50).map(r => `
+        <tr><td>${esc(r.code)}</td><td>${esc(r.label || '')}</td>
+          <td>${esc(CATEGORY_LABELS[r.category] || r.category)}</td>
+          <td class="num">${esc(r.rate)}</td></tr>`).join('')}
+      </tbody>`;
+    $('#ratesCsvPreview').hidden = false;
+  };
+  reader.readAsText(file);
+}
+
+async function confirmRatesCsvImport() {
+  if (!pendingCsvRows.length) return;
+  const total = pendingCsvRows.length;
+  let imported = 0;
+  // One at a time (not concurrent) — same reasoning as the bulk customer CSV
+  // import: avoids a burst of simultaneous writes against rate versioning.
+  for (const r of pendingCsvRows) {
+    try {
+      const res = await fetch(`${API}/rates`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          code: r.code, label: r.label || r.code, category: r.category,
+          unit: r.unit || 'gm', metal_type: r.metal_type || null, origin: r.origin || null,
+          rate: parseFloat(r.rate),
+        }),
+      }).then(res => res.json());
+      if (!res.error) imported++;
+    } catch { /* keep going — remaining rows still get a chance */ }
+  }
+  pendingCsvRows = [];
+  $('#ratesCsvPreview').hidden = true;
+  $('#uploadRatesCsvInput').value = '';
+  toast(`${imported} of ${total} rate(s) imported`);
+  loadRates();
+}
+
+// ------------------------------- watch rate modal ----------------------------
+function openWatchModal(existing) {
+  editingWatchKey = existing || null;
+  $('#watchModalTitle').textContent = existing ? `Edit ${existing.brand} — ${existing.insurer_name || 'Shop Sales'}` : 'Add watch brand rate';
+  $('#wBrand').value = existing?.brand || '';
+  $('#wBrand').readOnly = !!existing;
+  $('#wInsurer').value = existing?.insurer_id || '';
+  $('#wInsurer').disabled = !!existing;
+  $('#wRateType').value = existing?.rate_type || 'discount_pct';
+  $('#wRateValue').value = existing ? (existing.rate_value ? (Number(existing.rate_value) * 100) : '') : '';
+  $('#wRateValueWrap').style.display = $('#wRateType').value === 'poa' ? 'none' : '';
+  $('#watchModal').hidden = false;
+}
+window.editWatchRate = (w) => openWatchModal(w);
+
+async function saveWatchRate() {
+  const rateType = $('#wRateType').value;
+  const body = {
+    brand: $('#wBrand').value.trim(),
+    insurer_id: $('#wInsurer').value || null,
+    rate_type: rateType,
+    rate_value: rateType === 'poa' ? null : parseFloat($('#wRateValue').value) / 100,
+  };
+  if (!body.brand) return toast('Brand is required', true);
+  if (rateType !== 'poa' && Number.isNaN(body.rate_value)) return toast('Enter a discount percentage', true);
+  try {
+    const res = await fetch(`${API}/watch-rates`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+    }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    $('#watchModal').hidden = true;
+    toast(`${body.brand} saved — new version effective from today`);
+    loadWatchRates();
+  } catch (err) { toast('Save failed: ' + err.message, true); }
+}
+
+window.retireWatchRate = async (id, brand) => {
+  const ok = await brandedConfirm(
+    `Retire the rate for ${brand}? This does not affect any quote that already used it.`,
+    { title: 'Retire this rate?', okLabel: 'Retire' }
+  );
+  if (!ok) return;
+  try {
+    const res = await fetch(`${API}/watch-rates/${id}`, { method: 'DELETE' }).then(r => r.json());
+    if (res.error) throw new Error(res.error);
+    toast(`${brand} rate retired`);
+    loadWatchRates();
+  } catch (err) { toast('Retire failed: ' + err.message, true); }
+};
+
+// ------------------------------------ toast ----------------------------------
+let toastTimer;
+function toast(msg, isErr) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isErr ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = 'toast', 4200);
+}
+
+function esc(value) {
+  return value == null ? '' : String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function jsonAttr(value) {
+  return esc(JSON.stringify(value));
+}
+</script>
+
+<div class="manual-chat" id="manualChat">
+  <button class="manual-chat-toggle" id="manualChatToggle" type="button" aria-expanded="false" aria-controls="manualChatPanel" aria-label="Ask a question about these manuals">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 5h16v11H8l-4 4V5z"/>
+      <circle cx="9" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="12.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+      <circle cx="16" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
+    </svg>
+  </button>
+  <div class="manual-chat-panel" id="manualChatPanel" hidden>
+    <header>
+      <div>
+        <h3>Manual assistant</h3>
+        <span class="hint">Searches these manuals — not AI, just quick keyword matching</span>
+      </div>
+      <button class="manual-chat-close" id="manualChatClose" type="button" aria-label="Close">×</button>
+    </header>
+    <div class="manual-chat-messages" id="manualChatMessages" aria-live="polite"></div>
+    <form class="manual-chat-form" id="manualChatForm">
+      <input type="text" id="manualChatInput" placeholder="e.g. How do I deactivate a staff member?" autocomplete="off">
+      <button class="btn gold small" type="submit">Ask</button>
+    </form>
+  </div>
+</div>
+<script src="assets/manual-chat.js"></script>
+</body>
+</html>
