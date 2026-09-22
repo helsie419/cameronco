@@ -1,0 +1,1142 @@
+<style>
+  /* ==================================================
+     ARTICLE PAGE LAYOUT FIXES
+     ================================================== */
+
+  .live-article-hero,
+  .live-article-body,
+  .live-article-section,
+  .live-article-section h1,
+  .live-article-section h2,
+  .live-article-section h3,
+  .live-article-section h4,
+  .live-article-section p,
+  .live-article-section ul,
+  .live-article-section ol,
+  .live-article-section li,
+  .live-article-tagline {
+    text-align: left !important;
+  }
+
+  .live-article-hero {
+    align-items: start;
+  }
+
+  .live-article-section .article-image {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin: 24px 0 0 0 !important;
+    object-fit: contain;
+  }
+
+  .article-content-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: center;
+  }
+
+  .article-content-copy {
+    min-width: 0;
+  }
+
+  .article-content-media {
+    min-width: 0;
+  }
+
+  .article-content-row--image-left {
+    grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  }
+
+  .article-content-row--no-media {
+    grid-template-columns: 1fr;
+  }
+
+  .article-content-row--image-left .article-content-media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .article-content-row--image-left .article-content-copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .article-content-row > .btn-black-center {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .live-image-row {
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .live-image-row .article-image {
+    flex: 0 1 360px;
+    max-width: 360px;
+    margin: 0 !important;
+  }
+
+  .article-image-diagram {
+    max-width: 520px !important;
+  }
+
+  @media (max-width: 749px) {
+    .live-article-section .article-image,
+    .live-image-row .article-image {
+      max-width: 300px;
+    }
+
+    .live-image-row {
+      display: block;
+    }
+
+    .article-content-row,
+    .article-content-row--image-left {
+      display: block;
+    }
+
+    .article-content-row--image-left .article-content-media,
+    .article-content-row--image-left .article-content-copy {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .live-image-row .article-image + .article-image {
+      margin-top: 16px !important;
+    }
+
+    .article-image-diagram {
+      max-width: 100% !important;
+    }
+  }
+</style>
+
+{% assign hero_image_fallback = section.settings.hero_image_fallback %}
+{% assign hero_image_alt = section.settings.hero_image_alt %}
+
+{% if hero_image_fallback contains 'inspecting-diamonds-magnification' %}
+  {% assign hero_image_fallback = 'cameron-co-square-diamond-pendant.webp' %}
+  {% assign hero_image_alt = 'Square diamond pendant on satin introducing diamond education' %}
+{% endif %}
+
+<section class="live-article-hero" aria-labelledby="article-hero-title-{{ section.id }}">
+  <div>
+    <h1 id="article-hero-title-{{ section.id }}" class="sr-only">
+      {{ section.settings.hero_title }}
+    </h1>
+
+    {% if section.settings.hero_tagline != blank %}
+      <p
+        class="tagline live-article-tagline cc-font-heading-{{ section.settings.heading_font | default: 'cormorant' }}"
+        style="color:{{ section.settings.hero_heading_color | default: 'var(--heading-1-color)' }};"
+      >
+        {{ section.settings.hero_tagline }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.hero_intro != blank %}
+      <div
+        class="cc-font-body-{{ section.settings.body_font }}"
+        style="{% if section.settings.body_text_color != blank %}color:{{ section.settings.body_text_color }};{% endif %}"
+      >
+        {{ section.settings.hero_intro }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if section.settings.hero_image %}
+    <img
+      onerror="this.remove();"
+      alt="{{ hero_image_alt | escape }}"
+      src="{{ section.settings.hero_image | image_url: width: 1120 }}"
+      width="560"
+      height="360"
+      loading="eager"
+    >
+  {% elsif hero_image_fallback != blank %}
+    <img
+      onerror="this.remove();"
+      alt="{{ hero_image_alt | escape }}"
+      src="{{ hero_image_fallback | asset_url }}"
+      width="560"
+      height="360"
+      loading="eager"
+    >
+  {% endif %}
+</section>
+
+<div class="live-article-body">
+
+  {% for block in section.blocks %}
+
+    {% case block.type %}
+
+      {% when 'content_block' %}
+
+        {% assign has_media = false %}
+        {% if block.settings.image_1 or block.settings.image_1_fallback != blank %}
+          {% assign has_media = true %}
+        {% endif %}
+
+        <section
+          class="live-article-section article-content-row article-content-row--{% if forloop.index == 1 or forloop.index == 2 %}image-left{% else %}image-right{% endif %}{% unless has_media %} article-content-row--no-media{% endunless %}{% if block.settings.callout %} article-callout{% endif %}"
+          {% if block.settings.callout %}
+            style="background:{{ section.settings.callout_bg_color }};"
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
+
+          <div class="article-content-copy">
+
+          {% if block.settings.heading != blank %}
+            <h2
+              class="cc-font-heading-{{ section.settings.heading_font | default: 'cormorant' }}"
+              style="{% if section.settings.section_heading_color != blank %}color:{{ section.settings.section_heading_color }};{% endif %}"
+            >
+              {{ block.settings.heading }}
+            </h2>
+          {% endif %}
+
+          {% if block.settings.body != blank %}
+            <div
+              class="cc-font-body-{{ section.settings.body_font }}"
+              style="{% if section.settings.body_text_color != blank %}color:{{ section.settings.body_text_color }};{% endif %}"
+            >
+              {{ block.settings.body }}
+            </div>
+          {% endif %}
+
+          {% if block.settings.list_heading != blank %}
+            <h2
+              class="cc-font-heading-{{ section.settings.heading_font | default: 'cormorant' }}"
+              style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}"
+            >
+              {{ block.settings.list_heading }}
+            </h2>
+          {% endif %}
+
+          {% if block.settings.list_items != blank %}
+
+            {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+            {% if block.settings.list_style == 'numbered' %}
+
+              <ol
+                class="cc-font-body-{{ section.settings.body_font }}"
+                style="{% if section.settings.body_text_color != blank %}color:{{ section.settings.body_text_color }};{% endif %}"
+              >
+                {% for item in list_lines %}
+                  {% assign item_trim = item | strip %}
+                  {% if item_trim != blank %}
+                    <li>{{ item_trim }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ol>
+
+            {% else %}
+
+              <ul
+                class="cc-font-body-{{ section.settings.body_font }}"
+                style="{% if section.settings.body_text_color != blank %}color:{{ section.settings.body_text_color }};{% endif %}"
+              >
+                {% for item in list_lines %}
+                  {% assign item_trim = item | strip %}
+                  {% if item_trim != blank %}
+                    <li>{{ item_trim }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+            {% endif %}
+
+          {% endif %}
+
+          </div>
+
+          {% if has_media %}
+          <div class="article-content-media">
+
+          {% if block.settings.image_1_fallback == 'diamond-colour-grades-chart.webp' %}
+
+            {% render 'diamond-colour-scale' %}
+
+          {% elsif block.settings.image_1_fallback == 'anatomy-of-a-diamond-chart.webp' %}
+
+            {% render 'diamond-anatomy-diagram' %}
+
+          {% elsif block.settings.image_1 and block.settings.image_2 %}
+
+            <div class="live-image-row">
+
+              <img
+                onerror="this.remove();"
+                class="article-image"
+                alt="{{ block.settings.image_1_alt | escape }}"
+                src="{{ block.settings.image_1 | image_url: width: 900 }}"
+                width="{{ block.settings.image_1.width }}"
+                height="{{ block.settings.image_1.height }}"
+              >
+
+              <img
+                onerror="this.remove();"
+                class="article-image"
+                alt="{{ block.settings.image_2_alt | escape }}"
+                src="{{ block.settings.image_2 | image_url: width: 900 }}"
+                width="{{ block.settings.image_2.width }}"
+                height="{{ block.settings.image_2.height }}"
+              >
+
+            </div>
+
+          {% elsif block.settings.image_1 %}
+
+            <img
+              onerror="this.remove();"
+              class="article-image"
+              alt="{{ block.settings.image_1_alt | escape }}"
+              src="{{ block.settings.image_1 | image_url: width: 900 }}"
+              width="{{ block.settings.image_1.width }}"
+              height="{{ block.settings.image_1.height }}"
+            >
+
+          {% elsif block.settings.image_1_fallback != blank and block.settings.image_2_fallback != blank %}
+
+            {% assign fb1_w = 900 %}
+            {% assign fb1_h = 600 %}
+
+            {% case block.settings.image_1_fallback %}
+
+              {% when 'cameron-co-jewellery-repair-components.webp' %}
+                {% assign fb1_w = 418 %}
+                {% assign fb1_h = 182 %}
+
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
+                {% assign fb1_w = 236 %}
+                {% assign fb1_h = 371 %}
+
+              {% when 'cameron-co-diamond-brilliant-cut-illustration.webp' %}
+                {% assign fb1_w = 675 %}
+                {% assign fb1_h = 675 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb1_w = 1310 %}
+                {% assign fb1_h = 540 %}
+
+              {% when 'single-diamond-ring-box.webp' %}
+                {% assign fb1_w = 1024 %}
+                {% assign fb1_h = 692 %}
+
+              {% when 'cameron-co-brand-book-showroom.webp' %}
+                {% assign fb1_w = 1080 %}
+                {% assign fb1_h = 486 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb1_w = 802 %}
+                {% assign fb1_h = 249 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 802 %}
+                {% assign fb1_h = 394 %}
+
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
+                {% assign fb1_w = 1002 %}
+                {% assign fb1_h = 582 %}
+
+              {% when 'diamond-colour-grades-chart.webp' %}
+                {% assign fb1_w = 540 %}
+                {% assign fb1_h = 654 %}
+
+              {% when 'diamond-shapes-chart.webp' %}
+                {% assign fb1_w = 1022 %}
+                {% assign fb1_h = 545 %}
+
+              {% when 'anatomy-of-a-diamond-chart.webp' %}
+                {% assign fb1_w = 800 %}
+                {% assign fb1_h = 798 %}
+
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}
+                {% assign fb1_w = 1408 %}
+                {% assign fb1_h = 768 %}
+
+              {% when 'cameron-co-repair-workshop-bench.webp' %}
+                {% assign fb1_w = 1200 %}
+                {% assign fb1_h = 800 %}
+
+              {% when 'cameron-co-replacement-ring-selection.webp' %}
+                {% assign fb1_w = 900 %}
+                {% assign fb1_h = 874 %}
+
+              {% when 'cameron-co-appraisal-consultation.webp' %}
+                {% assign fb1_w = 1200 %}
+                {% assign fb1_h = 800 %}
+
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}
+                {% assign fb1_w = 1537 %}
+                {% assign fb1_h = 1023 %}
+
+              {% when 'cameron-co-jewellery-repair-ring-gemstones-white-satin-marble.webp' %}
+                {% assign fb1_w = 1448 %}
+                {% assign fb1_h = 1080 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb1_w = 294 %}
+                {% assign fb1_h = 318 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 326 %}
+
+              {% when 'diamond-halo-stud-earrings.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 310 %}
+
+              {% when 'double-band-diamond-cluster-ring.webp' %}
+                {% assign fb1_w = 287 %}
+                {% assign fb1_h = 303 %}
+
+              {% when 'emerald-cluster-gold-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb1_w = 2000 %}
+                {% assign fb1_h = 2000 %}
+
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
+                {% assign fb1_w = 291 %}
+                {% assign fb1_h = 315 %}
+
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 325 %}
+
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 315 %}
+
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 325 %}
+
+              {% when 'pear-diamond-yellow-gold-ring.webp' %}
+                {% assign fb1_w = 293 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'princess-cut-diamond-solitaire-ring.webp' %}
+                {% assign fb1_w = 289 %}
+                {% assign fb1_h = 308 %}
+
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 308 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb1_w = 412 %}
+                {% assign fb1_h = 516 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 1254 %}
+                {% assign fb1_h = 1254 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb1_w = 820 %}
+                {% assign fb1_h = 492 %}
+
+              {% when 'cameron-co-gold-heart-charm-bracelet.webp' %}
+                {% assign fb1_w = 1254 %}
+                {% assign fb1_h = 1254 %}
+
+              {% when 'cameron-co-tahitian-pearl-necklace.webp' %}
+                {% assign fb1_w = 1122 %}
+                {% assign fb1_h = 1402 %}
+
+              {% when 'cameron-co-ruby-trilogy-halo-ring.webp' %}
+                {% assign fb1_w = 1448 %}
+                {% assign fb1_h = 1086 %}
+
+            {% endcase %}
+
+
+            {% assign fb2_w = 900 %}
+            {% assign fb2_h = 600 %}
+
+            {% case block.settings.image_2_fallback %}
+
+              {% when 'cameron-co-jewellery-repair-components.webp' %}
+                {% assign fb2_w = 418 %}
+                {% assign fb2_h = 182 %}
+
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
+                {% assign fb2_w = 236 %}
+                {% assign fb2_h = 371 %}
+
+              {% when 'cameron-co-diamond-brilliant-cut-illustration.webp' %}
+                {% assign fb2_w = 675 %}
+                {% assign fb2_h = 675 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb2_w = 1310 %}
+                {% assign fb2_h = 540 %}
+
+              {% when 'single-diamond-ring-box.webp' %}
+                {% assign fb2_w = 1024 %}
+                {% assign fb2_h = 692 %}
+
+              {% when 'cameron-co-brand-book-showroom.webp' %}
+                {% assign fb2_w = 1080 %}
+                {% assign fb2_h = 486 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb2_w = 802 %}
+                {% assign fb2_h = 249 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb2_w = 802 %}
+                {% assign fb2_h = 394 %}
+
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
+                {% assign fb2_w = 1002 %}
+                {% assign fb2_h = 582 %}
+
+              {% when 'diamond-colour-grades-chart.webp' %}
+                {% assign fb2_w = 540 %}
+                {% assign fb2_h = 654 %}
+
+              {% when 'diamond-shapes-chart.webp' %}
+                {% assign fb2_w = 1022 %}
+                {% assign fb2_h = 545 %}
+
+              {% when 'anatomy-of-a-diamond-chart.webp' %}
+                {% assign fb2_w = 800 %}
+                {% assign fb2_h = 798 %}
+
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}
+                {% assign fb2_w = 1408 %}
+                {% assign fb2_h = 768 %}
+
+              {% when 'cameron-co-repair-workshop-bench.webp' %}
+                {% assign fb2_w = 1200 %}
+                {% assign fb2_h = 800 %}
+
+              {% when 'cameron-co-replacement-ring-selection.webp' %}
+                {% assign fb2_w = 900 %}
+                {% assign fb2_h = 874 %}
+
+              {% when 'cameron-co-appraisal-consultation.webp' %}
+                {% assign fb2_w = 1200 %}
+                {% assign fb2_h = 800 %}
+
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}
+                {% assign fb2_w = 1537 %}
+                {% assign fb2_h = 1023 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb2_w = 294 %}
+                {% assign fb2_h = 318 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb2_w = 304 %}
+                {% assign fb2_h = 326 %}
+
+              {% when 'diamond-halo-stud-earrings.webp' %}
+                {% assign fb2_w = 288 %}
+                {% assign fb2_h = 310 %}
+
+              {% when 'double-band-diamond-cluster-ring.webp' %}
+                {% assign fb2_w = 287 %}
+                {% assign fb2_h = 303 %}
+
+              {% when 'emerald-cluster-gold-ring.webp' %}
+                {% assign fb2_w = 288 %}
+                {% assign fb2_h = 316 %}
+
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb2_w = 2000 %}
+                {% assign fb2_h = 2000 %}
+
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
+                {% assign fb2_w = 288 %}
+                {% assign fb2_h = 316 %}
+
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
+                {% assign fb2_w = 291 %}
+                {% assign fb2_h = 315 %}
+
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
+                {% assign fb2_w = 304 %}
+                {% assign fb2_h = 325 %}
+
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
+                {% assign fb2_w = 288 %}
+                {% assign fb2_h = 315 %}
+
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
+                {% assign fb2_w = 304 %}
+                {% assign fb2_h = 325 %}
+
+              {% when 'pear-diamond-yellow-gold-ring.webp' %}
+                {% assign fb2_w = 293 %}
+                {% assign fb2_h = 316 %}
+
+              {% when 'princess-cut-diamond-solitaire-ring.webp' %}
+                {% assign fb2_w = 289 %}
+                {% assign fb2_h = 308 %}
+
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
+                {% assign fb2_w = 288 %}
+                {% assign fb2_h = 308 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb2_w = 412 %}
+                {% assign fb2_h = 516 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb2_w = 1254 %}
+                {% assign fb2_h = 1254 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb2_w = 820 %}
+                {% assign fb2_h = 492 %}
+
+              {% when 'cameron-co-gold-heart-charm-bracelet.webp' %}
+                {% assign fb2_w = 1254 %}
+                {% assign fb2_h = 1254 %}
+
+              {% when 'cameron-co-tahitian-pearl-necklace.webp' %}
+                {% assign fb2_w = 1122 %}
+                {% assign fb2_h = 1402 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb2_w = 1536 %}
+                {% assign fb2_h = 1024 %}
+
+            {% endcase %}
+
+
+            <div class="live-image-row">
+
+              <img
+                onerror="this.remove();"
+                class="article-image"
+                alt="{{ block.settings.image_1_alt | escape }}"
+                src="{{ block.settings.image_1_fallback | asset_url }}"
+                width="{{ fb1_w }}"
+                height="{{ fb1_h }}"
+              >
+
+              <img
+                onerror="this.remove();"
+                class="article-image"
+                alt="{{ block.settings.image_2_alt | escape }}"
+                src="{{ block.settings.image_2_fallback | asset_url }}"
+                width="{{ fb2_w }}"
+                height="{{ fb2_h }}"
+              >
+
+            </div>
+
+          {% elsif block.settings.image_1_fallback != blank %}
+
+            {% assign fb1_w = 900 %}
+            {% assign fb1_h = 600 %}
+
+            {% case block.settings.image_1_fallback %}
+
+              {% when 'cameron-co-jewellery-repair-components.webp' %}
+                {% assign fb1_w = 418 %}
+                {% assign fb1_h = 182 %}
+
+              {% when 'cameron-co-multicolour-gemstone-diamond-gold-ring.webp' %}
+                {% assign fb1_w = 236 %}
+                {% assign fb1_h = 371 %}
+
+              {% when 'cameron-co-diamond-brilliant-cut-illustration.webp' %}
+                {% assign fb1_w = 675 %}
+                {% assign fb1_h = 675 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb1_w = 1310 %}
+                {% assign fb1_h = 540 %}
+
+              {% when 'single-diamond-ring-box.webp' %}
+                {% assign fb1_w = 1024 %}
+                {% assign fb1_h = 692 %}
+
+              {% when 'cameron-co-brand-book-showroom.webp' %}
+                {% assign fb1_w = 1080 %}
+                {% assign fb1_h = 486 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb1_w = 802 %}
+                {% assign fb1_h = 249 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 802 %}
+                {% assign fb1_h = 394 %}
+
+              {% when 'cameron-co-square-diamond-pendant.webp' %}
+                {% assign fb1_w = 1002 %}
+                {% assign fb1_h = 582 %}
+
+              {% when 'diamond-colour-grades-chart.webp' %}
+                {% assign fb1_w = 540 %}
+                {% assign fb1_h = 654 %}
+
+              {% when 'diamond-shapes-chart.webp' %}
+                {% assign fb1_w = 1022 %}
+                {% assign fb1_h = 545 %}
+
+              {% when 'anatomy-of-a-diamond-chart.webp' %}
+                {% assign fb1_w = 800 %}
+                {% assign fb1_h = 798 %}
+
+              {% when 'cameron-co-jewellery-remodelling-workbench.webp' %}
+                {% assign fb1_w = 1408 %}
+                {% assign fb1_h = 768 %}
+
+              {% when 'cameron-co-repair-workshop-bench.webp' %}
+                {% assign fb1_w = 1200 %}
+                {% assign fb1_h = 800 %}
+
+              {% when 'cameron-co-replacement-ring-selection.webp' %}
+                {% assign fb1_w = 900 %}
+                {% assign fb1_h = 874 %}
+
+              {% when 'cameron-co-appraisal-consultation.webp' %}
+                {% assign fb1_w = 1200 %}
+                {% assign fb1_h = 800 %}
+
+              {% when 'cameron-co-jewellery-repair-laser-welding.webp' %}
+                {% assign fb1_w = 1537 %}
+                {% assign fb1_h = 1023 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb1_w = 294 %}
+                {% assign fb1_h = 318 %}
+
+              {% when 'aquamarine-solitaire-ring.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 326 %}
+
+              {% when 'diamond-halo-stud-earrings.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 310 %}
+
+              {% when 'double-band-diamond-cluster-ring.webp' %}
+                {% assign fb1_w = 287 %}
+                {% assign fb1_h = 303 %}
+
+              {% when 'emerald-cluster-gold-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'cameron-co-emerald-halo-ring.webp' %}
+                {% assign fb1_w = 2000 %}
+                {% assign fb1_h = 2000 %}
+
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'cameron-co-gold-bracelet-green-ring-hand.webp' %}
+                {% assign fb1_w = 291 %}
+                {% assign fb1_h = 315 %}
+
+              {% when 'cameron-co-golden-pearl-diamond-drop-earrings.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 325 %}
+
+              {% when 'cameron-co-vintage-opal-gold-ring.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 315 %}
+
+              {% when 'cameron-co-rectangular-diamond-cluster-ring.webp' %}
+                {% assign fb1_w = 304 %}
+                {% assign fb1_h = 325 %}
+
+              {% when 'pear-diamond-yellow-gold-ring.webp' %}
+                {% assign fb1_w = 293 %}
+                {% assign fb1_h = 316 %}
+
+              {% when 'princess-cut-diamond-solitaire-ring.webp' %}
+                {% assign fb1_w = 289 %}
+                {% assign fb1_h = 308 %}
+
+              {% when 'cameron-co-princess-diamond-bridal-set-rose-gold.webp' %}
+                {% assign fb1_w = 288 %}
+                {% assign fb1_h = 308 %}
+
+              {% when 'cameron-co-green-tourmaline-three-stone-ring.webp' %}
+                {% assign fb1_w = 412 %}
+                {% assign fb1_h = 516 %}
+
+              {% when 'cameron-co-sapphire-diamond-halo-earrings.webp' %}
+                {% assign fb1_w = 1254 %}
+                {% assign fb1_h = 1254 %}
+
+              {% when 'titanium-ring-care.webp' %}
+                {% assign fb1_w = 820 %}
+                {% assign fb1_h = 492 %}
+
+              {% when 'cameron-co-jewellery-cleaning-brush-bowl.webp' %}
+                {% assign fb1_w = 1200 %}
+                {% assign fb1_h = 800 %}
+
+              {% when 'cameron-co-loose-diamond-shapes-collection.webp' %}
+                {% assign fb1_w = 900 %}
+                {% assign fb1_h = 900 %}
+
+              {% when 'cameron-co-emerald-flower-halo-ring.webp' %}
+                {% assign fb1_w = 1358 %}
+                {% assign fb1_h = 1158 %}
+
+            {% endcase %}
+
+            <img
+              onerror="this.remove();"
+              class="article-image{% if block.settings.image_1_fallback == 'diamond-shapes-chart.webp' %} article-image-diagram{% endif %}"
+              alt="{{ block.settings.image_1_alt | escape }}"
+              src="{{ block.settings.image_1_fallback | asset_url }}"
+              width="{{ fb1_w }}"
+              height="{{ fb1_h }}"
+            >
+
+          {% endif %}
+
+          </div>
+          {% endif %}
+
+          {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+
+            <a
+              class="btn-black-center btn-dark cc-button-{{ block.settings.button_style | default: 'secondary' }} cc-font-body-{{ section.settings.body_font }}"
+              href="{{ block.settings.cta_link }}"
+            >
+              {{ block.settings.cta_text }}
+            </a>
+
+          {% endif %}
+
+        </section>
+
+    {% endcase %}
+
+  {% endfor %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Article page",
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Essential Jewellery Care Tips"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_tagline",
+      "label": "Tagline",
+      "default": "Keeping your precious pieces sparkling"
+    },
+
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>Jewellery is more than just an accessory; it is an investment in beauty and often holds sentimental value. Proper care is essential to maintain its beauty and value over time.</p>"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Leave blank to use the default image"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Hero image alt text",
+      "default": "Jewellery care and cleaning components"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_image_fallback",
+      "label": "Hero image fallback filename",
+      "info": "Asset filename used if no hero image is selected above. Do not change unless you know the exact filename in the Files/assets library.",
+      "default": "cameron-co-jewellery-repair-components.webp"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+
+    {
+      "type": "color",
+      "id": "hero_heading_color",
+      "label": "Hero title color",
+      "info": "Leave blank to use the global Heading 1 color (Theme settings → Headings)."
+    },
+
+    {
+      "type": "color",
+      "id": "hero_tagline_color",
+      "label": "Hero tagline color",
+      "info": "Leave blank to use the global Paragraph color (Theme settings → Paragraph)."
+    },
+
+    {
+      "type": "color",
+      "id": "section_heading_color",
+      "label": "Section heading color",
+      "info": "Leave blank to use the global Heading 2 color (Theme settings → Headings)."
+    },
+
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading / list lead-in color",
+      "info": "Leave blank to use the global Heading 4 color (Theme settings → Headings)."
+    },
+
+    {
+      "type": "color",
+      "id": "body_text_color",
+      "label": "Body text color",
+      "info": "Leave blank to use the global Paragraph color (Theme settings → Paragraph)."
+    },
+
+    {
+      "type": "color",
+      "id": "callout_bg_color",
+      "label": "Callout background color",
+      "default": "#f7f5f3"
+    },
+
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "info": "Leave unset to use the global Headings font (Theme settings → Headings).",
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ]
+    },
+
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "info": "Leave unset to use the global Paragraph font (Theme settings → Paragraph).",
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ]
+    }
+
+  ],
+
+  "blocks": [
+
+    {
+      "type": "content_block",
+      "name": "Content block",
+
+      "settings": [
+
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body copy",
+          "info": "Use Bold formatting for inline sub-labels (e.g. \"Gold Jewellery:\")."
+        },
+
+        {
+          "type": "checkbox",
+          "id": "callout",
+          "label": "Shaded callout background",
+          "default": false
+        },
+
+        {
+          "type": "header",
+          "content": "List (optional)"
+        },
+
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List lead-in heading"
+        },
+
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items",
+          "info": "One item per line. Basic HTML tags such as <strong>Label:</strong> are supported for bold lead-ins."
+        },
+
+        {
+          "type": "select",
+          "id": "list_style",
+          "label": "List style",
+          "options": [
+            {
+              "value": "bullet",
+              "label": "Bulleted"
+            },
+            {
+              "value": "numbered",
+              "label": "Numbered"
+            }
+          ],
+          "default": "bullet"
+        },
+
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_fallback",
+          "label": "Image 1 fallback filename",
+          "info": "Asset filename used if no image is selected above."
+        },
+
+        {
+          "type": "header",
+          "content": "Image 2 (optional, side-by-side)"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_fallback",
+          "label": "Image 2 fallback filename",
+          "info": "Asset filename used if no image is selected above."
+        },
+
+        {
+          "type": "header",
+          "content": "Call to action (optional)"
+        },
+
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button text"
+        },
+
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "secondary"
+        }
+
+      ]
+    }
+
+  ]
+}
+{% endschema %}

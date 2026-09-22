@@ -1,0 +1,105 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "intro": {
+      "type": "page-hero-intro",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Natural Diamonds",
+        "description": "<p>Browse our live certified natural  inventory, filtered by cut, colour, clarity and carat. </p><p>Prefer to start from a setting instead?</p>",
+        "button_label": "Create your own ring",
+        "button_link": "shopify://pages/ring-builder",
+        "button_style": "primary",
+        "heading_color": "",
+        "heading_font": "cormorant",
+        "description_color": "",
+        "description_font": "glacial"
+      }
+    },
+    "app": {
+      "type": "app-embed-slot",
+      "blocks": {
+        "nivoda_connect_feed_NH9E8R": {
+          "type": "shopify://apps/nivoda-connect/blocks/feed/1818f65a-9917-4ef2-bca9-2424a925fc76",
+          "settings": {
+            "primary_color": "#bdc3c7",
+            "diamond_type_natural": true,
+            "diamond_type_lab": true,
+            "diamond_type_gem_v2": false,
+            "shapes": "ROUND,OVAL,EMERALD,PEAR,PRINCESS,CUSHION,RADIANT,MARQUISE,HEART,SQUARE_EMERALD",
+            "carats_min": 0,
+            "carats_max": 10,
+            "price_min": 1,
+            "price_max": 5000000,
+            "color_min": "J",
+            "color_max": "D",
+            "clarity_min": "I2",
+            "clarity_max": "FL",
+            "cut_min": "VG",
+            "cut_max": "ID",
+            "polish_min": "GD",
+            "polish_max": "EX",
+            "symmetry_min": "GD",
+            "symmetry_max": "EX",
+            "fluorescence_min": "NON",
+            "fluorescence_max": "VST",
+            "certificate_lab": "GIA,IGI,WISE",
+            "table_min": 0,
+            "table_max": 100,
+            "is_rjc": false,
+            "lead_capture_cta": "",
+            "translations_enabled": false
+          }
+        },
+        "nivoda_connect_feed_fancy_Gb8DBi": {
+          "type": "shopify://apps/nivoda-connect/blocks/feed_fancy/1818f65a-9917-4ef2-bca9-2424a925fc76",
+          "settings": {
+            "primary_color": "#BD9C42",
+            "diamond_type_natural": true,
+            "diamond_type_lab": false,
+            "shapes": "ROUND,OVAL,EMERALD,PEAR,PRINCESS,CUSHION,RADIANT,MARQUISE,HEART,SQUARE_EMERALD",
+            "carats_min": 0,
+            "carats_max": 10,
+            "price_min": 1,
+            "price_max": 5000000,
+            "color_fancy": "Yellow,Pink,Blue,Red,Green,Purple,Orange,Violet,Gray,Black,Brown,Champagne,Cognac,Chameleon,White,salt_and_pepper,Other",
+            "overtone_fancy": "None,Yellow,Yellowish,Pink,Pinkish,Blue,Blueish,Red,Reddish,Green,Greenish,Purple,Purplish,Orange,Orangey,Violet,Gray,Greyish,Black,Brown,Brownish,Champagne,Cognac,Chameleon,White,Other",
+            "clarity_min": "I2",
+            "clarity_max": "FL",
+            "cut_min": "VG",
+            "cut_max": "EIGHTX",
+            "polish_min": "GD",
+            "polish_max": "EX",
+            "symmetry_min": "GD",
+            "symmetry_max": "EX",
+            "fluorescence_min": "NON",
+            "fluorescence_max": "VST",
+            "certificate_lab": "GIA,IGI,WISE",
+            "table_min": 0,
+            "table_max": 100,
+            "is_rjc": false,
+            "lead_capture_cta": "",
+            "translations_enabled": false
+          }
+        }
+      },
+      "block_order": [
+        "nivoda_connect_feed_NH9E8R",
+        "nivoda_connect_feed_fancy_Gb8DBi"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "intro",
+    "app"
+  ]
+}

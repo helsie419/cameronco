@@ -1,0 +1,22 @@
+{% comment %}
+  Renders one office map. Uses a custom-styled Google Maps JavaScript
+  API map (geocoded client-side from the address, so there's no
+  hardcoded lat/lng to keep in sync if an office ever moves) when
+  settings.google_maps_api_key is set. Falls back to the plain
+  embedded iframe otherwise, so maps still work with zero setup.
+
+  Usage: {% render 'styled-map', map_id: 'unique-dom-id', address: '...', embed_url: '...', map_title: '...', aria_label: '...' %}
+{% endcomment %}
+
+{% if settings.google_maps_api_key != blank %}
+  <div
+    class="office-map styled-map"
+    id="{{ map_id }}"
+    data-styled-map
+    data-address="{{ address | escape }}"
+    role="img"
+    aria-label="{{ aria_label | default: map_title | escape }}"
+  ></div>
+{% else %}
+  <iframe allowfullscreen class="office-map" src="{{ embed_url }}" title="{{ map_title | escape }}"{% if aria_label != blank %} aria-label="{{ aria_label | escape }}"{% endif %}></iframe>
+{% endif %}

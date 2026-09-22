@@ -1,0 +1,35 @@
+<div aria-labelledby="modal-title" aria-modal="true" class="modal-overlay" id="pricing-modal" role="dialog">
+<div class="modal-card">
+<button aria-label="Close pricing modal" class="modal-close">×</button>
+<h2 class="cc-moved-style-001" id="modal-title">Request Pricing</h2>
+<form class="pricing-form" id="pricing-form" novalidate="">
+<div class="form-group">
+<label for="p-name">Name *</label>
+<input autocomplete="name" id="p-name" name="name" placeholder="Your full name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="p-email">Email *</label>
+<input autocomplete="email" id="p-email" name="email" placeholder="your@email.com" required="" type="email"/>
+</div>
+<div class="form-group">
+<label for="rte-content">Please describe what items you are looking for pricing for</label>
+<div class="rte-wrap">
+<div aria-label="Text formatting" class="rte-toolbar" role="toolbar">
+<button aria-label="Bold" data-cmd="bold" type="button"><strong>B</strong></button>
+<button aria-label="Italic" data-cmd="italic" type="button"><em>I</em></button>
+<button aria-label="Underline" data-cmd="underline" type="button"><u>U</u></button>
+<select aria-label="Text format" data-cmd="formatblock" title="Format">
+<option value="p">Normal Text</option>
+<option value="h1">Heading 1</option>
+<option value="h2">Heading 2</option>
+<option value="h3">Heading 3</option>
+</select>
+</div>
+<div aria-label="Item description" aria-multiline="true" class="rte-content" contenteditable="true" id="rte-content" role="textbox"></div>
+</div>
+</div>
+<button class="btn-submit btn-red cc-button-primary" type="submit">Submit</button>
+</form>
+<div class="form-success" hidden="" id="form-success"><p>Thank you — we'll be in touch shortly.</p></div>
+</div>
+</div>

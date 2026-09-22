@@ -1,0 +1,808 @@
+<style>
+/* =========================================================
+   CAMERON & CO HERO — GLOBAL RESET & LAYOUT
+   ========================================================= */
+
+body.template-index main,
+body.template-index #MainContent,
+body.template-index .main-content,
+body.template-index .content-for-layout,
+body.template-index [role="main"] {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  gap: 0 !important;
+  row-gap: 0 !important;
+  column-gap: 0 !important;
+}
+
+.site-header,
+.shopify-section-group-header-group,
+#shopify-section-header,
+header.site-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+body.template-index #shopify-section-{{ section.id }} {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* =========================================================
+   HERO — DESKTOP
+   ========================================================= */
+
+.site-hero {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 600px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 0 !important;
+  background: #f8f6f2;
+}
+
+.site-hero-photo {
+  position: absolute;
+  inset: 0 !important;
+  width: auto;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: var(--hero-bg-x, 100%) var(--hero-bg-y, 50%) !important;
+  background-size: cover !important;
+  transform: scale(var(--hero-bg-scale, 1)) !important;
+  transform-origin: var(--hero-bg-x, 100%) var(--hero-bg-y, 50%) !important;
+  overflow: hidden;
+}
+
+.site-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 1;
+}
+
+.site-hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 60px 40px;
+  margin-left: 12vw;
+  max-width: 650px;
+}
+
+.site-hero h1 {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(46px, 5.2vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.site-hero-eyebrow {
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.2;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
+}
+
+.site-hero-line1 {
+  display: block;
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: clamp(42px, 3.6vw, 54px) !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.98 !important;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
+}
+
+.site-hero-line2 {
+  display: block;
+  font-family: "EB Garamond", Georgia, serif !important;
+  font-size: clamp(68px, 5.2vw, 74px) !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.98 !important;
+  margin-top: 6px;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px));
+}
+
+.site-hero-cta {
+  height: 46px !important;
+  width: 220px !important;
+  justify-content: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box !important;
+  transform: translate(var(--el-x, 0px), var(--el-y, 0px)) !important;
+}
+
+@media (max-width: 768px) {
+  .site-hero h1 {
+    font-size: clamp(36px, 10vw, 52px);
+  }
+
+  .site-hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    margin-bottom: 18px;
+  }
+}
+
+/* =========================================================
+   HERO — MOBILE ADJUSTMENTS (<= 900px)
+   ========================================================= */
+
+@media (max-width: 900px) {
+  /* Single full-bleed background photo, text overlaid on top.
+     The image itself has plenty of blank fabric up top (where the
+     text sits) and the box lower down — no separate white block. */
+  .site-hero {
+    min-height: 560px !important;
+    height: 76svh !important;
+    max-height: 700px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: {{ section.settings.text_v_position_mobile | default: 'flex-end' }} !important;
+    align-items: center !important;
+    background: #f8f6f2 !important;
+  }
+
+  .site-hero-photo {
+    position: absolute !important;
+    inset: 0 !important;
+    {% if section.settings.mobile_background_image %}
+      background-image: url('{{ section.settings.mobile_background_image | image_url: width: 1400 }}') !important;
+    {% elsif section.settings.background_image %}
+      background-image: url('{{ section.settings.background_image | image_url: width: 1400 }}') !important;
+    {% else %}
+      background-image: url('{{ 'cameron-co-mobile-engagement-ring-box-hero.webp' | asset_url }}') !important;
+    {% endif %}
+    background-position: var(--hero-bg-x-mobile, 62%) var(--hero-bg-y-mobile, 52%) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    transform: scale(var(--hero-bg-scale-mobile, 1)) !important;
+  }
+
+  .site-hero-video {
+    object-position: center 58% !important;
+  }
+
+  .site-hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background:
+      linear-gradient(to bottom, rgba(255,255,255,.72) 0%, rgba(255,255,255,.36) 28%, rgba(255,255,255,.04) 58%, rgba(255,255,255,.18) 100%),
+      radial-gradient(circle at 50% 38%, rgba(255,255,255,.76) 0%, rgba(255,255,255,.36) 28%, rgba(255,255,255,0) 58%) !important;
+  }
+
+  .site-hero::after {
+    opacity: .55 !important;
+  }
+
+  .site-hero-inner {
+    position: relative !important;
+    z-index: 2 !important;
+    padding: 34px 26px 44px !important;
+    width: min(100%, 390px) !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    text-align: center !important;
+    transform: translate(var(--hero-text-offset-x-mobile, 0px), var(--hero-text-offset-y-mobile, 0px)) !important;
+  }
+
+  .site-hero-eyebrow {
+    font-size: 11px !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    margin-bottom: 12px !important;
+    color: {{ section.settings.eyebrow_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
+  }
+
+  .site-hero-line1 {
+    font-size: clamp(42px, 11vw, 62px) !important;
+    line-height: 1.15 !important;
+    color: {{ section.settings.line1_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
+  }
+
+  .site-hero-line2 {
+    font-size: clamp(42px, 11vw, 62px) !important;
+    line-height: 1.1 !important;
+    margin-top: 2px !important;
+    margin-bottom: 22px !important;
+    color: {{ section.settings.line2_color_mobile }} !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
+  }
+
+  .site-hero-line2 .accent {
+    color: {{ section.settings.accent_color_mobile }} !important;
+  }
+
+  .site-hero-cta {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: min(100%, 250px) !important;
+    height: 48px !important;
+    padding: 0 22px !important;
+    font-size: 18px !important;
+    margin: 0 auto !important;
+    border-radius: 999px !important;
+    transform: translate(var(--el-x-m, 0px), var(--el-y-m, 0px)) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-hero {
+    min-height: 585px !important;
+    height: 78svh !important;
+  }
+
+  .site-hero-photo {
+    background-position: var(--hero-bg-x-mobile, 64%) var(--hero-bg-y-mobile, 52%) !important;
+    background-size: contain !important;
+  }
+
+  .site-hero-inner {
+    padding-inline: 22px !important;
+  }
+
+  .site-hero-eyebrow {
+    margin-bottom: 12px !important;
+  }
+}
+</style>
+
+<section
+  class="site-hero"
+  aria-label="Cameron &amp; Co — jewellery insurance specialists"
+  style="
+    justify-content: {{ section.settings.text_h_position }};
+    align-items: {{ section.settings.text_v_position }};
+  "
+>
+  {% if section.settings.media_type == 'video' %}
+    <div class="site-hero-photo" style="--hero-bg-x: {{ section.settings.hero_background_position_x | default: 100 }}%; --hero-bg-y: {{ section.settings.hero_background_position_y | default: 50 }}%; --hero-bg-x-mobile: {{ section.settings.hero_background_position_x_mobile | default: 62 }}%; --hero-bg-y-mobile: {{ section.settings.hero_background_position_y_mobile | default: 52 }}%; --hero-bg-scale: {{ section.settings.hero_background_zoom | default: 100 | divided_by: 100.0 }}; --hero-bg-scale-mobile: {{ section.settings.hero_background_zoom_mobile | default: 100 | divided_by: 100.0 }};">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'site-hero-video' }}
+      {% elsif section.settings.video_mp4_url != blank %}
+        <video autoplay loop muted playsinline class="site-hero-video"{% if section.settings.background_image %} poster="{{ section.settings.background_image | image_url: width: 2400 }}"{% else %} poster="{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}"{% endif %}>
+          <source src="{{ section.settings.video_mp4_url }}" type="video/mp4">
+        </video>
+      {% elsif section.settings.background_image %}
+        <div
+          class="site-hero-photo"
+          style="background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');"
+        ></div>
+      {% else %}
+        <div
+          class="site-hero-photo"
+          style="background-image: url('{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}');"
+        ></div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div
+      class="site-hero-photo"
+      style="
+        --hero-bg-x: {{ section.settings.hero_background_position_x | default: 100 }}%;
+        --hero-bg-y: {{ section.settings.hero_background_position_y | default: 50 }}%;
+        --hero-bg-x-mobile: {{ section.settings.hero_background_position_x_mobile | default: 62 }}%;
+        --hero-bg-y-mobile: {{ section.settings.hero_background_position_y_mobile | default: 52 }}%;
+        --hero-bg-scale: {{ section.settings.hero_background_zoom | default: 100 | divided_by: 100.0 }};
+        --hero-bg-scale-mobile: {{ section.settings.hero_background_zoom_mobile | default: 100 | divided_by: 100.0 }};
+        {% if section.settings.background_image %}
+          background-image: url('{{ section.settings.background_image | image_url: width: 2400 }}');
+        {% else %}
+          background-image: url('{{ 'cameron-co-homepage-hero-desktop.png' | asset_url }}');
+        {% endif %}
+      "
+    ></div>
+  {% endif %}
+
+  <div
+    class="site-hero-inner"
+    style="
+      --hero-text-offset-x-mobile: {{ section.settings.text_offset_x_mobile | default: 0 }}px;
+      --hero-text-offset-y-mobile: {{ section.settings.text_offset_y_mobile | default: 0 }}px;
+      {% if section.settings.text_offset_x != 0 or section.settings.text_offset_y != 0 %}
+        transform: translate(
+          {{ section.settings.text_offset_x }}px,
+          {{ section.settings.text_offset_y }}px
+        );
+      {% endif %}
+    "
+  >
+    <div
+      class="site-hero-eyebrow cc-font-body-{{ section.settings.body_font }}"
+      style="
+        color: {{ section.settings.eyebrow_color }};
+        --el-x: {{ section.settings.eyebrow_offset_x | default: 0 }}px;
+        --el-y: {{ section.settings.eyebrow_offset_y | default: 0 }}px;
+        --el-x-m: {{ section.settings.eyebrow_offset_x_mobile | default: 0 }}px;
+        --el-y-m: {{ section.settings.eyebrow_offset_y_mobile | default: 0 }}px;
+      "
+    >
+      {{ section.settings.eyebrow }}
+    </div>
+
+    <h2>
+      <span
+        class="site-hero-line1 cc-font-body-{{ section.settings.body_font }}"
+        style="
+          color: {{ section.settings.line1_color }};
+          --el-x: {{ section.settings.line1_offset_x | default: 0 }}px;
+          --el-y: {{ section.settings.line1_offset_y | default: 0 }}px;
+          --el-x-m: {{ section.settings.line1_offset_x_mobile | default: 0 }}px;
+          --el-y-m: {{ section.settings.line1_offset_y_mobile | default: 0 }}px;
+        "
+      >
+        {{ section.settings.line1 }}
+      </span>
+
+      <span
+        class="site-hero-line2 cc-font-heading-{{ section.settings.heading_font }}"
+        style="
+          color: {{ section.settings.line2_color }};
+          --el-x: {{ section.settings.line2_offset_x | default: 0 }}px;
+          --el-y: {{ section.settings.line2_offset_y | default: 0 }}px;
+          --el-x-m: {{ section.settings.line2_offset_x_mobile | default: 0 }}px;
+          --el-y-m: {{ section.settings.line2_offset_y_mobile | default: 0 }}px;
+        "
+      >
+        {{ section.settings.line2 }}
+
+        <span
+          class="accent"
+          style="color: {{ section.settings.accent_color }};"
+        >
+          {{ section.settings.line2_accent }}
+        </span>
+      </span>
+    </h2>
+
+    <a
+      class="site-hero-cta cc-button-{{ section.settings.button_style | default: 'primary' }}"
+      href="{{ section.settings.cta_link }}"
+      style="
+      "
+    >
+      {{ section.settings.cta_text }}
+
+      <svg
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+      >
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Media Options"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media Type",
+      "options": [
+        { "value": "image", "label": "Still Image" },
+        { "value": "video", "label": "Background Video" }
+      ],
+      "default": "image",
+      "info": "Switch between Still Image and Background Video to compare performance in your store."
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (or Video Poster Fallback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Mobile Background Image",
+      "info": "Optional portrait crop for phones. Recommended size: 1080 x 1440 or 1080 x 1620."
+    },
+    {
+      "type": "header",
+      "content": "Background image position"
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_x",
+      "label": "Desktop horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "info": "0% is far left, 100% is far right."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_y",
+      "label": "Desktop vertical position",
+      "min": -50,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "default": 50,
+      "info": "50% is centered. Lower values move the image up; higher values move it down."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_x_mobile",
+      "label": "Mobile horizontal position",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 62,
+      "info": "0% is far left, 100% is far right."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_position_y_mobile",
+      "label": "Mobile vertical position",
+      "min": -50,
+      "max": 150,
+      "step": 2,
+      "unit": "%",
+      "default": 52,
+      "info": "52% is centered. Lower values move the image up; higher values move it down."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_zoom",
+      "label": "Desktop background zoom",
+      "min": 50,
+      "max": 200,
+      "step": 2,
+      "unit": "%",
+      "default": 120,
+      "info": "50% shows more of the image. Higher values zoom in."
+    },
+    {
+      "type": "range",
+      "id": "hero_background_zoom_mobile",
+      "label": "Mobile background zoom",
+      "min": 50,
+      "max": 200,
+      "step": 2,
+      "unit": "%",
+      "default": 120,
+      "info": "50% shows more of the image. Higher values zoom in."
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify Hosted Video",
+      "info": "Select an uploaded video file from your Shopify Files."
+    },
+    {
+      "type": "url",
+      "id": "video_mp4_url",
+      "label": "Direct MP4 Video URL (Optional fallback)"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Jewellery Insurance Specialists — Sydney & Melbourne"
+    },
+    {
+      "type": "text",
+      "id": "line1",
+      "label": "Headline — line 1",
+      "default": "What was lost,"
+    },
+    {
+      "type": "text",
+      "id": "line2",
+      "label": "Headline — line 2",
+      "default": "beautifully"
+    },
+    {
+      "type": "text",
+      "id": "line2_accent",
+      "label": "Headline — accent word",
+      "default": "restored."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Book a private consultation"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow text color",
+      "default": "#4D493F"
+    },
+    {
+      "type": "color",
+      "id": "line1_color",
+      "label": "Headline line 1 color",
+      "default": "#615F5A"
+    },
+    {
+      "type": "color",
+      "id": "line2_color",
+      "label": "Headline line 2 color",
+      "default": "#4D493F"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent word color",
+      "default": "#E5C33C"
+    },
+    {
+      "type": "header",
+      "content": "Colors — mobile only"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color_mobile",
+      "label": "Eyebrow text color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "line1_color_mobile",
+      "label": "Headline line 1 color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "line2_color_mobile",
+      "label": "Headline line 2 color (mobile)",
+      "default": "#3a362f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color_mobile",
+      "label": "Accent word color (mobile)",
+      "default": "#BD9C42"
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Headline font",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Eyebrow / line 1 font",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference (default)" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ],
+      "default": "glacial"
+    },
+    {
+      "type": "header",
+      "content": "Position — Desktop"
+    },
+    {
+      "type": "select",
+      "id": "text_h_position",
+      "label": "Horizontal position",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "text_v_position",
+      "label": "Vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-end"
+    },
+    {
+      "type": "range",
+      "id": "text_offset_x",
+      "label": "Move whole text block — horizontal",
+      "min": -400, "max": 400, "step": 10, "unit": "px", "default": 300
+    },
+    {
+      "type": "range",
+      "id": "text_offset_y",
+      "label": "Move whole text block — vertical",
+      "min": -300, "max": 300, "step": 10, "unit": "px", "default": -130
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Eyebrow (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 1 (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 2 (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_x",
+      "label": "Horizontal",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_y",
+      "label": "Vertical",
+      "min": -200, "max": 200, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Position — Mobile"
+    },
+    {
+      "type": "select",
+      "id": "text_v_position_mobile",
+      "label": "Text block position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "flex-start",
+      "info": "Sets the overall anchor point, then use the fine-tune sliders below to nudge from there."
+    },
+    {
+      "type": "range",
+      "id": "text_offset_x_mobile",
+      "label": "Move whole text block — horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_offset_y_mobile",
+      "label": "Move whole text block — vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Eyebrow (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 1 (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line1_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Fine-tune — Headline line 2 (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_x_mobile",
+      "label": "Horizontal",
+      "min": -150, "max": 150, "step": 5, "unit": "px", "default": 0
+    },
+    {
+      "type": "range",
+      "id": "line2_offset_y_mobile",
+      "label": "Vertical",
+      "min": -100, "max": 500, "step": 10, "unit": "px", "default": 0
+    }
+  ]
+}
+{% endschema %}

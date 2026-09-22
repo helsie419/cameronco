@@ -1,0 +1,321 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "homepage-hero",
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        ".site-hero-eyebrow {font-weight: 500;}",
+        ".site-hero-line1 {font-family: \"EB Garamond\", Georgia, serif; font-weight: 400; font-style: normal;}",
+        ".site-hero-line2 {font-weight: 400; font-style: italic;}"
+      ],
+      "settings": {
+        "media_type": "image",
+        "background_image": "shopify://shop_images/cameron-co-oval-diamond-engagement-ring-box-ivory-satin-desktop-hero-v2.webp",
+        "mobile_background_image": "shopify://shop_images/cameron-co-mobile-engagement-ring-box-hero.webp",
+        "hero_background_position_x": 65,
+        "hero_background_position_y": 26,
+        "hero_background_position_x_mobile": 62,
+        "hero_background_position_y_mobile": 52,
+        "hero_background_zoom": 138,
+        "hero_background_zoom_mobile": 120,
+        "video_mp4_url": "",
+        "eyebrow": "Jewellery Insurance Specialists",
+        "line1": "What was lost,",
+        "line2": "beautifully",
+        "line2_accent": "recreated.",
+        "cta_text": "Book an appointment",
+        "cta_link": "/pages/booking",
+        "button_style": "primary",
+        "eyebrow_color": "#4d493f",
+        "line1_color": "#615f5a",
+        "line2_color": "#4d493f",
+        "accent_color": "#BD9C42",
+        "eyebrow_color_mobile": "#3a362f",
+        "line1_color_mobile": "#3a362f",
+        "line2_color_mobile": "#3a362f",
+        "accent_color_mobile": "#BD9C42",
+        "heading_font": "garamond",
+        "body_font": "montserrat",
+        "text_h_position": "flex-start",
+        "text_v_position": "center",
+        "text_offset_x": 40,
+        "text_offset_y": 0,
+        "eyebrow_offset_x": 0,
+        "eyebrow_offset_y": 0,
+        "line1_offset_x": 0,
+        "line1_offset_y": 0,
+        "line2_offset_x": 0,
+        "line2_offset_y": 0,
+        "text_v_position_mobile": "flex-start",
+        "text_offset_x_mobile": 0,
+        "text_offset_y_mobile": 0,
+        "eyebrow_offset_x_mobile": 0,
+        "eyebrow_offset_y_mobile": 0,
+        "line1_offset_x_mobile": 0,
+        "line1_offset_y_mobile": 0,
+        "line2_offset_x_mobile": 0,
+        "line2_offset_y_mobile": 0
+      }
+    },
+    "bento": {
+      "type": "homepage-bento",
+      "custom_css": [
+        "h2 {font-size: 32px;}",
+        ".hero-card {height: 260px; overflow: hidden;}",
+        ".hero-card.tall {height: 540px;}",
+        ".hero-card img {height: 100%;}",
+        ".hero-right-col > .hero-card:first-child img {object-position: 37% center;}",
+        "@media (max-width: 768px) {.hero-card {height: 220px; } .hero-card.tall {height: 320px; }}"
+      ],
+      "settings": {
+        "eyebrow": "What we can do for you",
+        "heading": "Remodelling, Repairs & Replacement",
+        "subheading": "Working with Australia's major insurers and loss adjusters for over 25 years — current appraisals, trusted replacement, and bespoke remaking, all under one roof.",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#BD9C42",
+        "heading_color": "#171d29",
+        "subheading_color": "",
+        "card_heading_color": "",
+        "eyebrow_color_mobile": "#BD9C42",
+        "heading_color_mobile": "#171d29",
+        "subheading_color_mobile": "",
+        "heading_font": "cormorant",
+        "card_heading_font": "cormorant",
+        "body_font": "glacial",
+        "image_1": "shopify://shop_images/cameron-co-jewellery-remodelling-workbench.webp",
+        "label_1": "Jewellery Remodelling",
+        "image_1_alt": "Jeweller using tweezers to reshape a diamond ring at a bright workbench during a remodelling project",
+        "link_1": "shopify://pages/jewellery-remodelling",
+        "image_2": "shopify://shop_images/cameron-co-jewellery-repair-laser-welding.webp",
+        "label_2": "Repairs",
+        "image_2_alt": "Jewellery repair workbench with tools and a ring being restored",
+        "link_2": "/pages/jewelleryrepairs",
+        "image_3": "shopify://shop_images/cameron-co-appraisal-consultation.webp",
+        "label_3": "Appraisals",
+        "image_3_alt": "Jeweller examining a diamond ring with a loupe during an appraisal inspection",
+        "link_3": "/pages/appraisals",
+        "image_4": "shopify://shop_images/cameron-co-replacement-ring-selection.webp",
+        "label_4": "Jewellery Replacement",
+        "image_4_alt": "Solitaire diamond engagement ring beside hand-drawn design sketches for a replacement piece",
+        "link_4": "/pages/jewelleryreplacement"
+      }
+    },
+    "services": {
+      "type": "homepage-services",
+      "blocks": {
+        "service-1": {
+          "type": "service_item",
+          "settings": {
+            "title": "Appraisals",
+            "description": "By phone, in our showroom, or at your home or workplace — whatever suits your schedule. Appointments run Monday to Friday, with extended hours available.",
+            "link": "/pages/appraisals"
+          }
+        },
+        "service-2": {
+          "type": "service_item",
+          "settings": {
+            "title": "Jewellery Remodelling",
+            "description": "We take apart the original piece, reuse the gems and metals, and craft a custom, updated design built around how you actually wear it.",
+            "link": "/pages/jewelleryremodelling"
+          }
+        },
+        "service-3": {
+          "type": "service_item",
+          "settings": {
+            "title": "Repairs",
+            "description": "Regular checks catch wear and tear before it becomes loss. Every visit includes a complimentary ring clean and inspection.",
+            "link": "/pages/jewelleryrepairs"
+          }
+        },
+        "service-4": {
+          "type": "service_item",
+          "settings": {
+            "title": "Jewellery Replacement",
+            "description": "Once your insurer establishes a replacement value, choose from stock, special order, or a piece individually designed and handcrafted in our workshop.",
+            "link": "/pages/jewelleryreplacement"
+          }
+        }
+      },
+      "block_order": [
+        "service-1",
+        "service-2",
+        "service-3",
+        "service-4"
+      ],
+      "settings": {
+        "eyebrow": "What we can do for you",
+        "heading": "Four ways we help",
+        "show_side_image": false,
+        "rings_image_alt": "Stack of gold and silver bezel-set gemstone rings",
+        "button_text": "Book an appointment",
+        "button_link": "/pages/contact",
+        "button_style": "secondary",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#BD9C42",
+        "heading_color": "#171d29",
+        "item_title_color": "",
+        "eyebrow_color_mobile": "#BD9C42",
+        "heading_color_mobile": "#171d29",
+        "item_title_color_mobile": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial",
+        "item_title_font": "cormorant"
+      }
+    },
+    "gallery": {
+      "type": "homepage-gallery",
+      "blocks": {
+        "gallery-1": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-pink-sapphire-pear-bridal-set.webp",
+            "image_alt": "Pink sapphire pear-cut halo bridal ring set in yellow gold",
+            "image_fallback": "cameron-co-pink-sapphire-pear-bridal-set.webp"
+          }
+        },
+        "gallery-2": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-blue-sapphire-wide-band-ring.webp",
+            "image_alt": "Blue sapphire emerald-cut wide band ring in yellow gold",
+            "image_fallback": "cameron-co-blue-sapphire-wide-band-ring.webp"
+          }
+        },
+        "gallery-3": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-amethyst-emerald-cut-ring.webp",
+            "image_alt": "Amethyst emerald-cut solitaire ring in yellow gold",
+            "image_fallback": "cameron-co-amethyst-emerald-cut-ring.webp"
+          }
+        },
+        "gallery-4": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-tanzanite-three-stone-ring.webp",
+            "image_alt": "Tanzanite and diamond three-stone ring in white gold",
+            "image_fallback": "cameron-co-tanzanite-three-stone-ring.webp"
+          }
+        },
+        "gallery-5": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-opal-inlay-mens-wedding-band.webp",
+            "image_alt": "Opal inlay men's wedding band in yellow gold",
+            "image_fallback": "cameron-co-opal-inlay-mens-wedding-band.webp"
+          }
+        },
+        "gallery-6": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-art-deco-filigree-band-ring.webp",
+            "image_alt": "Art Deco style filigree band ring in white gold",
+            "image_fallback": "cameron-co-art-deco-filigree-band-ring.webp"
+          }
+        },
+        "gallery-7": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-heart-cut-diamond-solitaire-ring.webp",
+            "image_alt": "Heart-cut diamond solitaire ring in yellow gold",
+            "image_fallback": "cameron-co-heart-cut-diamond-solitaire-ring.webp"
+          }
+        },
+        "gallery-8": {
+          "type": "gallery_item",
+          "settings": {
+            "image": "shopify://shop_images/cameron-co-rectangular-diamond-cluster-ring.webp",
+            "image_alt": "Rectangular diamond cluster statement ring in white gold",
+            "image_fallback": "cameron-co-rectangular-diamond-cluster-ring.webp"
+          }
+        }
+      },
+      "block_order": [
+        "gallery-1",
+        "gallery-2",
+        "gallery-3",
+        "gallery-4",
+        "gallery-5",
+        "gallery-6",
+        "gallery-7",
+        "gallery-8"
+      ],
+      "settings": {
+        "eyebrow": "Our Craftsmanship",
+        "heading": "A Glimpse of Our Jewellery",
+        "subheading": "",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#BD9C42",
+        "heading_color": "#171d29",
+        "subheading_color": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    },
+    "testimonials": {
+      "type": "homepage-testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Cate",
+            "quote": "April and the team did a fantastic job replacing my wedding ring. From sourcing an outstanding stone, developing the design, to crafting the final piece, I always felt like I was in the best hands possible. Importantly, communication was always clear and responsive. Not only did Cameron & Co totally meet my brief for a 'showstopper' ring, they delivered well beyond my expectations. They also turned what could have been a very difficult and upsetting experience into something special."
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Jillian",
+            "quote": "Thank you April for the incredible service you provided when I finally decided to have my ring made. From that initial phone call discussing what I would like, to receiving the design, then to it all actually being completed was rather rapid. April was extremely knowledgeable, helpful and friendly. She took the time to listen to what I wanted. I could not fault any of my dealings with April & Julia at Cameron & Co and would highly recommend them to anyone looking for jewellery or for that “WOW” factor in an extremely special piece."
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Kristy",
+            "quote": "Cannot recommend this business more! It was always going to be hard to replace a very sentimental necklace, but these guys nailed it. Huge shout out to Paige for being so patient with me, your customer service is second to none darling! Thank you thank you thank you 🩷"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3"
+      ],
+      "settings": {
+        "eyebrow": "What others have to say",
+        "heading": "Client stories",
+        "button_text": "Read more",
+        "button_link": "/pages/testimonials",
+        "button_style": "primary",
+        "background_color": "#ffffff",
+        "eyebrow_color": "#BD9C42",
+        "heading_color": "#171d29",
+        "name_color": "#BD9C42",
+        "quote_color": "",
+        "eyebrow_color_mobile": "#BD9C42",
+        "heading_color_mobile": "#171d29",
+        "name_color_mobile": "#BD9C42",
+        "quote_color_mobile": "",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "bento",
+    "services",
+    "gallery",
+    "testimonials"
+  ]
+}

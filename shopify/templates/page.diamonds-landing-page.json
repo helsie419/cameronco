@@ -1,0 +1,76 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "diamonds-landing-page",
+      "blocks": {
+        "natural": {
+          "type": "stone_card",
+          "settings": {
+            "eyebrow": "Natural Diamonds",
+            "heading": "Natural Diamonds",
+            "description": "<p>Formed deep within the earth over geological timescales, natural diamonds are finite, individual and prized for their rarity and enduring appeal.</p><p>Each stone carries its own combination of cut, colour, clarity and carat weight, giving you the opportunity to select a diamond whose character and proportions suit your design.</p>",
+            "image_alt": "Natural loose diamonds in a selection of classic cuts",
+            "image_fallback": "cameron-co-loose-diamond-shapes-collection.webp",
+            "link": "shopify://pages/natural",
+            "link_text": "Explore Natural Diamonds"
+          }
+        },
+        "lab-grown": {
+          "type": "stone_card",
+          "settings": {
+            "eyebrow": "Lab-Grown Diamonds",
+            "heading": "Lab-Grown Diamonds",
+            "description": "<p>Lab-grown diamonds are genuine diamonds with essentially the same crystal structure, hardness, fire and brilliance as natural diamonds. The difference lies in how they are formed.</p><p>Because they can generally be produced at a lower cost, lab-grown diamonds can offer greater size or higher specifications within the same budget.</p>",
+            "image": "shopify://shop_images/Lab_Grown_Diamonds.png",
+            "image_alt": "Loose lab-grown diamonds showing brilliant faceting and sparkle",
+            "image_fallback": "cameron-co-loose-diamond-shapes-collection.webp",
+            "link": "shopify://pages/lab-grown",
+            "link_text": "Explore Lab-Grown Diamonds"
+          }
+        },
+        "gemstones": {
+          "type": "stone_card",
+          "disabled": true,
+          "settings": {
+            "eyebrow": "Coloured Gemstones",
+            "heading": "Gemstones",
+            "description": "<p>Coloured gemstones offer almost limitless opportunities for individuality. Sapphires, rubies, emeralds, tourmalines and many other stones bring distinctive colour, personality and character to a design.</p><p>Colour, tone, saturation, clarity and cut all influence a gemstone's appearance, making each stone noticeably individual.</p>",
+            "image_alt": "Selection of coloured gemstones suitable for bespoke jewellery",
+            "image_fallback": "",
+            "link": "shopify://pages/gems",
+            "link_text": "Explore Gemstones"
+          }
+        }
+      },
+      "block_order": [
+        "natural",
+        "lab-grown",
+        "gemstones"
+      ],
+      "settings": {
+        "eyebrow": "Diamonds & Gemstones",
+        "heading": "Find the Stone That's Right for You",
+        "intro": "<p>Choosing a centre stone is one of the most personal parts of creating a piece of jewellery. Explore natural diamonds, lab-grown diamonds and coloured gemstones — each offering its own combination of beauty, character, rarity and value.</p>",
+        "help_heading": "Not Sure Which Is Right for You?",
+        "help_copy": "<p>The right choice depends on what matters most to you — rarity, budget, size, colour, origin or simply the stone you are drawn to. Our team can help you compare your options and choose a stone that works beautifully with both your design and your priorities.</p>",
+        "cta_text": "Book an Appointment",
+        "cta_link": "/pages/booking",
+        "button_style": "primary",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

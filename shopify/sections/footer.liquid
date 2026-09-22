@@ -1,0 +1,211 @@
+{% case section.settings.heading_font %}
+  {% when 'playfair' %}{% assign footer_heading_family = "'Playfair Display', Georgia, serif" %}
+  {% when 'garamond' %}{% assign footer_heading_family = "'EB Garamond', Georgia, serif" %}
+  {% when 'baskerville' %}{% assign footer_heading_family = "'Libre Baskerville', Georgia, serif" %}
+  {% else %}{% assign footer_heading_family = "'Cormorant Garamond', Georgia, serif" %}
+{% endcase %}
+{% case section.settings.body_font %}
+  {% when 'montserrat' %}{% assign footer_body_family = "'Montserrat', Arial, sans-serif" %}
+  {% when 'inter' %}{% assign footer_body_family = "'Inter', Arial, sans-serif" %}
+  {% when 'poppins' %}{% assign footer_body_family = "'Poppins', Arial, sans-serif" %}
+  {% else %}{% assign footer_body_family = "'Glacial Indifference', Arial, sans-serif" %}
+{% endcase %}
+{% assign footer_background_alpha = section.settings.background_opacity | default: 80 | divided_by: 100.0 %}
+{% assign footer_texture_alpha = section.settings.texture_opacity | default: 14 | divided_by: 100.0 %}
+{% assign footer_background = section.settings.background_color | color_modify: 'alpha', footer_background_alpha %}
+<style>
+#shopify-section-{{ section.id }},
+#shopify-section-{{ section.id }}.shopify-section,
+#shopify-section-{{ section.id }} .site-footer {
+  background-color: {{ footer_background }} !important;
+  background-image: none !important;
+}
+#shopify-section-{{ section.id }} .site-footer::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }}) center/cover no-repeat !important;
+  opacity: {{ footer_texture_alpha }} !important;
+  pointer-events: none !important;
+}
+.site-footer h2 { color: {{ section.settings.heading_color }} !important; font-family: {{ footer_heading_family }} !important; }
+.site-footer,
+.site-footer p,
+.site-footer a,
+.site-footer li { color: {{ section.settings.text_color }}; font-family: {{ footer_body_family }} !important; }
+@media (max-width: 900px) {
+  .site-footer h2 { color: {{ section.settings.heading_color_mobile }} !important; }
+  .site-footer,
+  .site-footer p,
+  .site-footer a,
+  .site-footer li { color: {{ section.settings.text_color_mobile }} !important; }
+}
+</style>
+<footer class="site-footer" role="contentinfo"><div class="footer-inner">
+<div class="footer-top">
+<div aria-label="Office locations" class="footer-offices">
+<div class="footer-office">
+<h2>{{ section.settings.office1_name }}</h2>
+<a href="tel:{{ section.settings.office1_phone_href }}">{{ section.settings.office1_phone }}</a>
+<p>{{ section.settings.office1_address_line1 }}</p>
+<p>{{ section.settings.office1_address_line2 }}</p>
+</div>
+<div class="footer-office">
+<h2>{{ section.settings.office2_name }}</h2>
+<a href="tel:{{ section.settings.office2_phone_href }}">{{ section.settings.office2_phone }}</a>
+<p>{{ section.settings.office2_address_line1 }}</p>
+<p>{{ section.settings.office2_address_line2 }}</p>
+</div>
+</div>
+<div class="footer-right-col">
+<div class="footer-social">
+<a aria-label="Cameron &amp; Co on Facebook" href="{{ section.settings.facebook_url | default: 'https://www.facebook.com/profile.php?id=100076065382587' }}" rel="noreferrer noopener" target="_blank">
+<img alt="Facebook icon" height="30" src="{{ 'cameron-co-facebook-icon.webp' | asset_url }}" width="30"/></a>
+<a aria-label="Cameron &amp; Co on Instagram" href="{{ section.settings.instagram_url | default: 'https://www.instagram.com/cameroncojewellery/' }}" rel="noreferrer noopener" target="_blank">
+<img alt="Instagram icon" height="30" src="{{ 'cameron-co-instagram-icon.webp' | asset_url }}" width="30"/></a>
+</div>
+</div>
+<div class="footer-col">
+<h2>{{ section.settings.menu_col_heading }}</h2>
+<ul>
+{% if section.settings.menu_col_links.links.size > 0 %}
+  {% for link in section.settings.menu_col_links.links %}
+<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  {% endfor %}
+  {% if section.settings.show_pricing_link %}
+<li><a class="open-pricing-modal" href="#">{{ section.settings.pricing_link_text }}</a></li>
+  {% endif %}
+{% else %}
+<li><a href="{{ routes.root_url }}">Home</a></li>
+<li><a href="{{ pages['testimonials'].url }}">Testimonials</a></li>
+<li><a href="{{ pages['booking'].url }}">Book Appointment</a></li>
+{% if section.settings.show_pricing_link %}
+<li><a class="open-pricing-modal" href="#">{{ section.settings.pricing_link_text }}</a></li>
+{% endif %}
+<li><a href="{{ pages['diamonds'].url }}">Diamonds</a></li>
+<li><a href="{{ pages['ring-builder'].url }}">Ring Builder</a></li>
+{% endif %}
+</ul>
+</div>
+<div class="footer-col">
+<h2>{{ section.settings.about_col_heading }}</h2>
+<ul>
+{% if section.settings.about_col_links.links.size > 0 %}
+  {% for link in section.settings.about_col_links.links %}
+<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  {% endfor %}
+{% else %}
+<li><a href="{{ pages['about'].url }}">About</a></li>
+<li><a href="{{ pages['faq'].url }}">FAQ</a></li>
+<li><a href="{{ pages['contact'].url }}">Contact</a></li>
+<li><a href="{{ pages['sydneyoffice'].url }}">Services Sydney</a></li>
+<li><a href="{{ pages['melbourneoffice'].url }}">Services Melbourne</a></li>
+{% endif %}
+</ul>
+</div>
+<div class="footer-col footer-col-education">
+<h2>{{ section.settings.education_col_heading }}</h2>
+<ul>
+{% if section.settings.education_col_links.links.size > 0 %}
+  {% for link in section.settings.education_col_links.links %}
+<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  {% endfor %}
+{% else %}
+<li><a href="{{ pages['jewellerycare'].url }}">Jewellery Care</a></li>
+<li><a href="{{ pages['jewelleryremodelling'].url }}">Jewellery Remodelling</a></li>
+<li><a href="{{ pages['understandingdiamonds'].url }}">Understanding Diamonds</a></li>
+<li><a href="{{ pages['timelesstrendyjewellery'].url }}">Timeless vs Trendy Jewellery Pieces</a></li>
+{% endif %}
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p class="footer-copyright">{{ section.settings.copyright_text }} © {{ "now" | date: "%Y" }}</p>
+<div class="footer-links-row">
+<a href="mailto:{{ section.settings.contact_email }}?subject=Contact">{{ section.settings.legal_contact_text }}</a>
+<a href="{{ section.settings.privacy_policy_url | default: '/pages/privacy-policy' }}" rel="nofollow">{{ section.settings.legal_privacy_text }}</a>
+<a href="{{ section.settings.terms_url | default: '/pages/termsandconditions' }}" rel="nofollow">{{ section.settings.legal_terms_text }}</a>
+<a href="{{ section.settings.disclaimer_url | default: '/pages/disclaimer' }}" rel="nofollow">{{ section.settings.legal_disclaimer_text }}</a>
+</div>
+<p class="footer-credit">Created by <a href="https://ambitiousminds.com.au" rel="noreferrer noopener" target="_blank">Ambitious Minds</a></p>
+</div>
+</div></footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "header", "content": "Melbourne office" },
+    { "type": "text", "id": "office1_name", "label": "Office name", "default": "Melbourne Office" },
+    { "type": "text", "id": "office1_phone", "label": "Phone (displayed)", "default": "(03) 9836 9922" },
+    { "type": "text", "id": "office1_phone_href", "label": "Phone (tel: link)", "default": "+61398369922" },
+    { "type": "text", "id": "office1_address_line1", "label": "Address line 1", "default": "73-75 Canterbury Road" },
+    { "type": "text", "id": "office1_address_line2", "label": "Address line 2", "default": "Canterbury VIC 3126" },
+    { "type": "header", "content": "Sydney office" },
+    { "type": "text", "id": "office2_name", "label": "Office name", "default": "Sydney Office" },
+    { "type": "text", "id": "office2_phone", "label": "Phone (displayed)", "default": "(02) 9699 2266" },
+    { "type": "text", "id": "office2_phone_href", "label": "Phone (tel: link)", "default": "+61296992266" },
+    { "type": "text", "id": "office2_address_line1", "label": "Address line 1", "default": "Suite 2, Level 7, 37 York St." },
+    { "type": "text", "id": "office2_address_line2", "label": "Address line 2", "default": "Sydney, NSW 2000" },
+    { "type": "header", "content": "Menu column" },
+    { "type": "text", "id": "menu_col_heading", "label": "Heading", "default": "Menu" },
+    { "type": "link_list", "id": "menu_col_links", "label": "Links", "info": "Manage links in Online Store → Navigation. Leave blank to use the default links." },
+    { "type": "checkbox", "id": "show_pricing_link", "label": "Show \"Request Pricing\" link", "info": "Opens the pricing modal instead of navigating.", "default": true },
+    { "type": "text", "id": "pricing_link_text", "label": "\"Request Pricing\" link text", "default": "Request Pricing" },
+    { "type": "header", "content": "About column" },
+    { "type": "text", "id": "about_col_heading", "label": "Heading", "default": "About" },
+    { "type": "link_list", "id": "about_col_links", "label": "Links", "info": "Manage links in Online Store → Navigation." },
+    { "type": "header", "content": "Education column" },
+    { "type": "text", "id": "education_col_heading", "label": "Heading", "default": "Education" },
+    { "type": "link_list", "id": "education_col_links", "label": "Links", "info": "Manage links in Online Store → Navigation." },
+    { "type": "header", "content": "Social & contact" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "info@cameronco.com.au" },
+    { "type": "header", "content": "Legal links" },
+    { "type": "text", "id": "legal_contact_text", "label": "\"Contact Us\" link text", "default": "Contact Us" },
+    { "type": "text", "id": "legal_privacy_text", "label": "\"Privacy Policy\" link text", "default": "Privacy Policy" },
+    { "type": "url", "id": "privacy_policy_url", "label": "Privacy policy URL" },
+    { "type": "text", "id": "legal_terms_text", "label": "\"Terms of Use\" link text", "default": "Terms of Use" },
+    { "type": "url", "id": "terms_url", "label": "Terms of use URL" },
+    { "type": "text", "id": "legal_disclaimer_text", "label": "\"Disclaimer\" link text", "default": "Disclaimer" },
+    { "type": "url", "id": "disclaimer_url", "label": "Disclaimer URL" },
+    { "type": "header", "content": "Copyright" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "Cameron & Co." },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "background_color", "label": "Footer background", "default": "#1a202b" },
+    { "type": "range", "id": "background_opacity", "label": "Footer background opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 80 },
+    { "type": "range", "id": "texture_opacity", "label": "Footer texture opacity", "min": 0, "max": 40, "step": 2, "unit": "%", "default": 14 },
+    { "type": "color", "id": "heading_color", "label": "Column heading color", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Body text color", "default": "#ffffff" },
+    { "type": "header", "content": "Colors — mobile only" },
+    { "type": "color", "id": "heading_color_mobile", "label": "Column heading color (mobile)", "default": "#ffffff" },
+    { "type": "color", "id": "text_color_mobile", "label": "Body text color (mobile)", "default": "#ffffff" },
+    { "type": "header", "content": "Fonts" },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Column heading font",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference (default)" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ],
+      "default": "glacial"
+    }
+  ]
+}
+{% endschema %}

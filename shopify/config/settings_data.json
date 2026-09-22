@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "h1_color": "#4D493F",
+    "h1_size": 40,
+    "h2_color": "#4D493F",
+    "h2_size": 32,
+    "h3_color": "#4D493F",
+    "h3_size": 24,
+    "h4_color": "#4D493F",
+    "h4_size": 20,
+    "h5_color": "#4D493F",
+    "h5_size": 19,
+    "h6_color": "#4D493F",
+    "h6_size": 18,
+    "google_maps_api_key": "AIzaSyAfy-Wk7rWb-UKuSK2jMPUzkWKKwGjcP5k",
+    "button_primary_radius": 18,
+    "button_primary_font_size": 14,
+    "button_primary_transparency": 0,
+    "button_primary_hover_background": "#FFFFFF",
+    "button_primary_hover_text": "#BD9C42",
+    "button_primary_hover_border": "#BD9C42",
+    "button_primary_hover_transparency": 83,
+    "button_secondary_background": "#171D29",
+    "button_secondary_border": "#171D29",
+    "button_secondary_radius": 18,
+    "button_secondary_font_size": 14,
+    "button_secondary_transparency": 0,
+    "button_secondary_hover_background": "#171D29",
+    "button_secondary_hover_border": "#171D29",
+    "button_secondary_hover_transparency": 0,
+    "button_outline_radius": 18,
+    "button_outline_font_size": 14,
+    "button_outline_transparency": 0,
+    "button_outline_hover_transparency": 0,
+    "sections": {
+      "header": {
+        "type": "header",
+        "custom_css": [
+          "a:not(.btn-book) {text-decoration-color: #0b0b0b !important;}",
+          ".site-header .primary-nav-link::after {background-color: #0b0b0b !important;}"
+        ],
+        "settings": {
+          "main_menu": "main-menu",
+          "button_text": "Book an appointment",
+          "button_link": "",
+          "button_style": "primary",
+          "background_color": "#ffffff",
+          "nav_color": "#0b0b0b",
+          "nav_color_mobile": "#0b0b0b",
+          "nav_font": "cormorant",
+          "logo_size": 60,
+          "logo_offset_x": 0,
+          "logo_offset_y": 0,
+          "logo_size_mobile": 42,
+          "logo_offset_x_mobile": 0,
+          "logo_offset_y_mobile": 0,
+          "nav_offset_x": 0,
+          "nav_offset_y": 0
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "office1_name": "Melbourne Office",
+          "office1_phone": "(03) 9836 9922",
+          "office1_phone_href": "+61398369922",
+          "office1_address_line1": "73-75 Canterbury Road",
+          "office1_address_line2": "Canterbury VIC 3126",
+          "office2_name": "Sydney Office",
+          "office2_phone": "(02) 9699 2266",
+          "office2_phone_href": "+61296992266",
+          "office2_address_line1": "Suite 2, Level 7, 37 York St.",
+          "office2_address_line2": "Sydney, NSW 2000",
+          "menu_col_heading": "Menu",
+          "menu_col_links": "main-menu",
+          "show_pricing_link": true,
+          "pricing_link_text": "Request Pricing",
+          "about_col_heading": "About",
+          "about_col_links": "about",
+          "education_col_heading": "Education",
+          "education_col_links": "education",
+          "facebook_url": "https://www.facebook.com/profile.php?id=100076065382587",
+          "instagram_url": "https://www.instagram.com/cameroncojewellery/",
+          "contact_email": "info@cameronco.com.au",
+          "legal_contact_text": "Contact Us",
+          "legal_privacy_text": "Privacy Policy",
+          "privacy_policy_url": "shopify://policies/privacy-policy",
+          "legal_terms_text": "Terms of Use",
+          "terms_url": "shopify://pages/termsandconditions",
+          "legal_disclaimer_text": "Disclaimer",
+          "disclaimer_url": "shopify://pages/disclaimer",
+          "copyright_text": "Cameron & Co.",
+          "background_color": "#1a202b",
+          "background_opacity": 80,
+          "texture_opacity": 14,
+          "heading_color": "#ffffff",
+          "text_color": "#ffffff",
+          "heading_color_mobile": "#ffffff",
+          "text_color_mobile": "#ffffff",
+          "heading_font": "cormorant",
+          "body_font": "glacial"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "13768625480086291342": {
+        "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {}
+      },
+      "6946623662726630353": {
+        "type": "shopify://apps/nivoda-connect/blocks/cart_extended/1818f65a-9917-4ef2-bca9-2424a925fc76",
+        "disabled": false,
+        "settings": {
+          "drawer_selector": "cart-drawer-component, .cart-drawer",
+          "enable_redirect": true,
+          "diamond_name": "diamonds",
+          "ringbuilder_name": "ring-setting",
+          "gemstone_name": "gemstones"
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {}
+  }
+}

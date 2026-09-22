@@ -1,0 +1,114 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "intro": {
+      "type": "jewellery-remodelling",
+      "settings": {
+        "eyebrow": "REIMAGINE WHAT YOU ALREADY LOVE",
+        "heading": "Jewellery Remodelling",
+        "description": "<p>Give treasured jewellery a new life with a considered redesign. Whether you have an inherited piece, a ring that no longer suits your style, or stones you would like reset, we can transform your existing jewellery into something made to be worn and enjoyed again.</p>",
+        "button_label": "Book a consultation",
+        "button_link": "/pages/booking",
+        "button_style": "primary",
+        "heading_color": "",
+        "heading_font": "cormorant",
+        "description_color": "",
+        "description_font": "glacial"
+      }
+    },
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Breathing New Life into Old Treasures",
+            "body": "<p>Jewellery remodelling lets a piece earn its place in your collection again.</p><p>Whether it's an inherited heirloom you've never worn, or a favourite that no longer suits your style, remodelling gives you the opportunity to create something that feels more like you. Rather than letting it sit in a drawer, the stones and precious metals you already own can be reimagined into something you'll reach for every day.</p><p>It might mean transforming an outdated ring into a refined new design, combining several sentimental pieces into one, or resetting meaningful stones into jewellery that better suits your lifestyle. The beauty of remodelling is that the history remains, while the design moves forward.</p><p>Where possible, your existing diamonds, gemstones and precious metals can be incorporated into the new piece, preserving their sentimental value while giving them a completely new purpose.</p><p>The result is jewellery that carries the memories of what came before, but feels entirely at home in your life now.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-teal-tourmaline-baguette-ring.webp",
+            "image_1_alt": "Rose gold and green emerald rings showing remodelling possibilities",
+            "image_1_fallback": "cameron-co-green-tourmaline-three-stone-ring.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Design Your New Setting",
+            "cta_link": "/pages/ring-builder",
+            "button_style": "secondary"
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "The Benefits of Remodelling Old Jewellery",
+            "body": "",
+            "callout": true,
+            "list_heading": "Why remodel instead of replace:",
+            "list_items": "Keep the emotional connection to an heirloom or gift while updating its style\nSave on cost compared to buying an entirely new piece\nA more sustainable choice, reusing precious metals and gemstones you already own\nCreate a completely unique piece designed around what you already have\nFlexibility to split one piece into several, or combine several into one",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-emerald-flower-halo-ring.webp",
+            "image_1_alt": "Emerald flower halo ring, an example of a remodelled vintage-inspired design",
+            "image_1_fallback": "cameron-co-emerald-flower-halo-ring.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-3": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Common Remodelling Techniques",
+            "body": "<p><strong>Resetting Stones:</strong> Your existing diamonds or gemstones are carefully removed and reset into a brand new setting — a favourite way to turn, for example, the diamond from a ring you no longer wear into a pendant you'll wear every day.</p><p><strong>Melting and Recasting:</strong> The original metal can be melted down and used into a new design, adding or removing elements to refresh a piece while keeping the same precious metal or we produce a cad drawing visualising the new design before it is made, we can then use the exisitng metal as a credit value against the new piece</p><p><strong>Repurposing:</strong> A piece is transformed into an entirely different type of jewellery — a brooch reborn as a pendant, or beads from an old necklace reworked into a bracelet.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-emerald-halo-ring.webp",
+            "image_1_alt": "Emerald halo ring on satin showing a refreshed jewellery remodelling direction",
+            "image_1_fallback": "cameron-co-emerald-halo-ring.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3"
+      ],
+      "settings": {
+        "hero_title": "",
+        "hero_tagline": "",
+        "hero_intro": "",
+        "hero_image_alt": "",
+        "hero_image_fallback": "",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "main"
+  ]
+}

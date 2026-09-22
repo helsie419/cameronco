@@ -1,0 +1,198 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "understanding-diamonds-page",
+      "blocks": {
+        "block-colour": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Colour",
+            "body": "<p>Diamond colour describes how colourless a white diamond appears. The GIA colour scale begins at D, representing exceptional colourlessness, and continues through Z as increasingly noticeable yellow or brown tones appear.</p><p>Colour is often easiest to recognise when diamonds are compared side by side. Once a diamond is set, however, its apparent colour can also be influenced by the surrounding metal. A slightly warmer diamond may still appear beautifully white in yellow or rose gold, while platinum and white gold can make subtle colour differences easier to see.</p>",
+            "callout": false,
+            "list_heading": "The GIA colour scale:",
+            "list_items": "Colourless (D–F): exceptionally little visible colour and prized for an icy white appearance.\nNear Colourless (G–J): slight traces of colour that are often difficult to detect once the diamond is mounted.\nFaint (K–M): a warmer tone becomes more noticeable, particularly in larger stones and white-metal settings.\nVery Light (N–R): increasingly visible yellow or brown colour.\nLight (S–Z): more pronounced natural colouration.",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/diamond-colour-grades-chart.webp",
+            "image_1_alt": "Diamond colour grading scale from D colourless through Z light yellow",
+            "image_1_fallback": "diamond-colour-grades-chart.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-carat": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Carat Weight",
+            "body": "<p>Carat is a measure of a diamond's weight rather than its visible diameter. One carat equals 0.20 grams. Because larger diamonds occur less frequently in nature, price generally rises significantly as carat weight increases, particularly around popular benchmark weights such as 0.50, 1.00 and 2.00 carats.</p><p>Two diamonds with the same carat weight can look noticeably different in size depending on their shape, proportions and cut quality. A well-proportioned stone can therefore offer excellent visual presence without simply choosing the highest possible carat weight.</p><p>When choosing a diamond, consider carat alongside cut, colour and clarity rather than treating size as the only measure of quality.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/princess-cut-diamond-solitaire-ring.webp",
+            "image_1_alt": "Princess cut diamond solitaire ring demonstrating diamond carat presence",
+            "image_1_fallback": "princess-cut-diamond-solitaire-ring.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-shapes": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Diamond Shapes",
+            "body": "<p>Diamond shape describes the outline you see when looking at a diamond from above. Unlike cut quality, shape is primarily a matter of personal style. It does not form part of the 4 C's, but it can significantly influence a diamond's character, apparent size and the way it works within a jewellery design.</p><p>Round brilliant diamonds are known for exceptional brilliance, while elongated shapes such as oval, pear and marquise can create greater visual length. Emerald and Asscher cuts offer a more architectural appearance, while cushion, radiant and princess cuts combine strong presence with distinctive faceting styles.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-loose-diamond-shapes-collection.webp",
+            "image_1_alt": "Collection of loose diamonds in round, oval, princess, cushion, emerald, pear, marquise and other cuts on satin",
+            "image_1_fallback": "cameron-co-loose-diamond-shapes-collection.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-cut": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Cut",
+            "body": "<p>Cut has one of the greatest influences on how much a diamond sparkles. It describes the proportions, symmetry and finish that determine how effectively light enters the diamond, reflects internally and returns through the top of the stone as brilliance and fire.</p><p>A beautifully cut diamond can appear lively and bright even when its colour or clarity grades are not at the very top of the scale. Conversely, a diamond with excellent colour and clarity can still appear dull if its proportions allow too much light to escape.</p>",
+            "callout": false,
+            "list_heading": "What affects diamond cut quality:",
+            "list_items": "Proportions: depth, table size, crown angle and pavilion angle influence the way light travels through the diamond.\nSymmetry: accurately aligned facets help light move evenly throughout the stone.\nPolish: the quality of the diamond's finished surfaces affects its overall appearance.\nBrightness: white light returned through the top of the diamond creates brilliance.\nFire: white light separating into spectral colours creates flashes of colour.\nScintillation: contrasting flashes of light and dark appear as the diamond or viewer moves.\nCut Grade: laboratories such as GIA assess round brilliant diamonds from Excellent through to Poor.",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-diamond-cut-top-view.svg",
+            "image_1_alt": "Top view of a round brilliant diamond showing girdle diameter and table width",
+            "image_1_fallback": "diamond-shapes-chart.webp",
+            "image_2": "shopify://shop_images/cameron-co-diamond-cut-side-profile.svg",
+            "image_2_alt": "Side profile of a round brilliant diamond showing crown height, pavilion depth, girdle thickness, table width and culet",
+            "image_2_fallback": "diamond-shapes-chart.webp",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-clarity": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Clarity",
+            "body": "<p>Almost every natural diamond contains tiny internal characteristics called inclusions or external characteristics called blemishes. Clarity grading considers their number, size, position, nature and visibility under 10x magnification.</p><p>A higher clarity grade does not automatically mean a diamond will look more beautiful to the naked eye. Many diamonds in the VS and SI ranges can appear completely clean without magnification, making clarity an area where a knowledgeable buyer can often find excellent value.</p>",
+            "callout": false,
+            "list_heading": "The clarity scale:",
+            "list_items": "Flawless (FL): no inclusions or blemishes visible under 10x magnification.\nInternally Flawless (IF): no internal inclusions visible under 10x magnification, although minor surface characteristics may be present.\nVery, Very Slightly Included (VVS1 and VVS2): inclusions are extremely difficult for a skilled grader to see.\nVery Slightly Included (VS1 and VS2): minor inclusions are visible under magnification but are commonly invisible to the naked eye.\nSlightly Included (SI1 and SI2): inclusions are more easily seen under magnification and may occasionally be visible without magnification.\nIncluded (I1, I2 and I3): inclusions are obvious under magnification and may affect transparency, durability or brilliance.",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-together": {
+          "type": "content_block",
+          "settings": {
+            "heading": "How the 4 C's Work Together",
+            "body": "<p>The best diamond is rarely the stone with the highest possible grade in every category. Choosing well is about finding the right balance between cut, colour, clarity and carat for the appearance you want and the budget you have available.</p><p>Small compromises in grades that are difficult to see can sometimes allow you to prioritise characteristics that have a much greater visual impact.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "Prioritise cut when brilliance and sparkle are most important to you.\nConsider near-colourless grades where subtle colour differences may be difficult to see once the diamond is set.\nChoose clarity based on whether inclusions are visible to the naked eye rather than the certificate alone.\nConsider shape and proportions when comparing how large different diamonds appear.\nCompare the entire diamond rather than selecting purely by one grading number.",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-diamond-eternity-bridal-set.webp",
+            "image_1_alt": "Diamond eternity band and round brilliant solitaire ring demonstrating a well-balanced diamond selection",
+            "image_1_fallback": "cameron-co-diamond-eternity-bridal-set.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-lab": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Natural vs Lab-Grown Diamonds",
+            "body": "<p>Natural and laboratory-grown diamonds are both genuine diamonds. They share essentially the same crystal structure, hardness and optical properties. The primary difference is their origin: one forms naturally deep within the earth, while the other is produced using technology that recreates diamond-growing conditions.</p>",
+            "callout": true,
+            "list_heading": "How they compare:",
+            "list_items": "Formation: Natural diamonds form deep within the earth over geological timescales. Lab-grown diamonds are produced in controlled environments using HPHT or CVD technology.\nAppearance: Both can display the same brilliance, fire and range of colour and clarity grades.\nPrice: Lab-grown diamonds generally cost considerably less than comparable natural diamonds, although market pricing changes over time.\nRarity: Natural diamonds are finite geological products, while laboratory production can be increased as technology and manufacturing capacity expand.\nResale: Natural and lab-grown diamonds can behave differently in the secondary market, so resale value should not be assumed from purchase price alone.\nCertification: Major gemmological laboratories grade both natural and lab-grown diamonds, and the grading report identifies the diamond's origin.",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-choosing": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Choosing the Right Diamond for You",
+            "body": "<p>A grading report provides valuable objective information, but it cannot tell you which diamond you will personally find most beautiful. Shape, proportions, setting style, metal colour and individual preference all influence how a finished piece looks when worn.</p><p>The most useful approach is to decide which characteristics matter most to you, then compare diamonds that balance those priorities rather than automatically chasing the highest certificate grades.</p>",
+            "callout": false,
+            "list_heading": "Before choosing a diamond, consider:",
+            "list_items": "Which diamond shape best suits the jewellery design and your personal style.\nWhether brilliance, size, colour or rarity matters most to you.\nHow the metal colour of the setting may influence the diamond's appearance.\nWhether the diamond is eye-clean at normal viewing distance.\nHow its proportions and cut affect visual size and sparkle.\nWhether you prefer a natural or laboratory-grown diamond.\nAlways review the grading certificate when comparing significant stones.",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": ""
+          }
+        },
+        "block-final": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Ready to Put It Into Practice?",
+            "body": "<p>Now that you know what to look for, explore our live diamond inventory and compare diamonds by cut, colour, clarity, carat weight and shape to find the stone that is right for you.</p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1_alt": "",
+            "image_1_fallback": "",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Browse Our Diamonds",
+            "cta_link": "/pages/diamonds"
+          }
+        }
+      },
+      "block_order": [
+        "block-colour",
+        "block-carat",
+        "block-shapes",
+        "block-cut",
+        "block-clarity",
+        "block-together",
+        "block-lab",
+        "block-choosing",
+        "block-final"
+      ],
+      "settings": {
+        "hero_title": "Understanding Diamonds: The 4 C's",
+        "hero_intro": "<p>Diamonds are extraordinary natural materials, formed under immense heat and pressure and valued for their exceptional hardness, brilliance and ability to interact with light. Yet two diamonds of the same size can differ considerably in appearance, rarity and value. Understanding the 4 C's:  Cut, Colour, Clarity and Carat Weight, gives you a practical framework for recognising those differences and comparing stones more confidently. Each characteristic contributes something different: cut influences brilliance and sparkle, colour measures how colourless a white diamond appears, clarity considers its natural internal and external characteristics, and carat describes its weight. The key is not simply to pursue the highest grade in every category, but to understand how these factors work together to create a diamond that balances beauty, quality, individuality and value.</p>",
+        "callout_bg_color": "#f7f5f3",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

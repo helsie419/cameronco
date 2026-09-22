@@ -1,0 +1,1398 @@
+<style>
+  /* ==========================================================
+     CAMERON & CO — JEWELLERY CARE PAGE
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} {
+    width: 100%;
+  }
+
+
+  /* ==========================================================
+     SHARED PAGE WIDTH
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-hero,
+  #jewellery-care-{{ section.id }} .jcare-section-inner {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-hero {
+    max-width: 1184px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-section-inner {
+    max-width: 1120px;
+  }
+
+
+  /* ==========================================================
+     INTRO
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-hero {
+    padding: 50px 32px 34px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-hero-content {
+    width: 100%;
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-tagline {
+    margin: 0 0 12px;
+
+    font-size: 16px;
+    line-height: 1.5;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-title {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 0 18px;
+
+    font-size: clamp(29px, 3vw, 40px);
+    line-height: 1.15;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-intro {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-intro p {
+    margin: 0;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     HERO IMAGE SUPPORT
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-hero-image-wrap {
+    width: 100%;
+
+    margin-top: 28px;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-hero-image {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     ARTICLE BODY
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-body {
+    width: 100%;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-section {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 42px 32px;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-section:first-child {
+    padding-top: 18px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-section-inner {
+    padding: 0;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-callout {
+    background: {{ section.settings.callout_bg_color }};
+  }
+
+
+  /* ==========================================================
+     HEADINGS
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-heading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0 0 16px;
+
+    font-size: clamp(29px, 3vw, 40px);
+    line-height: 1.15;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-list-heading {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 26px 0 10px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+    font-weight: 500;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     BODY TYPOGRAPHY
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-copy {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-copy p {
+    margin: 0 0 14px;
+
+    font-family: inherit !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-list {
+    width: 100%;
+    max-width: 980px;
+
+    margin: 8px 0 0;
+    padding-left: 21px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-list li {
+    margin: 0 0 6px;
+
+    font-family: inherit !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+
+  /* ==========================================================
+     FIRST CONTENT BLOCK
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-first-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 54px;
+
+    align-items: center;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-first-copy {
+    min-width: 0;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-first-media {
+    width: 260px;
+    max-width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    align-self: center;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-first-media .jcare-image-frame {
+    width: 100%;
+
+    margin: 0;
+  }
+
+
+  /* ==========================================================
+     GENERIC IMAGE FRAME
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-image-frame {
+    width: 260px;
+    max-width: 100%;
+
+    margin: 24px 0 0;
+
+    border-radius: 16px !important;
+    overflow: hidden !important;
+
+    line-height: 0;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-image-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    border-radius: 0 !important;
+  }
+
+
+  /* ==========================================================
+     TWO IMAGE ROW
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-image-row {
+    display: flex;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    width: 100%;
+
+    margin: 24px 0 0;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-image-row .jcare-image-frame {
+    width: 260px;
+
+    margin: 0;
+  }
+
+
+  /* ==========================================================
+     STORAGE IMAGES
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-storage-row {
+    gap: 20px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-storage-row .jcare-image-frame {
+    width: 260px;
+    height: auto;
+
+    aspect-ratio: 4 / 5;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-storage-row .jcare-image-frame img {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+
+  /* ==========================================================
+     MAINTENANCE IMAGES
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-maintenance-row {
+    gap: 18px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-maintenance-row .jcare-image-frame {
+    width: 260px !important;
+    height: 260px !important;
+
+    aspect-ratio: 1 / 1;
+
+    margin: 0;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-maintenance-row .jcare-image-frame img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+
+  /* ==========================================================
+     CTA — CENTERED
+     ========================================================== */
+
+  #jewellery-care-{{ section.id }} .jcare-cta-wrap {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: 28px;
+  }
+
+  #jewellery-care-{{ section.id }} .jcare-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+
+    margin: 0;
+    padding: 14px 26px;
+
+    box-sizing: border-box;
+
+    border-radius: var(--cc-button-radius, 999px);
+
+    text-decoration: none;
+
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+
+  /* ==========================================================
+     MOBILE
+     ========================================================== */
+
+  @media screen and (max-width: 749px) {
+
+    #jewellery-care-{{ section.id }} .jcare-hero,
+    #jewellery-care-{{ section.id }} .jcare-section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-hero {
+      padding-top: 34px;
+      padding-bottom: 24px;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-title {
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-intro,
+    #jewellery-care-{{ section.id }} .jcare-intro p,
+    #jewellery-care-{{ section.id }} .jcare-copy,
+    #jewellery-care-{{ section.id }} .jcare-copy p,
+    #jewellery-care-{{ section.id }} .jcare-list,
+    #jewellery-care-{{ section.id }} .jcare-list li,
+    #jewellery-care-{{ section.id }} .jcare-list-heading {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-heading {
+      max-width: none;
+
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-list {
+      padding-left: 20px;
+    }
+
+
+    /* FIRST BLOCK */
+    #jewellery-care-{{ section.id }} .jcare-first-grid {
+      display: flex;
+      flex-direction: column;
+
+      align-items: stretch;
+
+      gap: 22px;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-first-media {
+      width: 100%;
+      max-width: none;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-first-media .jcare-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* GENERIC SINGLE IMAGES */
+    #jewellery-care-{{ section.id }} .jcare-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* IMAGE ROWS */
+    #jewellery-care-{{ section.id }} .jcare-image-row {
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 14px;
+
+      margin-top: 20px;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-image-row .jcare-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* STORAGE */
+    #jewellery-care-{{ section.id }} .jcare-storage-row {
+      align-items: center;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-storage-row .jcare-image-frame {
+      width: 260px;
+      max-width: 100%;
+
+      height: auto;
+
+      aspect-ratio: 4 / 5;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    /* MAINTENANCE */
+    #jewellery-care-{{ section.id }} .jcare-maintenance-row {
+      align-items: center;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-maintenance-row .jcare-image-frame {
+      width: 260px !important;
+      height: 260px !important;
+
+      max-width: 100%;
+
+      aspect-ratio: 1 / 1;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #jewellery-care-{{ section.id }} .jcare-maintenance-row .jcare-image-frame img {
+      width: 100% !important;
+      height: 100% !important;
+
+      object-fit: cover !important;
+    }
+
+
+    /* CTA */
+    #jewellery-care-{{ section.id }} .jcare-cta-wrap {
+      justify-content: center;
+    }
+
+  }
+</style>
+
+
+<section
+  id="jewellery-care-{{ section.id }}"
+  class="jewellery-care-page"
+>
+
+
+  <!-- ========================================================
+       INTRO
+       ======================================================== -->
+
+  <div class="jcare-hero">
+
+    <div class="jcare-hero-content">
+
+      {% if section.settings.hero_tagline != blank %}
+
+        <p
+          class="jcare-tagline cc-font-heading-{{ section.settings.heading_font }}"
+          {% if section.settings.hero_tagline_color != blank %}
+            style="color: {{ section.settings.hero_tagline_color }};"
+          {% endif %}
+        >
+          {{ section.settings.hero_tagline }}
+        </p>
+
+      {% endif %}
+
+
+      {% if section.settings.hero_title != blank %}
+
+        <h1
+          class="jcare-title cc-font-heading-{{ section.settings.heading_font }}"
+          {% if section.settings.hero_heading_color != blank %}
+            style="color: {{ section.settings.hero_heading_color }};"
+          {% endif %}
+        >
+          {{ section.settings.hero_title }}
+        </h1>
+
+      {% endif %}
+
+
+      {% if section.settings.hero_intro != blank %}
+
+        <div
+          class="jcare-intro cc-font-body-{{ section.settings.body_font }}"
+          {% if section.settings.body_text_color != blank %}
+            style="color: {{ section.settings.body_text_color }};"
+          {% endif %}
+        >
+          {{ section.settings.hero_intro }}
+        </div>
+
+      {% endif %}
+
+    </div>
+
+
+    {% if section.settings.hero_image != blank %}
+
+      <div class="jcare-hero-image-wrap">
+
+        <img
+          class="jcare-hero-image"
+          src="{{ section.settings.hero_image | image_url: width: 1200 }}"
+          alt="{{ section.settings.hero_image_alt | escape }}"
+          width="{{ section.settings.hero_image.width }}"
+          height="{{ section.settings.hero_image.height }}"
+          loading="eager"
+        >
+
+      </div>
+
+
+    {% elsif section.settings.hero_image_fallback != blank %}
+
+      <div class="jcare-hero-image-wrap">
+
+        <img
+          class="jcare-hero-image"
+          src="{{ section.settings.hero_image_fallback | asset_url }}"
+          alt="{{ section.settings.hero_image_alt | escape }}"
+          width="1200"
+          height="800"
+          loading="eager"
+        >
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+
+  <!-- ========================================================
+       ARTICLE CONTENT
+       ======================================================== -->
+
+  <div class="jcare-body">
+
+    {% for block in section.blocks %}
+
+      {% if block.type == 'content_block' %}
+
+        <section
+          class="jcare-section{% if block.settings.callout %} jcare-callout{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+
+          <div class="jcare-section-inner">
+
+
+            <!-- =================================================
+                 FIRST BLOCK
+                 ================================================= -->
+
+            {% if block.id == 'block-1' %}
+
+              <div class="jcare-first-grid">
+
+
+                <div class="jcare-first-copy">
+
+                  {% if block.settings.heading != blank %}
+
+                    <h2
+                      class="jcare-heading cc-font-heading-{{ section.settings.heading_font }}"
+                    >
+                      {{ block.settings.heading }}
+                    </h2>
+
+                  {% endif %}
+
+
+                  {% if block.settings.body != blank %}
+
+                    <div
+                      class="jcare-copy cc-font-body-{{ section.settings.body_font }}"
+                    >
+                      {{ block.settings.body }}
+                    </div>
+
+                  {% endif %}
+
+
+                  {% if block.settings.list_heading != blank %}
+
+                    <h3 class="jcare-list-heading">
+                      {{ block.settings.list_heading }}
+                    </h3>
+
+                  {% endif %}
+
+
+                  {% if block.settings.list_items != blank %}
+
+                    {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                    {% if block.settings.list_style == 'numbered' %}
+
+                      <ol class="jcare-list">
+
+                        {% for item in list_lines %}
+
+                          {% assign clean_item = item | strip %}
+
+                          {% if clean_item != blank %}
+                            <li>{{ clean_item }}</li>
+                          {% endif %}
+
+                        {% endfor %}
+
+                      </ol>
+
+                    {% else %}
+
+                      <ul class="jcare-list">
+
+                        {% for item in list_lines %}
+
+                          {% assign clean_item = item | strip %}
+
+                          {% if clean_item != blank %}
+                            <li>{{ clean_item }}</li>
+                          {% endif %}
+
+                        {% endfor %}
+
+                      </ul>
+
+                    {% endif %}
+
+                  {% endif %}
+
+                </div>
+
+
+                <div class="jcare-first-media">
+
+                  {% if block.settings.image_1 != blank %}
+
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                        alt="{{ block.settings.image_1_alt | escape }}"
+                        width="{{ block.settings.image_1.width }}"
+                        height="{{ block.settings.image_1.height }}"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+
+                  {% elsif block.settings.image_1_fallback != blank %}
+
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_1_fallback | asset_url }}"
+                        alt="{{ block.settings.image_1_alt | escape }}"
+                        width="700"
+                        height="700"
+                        loading="lazy"
+                      >
+
+                    </div>
+
+                  {% endif %}
+
+                </div>
+
+              </div>
+
+
+            <!-- =================================================
+                 ALL OTHER BLOCKS
+                 ================================================= -->
+
+            {% else %}
+
+
+              {% if block.settings.heading != blank %}
+
+                <h2
+                  class="jcare-heading cc-font-heading-{{ section.settings.heading_font }}"
+                >
+                  {{ block.settings.heading }}
+                </h2>
+
+              {% endif %}
+
+
+              {% if block.settings.body != blank %}
+
+                <div
+                  class="jcare-copy cc-font-body-{{ section.settings.body_font }}"
+                >
+                  {{ block.settings.body }}
+                </div>
+
+              {% endif %}
+
+
+              {% if block.settings.list_heading != blank %}
+
+                <h3 class="jcare-list-heading">
+                  {{ block.settings.list_heading }}
+                </h3>
+
+              {% endif %}
+
+
+              {% if block.settings.list_items != blank %}
+
+                {% assign list_lines = block.settings.list_items | newline_to_br | split: '<br />' %}
+
+                {% if block.settings.list_style == 'numbered' %}
+
+                  <ol class="jcare-list">
+
+                    {% for item in list_lines %}
+
+                      {% assign clean_item = item | strip %}
+
+                      {% if clean_item != blank %}
+                        <li>{{ clean_item }}</li>
+                      {% endif %}
+
+                    {% endfor %}
+
+                  </ol>
+
+                {% else %}
+
+                  <ul class="jcare-list">
+
+                    {% for item in list_lines %}
+
+                      {% assign clean_item = item | strip %}
+
+                      {% if clean_item != blank %}
+                        <li>{{ clean_item }}</li>
+                      {% endif %}
+
+                    {% endfor %}
+
+                  </ul>
+
+                {% endif %}
+
+              {% endif %}
+
+
+              <!-- SELECTED IMAGES -->
+
+              {% if block.settings.image_1 != blank or block.settings.image_2 != blank or block.settings.image_3 != blank %}
+
+                <div
+                  class="jcare-image-row{% if block.id == 'block-4' %} jcare-storage-row{% endif %}{% if block.id == 'block-6' %} jcare-maintenance-row{% endif %}"
+                >
+
+                  {% if block.settings.image_1 != blank %}<div class="jcare-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="{{ block.settings.image_1.width }}"
+                      height="{{ block.settings.image_1.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>{% endif %}
+
+
+                  {% if block.settings.image_2 != blank %}<div class="jcare-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_2 | image_url: width: 700 }}"
+                      alt="{{ block.settings.image_2_alt | escape }}"
+                      width="{{ block.settings.image_2.width }}"
+                      height="{{ block.settings.image_2.height }}"
+                      loading="lazy"
+                    >
+
+                  </div>{% endif %}
+
+                  {% if block.settings.image_3 != blank %}
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_3 | image_url: width: 700 }}"
+                        alt="{{ block.settings.image_3_alt | escape }}"
+                        width="{{ block.settings.image_3.width }}"
+                        height="{{ block.settings.image_3.height }}"
+                        loading="lazy"
+                      >
+
+                    </div>
+                  {% endif %}
+
+                </div>
+
+
+              <!-- ONE SELECTED IMAGE -->
+
+              {% elsif block.settings.image_1 != blank %}
+
+                <div class="jcare-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_1 | image_url: width: 700 }}"
+                    alt="{{ block.settings.image_1_alt | escape }}"
+                    width="{{ block.settings.image_1.width }}"
+                    height="{{ block.settings.image_1.height }}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+              <!-- FALLBACK IMAGES -->
+
+              {% elsif block.settings.image_1_fallback != blank or block.settings.image_2_fallback != blank or block.settings.image_3_fallback != blank %}
+
+                <div
+                  class="jcare-image-row{% if block.id == 'block-4' %} jcare-storage-row{% endif %}{% if block.id == 'block-6' %} jcare-maintenance-row{% endif %}"
+                >
+
+                  {% if block.settings.image_1_fallback != blank %}<div class="jcare-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_1_fallback | asset_url }}"
+                      alt="{{ block.settings.image_1_alt | escape }}"
+                      width="700"
+                      height="700"
+                      loading="lazy"
+                    >
+
+                  </div>{% endif %}
+
+
+                  {% if block.settings.image_2_fallback != blank %}<div class="jcare-image-frame">
+
+                    <img
+                      src="{{ block.settings.image_2_fallback | asset_url }}"
+                      alt="{{ block.settings.image_2_alt | escape }}"
+                      width="700"
+                      height="700"
+                      loading="lazy"
+                    >
+
+                  </div>{% endif %}
+
+                  {% if block.settings.image_3_fallback != blank %}
+                    <div class="jcare-image-frame">
+
+                      <img
+                        src="{{ block.settings.image_3_fallback | asset_url }}"
+                        alt="{{ block.settings.image_3_alt | escape }}"
+                        width="700"
+                        height="700"
+                        loading="lazy"
+                      >
+
+                    </div>
+                  {% endif %}
+
+                </div>
+
+
+              <!-- ONE FALLBACK IMAGE -->
+
+              {% elsif block.settings.image_1_fallback != blank %}
+
+                <div class="jcare-image-frame">
+
+                  <img
+                    src="{{ block.settings.image_1_fallback | asset_url }}"
+                    alt="{{ block.settings.image_1_alt | escape }}"
+                    width="700"
+                    height="700"
+                    loading="lazy"
+                  >
+
+                </div>
+
+              {% endif %}
+
+
+              {% if block.settings.cta_text != blank and block.settings.cta_link != blank %}
+
+                <div class="jcare-cta-wrap">
+
+                  <a
+                    class="jcare-button cc-button-{{ block.settings.button_style | default: 'primary' }} cc-font-body-{{ section.settings.body_font }}"
+                    href="{{ block.settings.cta_link }}"
+                  >
+                    {{ block.settings.cta_text }}
+                  </a>
+
+                </div>
+
+              {% endif %}
+
+
+            {% endif %}
+
+          </div>
+
+        </section>
+
+      {% endif %}
+
+    {% endfor %}
+
+  </div>
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Jewellery care page",
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Title",
+      "default": "Essential Jewellery Care Tips"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_tagline",
+      "label": "Tagline",
+      "default": "Keeping your precious pieces sparkling"
+    },
+
+    {
+      "type": "richtext",
+      "id": "hero_intro",
+      "label": "Intro copy",
+      "default": "<p>Jewellery is more than just an accessory; it is an investment in beauty and often holds sentimental value. Proper care is essential to maintain its beauty and value over time.</p>"
+    },
+
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "Hero image alt text"
+    },
+
+    {
+      "type": "text",
+      "id": "hero_image_fallback",
+      "label": "Hero image fallback filename"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+
+    {
+      "type": "color",
+      "id": "hero_heading_color",
+      "label": "Hero heading colour"
+    },
+
+    {
+      "type": "color",
+      "id": "hero_tagline_color",
+      "label": "Hero tagline colour"
+    },
+
+    {
+      "type": "color",
+      "id": "section_heading_color",
+      "label": "Section heading colour"
+    },
+
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading colour"
+    },
+
+    {
+      "type": "color",
+      "id": "body_text_color",
+      "label": "Body text colour"
+    },
+
+    {
+      "type": "color",
+      "id": "callout_bg_color",
+      "label": "Callout background",
+      "default": "#f7f5f3"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+
+      "default": "cormorant"
+    },
+
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+
+      "default": "glacial"
+    }
+
+  ],
+
+
+  "blocks": [
+
+    {
+      "type": "content_block",
+      "name": "Content block",
+
+      "settings": [
+
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body copy"
+        },
+
+        {
+          "type": "checkbox",
+          "id": "callout",
+          "label": "Shaded callout background",
+          "default": false
+        },
+
+
+        {
+          "type": "header",
+          "content": "List"
+        },
+
+        {
+          "type": "text",
+          "id": "list_heading",
+          "label": "List heading"
+        },
+
+        {
+          "type": "textarea",
+          "id": "list_items",
+          "label": "List items",
+          "info": "Enter one item per line."
+        },
+
+        {
+          "type": "select",
+          "id": "list_style",
+          "label": "List style",
+
+          "options": [
+            {
+              "value": "bullet",
+              "label": "Bulleted"
+            },
+            {
+              "value": "numbered",
+              "label": "Numbered"
+            }
+          ],
+
+          "default": "bullet"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_1_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_2_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Image 3"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+
+        {
+          "type": "text",
+          "id": "image_3_alt",
+          "label": "Image alt text"
+        },
+
+        {
+          "type": "text",
+          "id": "image_3_fallback",
+          "label": "Fallback filename"
+        },
+
+
+        {
+          "type": "header",
+          "content": "Call to action"
+        },
+
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button text"
+        },
+
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "primary"
+        }
+
+      ]
+
+    }
+
+  ],
+
+
+  "presets": [
+    {
+      "name": "Jewellery care page"
+    }
+  ]
+
+}
+{% endschema %}

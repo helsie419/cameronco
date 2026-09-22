@@ -1,0 +1,557 @@
+<div class="booking-live-page">
+  <section class="brand-hero section-inner">
+    <h2 class="section-title{% if section.settings.heading_font != blank %} cc-font-heading-{{ section.settings.heading_font }}{% endif %}" style="{% if section.settings.heading_color != blank %}color:{{ section.settings.heading_color }};{% endif %}">{{ section.settings.heading }}</h2>
+    <p class="cc-preserve-line-breaks cc-font-body-{{ section.settings.body_font }}" style="{% if section.settings.subheading_color != blank %}color:{{ section.settings.subheading_color }};{% endif %}">{{ section.settings.subheading }}</p>
+  </section>
+
+  <div class="booking-header-grid section-inner">
+    <div class="booking-header-text">
+      <section class="booking-card" id="manage-booking" style="border: 0; box-shadow: none;">
+        <p id="manage-summary"></p>
+        <div class="button-row">
+          <button class="btn-black-center cc-button-{{ section.settings.reschedule_button_style | default: 'primary' }}" id="manage-reschedule" type="button" disabled>Reschedule to selected time</button>
+          <button class="btn-black-center cc-button-{{ section.settings.cancel_button_style | default: 'secondary' }}" id="manage-cancel" type="button">Cancel appointment</button>
+        </div>
+      </section>
+
+      <section class="booking-card" id="manage-empty" style="border: 0; box-shadow: none;">
+        <p>{{ section.settings.no_link_message }}</p>
+      </section>
+
+      <select id="booking-office" name="office" hidden>
+        <option value="melbourne">Melbourne Office</option>
+        <option value="sydney">Sydney Office</option>
+      </select>
+      <select id="booking-service" name="service" hidden>
+        <option>Virtual Enquiry</option>
+        <option>Engagement Ring Enquiry</option>
+        <option>Wedding Ring Enquiry</option>
+        <option>Jewellery Repairs</option>
+        <option>Collection</option>
+        <option>Remake or Custom Item</option>
+      </select>
+      <input id="selected-slot" name="slot" type="hidden" />
+
+      <p class="status-line" id="booking-status" aria-live="polite"></p>
+    </div>
+
+    <section class="booking-card booking-picker" id="manage-picker" aria-label="Select a new date and time" hidden>
+      <div class="booking-calendar-column">
+        <span id="timezone-label" hidden>Sydney time</span>
+
+        <div class="booking-scheduler">
+          <div class="booking-calendar-panel">
+            <h3 class="sr-only">Select a Date &amp; Time</h3>
+            <div class="calendar-month-row">
+              <button class="calendar-nav" id="calendar-prev" type="button" aria-label="Previous month">‹</button>
+              <strong id="calendar-month-label">Loading</strong>
+              <button class="calendar-nav" id="calendar-next" type="button" aria-label="Next month">›</button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun</span>
+            </div>
+            <div class="calendar-days" id="calendar-days"></div>
+          </div>
+
+          <section class="result-panel" aria-label="Available appointment timeslots">
+            <h3 class="sr-only" id="selected-date-heading">Select a date</h3>
+            <div aria-live="polite" class="slot-grid" id="slot-grid"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  window.CAMERON_CO_BOOKING_API = {{ section.settings.api_endpoint | json }};
+</script>
+
+<script>
+(function () {
+  var API_BASE = window.CAMERON_CO_BOOKING_API || "https://us-central1-cameronco-booking.cloudfunctions.net/api";
+  var params = new URLSearchParams(window.location.search);
+  var office = document.getElementById("booking-office");
+  var serviceSelect = document.getElementById("booking-service");
+  var slotInput = document.getElementById("selected-slot");
+  var slotGrid = document.getElementById("slot-grid");
+  var status = document.getElementById("booking-status");
+  var managePanel = document.getElementById("manage-booking");
+  var manageSummary = document.getElementById("manage-summary");
+  var emptyPanel = document.getElementById("manage-empty");
+  var pickerPanel = document.getElementById("manage-picker");
+  var calendarDays = document.getElementById("calendar-days");
+  var calendarMonthLabel = document.getElementById("calendar-month-label");
+  var selectedDateHeading = document.getElementById("selected-date-heading");
+  var timezoneLabel = document.getElementById("timezone-label");
+  var timezoneToggle = document.getElementById("timezone-toggle");
+  var timezoneToggleRow = document.getElementById("timezone-toggle-row");
+  var calendarPrev = document.getElementById("calendar-prev");
+  var calendarNext = document.getElementById("calendar-next");
+  var activeToken = params.get("booking");
+  var liveAvailabilityLoaded = false;
+  var reschedulePending = false;
+  var availableSlots = [];
+  var slotsByDate = {};
+  var selectedDateKey = "";
+  var calendarYear = new Date().getFullYear();
+  var calendarMonth = new Date().getMonth();
+
+  var OFFICE_TZ = "Australia/Sydney";
+  var LOCAL_TZ = OFFICE_TZ;
+  try {
+    LOCAL_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || OFFICE_TZ;
+  } catch (e) {
+    LOCAL_TZ = OFFICE_TZ;
+  }
+  var DISPLAY_TZ = OFFICE_TZ;
+
+  managePanel.hidden = true;
+  emptyPanel.hidden = true;
+
+  function fmt(value) {
+    return new Intl.DateTimeFormat("en-AU", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: DISPLAY_TZ
+    }).format(new Date(value));
+  }
+
+  function dateParts(value) {
+    var parts = new Intl.DateTimeFormat("en-AU", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: DISPLAY_TZ
+    }).formatToParts(new Date(value));
+    return parts.reduce(function (memo, part) {
+      if (part.type !== "literal") memo[part.type] = part.value;
+      return memo;
+    }, {});
+  }
+
+  function slotDateKey(value) {
+    var parts = new Intl.DateTimeFormat("en-AU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: DISPLAY_TZ
+    }).formatToParts(new Date(value)).reduce(function (memo, part) {
+      if (part.type !== "literal") memo[part.type] = part.value;
+      return memo;
+    }, {});
+    return parts.year + "-" + parts.month + "-" + parts.day;
+  }
+
+  function slotTime(value) {
+    return new Intl.DateTimeFormat("en-AU", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: DISPLAY_TZ
+    }).format(new Date(value)).replace(" ", "").toLowerCase();
+  }
+
+  function readableDateFromKey(key) {
+    var slot = slotsByDate[key] && slotsByDate[key][0];
+    if (slot) {
+      var parts = dateParts(slot.start);
+      return parts.weekday + ", " + parts.month + " " + Number(parts.day);
+    }
+    var bits = key.split("-");
+    return new Intl.DateTimeFormat("en-AU", {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    }).format(new Date(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2])));
+  }
+
+  // Office time is the default (unchanged behaviour for the vast majority of
+  // customers, who are already in Sydney/Melbourne time). Rarely, a customer
+  // browsing from elsewhere wants times in their own timezone instead --
+  // this toggle switches every displayed time (calendar, slot grid) without
+  // changing what actually gets submitted, since slot values are always the
+  // raw ISO instant regardless of how they're displayed.
+  function applyTimezone(tz) {
+    DISPLAY_TZ = tz;
+    if (timezoneLabel) {
+      timezoneLabel.textContent = tz === OFFICE_TZ ? "Sydney time" : "your local time (" + tz.replace(/_/g, " ").split("/").pop() + ")";
+    }
+    if (timezoneToggle) {
+      timezoneToggle.textContent = tz === OFFICE_TZ ? "Show in your local time" : "Show in Sydney time";
+    }
+    if (availableSlots.length) setSlots(availableSlots);
+  }
+
+  function officeContact() {
+    return office && office.value === "sydney"
+      ? "the Sydney office on (02) 9699 2266"
+      : "the Melbourne office on (03) 9836 9922";
+  }
+
+  function setStatus(msg, isError) {
+    if (!status) return;
+    status.textContent = msg;
+    status.classList.toggle("status-line--error", Boolean(isError));
+  }
+
+  function updateRescheduleButton() {
+    var button = document.getElementById("manage-reschedule");
+    if (button) button.disabled = !activeToken || !liveAvailabilityLoaded || !slotInput || !slotInput.value || reschedulePending;
+  }
+
+  function loadSlots() {
+    liveAvailabilityLoaded = false;
+    updateRescheduleButton();
+    setStatus("Loading available times...");
+    if (slotGrid) slotGrid.innerHTML = "";
+    if (slotInput) slotInput.value = "";
+    fetch(API_BASE + "/api/booking/availability?office=" + encodeURIComponent(office.value))
+      .then(function (res) {
+        if (!res.ok) throw new Error("Availability failed");
+        return res.json();
+      })
+      .then(function (json) {
+        liveAvailabilityLoaded = true;
+        setSlots(json.slots || []);
+        setStatus("");
+      })
+      .catch(function () {
+        setSlots([]);
+        setStatus("Live appointment times are temporarily unavailable. Please reload the page or contact " + officeContact() + ".", true);
+      });
+  }
+
+  function setSlots(slots) {
+    availableSlots = slots.slice().sort(function (a, b) {
+      return new Date(a.start) - new Date(b.start);
+    });
+    slotsByDate = availableSlots.reduce(function (memo, slot) {
+      var key = slotDateKey(slot.start);
+      if (!memo[key]) memo[key] = [];
+      memo[key].push(slot);
+      return memo;
+    }, {});
+
+    var firstSlot = availableSlots[0];
+    if (firstSlot) {
+      selectedDateKey = slotDateKey(firstSlot.start);
+      var firstKeyParts = selectedDateKey.split("-");
+      calendarYear = Number(firstKeyParts[0]);
+      calendarMonth = Number(firstKeyParts[1]) - 1;
+    } else {
+      selectedDateKey = "";
+    }
+    renderCalendar();
+    renderSlotsForDate(selectedDateKey);
+  }
+
+  function renderCalendar() {
+    if (!calendarDays || !calendarMonthLabel) return;
+    calendarDays.innerHTML = "";
+    calendarMonthLabel.textContent = new Intl.DateTimeFormat("en-AU", {
+      month: "long",
+      year: "numeric"
+    }).format(new Date(calendarYear, calendarMonth, 1));
+
+    var firstDay = new Date(calendarYear, calendarMonth, 1);
+    var daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+    var leadingBlanks = (firstDay.getDay() + 6) % 7;
+
+    for (var blank = 0; blank < leadingBlanks; blank += 1) {
+      var spacer = document.createElement("span");
+      spacer.className = "calendar-day-spacer";
+      calendarDays.appendChild(spacer);
+    }
+
+    for (var day = 1; day <= daysInMonth; day += 1) {
+      var key = calendarYear + "-" + String(calendarMonth + 1).padStart(2, "0") + "-" + String(day).padStart(2, "0");
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "calendar-day";
+      button.textContent = day;
+      button.disabled = !slotsByDate[key];
+      if (key === selectedDateKey) button.classList.add("selected");
+      if (slotsByDate[key]) button.classList.add("available");
+      button.addEventListener("click", function (event) {
+        selectedDateKey = event.currentTarget.getAttribute("data-date");
+        if (slotInput) slotInput.value = "";
+        updateRescheduleButton();
+        renderCalendar();
+        renderSlotsForDate(selectedDateKey);
+      });
+      button.setAttribute("data-date", key);
+      calendarDays.appendChild(button);
+    }
+  }
+
+  function renderSlotsForDate(dateKey) {
+    if (!slotGrid) return;
+    slotGrid.innerHTML = "";
+    if (selectedDateHeading) {
+      selectedDateHeading.textContent = dateKey ? readableDateFromKey(dateKey) : "Select a date";
+    }
+    var slots = slotsByDate[dateKey] || [];
+    if (availableSlots.length === 0) {
+      slotGrid.innerHTML = "<p>No open slots for this date range. Please contact us directly.</p>";
+      return;
+    }
+    if (slots.length === 0) {
+      slotGrid.innerHTML = "<p>Select a highlighted date to view available times.</p>";
+      return;
+    }
+    slots.forEach(function (slot) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "slot-button";
+      button.textContent = slotTime(slot.start);
+      button.addEventListener("click", function () {
+        slotGrid.querySelectorAll(".slot-button").forEach(function (item) {
+          item.classList.remove("selected");
+        });
+        button.classList.add("selected");
+        if (slotInput) slotInput.value = slot.start;
+        updateRescheduleButton();
+      });
+      slotGrid.appendChild(button);
+    });
+  }
+
+  if (calendarPrev) {
+    calendarPrev.addEventListener("click", function () {
+      calendarMonth -= 1;
+      if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear -= 1;
+      }
+      renderCalendar();
+      renderSlotsForDate(selectedDateKey);
+    });
+  }
+
+  if (calendarNext) {
+    calendarNext.addEventListener("click", function () {
+      calendarMonth += 1;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear += 1;
+      }
+      renderCalendar();
+      renderSlotsForDate(selectedDateKey);
+    });
+  }
+
+  function showManage(booking) {
+    if (!booking) return;
+    managePanel.hidden = false;
+    emptyPanel.hidden = true;
+    pickerPanel.hidden = false;
+    if (manageSummary) {
+      manageSummary.textContent = booking.service + " at " + fmt(booking.start) + " (" + booking.office.toUpperCase() + " Office).";
+    }
+    if (office) office.value = booking.office;
+    if (serviceSelect) serviceSelect.value = booking.service;
+    loadSlots();
+  }
+
+  function showEmptyState() {
+    managePanel.hidden = true;
+    pickerPanel.hidden = true;
+    emptyPanel.hidden = false;
+  }
+
+  function loadManagedBooking() {
+    if (!activeToken) {
+      showEmptyState();
+      return;
+    }
+    fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken))
+      .then(function (res) {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then(function (json) {
+        showManage(json.booking);
+        setStatus("Select a new time if you need to reschedule.");
+      })
+      .catch(function () {
+        setStatus("We could not load that appointment. Please contact us on (02) 9699 2266.", true);
+        showEmptyState();
+      });
+  }
+
+  var manageCancelButton = document.getElementById("manage-cancel");
+  var manageRescheduleButton = document.getElementById("manage-reschedule");
+
+  if (manageCancelButton) {
+    manageCancelButton.addEventListener("click", function () {
+      if (!activeToken) return;
+      fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/cancel", { method: "POST" })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Cancel failed");
+          return res.json();
+        })
+        .then(function () {
+          setStatus("Appointment cancelled. A cancellation email has been sent.");
+          showEmptyState();
+        })
+        .catch(function () {
+          setStatus("Unable to cancel online. Please call " + officeContact() + ".", true);
+        });
+    });
+  }
+
+  if (manageRescheduleButton) {
+    manageRescheduleButton.addEventListener("click", function () {
+      if (!activeToken || !liveAvailabilityLoaded || !slotInput || !slotInput.value || reschedulePending) {
+        setStatus("Select a new time first.", true);
+        return;
+      }
+      reschedulePending = true;
+      updateRescheduleButton();
+      setStatus("Rescheduling your appointment...");
+      fetch(API_BASE + "/api/booking/" + encodeURIComponent(activeToken) + "/reschedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slot: slotInput.value })
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Reschedule failed");
+          return res.json();
+        })
+        .then(function (json) {
+          showManage(json.booking);
+          setStatus("Appointment rescheduled. Updated confirmation and reminders are queued.");
+        })
+        .catch(function () {
+          setStatus("Unable to reschedule online. Please call " + officeContact() + ".", true);
+        })
+        .then(function () {
+          reschedulePending = false;
+          updateRescheduleButton();
+        });
+    });
+  }
+
+  if (timezoneToggle) {
+    if (LOCAL_TZ === OFFICE_TZ) {
+      // Customer's own timezone already matches the office -- nothing to offer.
+      if (timezoneToggleRow) timezoneToggleRow.hidden = true;
+    } else {
+      timezoneToggle.addEventListener("click", function () {
+        applyTimezone(DISPLAY_TZ === OFFICE_TZ ? LOCAL_TZ : OFFICE_TZ);
+      });
+    }
+  }
+  applyTimezone(OFFICE_TZ);
+  loadManagedBooking();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Manage Appointment Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Manage Your Appointment"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Cancel below, or pick a new date to reschedule."
+    },
+    {
+      "type": "textarea",
+      "id": "no_link_message",
+      "label": "Message when no appointment link is present",
+      "default": "We couldn't find an appointment to manage. Please use the manage link from your confirmation or reminder email, or contact us at (02) 9699 2266 / info@cameronco.com.au."
+    },
+    {
+      "type": "text",
+      "id": "api_endpoint",
+      "label": "Booking API URL",
+      "default": "https://us-central1-cameronco-booking.cloudfunctions.net/api",
+      "info": "The Firebase Functions backend URL connecting to Google Calendar for Sydney & Melbourne."
+    },
+    {
+      "type": "header",
+      "content": "Button styles"
+    },
+    {
+      "type": "select",
+      "id": "reschedule_button_style",
+      "label": "Reschedule button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "select",
+      "id": "cancel_button_style",
+      "label": "Cancel appointment button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "secondary"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#171d29"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#6b7280"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        { "value": "cormorant", "label": "Cormorant Garamond" },
+        { "value": "playfair", "label": "Playfair Display" },
+        { "value": "garamond", "label": "EB Garamond" },
+        { "value": "baskerville", "label": "Libre Baskerville" }
+      ],
+      "default": "garamond"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        { "value": "glacial", "label": "Glacial Indifference" },
+        { "value": "montserrat", "label": "Montserrat" },
+        { "value": "inter", "label": "Inter" },
+        { "value": "poppins", "label": "Poppins" }
+      ],
+      "default": "montserrat"
+    }
+  ],
+  "presets": [
+    { "name": "Manage Appointment Page" }
+  ]
+}
+{% endschema %}

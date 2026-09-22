@@ -1,0 +1,52 @@
+<style>
+  .legal-page { padding-top: 72px; padding-bottom: 96px; }
+  .legal-page__inner { max-width: 900px; margin: 0 auto; }
+  .legal-page h1 { margin: 0 0 42px; }
+  .legal-page h2 { margin: 42px 0 14px; }
+  .legal-page p, .legal-page li { max-width: none; }
+  .legal-page a { text-decoration: underline; }
+  @media screen and (max-width: 749px) {
+    .legal-page { padding-top: 48px; padding-bottom: 64px; }
+    .legal-page__inner { padding-left: 20px; padding-right: 20px; }
+    .legal-page h1 { margin-bottom: 32px; }
+  }
+</style>
+
+{% assign legal_handle = page.handle %}
+{% case legal_handle %}
+  {% when 'termsandconditions' %}
+    {% assign legal_snippet = 'legal-terms' %}
+  {% when 'disclaimer' %}
+    {% assign legal_snippet = 'legal-disclaimer' %}
+  {% else %}
+    {% assign legal_snippet = 'legal-privacy' %}
+{% endcase %}
+
+{% assign legal_heading = page.title %}
+
+<section class="legal-page section-inner" aria-labelledby="legal-page-title-{{ section.id }}">
+  <div class="legal-page__inner">
+    <h1 id="legal-page-title-{{ section.id }}">{{ legal_heading }}</h1>
+    <div class="legal-page__content rte">
+      {% case legal_handle %}
+        {% when 'termsandconditions' %}
+          {% render 'legal-terms' %}
+        {% when 'disclaimer' %}
+          {% render 'legal-disclaimer' %}
+        {% else %}
+          {% if page.content != blank %}
+            {{ page.content }}
+          {% else %}
+            {% render 'legal-privacy' %}
+          {% endif %}
+      {% endcase %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Legal page",
+  "settings": []
+}
+{% endschema %}

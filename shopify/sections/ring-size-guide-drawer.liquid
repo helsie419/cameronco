@@ -1,0 +1,273 @@
+<style>
+  #ring-size-drawer-{{ section.id }} .rsg-tab {
+    position: fixed;
+    top: 232px;
+    right: 0;
+    z-index: 1100;
+
+    transform: rotate(180deg);
+    writing-mode: vertical-rl;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 16px 10px;
+
+    background: #171d29;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px 0 0 8px;
+
+    font-family: var(--font-body);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-tab:hover {
+    background: #262f42;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1101;
+
+    background: rgba(23, 29, 41, 0.45);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+  }
+
+  #ring-size-drawer-{{ section.id }}.is-open .rsg-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1102;
+
+    width: min(400px, 90vw);
+
+    background: #ffffff;
+    box-shadow: -12px 0 32px rgba(0, 0, 0, 0.14);
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+
+    overflow-y: auto;
+
+    padding: 32px 28px 40px;
+    box-sizing: border-box;
+  }
+
+  #ring-size-drawer-{{ section.id }}.is-open .rsg-panel {
+    transform: translateX(0);
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-close {
+    display: block;
+    margin-left: auto;
+
+    background: none;
+    border: none;
+
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    color: #171d29;
+    cursor: pointer;
+
+    padding: 4px 0 20px;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel h2 {
+    margin: 0 0 14px;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel h3 {
+    margin: 26px 0 10px;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel p,
+  #ring-size-drawer-{{ section.id }} .rsg-panel li {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #383838;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel ol,
+  #ring-size-drawer-{{ section.id }} .rsg-panel ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-panel ol li + li,
+  #ring-size-drawer-{{ section.id }} .rsg-chart li + li {
+    margin-top: 8px;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-chart {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-chart li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 9px 0;
+    border-bottom: 1px solid #ececec;
+
+    font-size: 14px;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-chart li strong {
+    font-weight: 600;
+    color: #171d29;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-footer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #ececec;
+  }
+
+  #ring-size-drawer-{{ section.id }} .rsg-footer a {
+    color: #171d29;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #ring-size-drawer-{{ section.id }} .rsg-tab {
+      padding: 12px 8px;
+      font-size: 12px;
+    }
+
+    #ring-size-drawer-{{ section.id }} .rsg-panel {
+      padding: 26px 20px 32px;
+    }
+  }
+</style>
+
+<div id="ring-size-drawer-{{ section.id }}" class="ring-size-drawer">
+
+  <button type="button" class="rsg-tab" data-rsg-open aria-haspopup="dialog" aria-expanded="false">
+    {{ section.settings.tab_label | default: 'Find Your Ring Size' }}
+  </button>
+
+  <div class="rsg-overlay" data-rsg-close></div>
+
+  <div class="rsg-panel" role="dialog" aria-modal="true" aria-labelledby="rsg-title-{{ section.id }}">
+
+    <button type="button" class="rsg-close" data-rsg-close>Close ✕</button>
+
+    <h2 id="rsg-title-{{ section.id }}" class="cc-font-heading-cormorant">Find Your Ring Size</h2>
+
+    <p>Wrap a strip of string or paper around the base of the finger, mark where it overlaps, then measure the length in millimetres to get your circumference.</p>
+
+    <h3>Quick steps</h3>
+    <ol>
+      <li>Wrap string or paper snugly around the finger, where the ring will sit.</li>
+      <li>Mark the point where it overlaps to form a full circle.</li>
+      <li>Measure that length in millimetres — this is your circumference.</li>
+      <li>Match it to the closest size below.</li>
+    </ol>
+
+    <h3>Size chart (AU / UK — US — EU)</h3>
+    <ul class="rsg-chart">
+      <li><span><strong>AU/UK H</strong> — US 4 — EU 46</span><span>45.9mm</span></li>
+      <li><span><strong>AU/UK J½</strong> — US 5 — EU 49</span><span>49.3mm</span></li>
+      <li><span><strong>AU/UK L</strong> — US 6 — EU 51</span><span>51.9mm</span></li>
+      <li><span><strong>AU/UK N</strong> — US 6½ — EU 52</span><span>53.1mm</span></li>
+      <li><span><strong>AU/UK N½</strong> — US 7 — EU 54</span><span>54.4mm</span></li>
+      <li><span><strong>AU/UK P½</strong> — US 8 — EU 57</span><span>57.2mm</span></li>
+      <li><span><strong>AU/UK R½</strong> — US 9 — EU 59</span><span>59.5mm</span></li>
+      <li><span><strong>AU/UK T½</strong> — US 10 — EU 62</span><span>62.1mm</span></li>
+    </ul>
+
+    <div class="rsg-footer">
+      <p>Not sure, or between sizes? <a href="/pages/booking">Book a free in-store sizing</a> and we'll confirm it in a couple of minutes.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('ring-size-drawer-{{ section.id }}');
+    if (!root) return;
+
+    // Escape the animated #main-content wrapper (its transform-based
+    // entrance animation turns it into a containing block, which breaks
+    // position: fixed for anything nested inside it).
+    document.body.appendChild(root);
+
+    var openBtn = root.querySelector('[data-rsg-open]');
+    var closeEls = root.querySelectorAll('[data-rsg-close]');
+
+    function openDrawer() {
+      root.classList.add('is-open');
+      openBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      root.classList.remove('is-open');
+      openBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    openBtn.addEventListener('click', openDrawer);
+
+    closeEls.forEach(function (el) {
+      el.addEventListener('click', closeDrawer);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && root.classList.contains('is-open')) {
+        closeDrawer();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Ring size guide drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_label",
+      "label": "Tab label",
+      "default": "Find Your Ring Size"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ring size guide drawer"
+    }
+  ]
+}
+{% endschema %}

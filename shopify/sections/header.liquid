@@ -1,0 +1,887 @@
+<style>
+/* =========================================================
+   CAMERON & CO HEADER — single source of truth
+
+   This used to be spread across ~7 separate "final word" patches
+   in theme.css.liquid (dated things like "2026-06 definitive
+   correction patch", "FINAL QA CORRECTION PATCH", "2026-07 header
+   relayout v2", "UNIFIED HEADER POSITIONING"), each re-declaring
+   the same properties and only winning by a mix of !important,
+   CSS specificity and source order. All of that has been
+   consolidated into this one block, which reproduces the same
+   final computed result. Edit here — nothing else in the theme
+   should style .site-header, .site-logo, .menu-icon, .primary-nav,
+   .dropdown or the header's .btn-book.
+
+   Real breakpoint: the burger replaces the inline nav at 1200px
+   (not 900px, despite what older comments elsewhere claimed).
+   ========================================================= */
+
+.site-header {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: {{ section.settings.background_color | default: '#ffffff' }} !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  padding: 0 !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+
+  /* Outer minimum height. Taller than .header-inner's own min-height
+     below — that's intentional and matches the header's current
+     live sizing, not a bug to "fix" here. The flex centering above
+     is what actually keeps .header-inner (and the logo/burger inside
+     it) vertically centered in that extra height, rather than
+     hugging the top of the box. */
+  min-height: 84px;
+}
+
+.site-header .header-inner {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes ccHeaderDrop {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .site-header {
+    animation: ccHeaderDrop 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+.site-header::before,
+.site-header::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+.site-header .header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 22px !important;
+}
+
+.site-logo {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: start;
+  /* Mobile offset by default; overridden by the desktop offset
+     inside the desktop media query below. Neither needs !important
+     — the desktop rule is later in source order, so it naturally
+     wins at ≥1201px. */
+  transform: translate(var(--logo-x-m, 0px), var(--logo-y-m, 0px));
+}
+
+.site-header .site-logo img {
+  /* Controlled by the "Logo size — mobile" setting in the theme
+     editor (Header section), then eased down on smaller screens. */
+  height: {{ section.settings.logo_size_mobile | default: 29 }}px !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+.site-header nav {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  justify-content: flex-end;
+  min-width: 0;
+  display: none;
+}
+
+.site-header .menu-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0 !important;
+  border: 1px solid rgba(140, 106, 47, 0.32);
+  border-radius: 50%;
+  background: #ffffff;
+  width: 46px;
+  height: 46px;
+  z-index: 210;
+  flex-shrink: 0;
+}
+
+.site-header .menu-icon span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-brand-red);
+  border-radius: 10px;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.site-header .menu-icon span:last-child {
+  width: 16px;
+}
+
+.site-header .menu-icon.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-header .menu-icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header .menu-icon.open span:nth-child(3) {
+  width: 24px;
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---- Nav link appearance (shared by desktop + open mobile panel) ---- */
+
+.site-header .primary-nav > li > .primary-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: {{ section.settings.nav_color | default: '#0b0b0b' }} !important;
+  font-weight: 500;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  background: transparent;
+  border: 0;
+}
+
+.site-header .primary-nav > li > .primary-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: #BD9C42 !important;
+  background-color: #BD9C42 !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+.site-header .primary-nav > li > .primary-nav-link:hover,
+.site-header .primary-nav > li > .primary-nav-link:focus-visible,
+.site-header .primary-nav > li > .primary-nav-link[aria-current="page"] {
+  color: {{ section.settings.nav_color | default: '#0b0b0b' }} !important;
+}
+
+.site-header .primary-nav > li > .primary-nav-link:hover::after,
+.site-header .primary-nav > li > .primary-nav-link:focus-visible::after,
+.site-header .primary-nav > li > .primary-nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.site-header .primary-nav > li > .nav-parent svg {
+  width: 8px;
+  height: 8px;
+  fill: currentColor;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+/* ---- Desktop dropdown (submenu on nav items with children) ---- */
+
+.site-header .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  min-width: 210px;
+  padding: 10px 0 16px;
+  z-index: 300;
+  list-style: none;
+  overflow: hidden;
+}
+
+.site-header .primary-nav > li:hover .dropdown,
+.site-header .primary-nav > li.dropdown-open .dropdown {
+  display: block;
+}
+
+.site-header .dropdown a {
+  display: block;
+  font-size: 16px;
+  color: #171d29;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 14px 18px;
+  min-height: auto;
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transition: background 0.15s, color 0.15s;
+}
+
+.site-header .dropdown li:last-child a {
+  border-bottom: none;
+}
+
+.site-header .dropdown a:hover {
+  background: rgba(247, 243, 238, 0.72);
+  color: #BD9C42;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-header .dropdown {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  }
+  .site-header .primary-nav > li:hover > .dropdown,
+  .site-header .primary-nav > li:focus-within > .dropdown {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ---- Booking button (structural placement only — its color comes
+   from the shared "UNIFIED PRIMARY BUTTON STYLE" rule in
+   theme.css.liquid, same as every other primary CTA on the site) ---- */
+
+.site-header .btn-book {
+  display: none;
+  flex: 0 0 auto;
+  white-space: nowrap !important;
+}
+
+/* ---- Header icons wrapper (cart + menu on mobile, cart + book on desktop) ---- */
+
+.site-header .header-icons {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 210;
+}
+
+.site-header .cart-icon-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(140, 106, 47, 0.32);
+  border-radius: 50%;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.site-header .cart-icon-link svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--color-brand-red, #BD9C42);
+  stroke-width: 1.6;
+}
+
+.site-header .cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 50%;
+  background: var(--color-brand-red, #BD9C42);
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 18px;
+  text-align: center;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* =========================================================
+   DESKTOP — nav visible inline, burger hidden. 1200px is the
+   theme's real threshold, not the 900/1250px older comments
+   elsewhere assumed.
+   ========================================================= */
+@media (min-width: 1201px) {
+
+  .site-header {
+    min-height: 118px;
+  }
+
+  .site-header .header-inner {
+    grid-template-columns: 310px minmax(0, 1fr) 266px;
+    grid-template-rows: 1fr;
+    column-gap: 34px;
+    min-height: 118px;
+    max-width: 1540px;
+    padding: 0 36px !important;
+  }
+
+  .site-header .header-icons {
+    grid-column: 3;
+    grid-row: 1;
+    gap: 14px;
+  }
+
+  .site-logo {
+    grid-row: 1;
+    align-self: center;
+    transform: translate(var(--logo-x, 0px), var(--logo-y, 0px));
+  }
+
+  .site-header .site-logo img {
+    /* Controlled by the "Logo size" setting in the theme editor
+       (Header section). Width scales proportionally. */
+    height: {{ section.settings.logo_size | default: 58 }}px !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .site-header nav {
+    display: block;
+    grid-row: 1;
+    align-self: center;
+    padding-top: 0;
+  }
+
+  .site-header .primary-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-end;
+    gap: 20px;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .site-header .primary-nav > li {
+    position: relative;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .site-header .primary-nav > li > .primary-nav-link {
+    font-size: 18px;
+    line-height: 1.2;
+    white-space: nowrap !important;
+  }
+
+  .site-header .menu-icon {
+    display: none;
+  }
+
+  .site-header .btn-book {
+    display: inline-flex;
+
+    min-height: 44px !important;
+    width: auto !important;
+    min-width: 168px !important;
+    justify-content: center !important;
+    padding: 10px 18px 9px !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1380px) {
+  .site-header .header-inner {
+    grid-template-columns: 270px minmax(0, 1fr) 252px;
+    column-gap: 24px;
+    padding: 0 28px !important;
+  }
+
+  .site-header .primary-nav {
+    gap: 15px;
+  }
+
+  .site-header .primary-nav > li > .primary-nav-link {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   MOBILE / BURGER — 1200px and below
+   ========================================================= */
+@media (max-width: 1200px) {
+
+  .site-header .btn-book {
+    display: none !important;
+  }
+
+  .site-header.mobile-open nav {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 18px 22px 26px;
+
+    /* Flush with the screen edges, reading as an extension of the
+       header itself rather than a floating card — with enough
+       transparency to still see through to the page behind it. */
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: 0;
+  }
+
+  .site-header.mobile-open .primary-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .site-header.mobile-open .primary-nav > li {
+    width: 100%;
+    list-style: none !important;
+  }
+
+  .site-header.mobile-open .primary-nav > li > a,
+  .site-header.mobile-open .primary-nav > li > span {
+    padding: 12px 0;
+    /* Slightly larger, easier-to-read menu item text. */
+    font-size: 15px;
+  }
+
+  .site-header.mobile-open .dropdown {
+    display: none;
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none !important;
+    box-shadow: none;
+    padding: 0 0 0 18px;
+    margin: 0;
+    min-width: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    list-style: none !important;
+    overflow: visible;
+  }
+
+
+
+  .site-header.mobile-open .primary-nav > li.dropdown-open > .dropdown {
+    display: block;
+  }
+
+  .site-header.mobile-open .dropdown li {
+    list-style: none !important;
+  }
+
+  .site-header.mobile-open .dropdown a {
+    padding: 11px 0 !important;
+    font-size: 16px !important;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header {
+    min-height: 72px;
+  }
+  .site-header .header-inner {
+    min-height: 72px;
+  }
+}
+
+/* Override hardcoded h1 color to use CSS variable */
+.brand-hero h1 {
+  color: var(--color-text) !important;
+}\n\n/* ---- Header font + underline protection ---- */\n.site-header .cc-font-heading-cormorant { font-family: "Cormorant Garamond", Georgia, serif !important; }\n.site-header .cc-font-heading-playfair { font-family: "Playfair Display", Georgia, serif !important; }\n.site-header .cc-font-heading-garamond { font-family: "EB Garamond", Georgia, serif !important; }\n.site-header .cc-font-heading-baskerville { font-family: "Libre Baskerville", Georgia, serif !important; }\n\n.site-header .primary-nav > li > a.primary-nav-link,\n.site-header .primary-nav > li > a.primary-nav-link:hover,\n.site-header .primary-nav > li > a.primary-nav-link:focus,\n.site-header .primary-nav > li > a.primary-nav-link:focus-visible,\n.site-header .primary-nav > li > a.primary-nav-link[aria-current="page"] {\n  border: 0 !important;\n  border-bottom: 0 !important;\n  box-shadow: none !important;\n  text-decoration: none !important;\n  text-decoration-line: none !important;\n  background-image: none !important;\n}\n\n.site-header .primary-nav > li > a.primary-nav-link::after,\n.site-header .primary-nav > li > a.primary-nav-link:hover::after,\n.site-header .primary-nav > li > a.primary-nav-link:focus-visible::after,\n.site-header .primary-nav > li > a.primary-nav-link[aria-current="page"]::after {\n  background: #BD9C42 !important;\n  background-color: #BD9C42 !important;\n  border: 0 !important;\n}\n
+</style>
+
+
+<header
+  class="site-header"
+  role="banner"
+  style="background: {{ section.settings.background_color }} !important;"
+>
+  <div class="container header-inner">
+
+    <a
+      aria-label="Cameron &amp; Co home"
+      class="site-logo"
+      href="{{ routes.root_url }}"
+      style="
+        --logo-x: {{ section.settings.logo_offset_x | default: 0 }}px;
+        --logo-y: {{ section.settings.logo_offset_y | default: 0 }}px;
+        --logo-x-m: {{ section.settings.logo_offset_x_mobile | default: 0 }}px;
+        --logo-y-m: {{ section.settings.logo_offset_y_mobile | default: 0 }}px;
+      "
+    >
+      <img
+        alt="Cameron &amp; Co Logo"
+        height="486"
+        src="{{ 'cameron-co-logo-cropped.webp' | asset_url }}"
+        width="2000"
+        style="object-fit: contain;"
+      >
+    </a>
+
+    <nav
+      aria-label="Main navigation"
+      {% if section.settings.nav_offset_x != 0 or section.settings.nav_offset_y != 0 %}
+        style="transform: translate({{ section.settings.nav_offset_x }}px, {{ section.settings.nav_offset_y }}px);"
+      {% endif %}
+    >
+      <ul class="primary-nav">
+
+        {% if section.settings.main_menu.links.size > 0 %}
+
+          {% for link in section.settings.main_menu.links %}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link{% if link.links.size > 0 %} nav-parent{% endif %}"
+                {% if link.active %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{ link.title }}
+                {% if link.links.size > 0 %}
+                  <svg aria-hidden="true" viewbox="0 0 8 5" xmlns="http://www.w3.org/2000/svg"><path d="M4 5L0 0h8z"></path></svg>
+                {% endif %}
+              </a>
+              {% if link.links.size > 0 %}
+                <ul aria-label="{{ link.title }} submenu" class="dropdown">
+                  {% for child_link in link.links %}
+                    <li>
+                      <a class="cc-font-heading-{{ section.settings.nav_font }}" href="{{ child_link.url }}"{% if child_link.active %} aria-current="page"{% endif %}>{{ child_link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+
+        {% else %}
+
+          <li>
+            <a
+              href="{{ pages['sydneyoffice'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "sydney-services" or request.page.template_suffix == "melbourne-services" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Services
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['about'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "about" %}
+                aria-current="page"
+              {% endif %}
+            >
+              About
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['testimonials'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "testimonials" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Testimonials
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['diamonds'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+            >
+              Diamonds
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['ring-builder'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+            >
+              Ring Builder
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="{{ pages['contact'].url }}"
+              class="cc-font-heading-{{ section.settings.nav_font }} primary-nav-link"
+              {% if request.page.template_suffix == "contact" %}
+                aria-current="page"
+              {% endif %}
+            >
+              Contact
+            </a>
+          </li>
+
+        {% endif %}
+
+      </ul>
+    </nav>
+
+    <div class="header-icons">
+      <a
+        aria-label="Cart, {{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}"
+        class="cart-icon-link"
+        href="{{ routes.cart_url }}"
+      >
+        <svg aria-hidden="true" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 8V6a6 6 0 0 1 12 0v2" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M4.5 8h15l-1.2 12.2a2 2 0 0 1-2 1.8H7.7a2 2 0 0 1-2-1.8L4.5 8z" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} style="display: none;"{% endif %}>
+          {{ cart.item_count }}
+        </span>
+      </a>
+
+      <button
+        aria-expanded="false"
+        aria-label="Open menu"
+        class="menu-icon"
+        type="button"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a
+        class="btn-book btn-red cc-button-{{ section.settings.button_style | default: 'primary' }}"
+        href="{{ section.settings.button_link | default: pages['booking'].url }}"
+      >
+        {{ section.settings.button_text }}
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Menu",
+      "info": "Manage links in Online Store → Navigation. Leave blank to use the default links."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Book an appointment"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave blank to use the Booking page"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Nav link color",
+      "default": "#0b0b0b"
+    },
+    {
+      "type": "header",
+      "content": "Colors — mobile only"
+    },
+    {
+      "type": "color",
+      "id": "nav_color_mobile",
+      "label": "Nav link color (mobile menu)",
+      "default": "#0b0b0b"
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "nav_font",
+      "label": "Nav link font",
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond (default)"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "header",
+      "content": "Logo — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "logo_size",
+      "label": "Height",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_x",
+      "label": "Move — horizontal",
+      "min": -300,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_y",
+      "label": "Move — vertical",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Logo — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Height",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 29
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_x_mobile",
+      "label": "Move — horizontal",
+      "min": -150,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_offset_y_mobile",
+      "label": "Move — vertical",
+      "min": -60,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Move navigation"
+    },
+    {
+      "type": "range",
+      "id": "nav_offset_x",
+      "label": "Nav — horizontal",
+      "min": -300,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "nav_offset_y",
+      "label": "Nav — vertical",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,785 @@
+<style>
+  /* ==========================================================
+     CAMERON & CO — DIAMONDS & GEMSTONES LANDING PAGE
+     ========================================================== */
+
+  #diamonds-landing-{{ section.id }} {
+    width: 100%;
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-inner {
+    width: calc(100% - 64px);
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+
+  /* ==========================================================
+     INTRODUCTION
+     ========================================================== */
+
+  #diamonds-landing-{{ section.id }} .dl-intro {
+    padding: 56px 0 48px;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-eyebrow {
+    margin: 0 0 10px;
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-title {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 0 18px;
+
+    font-size: clamp(32px, 3.2vw, 42px);
+    line-height: 1.15;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-intro-copy {
+    width: 100%;
+    max-width: 960px;
+
+    margin: 0;
+
+    font-family: var(--font-body) !important;
+    font-size: 17px !important;
+    line-height: 1.72 !important;
+
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-intro-copy p {
+    margin: 0;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+
+  /* ==========================================================
+     THREE STONE TYPES
+     ========================================================== */
+
+  #diamonds-landing-{{ section.id }} .dl-options {
+    padding: 12px 0 76px;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-image-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    background: #f7f5f3;
+
+    line-height: 0;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-image img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center center !important;
+
+    border-radius: 0 !important;
+
+    transition: transform 0.35s ease;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card:hover .dl-card-image img {
+    transform: scale(1.025);
+  }
+
+
+  /* ==========================================================
+     CARD CONTENT
+     ========================================================== */
+
+  #diamonds-landing-{{ section.id }} .dl-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    padding: 21px 2px 0;
+
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-eyebrow {
+    margin: 0 0 8px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+
+    color: #6d6d6d;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-title {
+    width: 100%;
+
+    margin: 0 0 12px;
+
+    font-size: clamp(24px, 2vw, 29px);
+    line-height: 1.2;
+    font-weight: 400;
+
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-copy {
+    width: 100%;
+
+    margin: 0 0 18px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 16px;
+    line-height: 1.68;
+
+    text-align: left;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-copy p {
+    margin: 0 0 12px;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-copy p:last-child {
+    margin-bottom: 0;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-link {
+    display: inline-flex;
+
+    width: fit-content;
+
+    margin-top: auto;
+    padding-bottom: 3px;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    color: #171d29;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #BD9C42;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-card-link:hover {
+    opacity: 0.7;
+  }
+
+
+  /* ==========================================================
+     HELP CHOOSING SECTION
+     ========================================================== */
+
+  #diamonds-landing-{{ section.id }} .dl-help {
+    padding: 58px 0;
+
+    background-color: #f7f5f3;
+
+    background-image:
+      linear-gradient(
+        rgba(247, 245, 243, 0.94),
+        rgba(247, 245, 243, 0.94)
+      ),
+      url({{ 'cameron-co-footer-diamond-texture-wide.png' | asset_url }});
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-help-inner {
+    max-width: 820px;
+    text-align: center;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-help-title {
+    margin: 0 0 14px;
+
+    font-size: clamp(27px, 2.5vw, 34px);
+    line-height: 1.18;
+    font-weight: 400;
+
+    text-align: center;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-help-copy {
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    font-family: var(--font-body) !important;
+
+    font-size: 16px;
+    line-height: 1.68;
+
+    text-align: center;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-help-copy p {
+    margin: 0;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-cta-wrap {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 28px;
+  }
+
+  #diamonds-landing-{{ section.id }} .dl-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 190px;
+
+    padding: 14px 28px;
+
+    border-radius: var(--cc-button-radius, 999px);
+
+    font-family: var(--font-body) !important;
+    font-size: 14px;
+    line-height: 1.2;
+
+    text-decoration: none;
+  }
+
+
+  /* ==========================================================
+     TABLET
+     ========================================================== */
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+
+    #diamonds-landing-{{ section.id }} .dl-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 42px 26px;
+    }
+
+  }
+
+
+  /* ==========================================================
+     MOBILE
+     ========================================================== */
+
+  @media screen and (max-width: 749px) {
+
+    #diamonds-landing-{{ section.id }} .dl-inner {
+      width: calc(100% - 36px);
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-intro {
+      padding-top: 36px;
+      padding-bottom: 32px;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-eyebrow {
+      font-size: 14px;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-title {
+      margin-bottom: 14px;
+
+      font-size: 29px;
+      line-height: 1.18;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-intro-copy,
+    #diamonds-landing-{{ section.id }} .dl-intro-copy p {
+      font-size: 16px !important;
+      line-height: 1.68 !important;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-options {
+      padding-top: 6px;
+      padding-bottom: 52px;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-card-image {
+      aspect-ratio: 4 / 3;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-card-content {
+      padding-top: 17px;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-card-title {
+      margin-bottom: 10px;
+
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-card-copy {
+      margin-bottom: 15px;
+
+      font-size: 16px;
+      line-height: 1.68;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-help {
+      padding: 42px 0;
+    }
+
+    #diamonds-landing-{{ section.id }} .dl-help-title {
+      font-size: 25px;
+      line-height: 1.2;
+    }
+
+  }
+</style>
+
+
+<section
+  id="diamonds-landing-{{ section.id }}"
+  class="diamonds-landing"
+>
+
+  <!-- ========================================================
+       INTRODUCTION
+       ======================================================== -->
+
+  <div class="dl-inner dl-intro">
+
+    {% if section.settings.eyebrow != blank %}
+      <p class="dl-eyebrow cc-font-heading-{{ section.settings.heading_font }}">
+        {{ section.settings.eyebrow }}
+      </p>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h1 class="dl-title cc-font-heading-{{ section.settings.heading_font }}">
+        {{ section.settings.heading }}
+      </h1>
+    {% endif %}
+
+    {% if section.settings.intro != blank %}
+      <div class="dl-intro-copy cc-font-body-{{ section.settings.body_font }}">
+        {{ section.settings.intro }}
+      </div>
+    {% endif %}
+
+  </div>
+
+
+  <!-- ========================================================
+       STONE TYPES
+       ======================================================== -->
+
+  <div class="dl-options">
+
+    <div class="dl-inner">
+
+      <div class="dl-grid">
+
+        {% for block in section.blocks %}
+
+          {% if block.type == 'stone_card' %}
+
+            <article
+              class="dl-card"
+              {{ block.shopify_attributes }}
+            >
+
+              {% if block.settings.link != blank %}
+                <a
+                  class="dl-card-image-link"
+                  href="{{ block.settings.link }}"
+                  aria-label="{{ block.settings.heading | escape }}"
+                >
+              {% endif %}
+
+              <div class="dl-card-image">
+
+                {% if block.settings.image != blank %}
+
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1000 }}"
+                    alt="{{ block.settings.image_alt | escape }}"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    loading="lazy"
+                  >
+
+                {% elsif block.settings.image_fallback != blank %}
+
+                  <img
+                    src="{{ block.settings.image_fallback | asset_url }}"
+                    alt="{{ block.settings.image_alt | escape }}"
+                    width="1000"
+                    height="750"
+                    loading="lazy"
+                  >
+
+                {% endif %}
+
+              </div>
+
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+
+
+              <div class="dl-card-content">
+
+                {% if block.settings.eyebrow != blank %}
+                  <p class="dl-card-eyebrow">
+                    {{ block.settings.eyebrow }}
+                  </p>
+                {% endif %}
+
+                {% if block.settings.heading != blank %}
+                  <h2 class="dl-card-title cc-font-heading-{{ section.settings.heading_font }}">
+
+                    {% if block.settings.link != blank %}
+                      <a href="{{ block.settings.link }}">
+                        {{ block.settings.heading }}
+                      </a>
+                    {% else %}
+                      {{ block.settings.heading }}
+                    {% endif %}
+
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.description != blank %}
+                  <div class="dl-card-copy cc-font-body-{{ section.settings.body_font }}">
+                    {{ block.settings.description }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.link != blank %}
+                  <a
+                    class="dl-card-link"
+                    href="{{ block.settings.link }}"
+                  >
+                    {% if block.settings.link_text != blank %}
+                      {{ block.settings.link_text }}
+                    {% else %}
+                      Explore
+                    {% endif %}
+                  </a>
+                {% endif %}
+
+              </div>
+
+            </article>
+
+          {% endif %}
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================
+       HELP CHOOSING
+       ======================================================== -->
+
+  {% if section.settings.help_heading != blank or section.settings.help_copy != blank %}
+
+    <div class="dl-help">
+
+      <div class="dl-inner dl-help-inner">
+
+        {% if section.settings.help_heading != blank %}
+          <h2 class="dl-help-title cc-font-heading-{{ section.settings.heading_font }}">
+            {{ section.settings.help_heading }}
+          </h2>
+        {% endif %}
+
+        {% if section.settings.help_copy != blank %}
+          <div class="dl-help-copy cc-font-body-{{ section.settings.body_font }}">
+            {{ section.settings.help_copy }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.cta_text != blank and section.settings.cta_link != blank %}
+
+          <div class="dl-cta-wrap">
+
+            <a
+              class="dl-button cc-button-{{ section.settings.button_style | default: 'primary' }}"
+              href="{{ section.settings.cta_link }}"
+            >
+              {{ section.settings.cta_text }}
+            </a>
+
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  {% endif %}
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Diamonds landing page",
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Diamonds & Gemstones"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "default": "Find the Stone That's Right for You"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Introduction",
+      "default": "<p>Choosing a centre stone is one of the most personal parts of creating a piece of jewellery. Explore natural diamonds, lab-grown diamonds and coloured gemstones — each offering its own combination of beauty, character, rarity and value.</p>"
+    },
+
+    {
+      "type": "header",
+      "content": "Help choosing"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Heading",
+      "default": "Not Sure Which Is Right for You?"
+    },
+    {
+      "type": "richtext",
+      "id": "help_copy",
+      "label": "Copy",
+      "default": "<p>The right choice depends on what matters most to you — rarity, budget, size, colour, origin or simply the stone you are drawn to. Our team can help you compare your options and choose a stone that works beautifully with both your design and your priorities.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Book an Appointment"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "value": "primary", "label": "Primary" },
+        { "value": "secondary", "label": "Secondary" },
+        { "value": "outline", "label": "Outline" }
+      ],
+      "default": "primary"
+    },
+
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "header",
+      "content": "Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading font",
+      "options": [
+        {
+          "value": "cormorant",
+          "label": "Cormorant Garamond"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair Display"
+        },
+        {
+          "value": "garamond",
+          "label": "EB Garamond"
+        },
+        {
+          "value": "baskerville",
+          "label": "Libre Baskerville"
+        }
+      ],
+      "default": "cormorant"
+    },
+    {
+      "type": "select",
+      "id": "body_font",
+      "label": "Body font",
+      "options": [
+        {
+          "value": "glacial",
+          "label": "Glacial Indifference"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "poppins",
+          "label": "Poppins"
+        }
+      ],
+      "default": "glacial"
+    }
+  ],
+
+  "blocks": [
+    {
+      "type": "stone_card",
+      "name": "Stone type",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Category"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Choose image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "image_fallback",
+          "label": "Fallback image filename",
+          "info": "Optional. Used if no image is selected above."
+        },
+
+        {
+          "type": "header",
+          "content": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Destination page"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Explore"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Diamonds landing page"
+    }
+  ]
+}
+{% endschema %}

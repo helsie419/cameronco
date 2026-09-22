@@ -1,0 +1,74 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "articles-landing-page",
+      "blocks": {
+        "jewellery-care": {
+          "type": "article_card",
+          "settings": {
+            "eyebrow": "Jewellery Care",
+            "heading": "Essential Jewellery Care Tips",
+            "description": "<p>Learn how to clean, store and maintain fine jewellery so your favourite pieces remain beautiful and wearable for years to come.</p>",
+            "image": "shopify://shop_images/cameron-co-jewellery-cleaning-brush-bowl.webp",
+            "image_alt": "Jewellery being carefully cleaned with a soft brush",
+            "image_fallback": "cameron-co-jewellery-cleaning-brush-bowl.webp",
+            "link": "/pages/jewellery-care",
+            "link_text": "Read article"
+          }
+        },
+        "timeless-trendy": {
+          "type": "article_card",
+          "settings": {
+            "eyebrow": "Jewellery Style",
+            "heading": "Timeless vs Trendy Jewellery",
+            "description": "<p>Discover how to balance classic jewellery with contemporary design and build a collection that reflects your style while standing the test of time.</p>",
+            "image": "shopify://shop_images/RG1002656_YELLOW_DOWN.jpg",
+            "image_alt": "Double band diamond cluster ring representing timeless jewellery design",
+            "image_fallback": "double-band-diamond-cluster-ring.webp",
+            "link": "shopify://pages/timelesstrendyjewellery",
+            "link_text": "Read article"
+          }
+        },
+        "diamonds": {
+          "type": "article_card",
+          "settings": {
+            "eyebrow": "Diamond Education",
+            "heading": "Understanding Diamonds: The 4 C's",
+            "description": "<p>Understand cut, colour, clarity and carat weight, compare diamond shapes and learn how the different grading factors work together.</p>",
+            "image": "shopify://shop_images/cameron-co-loose-diamond-shapes-collection.webp",
+            "image_alt": "Collection of loose diamonds in different shapes",
+            "image_fallback": "cameron-co-loose-diamond-shapes-collection.webp",
+            "link": "/pages/understanding-diamonds",
+            "link_text": "Read article"
+          }
+        }
+      },
+      "block_order": [
+        "jewellery-care",
+        "timeless-trendy",
+        "diamonds"
+      ],
+      "settings": {
+        "eyebrow": "Cameron & Co Journal",
+        "heading": "Jewellery Guides & Insights",
+        "intro": "<p>Explore practical guides from Cameron & Co covering jewellery care, diamonds, design and choosing pieces that will remain meaningful for years to come.</p>",
+        "bottom_heading": "Jewellery Worth Understanding",
+        "bottom_copy": "<p>Whether you are caring for a treasured piece, comparing diamonds or considering your next design, informed choices make good jewellery even more meaningful.</p>",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

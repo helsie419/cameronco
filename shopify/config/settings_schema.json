@@ -1,0 +1,185 @@
+[
+  {
+    "name": "Headings",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sets the default color and font for every heading on the site (page titles, section titles, card/item titles, sub-headings). Individual sections still have their own heading color and font pickers — leave those blank to use the value set here, or pick a value there to override it just on that page. The footer and homepage hero headline have their own dedicated colors and are not affected by this panel."
+      },
+      { "type": "header", "content": "Heading 1 — page titles" },
+      { "type": "color", "id": "h1_color", "label": "Color", "default": "#BD9C42" },
+      {
+        "type": "select",
+        "id": "h1_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h1_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
+      { "type": "header", "content": "Heading 2 — section titles" },
+      { "type": "color", "id": "h2_color", "label": "Color", "default": "#BD9C42" },
+      {
+        "type": "select",
+        "id": "h2_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h2_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
+      { "type": "header", "content": "Heading 3 — card & item titles" },
+      { "type": "color", "id": "h3_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h3_font",
+        "label": "Font",
+        "info": "Only applies to headings styled with a heading font (FAQ categories, bento card labels, the \"Four ways we help\" service titles). Customer names on the homepage testimonials and the office services list are styled with the body font by design and follow their section's own body font setting instead.",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h3_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
+      { "type": "header", "content": "Heading 4 — sub-headings" },
+      { "type": "color", "id": "h4_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h4_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h4_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
+      {
+        "type": "paragraph",
+        "content": "Heading 5 and 6 aren't used anywhere on the site yet, but are wired up and ready for whenever they're needed."
+      },
+      { "type": "header", "content": "Heading 5" },
+      { "type": "color", "id": "h5_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h5_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h5_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 },
+      { "type": "header", "content": "Heading 6" },
+      { "type": "color", "id": "h6_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "h6_font",
+        "label": "Font",
+        "options": [
+          { "value": "cormorant", "label": "Cormorant Garamond (default)" },
+          { "value": "playfair", "label": "Playfair Display" },
+          { "value": "garamond", "label": "EB Garamond" },
+          { "value": "baskerville", "label": "Libre Baskerville" }
+        ],
+        "default": "cormorant"
+      },
+      { "type": "range", "id": "h6_size", "label": "Size", "min": 18, "max": 80, "step": 1, "unit": "px", "default": 40 }
+    ]
+  },
+  {
+    "name": "Paragraph",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sets the default color and font for body copy site-wide (intro text, descriptions, quotes). Individual sections still have their own text color pickers where they exist — leave those blank to use the value set here, or pick a value there to override it just on that page. The footer and homepage hero have their own dedicated colors and are not affected by this panel."
+      },
+      { "type": "color", "id": "paragraph_color", "label": "Color", "default": "#171d29" },
+      {
+        "type": "select",
+        "id": "paragraph_font",
+        "label": "Font",
+        "options": [
+          { "value": "glacial", "label": "Glacial Indifference (default)" },
+          { "value": "montserrat", "label": "Montserrat" },
+          { "value": "inter", "label": "Inter" },
+          { "value": "poppins", "label": "Poppins" }
+        ],
+        "default": "glacial"
+      }
+    ]
+  },
+  {
+    "name": "Google Maps",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Powers the custom-styled office maps on the Contact page and office/services pages. Needs a Google Maps Platform API key with the Maps JavaScript API enabled. Leave blank and every map falls back to the plain embedded map (no custom styling, but still works)."
+      },
+      { "type": "text", "id": "google_maps_api_key", "label": "Maps JavaScript API key" }
+    ]
+  },
+  {
+    "name": "Button styles",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Configure the three reusable CTA button styles below. Changes apply site-wide wherever the matching button type is used. Booking slots, filters and other functional controls keep their own interaction styling."
+      },
+      { "type": "header", "content": "Primary buttons" },
+      { "type": "color", "id": "button_primary_background", "label": "Background", "default": "#BD9C42" },
+      { "type": "color", "id": "button_primary_text", "label": "Text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_primary_border", "label": "Border", "default": "#BD9C42" },
+      { "type": "range", "id": "button_primary_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_primary_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_primary_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_primary_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_primary_hover_background", "label": "Hover background", "default": "#B9971F" },
+      { "type": "color", "id": "button_primary_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_primary_hover_border", "label": "Hover border", "default": "#B9971F" },
+      { "type": "range", "id": "button_primary_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+
+      { "type": "header", "content": "Secondary buttons" },
+      { "type": "color", "id": "button_secondary_background", "label": "Background", "default": "#171D29" },
+      { "type": "color", "id": "button_secondary_text", "label": "Text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_secondary_border", "label": "Border", "default": "#171D29" },
+      { "type": "range", "id": "button_secondary_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_secondary_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_secondary_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_secondary_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_secondary_hover_background", "label": "Hover background", "default": "#0F141D" },
+      { "type": "color", "id": "button_secondary_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_secondary_hover_border", "label": "Hover border", "default": "#0F141D" },
+      { "type": "range", "id": "button_secondary_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+
+      { "type": "header", "content": "Outline buttons" },
+      { "type": "color", "id": "button_outline_background", "label": "Background", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_outline_text", "label": "Text", "default": "#171D29" },
+      { "type": "color", "id": "button_outline_border", "label": "Border", "default": "#171D29" },
+      { "type": "range", "id": "button_outline_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+      { "type": "range", "id": "button_outline_radius", "label": "Rounded edges", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 100 },
+      { "type": "range", "id": "button_outline_font_size", "label": "Font size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 14 },
+      { "type": "range", "id": "button_outline_transparency", "label": "Background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+      { "type": "color", "id": "button_outline_hover_background", "label": "Hover background", "default": "#171D29" },
+      { "type": "color", "id": "button_outline_hover_text", "label": "Hover text", "default": "#FFFFFF" },
+      { "type": "color", "id": "button_outline_hover_border", "label": "Hover border", "default": "#171D29" },
+      { "type": "range", "id": "button_outline_hover_transparency", "label": "Hover background transparency", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 }
+    ]
+  }
+]

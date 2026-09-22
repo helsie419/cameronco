@@ -1,0 +1,28 @@
+{% comment %}
+  Diamond colour grading scale (D-Z), built as inline SVG/HTML rather than
+  a raster image so labels stay sharp and on-brand. Replaces the old
+  diamond-colour-grades-chart.webp, which used off-brand blue text.
+
+  Usage: {% render 'diamond-colour-scale' %}
+{% endcomment %}
+
+<div class="diamond-colour-scale">
+  {% assign tiers = "Colourless|D – F|#fbfaf8;Near Colourless|G – J|#f7f3e8;Faint Yellow|K – M|#f2e9cd;Very Light Yellow|N – R|#ecdfab;Light Yellow|S – Z|#e4d287" | split: ";" %}
+  {% for tier in tiers %}
+    {% assign parts = tier | split: "|" %}
+    <div class="diamond-colour-scale__row">
+      <svg class="diamond-colour-scale__icon" viewBox="0 0 64 64" aria-hidden="true">
+        <polygon points="32,4 48,20 40,58 24,58 16,20" fill="{{ parts[2] }}" stroke="#171d29" stroke-width="1.5"/>
+        <polygon points="32,4 48,20 16,20" fill="none" stroke="#171d29" stroke-width="1"/>
+        <line x1="32" y1="4" x2="32" y2="58" stroke="#171d29" stroke-width="0.75"/>
+        <line x1="16" y1="20" x2="48" y2="20" stroke="#171d29" stroke-width="0.75"/>
+        <line x1="24" y1="58" x2="32" y2="20" stroke="#171d29" stroke-width="0.75"/>
+        <line x1="40" y1="58" x2="32" y2="20" stroke="#171d29" stroke-width="0.75"/>
+      </svg>
+      <div class="diamond-colour-scale__text">
+        <span class="diamond-colour-scale__name">{{ parts[0] }}</span>
+        <span class="diamond-colour-scale__grade">{{ parts[1] }}</span>
+      </div>
+    </div>
+  {% endfor %}
+</div>

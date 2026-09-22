@@ -1,0 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "article-page",
+      "blocks": {
+        "block-1": {
+          "type": "content_block",
+          "settings": {
+            "heading": "How It Works",
+            "body": "<p>Where past valuation certificates are available, we use that documentation to estimate current retail values — otherwise, we work from descriptions, photos, receipts and our consultants' own notes to reach an accurate figure. Appointments can be arranged by phone, in our showroom,  Monday to Friday with extended hours available. Sending items to us instead? We use a secure, fully trackable and fully insured delivery service.</p>",
+            "callout": false,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/cameron-co-diamond-ring-set-satin.webp",
+            "image_1_alt": "Diamond ring set prepared for insurance appraisal documentation",
+            "image_1_fallback": "cameron-co-diamond-ring-set-satin.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "",
+            "cta_link": "",
+            "button_style": "secondary"
+          }
+        },
+        "block-2": {
+          "type": "content_block",
+          "settings": {
+            "heading": "Insurance Validation & Timeframes",
+            "body": "<p>We complete our validation reports within strict time frames and submit to your insurance company , we're happy to chase a progress update on your behalf. </p>",
+            "callout": true,
+            "list_heading": "",
+            "list_items": "",
+            "list_style": "bullet",
+            "image_1": "shopify://shop_images/diamond-halo-stud-earrings.webp",
+            "image_1_alt": "Diamond halo stud earrings prepared for valuation documentation",
+            "image_1_fallback": "diamond-halo-stud-earrings.webp",
+            "image_2_alt": "",
+            "image_2_fallback": "",
+            "cta_text": "Book an appointment",
+            "cta_link": "/pages/booking",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2"
+      ],
+      "settings": {
+        "hero_title": "Jewellery Appraisals",
+        "hero_tagline": "Accurate valuations for insurance, claims and peace of mind",
+        "hero_intro": "<p>Whether you need a valuation for an insurance claim or simply want your collection accurately documented for re-insurance we are able to assit you with this. For items we have suppllied with a retail value over $1,000 , we provide an independent valuation from a registered valuer for re-insurance purposes.</p>",
+        "hero_image_alt": "Jeweller examining a diamond ring with a loupe during an appraisal inspection",
+        "hero_image_fallback": "cameron-co-appraisal-consultation.webp",
+        "hero_heading_color": "",
+        "hero_tagline_color": "",
+        "section_heading_color": "",
+        "subheading_color": "",
+        "body_text_color": "",
+        "callout_bg_color": "#f7f5f3",
+        "heading_font": "cormorant",
+        "body_font": "glacial"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
