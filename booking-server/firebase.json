@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs20",
+    "ignore": [
+      "node_modules",
+      ".git",
+      ".env",
+      "bookings-store.json",
+      "settings-store.json"
+    ]
+  }
+}
